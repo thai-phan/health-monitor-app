@@ -1,10 +1,14 @@
-package com.example.myapplication.ui.dashboard
+package com.sewon.healthmonitor.ui.agreement
 
+import androidx.compose.material.icons.Icons
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class AgreementViewModel : ViewModel() {
+
+    val MyAppIcons = Icons.Rounded
+//    SomeComposable(icon = MyAppIcons.Menu)
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Test"

@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.sewon.healthmonitor
 
 import org.junit.Test
 

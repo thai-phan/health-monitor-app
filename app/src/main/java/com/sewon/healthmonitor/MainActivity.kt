@@ -1,13 +1,17 @@
-package com.example.myapplication
+package com.sewon.healthmonitor
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.myapplication.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.sewon.healthmonitor.R.id.*
+import com.sewon.healthmonitor.databinding.ActivityMainBinding
+import com.sewon.healthmonitor.ui.agreement.AgreementFragment
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,17 +25,32 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val navController = findNavController(nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home,
-                R.id.navigation_dashboard,
-                R.id.navigation_notifications
+                navigation_home,
+                navigation_dashboard,
+                navigation_notifications,
+                navigation_agreement
+
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fl_main_settings);
+
+        //If you want to insert data in your settings
+//        val settingsFragment = AgreementFragment();
+//        settingsFragment.
+//        getSupportFragmentManager().beginTransaction().replace(R.id.test_frame).commit();
+
+        //Else
+        getSupportFragmentManager().beginTransaction().replace(R.id.test_frame, AgreementFragment()).commit();
     }
 }
