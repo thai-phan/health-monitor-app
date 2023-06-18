@@ -29,8 +29,7 @@
     <Preference
         android:title="Acts like a button"
         android:key="@string/title_agreement"
-        android:summary="This is a cool button"
-        android:icon="@color/material_dynamic_secondary100"
+        android:summary="This is a cool button  test"
 
         />
 </androidx.preference.PreferenceScreen>
