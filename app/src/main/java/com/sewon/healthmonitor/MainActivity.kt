@@ -57,9 +57,10 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         val db = Room.databaseBuilder(
             applicationContext,
-            AppDatabase::class.java, "database-name"
-        ).build()
+            AppDatabase::class.java, "health-monitor-db"
+        ).allowMainThreadQueries().build()
         val userDao = db.userDao()
+        print("aaaaa")
         val users: List<User> = userDao.getAll()
 
         if (prefs!!.getBoolean("firstrun", true)) {
