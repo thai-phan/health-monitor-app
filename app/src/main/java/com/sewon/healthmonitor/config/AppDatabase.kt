@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor
+package com.sewon.healthmonitor.config
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
