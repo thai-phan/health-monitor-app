@@ -3,26 +3,43 @@ package com.sewon.healthmonitor
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.room.Room
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sewon.healthmonitor.config.AppDatabase
+import com.sewon.healthmonitor.databinding.ActivityMainBinding
 import com.sewon.healthmonitor.entity.User
 import com.sewon.healthmonitor.theme.DataStoreTheme
+import com.sewon.healthmonitor.ui.setting.TermAgreement
 import com.sewon.healthmonitor.ui.setting.UserSettings
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.sewon.healthmonitor.R.id.*
 
-//        TODO: run back ground
 
-class MainActivity : ComponentActivity() {
+// TODO: Check first load
+
+// TODO: Navigate
+// TODO: Run back ground
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         setContent {
+
             DataStoreTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -33,32 +50,31 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val navView: BottomNavigationView = binding.navView
+
+        val navController = findNavController(nav_host_fragment_activity_main)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                navigation_home,
+                navigation_dashboard,
+                navigation_notifications,
+                navigation_agreement
+
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//
-////
-////        binding = ActivityMainBinding.inflate(layoutInflater)
-////        setContentView(binding.root)
-////
-////        val navView: BottomNavigationView = binding.navView
-////
-////        val navController = findNavController(nav_host_fragment_activity_main)
-////        // Passing each menu ID as a set of Ids because each
-////        // menu should be considered as top level destinations.
-////        val appBarConfiguration = AppBarConfiguration(
-////            setOf(
-////                navigation_home,
-////                navigation_dashboard,
-////                navigation_notifications,
-////                navigation_agreement
-////
-////            )
-////        )
-////        setupActionBarWithNavController(navController, appBarConfiguration)
-////        navView.setupWithNavController(navController)
+
+
+
 //
 //
 //

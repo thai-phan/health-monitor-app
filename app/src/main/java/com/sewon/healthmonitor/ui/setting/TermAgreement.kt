@@ -2,7 +2,6 @@ package com.sewon.healthmonitor.ui.setting
 
 import android.content.res.AssetManager
 import android.content.res.Resources
-import android.os.Environment
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,86 +24,39 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.config.AppDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.BufferedReader
-import java.io.File
-import com.sewon.healthmonitor.R
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun UserSettings() {
+fun TermAgreement() {
     val context = LocalContext.current
-    val assetFiles: AssetManager = context.assets
-    val file_name = "text.txt"
-    val text: String = assetFiles.open(file_name).bufferedReader().use{
-        it.readText()
-    }
-
-    val keyboardController = LocalSoftwareKeyboardController.current
-    val tokenValue = remember {
-        mutableStateOf(TextFieldValue())
-    }
-//    val bufferedReader: BufferedReader = File("example.txt").bufferedReader()
-//    val inputString = bufferedReader.use { it.readText() }
-//    println(inputString)
-//    val aaa = Environment.getDataDirectory().listFiles()
-    val store = AppDataStore(context)
-    val tokenText = store.getAccessToken.collectAsState(initial = "")
-    val scroll = rememberScrollState(0)
     val res: Resources = context.resources
     val in_s = res.openRawResource(R.raw.term_of_use)
     val b = ByteArray(in_s.available())
     in_s.read(b)
     val json_string = (String(b))
 
+    val scroll = rememberScrollState(0)
 
     Column(
-        modifier = Modifier.clickable { keyboardController?.hide() },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(30.dp))
-
-        Text(text = "DataStorage Example", fontWeight = FontWeight.Bold)
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        Text(text = tokenText.value)
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        TextField(
-            value = tokenValue.value,
-            onValueChange = { tokenValue.value = it },
-        )
-//
-//        TextField(
-//            value = tokenValue.value,
-//            onValueChange = { tokenValue.value = it },
-//        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Button(
-            onClick = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    store.saveToken(tokenValue.value.text)
-                }
-            }
-        ) {
-            Text(text = "Update Token")
-        }
-
-
+        Text(text = "Terms and Agreements", fontWeight = FontWeight.Bold, fontSize = 30.sp)
+        Spacer(modifier = Modifier.height(20.dp))
         Text(
-            text = text,
+            text = json_string,
             overflow = TextOverflow.Visible,
             modifier = Modifier
                 .padding(30.dp)
-                .height(300.dp)
+                .height(500.dp)
                 .verticalScroll(scroll)
         )
         Button(
