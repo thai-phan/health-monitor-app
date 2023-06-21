@@ -39,7 +39,7 @@ import com.sewon.healthmonitor.R
 fun UserSettings() {
     val context = LocalContext.current
     val assetFiles: AssetManager = context.assets
-    val file_name = "text.txt"
+    val file_name = "term_of_use.txt"
     val text: String = assetFiles.open(file_name).bufferedReader().use{
         it.readText()
     }

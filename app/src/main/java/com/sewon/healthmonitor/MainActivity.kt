@@ -12,7 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.room.Room
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sewon.healthmonitor.config.AppDatabase
 import com.sewon.healthmonitor.databinding.ActivityMainBinding
@@ -20,14 +24,10 @@ import com.sewon.healthmonitor.entity.User
 import com.sewon.healthmonitor.theme.DataStoreTheme
 import com.sewon.healthmonitor.ui.setting.TermAgreement
 import com.sewon.healthmonitor.ui.setting.UserSettings
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.sewon.healthmonitor.R.id.*
 
 
 // TODO: Check first load
-
 // TODO: Navigate
 // TODO: Run back ground
 
@@ -46,30 +46,30 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    UserSettings()
+                    TermAgreement()
                 }
             }
         }
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val navView: BottomNavigationView = binding.navView
-
-        val navController = findNavController(nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                navigation_home,
-                navigation_dashboard,
-                navigation_notifications,
-                navigation_agreement
-
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+//        binding = ActivityMainBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//
+//        val navView: BottomNavigationView = binding.navView
+//
+//        val navController = findNavController(nav_host_fragment_activity_main)
+//        // Passing each menu ID as a set of Ids because each
+//        // menu should be considered as top level destinations.
+//        val appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                navigation_home,
+//                navigation_dashboard,
+//                navigation_notifications,
+//                navigation_agreement
+//
+//            )
+//        )
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+//        navView.setupWithNavController(navController)
     }
 
 
