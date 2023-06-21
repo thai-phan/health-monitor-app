@@ -1,30 +1,16 @@
-package com.sewon.healthmonitor
+package com.sewon.healthmonitor.ui
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.room.Room
 
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.sewon.healthmonitor.config.AppDatabase
 import com.sewon.healthmonitor.databinding.ActivityMainBinding
-import com.sewon.healthmonitor.entity.User
-import com.sewon.healthmonitor.theme.DataStoreTheme
+import com.sewon.healthmonitor.ui.theme.DataStoreTheme
 import com.sewon.healthmonitor.ui.setting.TermAgreement
-import com.sewon.healthmonitor.ui.setting.UserSettings
-import com.sewon.healthmonitor.R.id.*
 
 
 // TODO: Check first load
@@ -39,15 +25,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-
-            DataStoreTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    TermAgreement()
-                }
+            HealthApp {
+                finish()
             }
         }
 

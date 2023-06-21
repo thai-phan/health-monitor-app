@@ -4,6 +4,8 @@ plugins {
     id 'com.google.devtools.ksp' version '1.8.10-1.0.9'
 }
 
+def room_version = "2.5.2"
+
 android {
     namespace 'com.sewon.healthmonitor'
     compileSdk 33
@@ -54,12 +56,11 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.preference:preference-ktx:1.2.0'
-
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
     implementation 'androidx.activity:activity-compose:1.7.2'
 
     // Database
     //
-    def room_version = "2.5.1"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     // To use Kotlin Symbol Processing (KSP)
@@ -92,7 +93,11 @@ dependencies {
     implementation("androidx.compose.ui:ui-text:$compose_version")
     implementation("androidx.compose.ui:ui-viewbinding:$compose_version")
     implementation("androidx.compose.ui:ui-tooling:$compose_version")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.4.3")
     implementation("androidx.compose.animation:animation:$compose_version")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.4.3")
+
+
     implementation("androidx.compose.material:material:$compose_version")
     implementation("androidx.compose.material:material-icons-core:$compose_version")
     implementation("androidx.compose.material:material-icons-extended:$compose_version")

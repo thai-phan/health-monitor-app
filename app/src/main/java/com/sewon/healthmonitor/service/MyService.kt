@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor
+package com.sewon.healthmonitor.service
 
 import android.app.Service
 import android.content.Intent
