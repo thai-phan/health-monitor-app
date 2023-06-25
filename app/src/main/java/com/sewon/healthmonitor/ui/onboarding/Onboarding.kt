@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sewon.healthmonitor.onboarding
+package com.sewon.healthmonitor.ui.onboarding
 
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
@@ -79,15 +79,16 @@ import kotlin.math.max
 @Composable
 fun Onboarding(onboardingComplete: () -> Unit) {
     YellowTheme {
+//        TODO: Scaffold?
         Scaffold(
             topBar = { AppBar() },
             backgroundColor = MaterialTheme.colors.primarySurface,
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = onboardingComplete,
-                    modifier = Modifier
-                        .navigationBarsPadding()
+                    modifier = Modifier.navigationBarsPadding()
                 ) {
+                    Text(text = "aaaaa")
                     Icon(
                         imageVector = Icons.Rounded.Explore,
                         contentDescription = stringResource(R.string.label_continue_to_courses)

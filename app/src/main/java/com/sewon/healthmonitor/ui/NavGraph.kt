@@ -24,24 +24,23 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.sewon.healthmonitor.courses.CourseTabs
-import com.sewon.healthmonitor.courses.courses
-import com.sewon.healthmonitor.onboarding.Onboarding
-import com.sewon.healthmonitor.model.courses
-import com.sewon.healthmonitor.ui.MainDestinations.COURSE_DETAIL_ID_KEY
-import com.sewon.healthmonitor.ui.course.CourseDetails
+import com.sewon.healthmonitor.ui.courses.MainTabs
+import com.sewon.healthmonitor.ui.courses.courses
+import com.sewon.healthmonitor.ui.onboarding.Onboarding
 
 /**
  * Destinations used in the ([OwlApp]).
  */
 object MainDestinations {
     const val ONBOARDING_ROUTE = "onboarding"
+    const val USER_DETAIL_ROUTE = "userDetail"
+    const val ACTIVITY_ROUTE = "activity"
+    const val REPORT_ROUTE = "report"
+    const val SETTING_ROUTE = "setting"
     const val COURSES_ROUTE = "courses"
     const val COURSE_DETAIL_ROUTE = "course"
     const val COURSE_DETAIL_ID_KEY = "courseId"
@@ -82,7 +81,7 @@ fun NavGraph(
         }
         navigation(
             route = MainDestinations.COURSES_ROUTE,
-            startDestination = CourseTabs.FEATURED.route
+            startDestination = MainTabs.ACTIVITY.route
         ) {
             courses(
                 onCourseSelected = actions.openCourse,

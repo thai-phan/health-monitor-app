@@ -2,7 +2,6 @@ package com.sewon.healthmonitor.ui
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.add
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -14,8 +13,6 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.primarySurface
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -26,9 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sewon.healthmonitor.courses.CourseTabs
-import com.sewon.healthmonitor.ui.theme.DataStoreTheme
-import com.sewon.healthmonitor.ui.setting.TermAgreement
+import com.sewon.healthmonitor.ui.courses.MainTabs
 import com.sewon.healthmonitor.ui.theme.BlueTheme
 import java.util.Locale
 
@@ -42,7 +37,7 @@ fun HealthApp(finishActivity: () -> Unit) {
 //        ) {
 //            TermAgreement()
 //        }
-        val tabs = remember { CourseTabs.values() }
+        val tabs = remember { MainTabs.values() }
         val navController = rememberNavController()
         Scaffold(
             backgroundColor = androidx.compose.material.MaterialTheme.colors.primarySurface,
@@ -58,13 +53,13 @@ fun HealthApp(finishActivity: () -> Unit) {
 }
 
 @Composable
-fun OwlBottomBar(navController: NavController, tabs: Array<CourseTabs>) {
+fun OwlBottomBar(navController: NavController, tabs: Array<MainTabs>) {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-        ?: CourseTabs.FEATURED.route
+        ?: MainTabs.ACTIVITY.route
 
-    val routes = remember { CourseTabs.values().map { it.route } }
+    val routes = remember { MainTabs.values().map { it.route } }
     if (currentRoute in routes) {
         BottomNavigation(
             Modifier.windowInsetsBottomHeight(

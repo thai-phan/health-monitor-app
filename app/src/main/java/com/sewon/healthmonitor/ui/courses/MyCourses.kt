@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sewon.healthmonitor.courses
+package com.sewon.healthmonitor.ui.courses
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

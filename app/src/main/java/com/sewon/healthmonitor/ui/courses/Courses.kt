@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sewon.healthmonitor.courses
+package com.sewon.healthmonitor.ui.courses
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -40,7 +40,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.model.courses
-import com.sewon.healthmonitor.model.topics
 import com.sewon.healthmonitor.ui.MainDestinations
 
 fun NavGraphBuilder.courses(
@@ -49,7 +48,7 @@ fun NavGraphBuilder.courses(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    composable(CourseTabs.FEATURED.route) { from ->
+    composable(MainTabs.ACTIVITY.route) { from ->
         // Show onboarding instead if not shown yet.
         LaunchedEffect(onboardingComplete) {
             if (!onboardingComplete.value) {
@@ -64,13 +63,14 @@ fun NavGraphBuilder.courses(
             )
         }
     }
-    composable(CourseTabs.MY_COURSES.route) { from ->
+    composable(MainTabs.REPORT.route) { from ->
         MyCourses(
             courses = courses,
             { id -> onCourseSelected(id, from) },
             modifier
         )
     }
+
 //    composable(CourseTabs.SEARCH.route) {
 //        SearchCourses(topics, modifier)
 //    }
@@ -101,21 +101,32 @@ fun CoursesAppBar() {
     }
 }
 
-enum class CourseTabs(
+/**
+ * Destinations used in the ([OwlApp]).
+ */
+private object HealthDestinations {
+    const val ACTIVITY_ROUTE = "courses/activity"
+    const val REPORT_ROUTE = "courses/report"
+    const val USER_ROUTE = "courses/user"
+
+//
+//    const val FEATURED_ROUTE = "courses/featured"
+//    const val MY_COURSES_ROUTE = "courses/my"
+//    const val SEARCH_COURSES_ROUTE = "courses/search"
+
+}
+
+enum class MainTabs(
     @StringRes val title: Int,
     @DrawableRes val icon: Int,
     val route: String
 ) {
-    MY_COURSES(R.string.my_courses, R.drawable.ic_grain, CoursesDestinations.MY_COURSES_ROUTE),
-    FEATURED(R.string.featured, R.drawable.ic_featured, CoursesDestinations.FEATURED_ROUTE),
-    SEARCH(R.string.search, R.drawable.ic_search, CoursesDestinations.SEARCH_COURSES_ROUTE)
+    ACTIVITY(R.string.activity_page, R.drawable.ic_grain, HealthDestinations.ACTIVITY_ROUTE),
+    REPORT(R.string.report_page, R.drawable.ic_featured, HealthDestinations.REPORT_ROUTE),
+    USER(R.string.user_page, R.drawable.ic_grain, HealthDestinations.USER_ROUTE),
+//    MY_COURSES(R.string.my_courses, R.drawable.ic_grain, HealthDestinations.MY_COURSES_ROUTE),
+//    FEATURED(R.string.featured, R.drawable.ic_featured, HealthDestinations.FEATURED_ROUTE),
+//    SEARCH(R.string.search, R.drawable.ic_search, HealthDestinations.SEARCH_COURSES_ROUTE)
 }
 
-/**
- * Destinations used in the ([OwlApp]).
- */
-private object CoursesDestinations {
-    const val FEATURED_ROUTE = "courses/featured"
-    const val MY_COURSES_ROUTE = "courses/my"
-    const val SEARCH_COURSES_ROUTE = "courses/search"
-}
+

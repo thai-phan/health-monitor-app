@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sewon.healthmonitor.courses
+package com.sewon.healthmonitor.ui.courses
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

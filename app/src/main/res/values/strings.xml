@@ -5,6 +5,12 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_agreement">Agreement</string>
     <string name="label_back">Back</string>
+
+    <string name="activity_page">Activity</string>
+    <string name="report_page">Report</string>
+    <string name="user_page">User</string>
+
+
     <!-- Onboarding -->
     <string name="choose_topics_that_interest_you">Choose topics that interest you</string>
     <string name="label_continue_to_courses">Continue to courses</string>
