@@ -14,7 +14,6 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.ui.MainDestinations
 import kotlinx.coroutines.delay
 
 

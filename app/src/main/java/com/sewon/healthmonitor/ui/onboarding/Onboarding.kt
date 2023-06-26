@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -51,7 +50,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.Explore
-import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.State
@@ -74,7 +72,7 @@ import com.sewon.healthmonitor.model.topics
 import com.sewon.healthmonitor.ui.theme.OwlTheme
 import com.sewon.healthmonitor.ui.theme.YellowTheme
 import com.sewon.healthmonitor.ui.theme.pink500
-import com.sewon.healthmonitor.ui.yellowBackground
+import com.sewon.healthmonitor.ui.backgreenBackground
 import kotlin.math.max
 
 @Composable
@@ -84,8 +82,7 @@ fun Onboarding(onboardingComplete: () -> Unit) {
 
 
         Scaffold(
-            modifier = Modifier
-                .yellowBackground(),
+
             topBar = { AppBar() },
 //            backgroundColor = MaterialTheme.colors.primarySurface,
             floatingActionButton = {
@@ -103,6 +100,7 @@ fun Onboarding(onboardingComplete: () -> Unit) {
         ) { innerPadding ->
             Column(
                 modifier = Modifier
+                    .backgreenBackground()
                     .statusBarsPadding()
                     .navigationBarsPadding()
                     .padding(innerPadding)

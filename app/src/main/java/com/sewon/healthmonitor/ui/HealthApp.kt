@@ -1,10 +1,12 @@
 package com.sewon.healthmonitor.ui
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -34,15 +36,6 @@ import java.util.Locale
 @Composable
 fun HealthApp(finishActivity: () -> Unit) {
     WhiteTheme {
-        // A surface container using the 'background' color from the theme
-//        Surface(
-//            modifier = Modifier.fillMaxSize(),
-//            color = MaterialTheme.colorScheme.background
-//        ) {
-//            TermAgreement()
-//        }
-
-
         val tabs = remember { MainTabs.values() }
         val navController = rememberNavController()
         Scaffold(
@@ -50,12 +43,21 @@ fun HealthApp(finishActivity: () -> Unit) {
             bottomBar = {
                 OwlBottomBar(navController = navController, tabs)
             }
-        ) { innerPaddingModifier ->
-            NavGraph(
-                finishActivity = finishActivity,
-                navController = navController,
-                modifier = Modifier.padding(innerPaddingModifier)
-            )
+        ) { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .backgreenBackground()
+                    .statusBarsPadding()
+                    .navigationBarsPadding()
+                    .padding(innerPadding)
+            ) {
+                NavGraph(
+                    finishActivity = finishActivity,
+                    navController = navController,
+                    modifier = Modifier.padding(innerPadding)
+                )
+            }
+
         }
     }
 }

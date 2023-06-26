@@ -59,7 +59,7 @@ import com.sewon.healthmonitor.model.topics
 import com.sewon.healthmonitor.ui.theme.OwlTheme
 import com.sewon.healthmonitor.ui.theme.YellowTheme
 import com.sewon.healthmonitor.ui.theme.pink500
-import com.sewon.healthmonitor.ui.yellowBackground
+import com.sewon.healthmonitor.ui.backgreenBackground
 import kotlin.math.max
 
 @Composable
@@ -70,7 +70,7 @@ fun TestLayout(onboardingComplete: () -> Unit) {
 
         Scaffold(
             modifier = Modifier
-                .yellowBackground(),
+                .backgreenBackground(),
             topBar = { AppBar() },
 //            backgroundColor = MaterialTheme.colors.primarySurface,
             floatingActionButton = {

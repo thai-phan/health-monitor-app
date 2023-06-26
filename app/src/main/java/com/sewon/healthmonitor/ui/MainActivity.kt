@@ -11,7 +11,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 
-import com.sewon.healthmonitor.databinding.ActivityMainBinding
 import com.sewon.healthmonitor.ui.theme.DataStoreTheme
 import com.sewon.healthmonitor.ui.setting.TermAgreement
 import android.view.animation.OvershootInterpolator
@@ -46,10 +45,10 @@ import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        actionBar?.hide();
         super.onCreate(savedInstanceState)
 
         setContent {

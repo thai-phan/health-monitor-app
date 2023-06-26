@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 
 
 @SuppressLint("UnnecessaryComposedModifier")
-fun Modifier.yellowBackground(): Modifier = this.composed {
+fun Modifier.backgreenBackground(): Modifier = this.composed {
         Modifier.drawWithCache {
             val gradientBrush = Brush.verticalGradient(
                 listOf(Color(0xff006d63), Color(0xff071224), Color(0xff091d3f))
