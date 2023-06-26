@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.sewon.healthmonitor.model.Course
 import com.sewon.healthmonitor.model.courses
 import com.sewon.healthmonitor.ui.common.CourseListItem
-import com.sewon.healthmonitor.ui.theme.BlueTheme
+import com.sewon.healthmonitor.ui.theme.WhiteTheme
 
 @Composable
 fun MyCourses(
@@ -83,7 +83,7 @@ fun MyCourse(
 @Preview(name = "My Courses")
 @Composable
 private fun MyCoursesPreview() {
-    BlueTheme {
+    WhiteTheme {
         MyCourses(
             courses = courses,
             selectCourse = { }

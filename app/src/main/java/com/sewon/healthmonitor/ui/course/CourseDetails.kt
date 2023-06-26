@@ -92,8 +92,7 @@ import com.sewon.healthmonitor.model.LessonsRepo
 import com.sewon.healthmonitor.model.courses
 import com.sewon.healthmonitor.ui.common.CourseListItem
 import com.sewon.healthmonitor.ui.common.OutlinedAvatar
-import com.sewon.healthmonitor.ui.theme.BlueTheme
-import com.sewon.healthmonitor.ui.theme.PinkTheme
+import com.sewon.healthmonitor.ui.theme.WhiteTheme
 import com.sewon.healthmonitor.ui.theme.pink500
 //import com.sewon.healthmonitor.ui.utils.NetworkImage
 import com.sewon.healthmonitor.ui.utils.lerp
@@ -123,7 +122,7 @@ fun CourseDetails(
     selectCourse: (Long) -> Unit,
     upPress: () -> Unit
 ) {
-    PinkTheme {
+    WhiteTheme {
         BoxWithConstraints {
             val sheetState = rememberSwipeableState(SheetState.Closed)
             val fabSize = with(LocalDensity.current) { FabSize.toPx() }
@@ -302,7 +301,7 @@ private fun RelatedCourses(
     selectCourse: (Long) -> Unit
 ) {
     val relatedCourses = remember(courseId) { CourseRepo.getRelated(courseId) }
-    BlueTheme {
+    WhiteTheme {
         Surface(
             color = MaterialTheme.colors.primarySurface,
             modifier = Modifier.fillMaxWidth()
@@ -551,7 +550,7 @@ private fun LessonsSheetPreview(
     openFraction: Float,
     darkTheme: Boolean = false
 ) {
-    PinkTheme(darkTheme) {
+    WhiteTheme(darkTheme) {
         val color = MaterialTheme.colors.primarySurface
         Surface(color = color) {
             Lessons(

@@ -45,7 +45,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.sewon.healthmonitor.ui.theme.BlueTheme
+import com.sewon.healthmonitor.ui.theme.WhiteTheme
 
 @Composable
 fun OutlinedAvatar(
@@ -78,7 +78,7 @@ fun OutlinedAvatar(
 )
 @Composable
 private fun OutlinedAvatarPreview() {
-    BlueTheme {
+    WhiteTheme() {
         OutlinedAvatar(url = "")
     }
 }

@@ -49,7 +49,7 @@ import androidx.compose.ui.unit.dp
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.model.Topic
 import com.sewon.healthmonitor.model.topics
-import com.sewon.healthmonitor.ui.theme.BlueTheme
+import com.sewon.healthmonitor.ui.theme.WhiteTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -144,7 +144,7 @@ private fun AppBar(
 @Preview(name = "Search Courses")
 @Composable
 private fun FeaturedCoursesPreview() {
-    BlueTheme {
+    WhiteTheme() {
         SearchCourses(topics, Modifier)
     }
 }

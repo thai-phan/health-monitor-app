@@ -47,8 +47,8 @@ import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.model.Course
 import com.sewon.healthmonitor.model.courses
 import com.sewon.healthmonitor.ui.common.OutlinedAvatar
-import com.sewon.healthmonitor.ui.theme.BlueTheme
 import com.sewon.healthmonitor.ui.theme.OwlTheme
+import com.sewon.healthmonitor.ui.theme.WhiteTheme
 //import com.sewon.healthmonitor.ui.utils.NetworkImage
 import java.util.Locale
 import kotlin.math.ceil
@@ -234,7 +234,7 @@ private fun shortestColumn(colHeights: IntArray): Int {
 @Preview(name = "Featured Course")
 @Composable
 private fun FeaturedCoursePreview() {
-    BlueTheme {
+    WhiteTheme {
         FeaturedCourse(
             course = courses.first(),
             selectCourse = { }
@@ -245,7 +245,7 @@ private fun FeaturedCoursePreview() {
 @Preview(name = "Featured Courses Portrait")
 @Composable
 private fun FeaturedCoursesPreview() {
-    BlueTheme {
+    WhiteTheme {
         FeaturedCourses(
             courses = courses,
             selectCourse = { }
@@ -256,7 +256,7 @@ private fun FeaturedCoursesPreview() {
 @Preview(name = "Featured Courses Dark")
 @Composable
 private fun FeaturedCoursesPreviewDark() {
-    BlueTheme(darkTheme = true) {
+    WhiteTheme(darkTheme = true) {
         FeaturedCourses(
             courses = courses,
             selectCourse = { }
@@ -271,7 +271,7 @@ private fun FeaturedCoursesPreviewDark() {
 )
 @Composable
 private fun FeaturedCoursesPreviewLandscape() {
-    BlueTheme {
+    WhiteTheme {
         FeaturedCourses(
             courses = courses,
             selectCourse = { }

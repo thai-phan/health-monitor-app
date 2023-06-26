@@ -26,9 +26,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sewon.healthmonitor.ui.courses.MainTabs
-import com.sewon.healthmonitor.ui.theme.BlueTheme
 import com.sewon.healthmonitor.ui.theme.DataStoreTheme
-import com.sewon.healthmonitor.ui.theme.PinkTheme
 import com.sewon.healthmonitor.ui.theme.WhiteTheme
 import com.sewon.healthmonitor.ui.theme.YellowTheme
 import java.util.Locale
