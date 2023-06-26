@@ -1,41 +1,30 @@
-/*
- * Copyright 2020 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.sewon.healthmonitor.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
+import com.sewon.healthmonitor.config.AppDataStore
+import com.sewon.healthmonitor.ui.courses.HealthDestinations
 import com.sewon.healthmonitor.ui.courses.MainTabs
 import com.sewon.healthmonitor.ui.courses.courses
-import com.sewon.healthmonitor.ui.onboarding.Onboarding
+import com.sewon.healthmonitor.ui.splashscreen.SplashScreen
+import com.sewon.healthmonitor.ui.setting.TestLayout
 
-/**
- * Destinations used in the ([OwlApp]).
- */
+
 object MainDestinations {
+    const val SPLASH_ROUTE = "splash_screen"
+    const val TERM_AGREEMENT_ROUTE = "term_agreement"
     const val ONBOARDING_ROUTE = "onboarding"
     const val USER_DETAIL_ROUTE = "userDetail"
     const val ACTIVITY_ROUTE = "activity"
@@ -51,9 +40,13 @@ fun NavGraph(
     modifier: Modifier = Modifier,
     finishActivity: () -> Unit = {},
     navController: NavHostController = rememberNavController(),
-    startDestination: String = MainDestinations.COURSES_ROUTE,
-    showOnboardingInitially: Boolean = true
+    startDestination: String = MainDestinations.SPLASH_ROUTE,
+    showOnboardingInitially: Boolean = false
 ) {
+    val context = LocalContext.current
+    val store = AppDataStore(context)
+    val isAccepted = store.getIsTermAgreementAccepted.collectAsState(initial = false)
+
     // Onboarding could be read from shared preferences.
     val onboardingComplete = remember(showOnboardingInitially) {
         mutableStateOf(!showOnboardingInitially)
@@ -65,13 +58,33 @@ fun NavGraph(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(MainDestinations.ONBOARDING_ROUTE) {
+
+        var redirectRoute = MainDestinations.TERM_AGREEMENT_ROUTE
+        if (isAccepted.value) {
+            redirectRoute = HealthDestinations.ACTIVITY_ROUTE
+        }
+//        // Onboarding could be read from shared preferences.
+//        val onboardingComplete = remember(showOnboardingInitially) {
+//            mutableStateOf(!showOnboardingInitially)
+//        }
+
+
+//        if onboardingComplete
+
+        composable(MainDestinations.SPLASH_ROUTE) {
+            SplashScreen(
+                navController = navController,
+                redirectRoute = redirectRoute
+            )
+        }
+
+        composable(MainDestinations.TERM_AGREEMENT_ROUTE) {
             // Intercept back in Onboarding: make it finish the activity
             BackHandler {
                 finishActivity()
             }
 
-            Onboarding(
+            TestLayout(
                 onboardingComplete = {
                     // Set the flag so that onboarding is not shown next time.
                     onboardingComplete.value = true
@@ -79,6 +92,7 @@ fun NavGraph(
                 }
             )
         }
+
         navigation(
             route = MainDestinations.COURSES_ROUTE,
             startDestination = MainTabs.ACTIVITY.route

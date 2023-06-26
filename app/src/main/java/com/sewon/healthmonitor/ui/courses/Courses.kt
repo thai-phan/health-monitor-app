@@ -104,15 +104,11 @@ fun CoursesAppBar() {
 /**
  * Destinations used in the ([OwlApp]).
  */
-private object HealthDestinations {
+object HealthDestinations {
     const val ACTIVITY_ROUTE = "courses/activity"
     const val REPORT_ROUTE = "courses/report"
     const val USER_ROUTE = "courses/user"
 
-//
-//    const val FEATURED_ROUTE = "courses/featured"
-//    const val MY_COURSES_ROUTE = "courses/my"
-//    const val SEARCH_COURSES_ROUTE = "courses/search"
 
 }
 

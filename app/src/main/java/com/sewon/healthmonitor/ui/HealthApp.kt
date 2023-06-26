@@ -37,11 +37,15 @@ fun HealthApp(finishActivity: () -> Unit) {
 //        ) {
 //            TermAgreement()
 //        }
+
+
         val tabs = remember { MainTabs.values() }
         val navController = rememberNavController()
         Scaffold(
             backgroundColor = androidx.compose.material.MaterialTheme.colors.primarySurface,
-            bottomBar = { OwlBottomBar(navController = navController, tabs) }
+            bottomBar = {
+                OwlBottomBar(navController = navController, tabs)
+            }
         ) { innerPaddingModifier ->
             NavGraph(
                 finishActivity = finishActivity,
