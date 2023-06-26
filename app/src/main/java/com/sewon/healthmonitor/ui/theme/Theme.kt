@@ -131,6 +131,23 @@ fun PinkTheme(
     OwlTheme(darkTheme, colors, content)
 }
 
+
+private val WhiteTheme = lightColors(
+    primary = white,
+    secondary = yellow200,
+    surface = blueDarkPrimary
+)
+
+
+@Composable
+fun WhiteTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colors = WhiteTheme
+    OwlTheme(darkTheme, colors, content)
+}
+
 private val LightElevation = Elevations()
 
 private val DarkElevation = Elevations(card = 1.dp)

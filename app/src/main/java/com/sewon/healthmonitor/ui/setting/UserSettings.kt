@@ -2,7 +2,6 @@ package com.sewon.healthmonitor.ui.setting
 
 import android.content.res.AssetManager
 import android.content.res.Resources
-import android.os.Environment
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,8 +29,6 @@ import com.sewon.healthmonitor.config.AppDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.BufferedReader
-import java.io.File
 import com.sewon.healthmonitor.R
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -57,7 +54,7 @@ fun UserSettings() {
     val tokenText = store.getAccessToken.collectAsState(initial = "")
     val scroll = rememberScrollState(0)
     val res: Resources = context.resources
-    val in_s = res.openRawResource(R.raw.term_of_use)
+    val in_s = res.openRawResource(R.raw.test)
     val b = ByteArray(in_s.available())
     in_s.read(b)
     val json_string = (String(b))

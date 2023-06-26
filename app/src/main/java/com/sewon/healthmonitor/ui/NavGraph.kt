@@ -18,6 +18,7 @@ import com.sewon.healthmonitor.config.AppDataStore
 import com.sewon.healthmonitor.ui.courses.HealthDestinations
 import com.sewon.healthmonitor.ui.courses.MainTabs
 import com.sewon.healthmonitor.ui.courses.courses
+import com.sewon.healthmonitor.ui.setting.TermAgreement
 import com.sewon.healthmonitor.ui.splashscreen.SplashScreen
 import com.sewon.healthmonitor.ui.setting.TestLayout
 
@@ -84,12 +85,8 @@ fun NavGraph(
                 finishActivity()
             }
 
-            TestLayout(
-                onboardingComplete = {
-                    // Set the flag so that onboarding is not shown next time.
-                    onboardingComplete.value = true
-                    actions.onboardingComplete()
-                }
+            TermAgreement(
+
             )
         }
 
