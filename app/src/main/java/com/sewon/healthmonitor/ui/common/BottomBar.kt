@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,9 +35,11 @@ fun BottomBar(navController: NavController, tabs: Array<MainTabs>) {
     val routes = remember { MainTabs.values().map { it.route } }
     if (currentRoute in routes) {
         NavigationBar(
-            modifier = Modifier.windowInsetsBottomHeight(
-                WindowInsets.navigationBars.add(WindowInsets(bottom = 56.dp))
-            ).background(Color(0xFF071224))
+//            modifier = Modifier.windowInsetsBottomHeight(
+//                WindowInsets.navigationBars.add(WindowInsets(bottom = 56.dp))
+//            ),
+            containerColor = Color(0xFF071224),
+//            contentColor =
         ) {
             tabs.forEach { tab ->
                 NavigationBarItem(
@@ -53,7 +57,15 @@ fun BottomBar(navController: NavController, tabs: Array<MainTabs>) {
                             }
                         }
                     },
-                    alwaysShowLabel = false,
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor=Color(0xFF03dac5),
+                        selectedTextColor = Color(0xFF03dac5),
+                        indicatorColor = Color(0xFF071224),
+                        unselectedIconColor = Color.White,
+                        unselectedTextColor = Color.White,
+                        disabledIconColor = Color.Cyan,
+                        disabledTextColor = Color.Cyan,
+                    ),
 //                    TODO: check
 //                    selectedContentColor = Color(0xFF03dac5),
 //                    unselectedContentColor = Color.White,

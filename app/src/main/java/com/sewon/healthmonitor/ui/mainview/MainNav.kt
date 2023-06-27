@@ -43,7 +43,7 @@ import com.sewon.healthmonitor.ui.courses.MyCourses
 
 fun NavGraphBuilder.mainNavGraph(
     onCourseSelected: (Long, NavBackStackEntry) -> Unit,
-    onboardingComplete: State<Boolean>, // https://issuetracker.google.com/174783110
+    onboardingComplete: State<Boolean>,
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
@@ -71,9 +71,18 @@ fun NavGraphBuilder.mainNavGraph(
         )
     }
 
-//    composable(MainTabs.USER.route) {
-//        SearchCourses(topics, modifier)
+    composable(MainTabs.USER.route) {
+        User()
+    }
+
+//    composable(MainTabs.USER.route) { from ->
+//        MyCourses(
+//            courses = courses,
+//            { id -> onCourseSelected(id, from) },
+//            modifier
+//        )
 //    }
+
 }
 
 

@@ -9,6 +9,8 @@ import androidx.activity.compose.setContent
 // TODO: Navigate
 // TODO: Run back ground
 // TODO: Add multi language
+// TODO: Back button
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
