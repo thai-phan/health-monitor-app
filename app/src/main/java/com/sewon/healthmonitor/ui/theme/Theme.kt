@@ -1,169 +1,110 @@
 package com.sewon.healthmonitor.ui.theme
 
+import android.app.Activity
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Shapes
-import androidx.compose.material.Typography
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import com.sewon.healthmonitor.R
 
-private val DarkColorPalette = darkColorScheme(
-    primary = Purple200,
-    primaryContainer = Purple700,
-    secondary = Teal200
+
+// Material 3 color schemes
+private val DarkColorScheme = darkColorScheme(
+    primary = DarkPrimary,
+    onPrimary = DarkOnPrimary,
+    primaryContainer = DarkPrimaryContainer,
+    onPrimaryContainer = DarkOnPrimaryContainer,
+    inversePrimary = DarkPrimaryInverse,
+    secondary = DarkSecondary,
+    onSecondary = DarkOnSecondary,
+    secondaryContainer = DarkSecondaryContainer,
+    onSecondaryContainer = DarkOnSecondaryContainer,
+    tertiary = DarkTertiary,
+    onTertiary = DarkOnTertiary,
+    tertiaryContainer = DarkTertiaryContainer,
+    onTertiaryContainer = DarkOnTertiaryContainer,
+    error = DarkError,
+    onError = DarkOnError,
+    errorContainer = DarkErrorContainer,
+    onErrorContainer = DarkOnErrorContainer,
+    background = DarkBackground,
+    onBackground = DarkOnBackground,
+    surface = DarkSurface,
+    onSurface = DarkOnSurface,
+    inverseSurface = DarkInverseSurface,
+    inverseOnSurface = DarkInverseOnSurface,
+    surfaceVariant = DarkSurfaceVariant,
+    onSurfaceVariant = DarkOnSurfaceVariant,
+    outline = DarkOutline
 )
 
-private val LightColorPalette = lightColorScheme(
-    primary = Purple500,
-    primaryContainer = Purple700,
-    secondary = Teal200
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+private val LightColorScheme = lightColorScheme(
+    primary = LightPrimary,
+    onPrimary = LightOnPrimary,
+    primaryContainer = LightPrimaryContainer,
+    onPrimaryContainer = LightOnPrimaryContainer,
+    inversePrimary = LightPrimaryInverse,
+    secondary = LightSecondary,
+    onSecondary = LightOnSecondary,
+    secondaryContainer = LightSecondaryContainer,
+    onSecondaryContainer = LightOnSecondaryContainer,
+    tertiary = LightTertiary,
+    onTertiary = LightOnTertiary,
+    tertiaryContainer = LightTertiaryContainer,
+    onTertiaryContainer = LightOnTertiaryContainer,
+    error = LightError,
+    onError = LightOnError,
+    errorContainer = LightErrorContainer,
+    onErrorContainer = LightOnErrorContainer,
+    background = LightBackground,
+    onBackground = LightOnBackground,
+    surface = LightSurface,
+    onSurface = LightOnSurface,
+    inverseSurface = LightInverseSurface,
+    inverseOnSurface = LightInverseOnSurface,
+    surfaceVariant = LightSurfaceVariant,
+    onSurfaceVariant = LightOnSurfaceVariant,
+    outline = LightOutline
 )
 
 @Composable
-fun DataStoreTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = darkColors()
+fun HealthTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = true,
+    content: @Composable () -> Unit
+) {
+    val ColorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+        darkTheme -> DarkColorScheme
+        else -> LightColorScheme
+    }
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = ColorScheme.primary.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+        }
+    }
 
-    MaterialTheme(
-        colors = colors,
+    androidx.compose.material3.MaterialTheme(
+        colorScheme = ColorScheme,
         typography = typography,
         shapes = shapes,
         content = content
     )
-}
-
-
-private val YellowThemeLight = lightColors(
-    primary = yellow500,
-    primaryVariant = yellow400,
-    onPrimary = Color.Black,
-    secondary = blue700,
-    secondaryVariant = blue800,
-    onSecondary = Color.White
-)
-
-private val YellowThemeDark = darkColors(
-    primary = yellow200,
-    secondary = blue200,
-    onSecondary = Color.Black,
-    surface = yellowDarkPrimary
-)
-
-@Composable
-fun YellowTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colors = if (darkTheme) {
-        YellowThemeDark
-    } else {
-        YellowThemeLight
-    }
-    OwlTheme(darkTheme, colors, content)
-}
-
-
-
-private val WhiteTheme = lightColors(
-    primary = white,
-    onPrimary = blue200,
-    secondary = yellow200,
-    surface = blueDarkPrimary
-)
-
-
-@Composable
-fun WhiteTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colors = WhiteTheme
-    OwlTheme(darkTheme, colors, content)
-}
-
-private val LightElevation = Elevations()
-
-private val DarkElevation = Elevations(card = 1.dp)
-
-private val LightImages = Images(lockupLogo = R.drawable.ic_lockup_blue)
-
-private val DarkImages = Images(lockupLogo = R.drawable.ic_lockup_white)
-
-@Composable
-private fun OwlTheme(
-    darkTheme: Boolean,
-    colors: Colors,
-    content: @Composable () -> Unit
-) {
-    val elevation = if (darkTheme) DarkElevation else LightElevation
-    val images = if (darkTheme) DarkImages else LightImages
-    CompositionLocalProvider(
-        LocalElevations provides elevation,
-        LocalImages provides images
-    ) {
-        MaterialTheme(
-            colors = colors,
-            typography = typography,
-            shapes = shapes,
-            content = content
-        )
-    }
-}
-
-/**
- * Alternate to [MaterialTheme] allowing us to add our own theme systems (e.g. [Elevations]) or to
- * extend [MaterialTheme]'s types e.g. return our own [Colors] extension
- */
-object OwlTheme {
-
-    /**
-     * Proxy to [MaterialTheme]
-     */
-    val colors: Colors
-        @Composable
-        get() = androidx.compose.material.MaterialTheme.colors
-
-    /**
-     * Proxy to [MaterialTheme]
-     */
-    val typography: Typography
-        @Composable
-        get() = androidx.compose.material.MaterialTheme.typography
-
-    /**
-     * Proxy to [MaterialTheme]
-     */
-    val shapes: Shapes
-        @Composable
-        get() = androidx.compose.material.MaterialTheme.shapes
-
-    /**
-     * Retrieves the current [Elevations] at the call site's position in the hierarchy.
-     */
-    val elevations: Elevations
-        @Composable
-        get() = LocalElevations.current
-
-    /**
-     * Retrieves the current [Images] at the call site's position in the hierarchy.
-     */
-    val images: Images
-        @Composable
-        get() = LocalImages.current
 }

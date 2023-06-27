@@ -1,53 +1,35 @@
 package com.sewon.healthmonitor.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.add
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.windowInsetsBottomHeight
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.primarySurface
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sewon.healthmonitor.ui.courses.MainTabs
-import com.sewon.healthmonitor.ui.theme.DataStoreTheme
-import com.sewon.healthmonitor.ui.theme.WhiteTheme
-import com.sewon.healthmonitor.ui.theme.YellowTheme
-import java.util.Locale
+import com.sewon.healthmonitor.ui.common.BottomBar
+import com.sewon.healthmonitor.ui.common.blackGreenBackground
+import com.sewon.healthmonitor.ui.theme.HealthTheme
 
 @Composable
 fun HealthApp(finishActivity: () -> Unit) {
-    WhiteTheme {
+    HealthTheme {
         val tabs = remember { MainTabs.values() }
         val navController = rememberNavController()
+        //        TODO: Scaffold?
+
         Scaffold(
-            backgroundColor = androidx.compose.material.MaterialTheme.colors.primarySurface,
             bottomBar = {
-                OwlBottomBar(navController = navController, tabs)
+                BottomBar(navController = navController, tabs)
             }
         ) { innerPadding ->
             Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .backgreenBackground()
-                    .statusBarsPadding()
-                    .navigationBarsPadding()
-                    .padding(innerPadding)
+                    .blackGreenBackground()
             ) {
                 NavGraph(
                     finishActivity = finishActivity,
@@ -57,45 +39,7 @@ fun HealthApp(finishActivity: () -> Unit) {
             }
 
         }
+
     }
 }
 
-@Composable
-fun OwlBottomBar(navController: NavController, tabs: Array<MainTabs>) {
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-        ?: MainTabs.ACTIVITY.route
-
-    val routes = remember { MainTabs.values().map { it.route } }
-    if (currentRoute in routes) {
-        BottomNavigation(
-            Modifier.windowInsetsBottomHeight(
-                WindowInsets.navigationBars.add(WindowInsets(bottom = 56.dp))
-            )
-        ) {
-            tabs.forEach { tab ->
-                BottomNavigationItem(
-                    icon = { Icon(painterResource(tab.icon), contentDescription = null) },
-                    label = { Text(stringResource(tab.title).uppercase(Locale.getDefault())) },
-                    selected = currentRoute == tab.route,
-                    onClick = {
-                        if (tab.route != currentRoute) {
-                            navController.navigate(tab.route) {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }
-                    },
-                    alwaysShowLabel = false,
-                    selectedContentColor = androidx.compose.material.MaterialTheme.colors.secondary,
-                    unselectedContentColor = LocalContentColor.current,
-                    modifier = Modifier.navigationBarsPadding()
-                )
-            }
-        }
-    }
-}

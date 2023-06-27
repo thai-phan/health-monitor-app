@@ -33,8 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sewon.healthmonitor.model.Course
 import com.sewon.healthmonitor.model.courses
-import com.sewon.healthmonitor.ui.common.CourseListItem
-import com.sewon.healthmonitor.ui.theme.WhiteTheme
+import com.sewon.healthmonitor.ui.theme.HealthTheme
 
 @Composable
 fun MyCourses(
@@ -47,7 +46,7 @@ fun MyCourses(
             Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
         }
         item {
-            CoursesAppBar()
+//            CoursesAppBar()
         }
         itemsIndexed(
             items = courses,
@@ -83,7 +82,7 @@ fun MyCourse(
 @Preview(name = "My Courses")
 @Composable
 private fun MyCoursesPreview() {
-    WhiteTheme {
+    HealthTheme {
         MyCourses(
             courses = courses,
             selectCourse = { }

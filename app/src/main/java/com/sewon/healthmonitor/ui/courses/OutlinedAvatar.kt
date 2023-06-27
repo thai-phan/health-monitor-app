@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sewon.healthmonitor.ui.common
+package com.sewon.healthmonitor.ui.courses
 
 /*
  * Copyright 2020 The Android Open Source Project
@@ -34,25 +34,22 @@ package com.sewon.healthmonitor.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.sewon.healthmonitor.ui.theme.WhiteTheme
+import com.sewon.healthmonitor.ui.theme.HealthTheme
 
 @Composable
 fun OutlinedAvatar(
     url: String,
     modifier: Modifier = Modifier,
     outlineSize: Dp = 3.dp,
-    outlineColor: Color = MaterialTheme.colors.surface
+    outlineColor: Color = MaterialTheme.colorScheme.surface
 ) {
     Box(
         modifier = modifier.background(
@@ -78,7 +75,7 @@ fun OutlinedAvatar(
 )
 @Composable
 private fun OutlinedAvatarPreview() {
-    WhiteTheme() {
+    HealthTheme() {
         OutlinedAvatar(url = "")
     }
 }

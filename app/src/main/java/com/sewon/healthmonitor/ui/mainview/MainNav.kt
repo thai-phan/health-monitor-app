@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 
-package com.sewon.healthmonitor.ui.courses
+package com.sewon.healthmonitor.ui.mainview
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.runtime.Composable
@@ -40,9 +35,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.model.courses
-import com.sewon.healthmonitor.ui.MainDestinations
+import com.sewon.healthmonitor.model.topics
+import com.sewon.healthmonitor.ui.AppDestinations
+import com.sewon.healthmonitor.ui.MainTabs
+import com.sewon.healthmonitor.ui.courses.FeaturedCourses
+import com.sewon.healthmonitor.ui.courses.MyCourses
 
-fun NavGraphBuilder.courses(
+fun NavGraphBuilder.mainNavGraph(
     onCourseSelected: (Long, NavBackStackEntry) -> Unit,
     onboardingComplete: State<Boolean>, // https://issuetracker.google.com/174783110
     navController: NavHostController,
@@ -52,7 +51,7 @@ fun NavGraphBuilder.courses(
         // Show onboarding instead if not shown yet.
         LaunchedEffect(onboardingComplete) {
             if (!onboardingComplete.value) {
-                navController.navigate(MainDestinations.ONBOARDING_ROUTE)
+                navController.navigate(AppDestinations.ONBOARDING_ROUTE)
             }
         }
         if (onboardingComplete.value) { // Avoid glitch when showing onboarding
@@ -63,6 +62,7 @@ fun NavGraphBuilder.courses(
             )
         }
     }
+
     composable(MainTabs.REPORT.route) { from ->
         MyCourses(
             courses = courses,
@@ -71,58 +71,11 @@ fun NavGraphBuilder.courses(
         )
     }
 
-//    composable(CourseTabs.SEARCH.route) {
+//    composable(MainTabs.USER.route) {
 //        SearchCourses(topics, modifier)
 //    }
 }
 
-@Composable
-fun CoursesAppBar() {
-    TopAppBar(
-        elevation = 0.dp,
-        modifier = Modifier.height(80.dp)
-    ) {
-        Image(
-            modifier = Modifier
-                .padding(16.dp)
-                .align(Alignment.CenterVertically),
-            painter = painterResource(id = R.drawable.ic_lockup_white),
-            contentDescription = null
-        )
-        IconButton(
-            modifier = Modifier.align(Alignment.CenterVertically),
-            onClick = { /* todo */ }
-        ) {
-            Icon(
-                imageVector = Icons.Filled.AccountCircle,
-                contentDescription = stringResource(R.string.label_profile)
-            )
-        }
-    }
-}
 
-/**
- * Destinations used in the ([OwlApp]).
- */
-object HealthDestinations {
-    const val ACTIVITY_ROUTE = "courses/activity"
-    const val REPORT_ROUTE = "courses/report"
-    const val USER_ROUTE = "courses/user"
-
-
-}
-
-enum class MainTabs(
-    @StringRes val title: Int,
-    @DrawableRes val icon: Int,
-    val route: String
-) {
-    ACTIVITY(R.string.activity_page, R.drawable.ic_grain, HealthDestinations.ACTIVITY_ROUTE),
-    REPORT(R.string.report_page, R.drawable.ic_featured, HealthDestinations.REPORT_ROUTE),
-    USER(R.string.user_page, R.drawable.ic_grain, HealthDestinations.USER_ROUTE),
-//    MY_COURSES(R.string.my_courses, R.drawable.ic_grain, HealthDestinations.MY_COURSES_ROUTE),
-//    FEATURED(R.string.featured, R.drawable.ic_featured, HealthDestinations.FEATURED_ROUTE),
-//    SEARCH(R.string.search, R.drawable.ic_search, HealthDestinations.SEARCH_COURSES_ROUTE)
-}
 
 

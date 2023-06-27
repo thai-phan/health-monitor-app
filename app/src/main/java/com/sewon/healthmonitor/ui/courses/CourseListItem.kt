@@ -14,26 +14,23 @@
  * limitations under the License.
  */
 
-package com.sewon.healthmonitor.ui.common
+package com.sewon.healthmonitor.ui.courses
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.OndemandVideo
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
@@ -45,8 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.model.Course
 import com.sewon.healthmonitor.model.courses
-import com.sewon.healthmonitor.ui.theme.OwlTheme
-import com.sewon.healthmonitor.ui.theme.WhiteTheme
+import com.sewon.healthmonitor.ui.theme.HealthTheme
 
 @Composable
 fun CourseListItem(
@@ -54,12 +50,11 @@ fun CourseListItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
-    elevation: Dp = OwlTheme.elevations.card,
-    titleStyle: TextStyle = MaterialTheme.typography.subtitle1,
+    titleStyle: TextStyle = MaterialTheme.typography.labelSmall,
     iconSize: Dp = 16.dp
 ) {
     Surface(
-        elevation = elevation,
+//        elevation = elevation,
         shape = shape,
         modifier = modifier
     ) {
@@ -89,7 +84,7 @@ fun CourseListItem(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Rounded.OndemandVideo,
-                        tint = MaterialTheme.colors.primary,
+                        tint = MaterialTheme.colorScheme.primary,
                         contentDescription = null,
                         modifier = Modifier.size(iconSize)
                     )
@@ -99,8 +94,8 @@ fun CourseListItem(
                             course.step,
                             course.steps
                         ),
-                        color = MaterialTheme.colors.primary,
-                        style = MaterialTheme.typography.caption,
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier
                             .padding(start = 8.dp)
                             .weight(1f)
@@ -133,7 +128,7 @@ private fun CourseListItemPreviewDark() {
 
 @Composable
 private fun CourseListItemPreview(darkTheme: Boolean) {
-    WhiteTheme(darkTheme) {
+    HealthTheme(darkTheme) {
         CourseListItem(
             course = courses.first(),
             onClick = {},

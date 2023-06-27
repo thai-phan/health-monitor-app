@@ -15,33 +15,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.sewon.healthmonitor.config.AppDataStore
-import com.sewon.healthmonitor.ui.courses.HealthDestinations
-import com.sewon.healthmonitor.ui.courses.MainTabs
-import com.sewon.healthmonitor.ui.courses.courses
-import com.sewon.healthmonitor.ui.setting.TermAgreement
+import com.sewon.healthmonitor.ui.mainview.mainNavGraph
+import com.sewon.healthmonitor.ui.termagreement.TermAgreement
 import com.sewon.healthmonitor.ui.splashscreen.SplashScreen
-import com.sewon.healthmonitor.ui.setting.TestLayout
 
 
-object MainDestinations {
-    const val SPLASH_ROUTE = "splash_screen"
-    const val TERM_AGREEMENT_ROUTE = "term_agreement"
-    const val ONBOARDING_ROUTE = "onboarding"
-    const val USER_DETAIL_ROUTE = "userDetail"
-    const val ACTIVITY_ROUTE = "activity"
-    const val REPORT_ROUTE = "report"
-    const val SETTING_ROUTE = "setting"
-    const val COURSES_ROUTE = "courses"
-    const val COURSE_DETAIL_ROUTE = "course"
-    const val COURSE_DETAIL_ID_KEY = "courseId"
-}
+
 
 @Composable
 fun NavGraph(
     modifier: Modifier = Modifier,
     finishActivity: () -> Unit = {},
     navController: NavHostController = rememberNavController(),
-    startDestination: String = MainDestinations.SPLASH_ROUTE,
+    startDestination: String = AppDestinations.SPLASH_ROUTE,
     showOnboardingInitially: Boolean = false
 ) {
     val context = LocalContext.current
@@ -60,9 +46,9 @@ fun NavGraph(
         startDestination = startDestination
     ) {
 
-        var redirectRoute = MainDestinations.TERM_AGREEMENT_ROUTE
+        var redirectRoute = AppDestinations.TERM_AGREEMENT_ROUTE
         if (isAccepted.value) {
-            redirectRoute = HealthDestinations.ACTIVITY_ROUTE
+            redirectRoute = AppDestinations.ACTIVITY_ROUTE
         }
 //        // Onboarding could be read from shared preferences.
 //        val onboardingComplete = remember(showOnboardingInitially) {
@@ -72,29 +58,30 @@ fun NavGraph(
 
 //        if onboardingComplete
 
-        composable(MainDestinations.SPLASH_ROUTE) {
+        composable(AppDestinations.SPLASH_ROUTE) {
             SplashScreen(
                 navController = navController,
                 redirectRoute = redirectRoute
             )
         }
 
-        composable(MainDestinations.TERM_AGREEMENT_ROUTE) {
+        composable(AppDestinations.TERM_AGREEMENT_ROUTE) {
             // Intercept back in Onboarding: make it finish the activity
             BackHandler {
                 finishActivity()
             }
 
             TermAgreement(
-
+                navController = navController,
+                redirectRoute = AppDestinations.ACTIVITY_ROUTE
             )
         }
 
         navigation(
-            route = MainDestinations.COURSES_ROUTE,
+            route = AppDestinations.MAIN_ROUTE,
             startDestination = MainTabs.ACTIVITY.route
         ) {
-            courses(
+            mainNavGraph(
                 onCourseSelected = actions.openCourse,
                 onboardingComplete = onboardingComplete,
                 navController = navController,
@@ -132,7 +119,7 @@ class MainActions(navController: NavHostController) {
     val openCourse = { newCourseId: Long, from: NavBackStackEntry ->
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.COURSE_DETAIL_ROUTE}/$newCourseId")
+            navController.navigate("${AppDestinations.USER_ROUTE}/$newCourseId")
         }
     }
 
@@ -140,7 +127,7 @@ class MainActions(navController: NavHostController) {
     val relatedCourse = { newCourseId: Long, from: NavBackStackEntry ->
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.COURSE_DETAIL_ROUTE}/$newCourseId")
+            navController.navigate("${AppDestinations.REPORT_ROUTE}/$newCourseId")
         }
     }
 
@@ -160,3 +147,4 @@ class MainActions(navController: NavHostController) {
  */
 private fun NavBackStackEntry.lifecycleIsResumed() =
     this.lifecycle.currentState == Lifecycle.State.RESUMED
+

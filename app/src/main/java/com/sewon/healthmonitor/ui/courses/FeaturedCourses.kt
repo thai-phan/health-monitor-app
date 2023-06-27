@@ -18,22 +18,20 @@ package com.sewon.healthmonitor.ui.courses
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalElevationOverlay
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.OndemandVideo
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -46,9 +44,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.model.Course
 import com.sewon.healthmonitor.model.courses
-import com.sewon.healthmonitor.ui.common.OutlinedAvatar
-import com.sewon.healthmonitor.ui.theme.OwlTheme
-import com.sewon.healthmonitor.ui.theme.WhiteTheme
+import com.sewon.healthmonitor.ui.theme.HealthTheme
 //import com.sewon.healthmonitor.ui.utils.NetworkImage
 import java.util.Locale
 import kotlin.math.ceil
@@ -64,7 +60,7 @@ fun FeaturedCourses(
             .verticalScroll(rememberScrollState())
             .statusBarsPadding()
     ) {
-        CoursesAppBar()
+//        CoursesAppBar()
         StaggeredVerticalGrid(
             maxColumnWidth = 220.dp,
             modifier = Modifier.padding(4.dp)
@@ -84,8 +80,7 @@ fun FeaturedCourse(
 ) {
     Surface(
         modifier = modifier.padding(4.dp),
-        color = MaterialTheme.colors.surface,
-        elevation = OwlTheme.elevations.card,
+        color = MaterialTheme.colorScheme.surface,
         shape = MaterialTheme.shapes.medium
     ) {
         val featuredString = stringResource(id = R.string.featured)
@@ -109,10 +104,7 @@ fun FeaturedCourse(
 //                        top.linkTo(parent.top)
 //                    }
 //            )
-            val outlineColor = LocalElevationOverlay.current?.apply(
-                color = MaterialTheme.colors.surface,
-                elevation = OwlTheme.elevations.card
-            ) ?: MaterialTheme.colors.surface
+            val outlineColor =  MaterialTheme.colorScheme.surface
             OutlinedAvatar(
                 url = course.instructor,
                 outlineColor = outlineColor,
@@ -125,8 +117,8 @@ fun FeaturedCourse(
             )
             Text(
                 text = course.subject.uppercase(Locale.getDefault()),
-                color = MaterialTheme.colors.primary,
-                style = MaterialTheme.typography.overline,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier
                     .padding(16.dp)
                     .constrainAs(subject) {
@@ -136,7 +128,7 @@ fun FeaturedCourse(
             )
             Text(
                 text = course.name,
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.labelSmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
@@ -148,7 +140,7 @@ fun FeaturedCourse(
             val center = createGuidelineFromStart(0.5f)
             Icon(
                 imageVector = Icons.Rounded.OndemandVideo,
-                tint = MaterialTheme.colors.primary,
+                tint = MaterialTheme.colorScheme.primary,
                 contentDescription = null,
                 modifier = Modifier
                     .size(16.dp)
@@ -159,8 +151,8 @@ fun FeaturedCourse(
             )
             Text(
                 text = course.steps.toString(),
-                color = MaterialTheme.colors.primary,
-                style = MaterialTheme.typography.subtitle2,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier
                     .padding(
                         start = 4.dp,
@@ -234,7 +226,7 @@ private fun shortestColumn(colHeights: IntArray): Int {
 @Preview(name = "Featured Course")
 @Composable
 private fun FeaturedCoursePreview() {
-    WhiteTheme {
+    HealthTheme {
         FeaturedCourse(
             course = courses.first(),
             selectCourse = { }
@@ -245,7 +237,7 @@ private fun FeaturedCoursePreview() {
 @Preview(name = "Featured Courses Portrait")
 @Composable
 private fun FeaturedCoursesPreview() {
-    WhiteTheme {
+    HealthTheme {
         FeaturedCourses(
             courses = courses,
             selectCourse = { }
@@ -256,7 +248,7 @@ private fun FeaturedCoursesPreview() {
 @Preview(name = "Featured Courses Dark")
 @Composable
 private fun FeaturedCoursesPreviewDark() {
-    WhiteTheme(darkTheme = true) {
+    HealthTheme(darkTheme = true) {
         FeaturedCourses(
             courses = courses,
             selectCourse = { }
@@ -271,7 +263,7 @@ private fun FeaturedCoursesPreviewDark() {
 )
 @Composable
 private fun FeaturedCoursesPreviewLandscape() {
-    WhiteTheme {
+    HealthTheme {
         FeaturedCourses(
             courses = courses,
             selectCourse = { }

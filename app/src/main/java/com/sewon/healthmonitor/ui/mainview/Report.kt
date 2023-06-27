@@ -1,6 +1,5 @@
 package com.sewon.healthmonitor.ui.mainview
 
-import com.sewon.healthmonitor.ui.courses.CoursesAppBar
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,9 +18,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sewon.healthmonitor.model.Course
 import com.sewon.healthmonitor.model.courses
-import com.sewon.healthmonitor.ui.common.CourseListItem
+import com.sewon.healthmonitor.ui.courses.CourseListItem
 import com.sewon.healthmonitor.ui.courses.MyCourses
-import com.sewon.healthmonitor.ui.theme.WhiteTheme
+import com.sewon.healthmonitor.ui.theme.HealthTheme
 
 @Composable
 fun Report(
@@ -33,9 +32,7 @@ fun Report(
         item {
             Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
         }
-        item {
-            CoursesAppBar()
-        }
+
         itemsIndexed(
             items = courses,
             key = { _, course -> course.id }
@@ -70,7 +67,7 @@ fun MyCourse(
 @Preview(name = "My Courses")
 @Composable
 private fun MyCoursesPreview() {
-    WhiteTheme() {
+    HealthTheme() {
         MyCourses(
             courses = courses,
             selectCourse = { }

@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.ui.setting
+package com.sewon.healthmonitor.ui.termagreement
 
 import android.content.res.AssetManager
 import android.content.res.Resources
