@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.ui.termagreement
+package com.sewon.healthmonitor.ui.ztemp
 
 import android.content.res.AssetManager
 import android.content.res.Resources

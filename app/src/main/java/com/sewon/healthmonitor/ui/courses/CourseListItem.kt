@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.model.Course
 import com.sewon.healthmonitor.model.courses
-import com.sewon.healthmonitor.ui.theme.HealthTheme
+import com.sewon.healthmonitor.ui.theme.HealthAppTheme
 
 @Composable
 fun CourseListItem(
@@ -117,18 +117,18 @@ fun CourseListItem(
 @Preview(name = "Course list item")
 @Composable
 private fun CourseListItemPreviewLight() {
-    CourseListItemPreview(false)
+    CourseListItemPreview()
 }
 
 @Preview(name = "Course list item – Dark")
 @Composable
 private fun CourseListItemPreviewDark() {
-    CourseListItemPreview(true)
+    CourseListItemPreview()
 }
 
 @Composable
-private fun CourseListItemPreview(darkTheme: Boolean) {
-    HealthTheme(darkTheme) {
+private fun CourseListItemPreview() {
+    HealthAppTheme() {
         CourseListItem(
             course = courses.first(),
             onClick = {},

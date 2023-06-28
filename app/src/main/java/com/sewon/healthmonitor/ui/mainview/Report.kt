@@ -20,7 +20,7 @@ import com.sewon.healthmonitor.model.Course
 import com.sewon.healthmonitor.model.courses
 import com.sewon.healthmonitor.ui.courses.CourseListItem
 import com.sewon.healthmonitor.ui.courses.MyCourses
-import com.sewon.healthmonitor.ui.theme.HealthTheme
+import com.sewon.healthmonitor.ui.theme.HealthAppTheme
 
 @Composable
 fun Report(
@@ -67,7 +67,7 @@ fun MyCourse(
 @Preview(name = "My Courses")
 @Composable
 private fun MyCoursesPreview() {
-    HealthTheme() {
+    HealthAppTheme() {
         MyCourses(
             courses = courses,
             selectCourse = { }

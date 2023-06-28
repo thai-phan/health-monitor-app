@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 fun Modifier.blackGreenBackground(): Modifier = this.composed {
         Modifier.drawWithCache {
             val gradientBrush = Brush.verticalGradient(
-                listOf(Color(0xff006d63), Color(0xff071224), Color(0xff091d3f))
+                listOf(Color(0xff006d63), Color(0xff091d3f), Color(0xff071224))
             )
             onDrawBehind {
                 drawRect(gradientBrush)

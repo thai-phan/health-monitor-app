@@ -44,7 +44,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.model.Course
 import com.sewon.healthmonitor.model.courses
-import com.sewon.healthmonitor.ui.theme.HealthTheme
+import com.sewon.healthmonitor.ui.theme.HealthAppTheme
 //import com.sewon.healthmonitor.ui.utils.NetworkImage
 import java.util.Locale
 import kotlin.math.ceil
@@ -226,7 +226,7 @@ private fun shortestColumn(colHeights: IntArray): Int {
 @Preview(name = "Featured Course")
 @Composable
 private fun FeaturedCoursePreview() {
-    HealthTheme {
+    HealthAppTheme {
         FeaturedCourse(
             course = courses.first(),
             selectCourse = { }
@@ -237,7 +237,7 @@ private fun FeaturedCoursePreview() {
 @Preview(name = "Featured Courses Portrait")
 @Composable
 private fun FeaturedCoursesPreview() {
-    HealthTheme {
+    HealthAppTheme {
         FeaturedCourses(
             courses = courses,
             selectCourse = { }
@@ -248,7 +248,7 @@ private fun FeaturedCoursesPreview() {
 @Preview(name = "Featured Courses Dark")
 @Composable
 private fun FeaturedCoursesPreviewDark() {
-    HealthTheme(darkTheme = true) {
+    HealthAppTheme() {
         FeaturedCourses(
             courses = courses,
             selectCourse = { }
@@ -263,7 +263,7 @@ private fun FeaturedCoursesPreviewDark() {
 )
 @Composable
 private fun FeaturedCoursesPreviewLandscape() {
-    HealthTheme {
+    HealthAppTheme {
         FeaturedCourses(
             courses = courses,
             selectCourse = { }

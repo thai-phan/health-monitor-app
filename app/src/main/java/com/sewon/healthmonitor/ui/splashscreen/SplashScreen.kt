@@ -19,6 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -62,11 +66,23 @@ fun SplashScreen(navController: NavController, redirectRoute: String) {
                 .scale(scale.value)
         )
         Spacer(modifier = Modifier.height(1.dp))
-        Row {
-            Text("건강 ", color = Color.White, fontSize=26.sp)
-            Text("모니터링", color = Color(0xFF03dac5), fontSize=26.sp)
-            Text(" 토-퍼", color = Color.White, fontSize=26.sp)
-        }
+        Text(
+            buildAnnotatedString {
+                append("건강 ")
+                withStyle(style = SpanStyle(color = Color(0xFF03dac5))) {
+                    append("모니터링")
+                }
+                append(" 토-퍼")
+            },
+            color = Color.White,
+            fontSize=26.sp,
+
+        )
+//        Row {
+//            Text("건강 ", color = Color.White, fontSize=26.sp)
+//            Text("모니터링", color = Color(0xFF03dac5), fontSize=26.sp)
+//            Text(" 토-퍼", color = Color.White, fontSize=26.sp)
+//        }
     }
 
 }

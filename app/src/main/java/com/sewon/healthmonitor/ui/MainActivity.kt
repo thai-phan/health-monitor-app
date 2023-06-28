@@ -3,6 +3,7 @@ package com.sewon.healthmonitor.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.sewon.healthmonitor.ui.ztemp.TestApp
 
 
 // TODO: Check first load
@@ -22,6 +23,8 @@ class MainActivity : ComponentActivity() {
             HealthApp {
                 finish()
             }
+
+//
         }
     }
 

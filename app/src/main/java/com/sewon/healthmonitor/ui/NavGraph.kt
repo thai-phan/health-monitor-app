@@ -79,7 +79,7 @@ fun NavGraph(
 
         navigation(
             route = AppDestinations.MAIN_ROUTE,
-            startDestination = MainTabs.ACTIVITY.route
+            startDestination = MainTabs.USER.route
         ) {
             mainNavGraph(
                 onCourseSelected = actions.openCourse,

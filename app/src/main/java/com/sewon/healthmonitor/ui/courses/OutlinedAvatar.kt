@@ -42,7 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.sewon.healthmonitor.ui.theme.HealthTheme
+import com.sewon.healthmonitor.ui.theme.HealthAppTheme
 
 @Composable
 fun OutlinedAvatar(
@@ -75,7 +75,7 @@ fun OutlinedAvatar(
 )
 @Composable
 private fun OutlinedAvatarPreview() {
-    HealthTheme() {
+    HealthAppTheme() {
         OutlinedAvatar(url = "")
     }
 }
