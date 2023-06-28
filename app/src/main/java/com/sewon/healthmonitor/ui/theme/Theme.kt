@@ -77,12 +77,13 @@ fun HealthAppTheme(
         colorScheme = colorScheme,
         typography = typography,
         shapes = shapes,
-        content = {
-
-            ProvideTextStyle(
-                value = TextStyle(color = Color.Yellow),
-                content = content
-            )
-        }
+        content = content
+//        content = {
+//
+//            ProvideTextStyle(
+//                value = TextStyle(color = Color.White),
+//                content = content
+//            )
+//        }
     )
 }

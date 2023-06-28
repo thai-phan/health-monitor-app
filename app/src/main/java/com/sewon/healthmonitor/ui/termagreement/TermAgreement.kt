@@ -60,7 +60,7 @@ fun TermAgreement(navController: NavController, redirectRoute: String) {
             .fillMaxSize()
             .padding(horizontal = 20.dp, vertical = 20.dp)
     ) {
-        Text("건강모니터링 토퍼", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        Text("건강모니터링 토퍼", fontWeight = FontWeight.Bold, fontSize = 24.sp)
         Spacer(modifier = Modifier.height(20.dp))
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -108,7 +108,7 @@ fun TermAgreement(navController: NavController, redirectRoute: String) {
                         navController.navigate(redirectRoute)
                     },
                 )
-                Text(text = "Agree", modifier = Modifier.padding(16.dp), color = Color.White)
+                Text(text = "Agree", modifier = Modifier.padding(16.dp))
             }
             Button(
                 onClick = {
@@ -116,7 +116,7 @@ fun TermAgreement(navController: NavController, redirectRoute: String) {
 
                 }
             ) {
-                Text(text = "Agree", color = Color.White)
+                Text(text = "Agree")
             }
         }
 

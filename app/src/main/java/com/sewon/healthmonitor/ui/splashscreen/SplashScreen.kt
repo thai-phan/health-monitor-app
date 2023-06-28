@@ -74,9 +74,7 @@ fun SplashScreen(navController: NavController, redirectRoute: String) {
                 }
                 append(" 토-퍼")
             },
-            color = Color.White,
             fontSize=26.sp,
-
         )
 //        Row {
 //            Text("건강 ", color = Color.White, fontSize=26.sp)

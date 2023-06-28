@@ -58,12 +58,12 @@ fun BottomBar(navController: NavController, tabs: Array<MainTabs>) {
                         }
                     },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor=Color(0xFF03dac5),
-                        selectedTextColor = Color(0xFF03dac5),
-                        indicatorColor = Color(0xFF071224),
-                        unselectedIconColor = Color.White,
-                        unselectedTextColor = Color.White,
-                        disabledIconColor = Color.Cyan,
+                        selectedIconColor=Color.Green,
+                        selectedTextColor = Color.Cyan,
+                        indicatorColor = Color.Magenta,
+                        unselectedIconColor = Color.Black,
+                        unselectedTextColor = Color.Yellow,
+                        disabledIconColor = Color.DarkGray,
                         disabledTextColor = Color.Cyan,
                     ),
 //                    TODO: check

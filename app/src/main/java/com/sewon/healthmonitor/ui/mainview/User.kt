@@ -59,7 +59,7 @@ fun User() {
             .fillMaxSize()
             .padding(horizontal = 20.dp, vertical = 20.dp)
     ) {
-        Text("내 설정", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        Text("내 설정", fontWeight = FontWeight.Bold, fontSize = 24.sp)
         Spacer(modifier = Modifier.height(20.dp))
         Column(
             verticalArrangement = Arrangement.SpaceAround,
@@ -89,7 +89,7 @@ fun User() {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("성별", color=Color.White)
+                Text("성별")
                 TextButton(
                     onClick = { /* Do something! */ },
                 ) {
@@ -125,7 +125,7 @@ fun User() {
 
                 }
             ) {
-                Text(text = "Agree", color = Color.White)
+                Text(text = "Agree")
             }
         }
 
