@@ -22,26 +22,26 @@ fun HealthApp(finishActivity: () -> Unit) {
         val navController = rememberNavController()
         //        TODO: Scaffold?
 
-        TestApp()
+//        TestApp()
 
-//        Scaffold(
-//            bottomBar = {
-//                BottomBar(navController = navController, tabs)
-//            }
-//        ) { innerPadding ->
-//            Column(
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                modifier = Modifier
-//                    .blackGreenBackground()
-//            ) {
-//                NavGraph(
-//                    finishActivity = finishActivity,
-//                    navController = navController,
-//                    modifier = Modifier.padding(innerPadding)
-//                )
-//            }
-//
-//        }
+        Scaffold(
+            bottomBar = {
+                BottomBar(navController = navController, tabs)
+            }
+        ) { innerPadding ->
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .blackGreenBackground()
+            ) {
+                NavGraph(
+                    finishActivity = finishActivity,
+                    navController = navController,
+                    modifier = Modifier.padding(innerPadding)
+                )
+            }
+
+        }
 
     }
 }
