@@ -89,11 +89,7 @@ fun CourseListItem(
                         modifier = Modifier.size(iconSize)
                     )
                     Text(
-                        text = stringResource(
-                            R.string.course_step_steps,
-                            course.step,
-                            course.steps
-                        ),
+                        text = "course_step_steps",
                         color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier

@@ -42,7 +42,7 @@ fun GeneralSetting() {
 
         ) {
             Text(
-                "프로필", fontSize = 16.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
+                "일반설정", fontSize = 16.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
             )
             Spacer(modifier = Modifier.height(5.dp))
             Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)

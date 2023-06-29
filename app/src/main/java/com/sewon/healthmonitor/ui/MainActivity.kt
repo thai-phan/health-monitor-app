@@ -11,7 +11,7 @@ import com.sewon.healthmonitor.ui.ztemp.TestApp
 // TODO: Run back ground
 // TODO: Add multi language
 // TODO: Back button
-
+// TODO: Scroll view
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,11 +24,30 @@ class MainActivity : ComponentActivity() {
                 finish()
             }
 
-//
         }
     }
 
     override fun onResume() {
         super.onResume()
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

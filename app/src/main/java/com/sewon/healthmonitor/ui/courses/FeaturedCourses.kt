@@ -83,7 +83,7 @@ fun FeaturedCourse(
         color = MaterialTheme.colorScheme.surface,
         shape = MaterialTheme.shapes.medium
     ) {
-        val featuredString = stringResource(id = R.string.featured)
+        val featuredString = "featuredString"
         ConstraintLayout(
             modifier = Modifier
                 .clickable(

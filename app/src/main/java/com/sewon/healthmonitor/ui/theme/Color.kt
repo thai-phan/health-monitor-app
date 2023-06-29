@@ -2,6 +2,10 @@ package com.sewon.healthmonitor.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val BackgroundTop = Color(0xff006d63)
+val BackgroundMiddle = Color(0xff091d3f)
+val BackgroundBottom = Color(0xff071224)
+
 val DarkPrimary = Color(0xff091d3f)
 val DarkOnPrimary = Color(0xFF01B8A7)
 val DarkPrimaryContainer = Color(0xFF86FFF4)
@@ -26,9 +30,9 @@ val DarkBackground = Color(0xFF005EFF)
 val DarkOnBackground = Color(0xFFFFFFFF)
 val DarkSurface = Color(0xFFFCFCFC)
 val DarkOnSurface = Color(0xFF03dac5)
-val DarkSurfaceVariant = Color(0x99000000)
+val DarkSurfaceVariant = Color(0xff006d63)
 val DarkOnSurfaceVariant = Color(0xFFFFFFFF)
-val DarkOutline = Color(0xFFFABBBB)
+val DarkOutline = Color(0xFF01B8A7)
 val DarkInverseOnSurface = Color(0xFFFABBBB)
 val DarkInverseSurface = Color(0xFFFABBBB)
 val DarkPrimaryInverse = Color(0xFFFABBBB)
