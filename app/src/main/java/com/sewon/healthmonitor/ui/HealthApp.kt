@@ -28,8 +28,7 @@ fun HealthApp(finishActivity: () -> Unit) {
         ) { innerPadding ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .blackGreenBackground()
+                modifier = Modifier.blackGreenBackground()
             ) {
                 HealthNavGraph(
                     finishActivity = finishActivity,

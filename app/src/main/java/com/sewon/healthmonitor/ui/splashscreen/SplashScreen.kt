@@ -57,7 +57,7 @@ fun SplashScreen(navController: NavController, redirectRoute: String) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_splash),
