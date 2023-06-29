@@ -1,30 +1,19 @@
 
 package com.sewon.healthmonitor.ui.mainview
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.model.courses
-import com.sewon.healthmonitor.model.topics
 import com.sewon.healthmonitor.ui.AppDestinations
 import com.sewon.healthmonitor.ui.MainTabs
 import com.sewon.healthmonitor.ui.courses.FeaturedCourses
 import com.sewon.healthmonitor.ui.courses.MyCourses
+import com.sewon.healthmonitor.ui.usersetting.User
 
 fun NavGraphBuilder.mainNavGraph(
     onCourseSelected: (Long, NavBackStackEntry) -> Unit,

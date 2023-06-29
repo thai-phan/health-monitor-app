@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.ui.termagreement
+package com.sewon.healthmonitor.ui.singleview
 
 import android.content.res.AssetManager
 import androidx.compose.foundation.layout.Arrangement

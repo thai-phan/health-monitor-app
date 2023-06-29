@@ -16,8 +16,8 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.sewon.healthmonitor.config.AppDataStore
 import com.sewon.healthmonitor.ui.mainview.mainNavGraph
-import com.sewon.healthmonitor.ui.termagreement.TermAgreement
-import com.sewon.healthmonitor.ui.splashscreen.SplashScreen
+import com.sewon.healthmonitor.ui.singleview.TermAgreement
+import com.sewon.healthmonitor.ui.singleview.SplashScreen
 
 
 @Composable
@@ -25,38 +25,31 @@ fun HealthNavGraph(
     modifier: Modifier = Modifier,
     finishActivity: () -> Unit = {},
     navController: NavHostController = rememberNavController(),
-    startDestination: String = AppDestinations.SPLASH_ROUTE,
+    startDestination: String = AppDestinations.MAIN_ROUTE,
     showOnboardingInitially: Boolean = false
 ) {
     val context = LocalContext.current
     val store = AppDataStore(context)
     val isAccepted = store.getIsTermAgreementAccepted.collectAsState(initial = false)
 
-    // Onboarding could be read from shared preferences.
     val onboardingComplete = remember(showOnboardingInitially) {
         mutableStateOf(!showOnboardingInitially)
     }
-
     val actions = remember(navController) { MainActions(navController) }
-
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-
         var redirectRoute = AppDestinations.TERM_AGREEMENT_ROUTE
         if (isAccepted.value) {
             redirectRoute = AppDestinations.ACTIVITY_ROUTE
         }
-//        // Onboarding could be read from shared preferences.
-//        val onboardingComplete = remember(showOnboardingInitially) {
-//            mutableStateOf(!showOnboardingInitially)
-//        }
-
-
-//        if onboardingComplete
 
         composable(AppDestinations.SPLASH_ROUTE) {
+            // Intercept back in Onboarding: make it finish the activity
+            BackHandler {
+                finishActivity()
+            }
             SplashScreen(
                 navController = navController,
                 redirectRoute = redirectRoute
@@ -64,11 +57,6 @@ fun HealthNavGraph(
         }
 
         composable(AppDestinations.TERM_AGREEMENT_ROUTE) {
-            // Intercept back in Onboarding: make it finish the activity
-            BackHandler {
-                finishActivity()
-            }
-
             TermAgreement(
                 navController = navController,
                 redirectRoute = AppDestinations.ACTIVITY_ROUTE

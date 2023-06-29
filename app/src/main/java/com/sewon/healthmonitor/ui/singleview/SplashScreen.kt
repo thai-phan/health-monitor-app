@@ -1,11 +1,10 @@
-package com.sewon.healthmonitor.ui.splashscreen
+package com.sewon.healthmonitor.ui.singleview
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -21,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,7 +51,6 @@ fun SplashScreen(navController: NavController, redirectRoute: String) {
     }
 
 
-    // Change the logo
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -62,7 +59,8 @@ fun SplashScreen(navController: NavController, redirectRoute: String) {
         Image(
             painter = painterResource(id = R.drawable.ic_splash),
             contentDescription = "Logo",
-            modifier = Modifier.size(100.dp)
+            modifier = Modifier
+                .size(100.dp)
                 .scale(scale.value)
         )
         Spacer(modifier = Modifier.height(1.dp))
@@ -74,13 +72,10 @@ fun SplashScreen(navController: NavController, redirectRoute: String) {
                 }
                 append(" 토-퍼")
             },
-            fontSize=26.sp,
+//            color = MaterialTheme.colorScheme.onSecondary,
+            fontSize = 26.sp,
         )
-//        Row {
-//            Text("건강 ", color = Color.White, fontSize=26.sp)
-//            Text("모니터링", color = Color(0xFF03dac5), fontSize=26.sp)
-//            Text(" 토-퍼", color = Color.White, fontSize=26.sp)
-//        }
     }
+
 
 }
