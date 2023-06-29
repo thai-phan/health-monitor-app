@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sewon.healthmonitor.ui.common.BottomBar
 import com.sewon.healthmonitor.ui.common.blackGreenBackground
 import com.sewon.healthmonitor.ui.theme.HealthAppTheme
+import com.sewon.healthmonitor.ui.ztemp.CountrySelection
 import com.sewon.healthmonitor.ui.ztemp.TestApp
 
 @Composable
@@ -19,7 +20,7 @@ fun HealthApp(finishActivity: () -> Unit) {
         val tabs = remember { MainTabs.values() }
         val navController = rememberNavController()
 
-        TestApp()
+        CountrySelection()
 
 //        Scaffold(
 //            bottomBar = {

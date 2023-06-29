@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -57,6 +58,7 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -121,4 +123,70 @@ fun TestApp() {
         }
     }
 
+}
+
+
+@Composable
+fun DropDownList(
+    requestToOpen: Boolean = false,
+    list: List<String>,
+    request: (Boolean) -> Unit,
+    selectedString: (String) -> Unit
+) {
+    DropdownMenu(
+        modifier = Modifier.fillMaxWidth(),
+
+        expanded = requestToOpen,
+        onDismissRequest = { request(false) },
+    ) {
+        list.forEach { it ->
+            DropdownMenuItem(
+                text = { Text(it) },
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { }
+            )
+        }
+    }
+}
+@Composable
+fun CountrySelection() {
+    val countryList = listOf(
+        "United state",
+        "Australia",
+        "Japan",
+        "India",
+    )
+    val text = remember { mutableStateOf("") } // initial value
+    val isOpen = remember { mutableStateOf(false) } // initial value
+    val openCloseOfDropDownList: (Boolean) -> Unit = {
+        isOpen.value = it
+    }
+    val userSelectedString: (String) -> Unit = {
+        text.value = it
+    }
+    Box {
+        Column {
+            OutlinedTextField(
+                value = text.value,
+                onValueChange = { text.value = it },
+                label = { Text(text = "TextFieldTitle") },
+                modifier = Modifier.fillMaxWidth()
+            )
+            DropDownList(
+                requestToOpen = isOpen.value,
+                list = countryList,
+                openCloseOfDropDownList,
+                userSelectedString
+            )
+        }
+        Spacer(
+            modifier = Modifier
+                .matchParentSize()
+                .background(Color.Transparent)
+                .padding(10.dp)
+                .clickable(
+                    onClick = { isOpen.value = true }
+                )
+        )
+    }
 }
