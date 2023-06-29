@@ -20,10 +20,8 @@ import com.sewon.healthmonitor.ui.termagreement.TermAgreement
 import com.sewon.healthmonitor.ui.splashscreen.SplashScreen
 
 
-
-
 @Composable
-fun NavGraph(
+fun HealthNavGraph(
     modifier: Modifier = Modifier,
     finishActivity: () -> Unit = {},
     navController: NavHostController = rememberNavController(),

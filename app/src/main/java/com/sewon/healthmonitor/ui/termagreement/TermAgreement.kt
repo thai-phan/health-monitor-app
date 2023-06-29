@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -80,7 +81,6 @@ fun TermAgreement(navController: NavController, redirectRoute: String) {
                 "생체신호 모니터링 매트리스 앱 서비스 이용동의서",
                 fontSize = 20.sp,
                 fontWeight = FontWeight(700),
-                color = Color(0xFFFFFFFF),
                 fontFamily = FontFamily(
                     Font(R.font.suite_regular)
                 )
@@ -92,7 +92,6 @@ fun TermAgreement(navController: NavController, redirectRoute: String) {
                 modifier = Modifier
                     .fillMaxHeight(0.8f)
                     .verticalScroll(scroll),
-                color = Color.White
             )
 
 
