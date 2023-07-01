@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.ui.usersetting
+package com.sewon.healthmonitor.ui.usersetting.card4
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
