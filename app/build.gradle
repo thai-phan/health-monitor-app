@@ -82,9 +82,9 @@ dependencies {
     // optional - RxJava3 support
     implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
 
-    // UI
+    // UI Compose
     def compose_version = "1.4.3"
-    implementation "androidx.compose.compiler:compiler:1.4.7"
+    implementation "androidx.compose.compiler:compiler:1.4.8"
     implementation "androidx.compose.material3:material3:1.1.1"
     implementation("androidx.compose.runtime:runtime:$compose_version")
     implementation("androidx.compose.runtime:runtime-livedata:$compose_version")
@@ -104,12 +104,10 @@ dependencies {
     implementation("androidx.compose.material:material-icons-core:$compose_version")
     implementation("androidx.compose.material:material-icons-extended:$compose_version")
 
-
     // Algorithm
 //    implementation 'org.apache.commons:commons-math3:3.6.1'
 
 
-    
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
