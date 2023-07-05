@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.ui.mainview
+package com.sewon.healthmonitor.ui.screen.report
 
 
 import androidx.compose.foundation.layout.Row
@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sewon.healthmonitor.model.Course
 import com.sewon.healthmonitor.model.courses
-import com.sewon.healthmonitor.ui.courses.CourseListItem
-import com.sewon.healthmonitor.ui.courses.MyCourses
+import com.sewon.healthmonitor.ui.ztemp.CourseListItem
+import com.sewon.healthmonitor.ui.ztemp.MyCourses
 import com.sewon.healthmonitor.ui.theme.HealthAppTheme
 
 @Composable

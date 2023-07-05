@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sewon.healthmonitor.ui.courses
+package com.sewon.healthmonitor.ui.ztemp
 
 /*
  * Copyright 2020 The Android Open Source Project

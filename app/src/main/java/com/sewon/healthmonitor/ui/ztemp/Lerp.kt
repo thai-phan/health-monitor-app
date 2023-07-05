@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sewon.healthmonitor.ui.utils
+package com.sewon.healthmonitor.ui.ztemp
 
 import androidx.annotation.FloatRange
 import androidx.compose.ui.graphics.Color

@@ -15,7 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.sewon.healthmonitor.config.AppDataStore
-import com.sewon.healthmonitor.ui.mainview.mainNavGraph
+import com.sewon.healthmonitor.ui.common.mainNavGraph
 import com.sewon.healthmonitor.ui.singleview.TermAgreement
 import com.sewon.healthmonitor.ui.singleview.SplashScreen
 

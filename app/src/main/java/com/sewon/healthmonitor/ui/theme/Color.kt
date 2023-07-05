@@ -6,8 +6,21 @@ val BackgroundTop = Color(0xff006d63)
 val BackgroundMiddle = Color(0xff091d3f)
 val BackgroundBottom = Color(0xff071224)
 
-val DarkPrimary = Color(0xff091d3f)
-val DarkOnPrimary = Color(0xFF01B8A7)
+val ButtonAccept = Color(0xFF03DAC5)
+val OnButtonAccept = Color(0xFF000000)
+
+val ButtonCancel = Color(0xFF2F4974)
+val OnButtonCancel = Color(0xFFFFFFFF)
+
+val SwitchButton = Color(0xFF2F4974)
+val OnSwitchOn = Color(0xFF2F4974)
+val OnSwitchOff = Color(0xFF2F4974)
+
+
+
+// Dark Theme
+val DarkPrimary = Color(0xff03DAC5)
+val DarkOnPrimary = Color(0xFF000000)
 val DarkPrimaryContainer = Color(0xFF86FFF4)
 val DarkOnPrimaryContainer = Color(0xFF0015FF)
 
@@ -26,7 +39,7 @@ val DarkErrorContainer = Color(0xFFE92000)
 val DarkOnError = Color(0xFFFF0000)
 val DarkOnErrorContainer = Color(0xFFF80004)
 
-val DarkBackground = Color(0xFF005EFF)
+val DarkBackground = Color(0xff091d3f)
 val DarkOnBackground = Color(0xFFFFFFFF)
 val DarkSurface = Color(0xFF071224)
 

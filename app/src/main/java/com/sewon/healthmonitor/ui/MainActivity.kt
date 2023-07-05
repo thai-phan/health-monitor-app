@@ -1,6 +1,7 @@
 package com.sewon.healthmonitor.ui
 
 import android.os.Bundle
+import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.sewon.healthmonitor.ui.ztemp.TestApp

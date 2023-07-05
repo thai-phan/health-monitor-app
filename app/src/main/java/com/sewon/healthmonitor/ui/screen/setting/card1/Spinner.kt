@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.ui.usersetting.card1
+package com.sewon.healthmonitor.ui.screen.setting.card1
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

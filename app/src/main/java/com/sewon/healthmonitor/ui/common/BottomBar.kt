@@ -38,7 +38,7 @@ fun BottomBar(navController: NavController, tabs: Array<MainTabs>) {
 //            modifier = Modifier.windowInsetsBottomHeight(
 //                WindowInsets.navigationBars.add(WindowInsets(bottom = 56.dp))
 //            ),
-            containerColor = Color(0xFF071224),
+            containerColor = Color(0xFF000103),
 //            contentColor =
         ) {
             tabs.forEach { tab ->
@@ -57,9 +57,6 @@ fun BottomBar(navController: NavController, tabs: Array<MainTabs>) {
                             }
                         }
                     },
-//                    TODO: check
-//                    selectedContentColor = Color(0xFF03dac5),
-//                    unselectedContentColor = Color.White,
                     modifier = Modifier.navigationBarsPadding()
                 )
             }

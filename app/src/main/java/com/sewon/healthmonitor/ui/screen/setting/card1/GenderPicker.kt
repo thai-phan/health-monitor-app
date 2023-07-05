@@ -1,7 +1,5 @@
-package com.sewon.healthmonitor.ui.usersetting.card1
+package com.sewon.healthmonitor.ui.screen.setting.card1
 
-import android.view.LayoutInflater
-import android.widget.NumberPicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,9 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.viewinterop.AndroidView
-import com.sewon.healthmonitor.R
-import kotlinx.coroutines.launch
 
 @Composable
 fun GenderPicker() {
