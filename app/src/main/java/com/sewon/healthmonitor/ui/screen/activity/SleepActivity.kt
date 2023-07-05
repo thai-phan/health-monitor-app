@@ -2,6 +2,7 @@ package com.sewon.healthmonitor.ui.screen.activity
 
 import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TimePicker
+import androidx.compose.material3.TimePickerColors
+import androidx.compose.material3.TimePickerDefaults
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
@@ -38,9 +42,16 @@ fun SleepActivity() {
     val snackScope = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Row() {
+        Row(
+            horizontalArrangement= Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
 
-            Column(modifier = Modifier.weight(1f)) {
+            Column(modifier = Modifier.weight(1f),
+
+                verticalArrangement= Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Text("123123")
                 Text("2112312312")
                 Text("asdfasdf")
@@ -54,7 +65,11 @@ fun SleepActivity() {
                     Switch(checked = true, onCheckedChange = {})
                 }
             }
-            Column(modifier = Modifier.weight(1f)) {
+            Column(
+                modifier = Modifier.weight(1f),
+                Arrangement.Center,
+                Alignment.CenterHorizontally
+            ) {
                 Box(propagateMinConstraints = false) {
                     Button(
                         modifier = Modifier.align(Alignment.Center),
@@ -64,14 +79,32 @@ fun SleepActivity() {
                 }
             }
         }
-
-        Button(onClick = { /*TODO*/ }) {
-            Text("asdfadfa")
+        Row() {
+            Button(onClick = { /*TODO*/ }) {
+                Text("asdfadfa")
+            }
         }
+
     }
 
 
+    var timePickerColors: TimePickerColors = TimePickerDefaults.colors(
+//        clockDialColor = clockDialColor,
+//        clockDialSelectedContentColor = clockDialSelectedContentColor,
+//        clockDialUnselectedContentColor = clockDialUnselectedContentColor,
+//        selectorColor = selectorColor,
+//        containerColor = containerColor,
+//        periodSelectorBorderColor = periodSelectorBorderColor,
+//        periodSelectorSelectedContainerColor = periodSelectorSelectedContainerColor,
+//        periodSelectorUnselectedContainerColor = periodSelectorUnselectedContainerColor,
+//        periodSelectorSelectedContentColor = periodSelectorSelectedContentColor,
+//        periodSelectorUnselectedContentColor = periodSelectorUnselectedContentColor,
+//        timeSelectorSelectedContainerColor = timeSelectorSelectedContainerColor,
+//        timeSelectorUnselectedContainerColor = timeSelectorUnselectedContainerColor,
+//        timeSelectorSelectedContentColor = timeSelectorSelectedContentColor,
+//        timeSelectorUnselectedContentColor = timeSelectorUnselectedContentColor
 
+    )
 
 
     if (showTimePicker) {
@@ -88,8 +121,16 @@ fun SleepActivity() {
                 showTimePicker = false
             },
         ) {
-            TimePicker(state = state)
+            TimePicker(
+                colors = timePickerColors, state = state
+            )
         }
 
     }
+}
+
+@Preview
+@Composable
+fun PreviewSleepActivity() {
+    SleepActivity()
 }

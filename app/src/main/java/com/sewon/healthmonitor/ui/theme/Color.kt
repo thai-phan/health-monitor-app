@@ -21,8 +21,8 @@ val OnSwitchOff = Color(0xFF2F4974)
 // Dark Theme
 val DarkPrimary = Color(0xff03DAC5)
 val DarkOnPrimary = Color(0xFF000000)
-val DarkPrimaryContainer = Color(0xFF86FFF4)
-val DarkOnPrimaryContainer = Color(0xFF0015FF)
+val DarkPrimaryContainer = Color(0xFFFF0000)
+val DarkOnPrimaryContainer = Color(0xFFFFFB00)
 
 val DarkSecondary = Color(0xAD088514)
 val DarkOnSecondary = Color(0xFFFFFFFF)
@@ -30,9 +30,9 @@ val DarkSecondaryContainer = Color(0xFF071224)
 val DarkOnSecondaryContainer = Color(0xFF03dac5)
 
 val DarkTertiary = Color(0xFF78FF00)
-val DarkOnTertiary = Color(0xFF59FF00)
+val DarkOnTertiary = Color(0xFF0037FF)
 val DarkTertiaryContainer = Color(0xFFB1FF63)
-val DarkOnTertiaryContainer = Color(0xFF6DFF00)
+val DarkOnTertiaryContainer = Color(0xFFE600FF)
 
 val DarkError = Color(0xFFBA1B1B)
 val DarkErrorContainer = Color(0xFFE92000)
