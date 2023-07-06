@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHost
@@ -24,8 +26,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
@@ -41,47 +43,51 @@ fun SleepActivity() {
     val snackState = remember { SnackbarHostState() }
     val snackScope = rememberCoroutineScope()
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Row(
-            horizontalArrangement= Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+    Column(modifier = Modifier.fillMaxSize().padding(horizontal = 30.dp)) {
+        Text("수면시간 체크")
+        CircularTimePicker()
 
-            Column(modifier = Modifier.weight(1f),
+        Row(modifier = Modifier.fillMaxWidth()) {
 
-                verticalArrangement= Arrangement.Center,
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("123123")
-                Text("2112312312")
-                Text("asdfasdf")
-                Text("sadfadsf")
-                Row() {
-                    Text("123123")
-                    Switch(checked = true, onCheckedChange = {})
-                }
-                Row() {
-                    Text("34234523")
-                    Switch(checked = true, onCheckedChange = {})
-                }
+                Text("취침시간")
+                Text("12:00")
+                Text("PM")
             }
             Column(
                 modifier = Modifier.weight(1f),
-                Arrangement.Center,
-                Alignment.CenterHorizontally
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Box(propagateMinConstraints = false) {
-                    Button(
-                        modifier = Modifier.align(Alignment.Center),
-                        onClick = { showTimePicker = true }
-                    ) { Text("Set Time") }
-                    SnackbarHost(hostState = snackState)
-                }
+                Text("기상시간")
+                Text("12:00")
+                Text("AM")
             }
         }
-        Row() {
+
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("수면유도에너지")
+            Switch(checked = true, onCheckedChange = {})
+        }
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("수면유도사운드")
+            Switch(checked = true, onCheckedChange = {})
+        }
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically) {
             Button(onClick = { /*TODO*/ }) {
-                Text("asdfadfa")
+                Text("기상")
             }
         }
 
