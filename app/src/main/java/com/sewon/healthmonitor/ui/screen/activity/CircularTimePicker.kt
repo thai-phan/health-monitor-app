@@ -41,9 +41,9 @@ fun CircularTimePicker() {
                 }
             })
 
-            timePicker.sliderColor = Color.parseColor("#88141218")
+//            timePicker.sliderColor = Color.parseColor("#88141218")
             timePicker.sliderWidth = 20.px
-            timePicker.sliderRangeColor = Color.parseColor("#03DAC5")
+//            timePicker.sliderRangeColor = Color.parseColor("#03DAC5")
 
 //            timePicker.sliderColor
             timePicker

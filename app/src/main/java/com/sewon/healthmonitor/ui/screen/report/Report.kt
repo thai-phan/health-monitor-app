@@ -57,6 +57,7 @@ fun Report() {
             CircularChart(angle = 70f, modifier = Modifier.weight(1f), brush = blueBrush)
         }
 
+        GradientProgressbar1()
         Text("PQSI 수면평가점수")
 
 

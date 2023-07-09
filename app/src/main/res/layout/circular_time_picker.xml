@@ -5,10 +5,14 @@
     android:id="@+id/circularTimePicker"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
+    app:trp_clockFace="APPLE"
+    app:trp_clockLabelColor="#F40101"
+    app:trp_clockTickColor="#53B844"
     app:trp_endTime="6:30"
+    app:trp_sliderColor="#0738FF"
+    app:trp_sliderRangeColor="#FF007B"
     app:trp_startTime="22:00"
     app:trp_thumbColor="@color/cardview_light_background"
+    app:trp_thumbIconColor="#E102FF"
     app:trp_thumbIconEnd="@drawable/ic_sunny"
-    app:trp_thumbIconStart="@drawable/ic_sleep"
-    app:trp_clockFace="APPLE"
-    />
+    app:trp_thumbIconStart="@drawable/ic_sleep" />
