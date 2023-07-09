@@ -1,4 +1,4 @@
-package sewon.algorithm.ECG_STRESS;
+package com.sewon.healthmonitor.algorithm;
 
 public class ECG_STRESS {
 	public double TotalPower;

@@ -1,4 +1,4 @@
-package sewon.algorithm;
+package com.sewon.healthmonitor.algorithm;
 
 public class ECGObject implements Comparable<ECGObject> {
     //시간

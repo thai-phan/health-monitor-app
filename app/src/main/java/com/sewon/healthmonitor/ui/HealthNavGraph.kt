@@ -65,7 +65,7 @@ fun HealthNavGraph(
 
         navigation(
             route = AppDestinations.MAIN_ROUTE,
-            startDestination = MainTabs.USER.route
+            startDestination = MainTabs.REPORT.route
         ) {
             mainNavGraph(
                 onCourseSelected = actions.openCourse,

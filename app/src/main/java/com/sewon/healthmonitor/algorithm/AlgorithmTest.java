@@ -1,14 +1,11 @@
-package sewon.algorithm;
+package com.sewon.healthmonitor.algorithm;
 
-import sewon.algorithm.ECG_PROC.ECG_ANALYSIS_PROC;
-import sewon.algorithm.ECG_TOPPER.ECG_TOPPER;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class JAVA_ECG_ANALYSIS {
+public class AlgorithmTest {
 
   public static void main(String[] args) {
     String COMMA_DELIMITER = ",";

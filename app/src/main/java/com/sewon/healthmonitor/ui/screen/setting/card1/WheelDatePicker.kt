@@ -10,7 +10,7 @@ import com.sewon.healthmonitor.R
 import java.util.Calendar
 
 @Composable
-fun DatePicker(
+fun WheelDatePicker(
 //    onDateSelected: (Date) -> Unit
 ) {
     AndroidView(

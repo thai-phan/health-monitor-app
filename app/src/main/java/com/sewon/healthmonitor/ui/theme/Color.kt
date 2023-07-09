@@ -6,6 +6,7 @@ val BackgroundTop = Color(0xff006d63)
 val BackgroundMiddle = Color(0xff091d3f)
 val BackgroundBottom = Color(0xff071224)
 
+
 val ButtonAccept = Color(0xFF03DAC5)
 val OnButtonAccept = Color(0xFF000000)
 

@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sewon.healthmonitor.ui.screen.setting.card1.ProfileSetting
@@ -30,21 +31,32 @@ fun UserSetting() {
         uncheckedTrackColor = Color(0xFF36343B),
         uncheckedBorderColor = Color(0xFF938F99),
     )
-
     Column(
         modifier = Modifier
-            .padding(horizontal = 20.dp, vertical = 20.dp)
-            .verticalScroll(rememberScrollState()),
+            .padding(horizontal = 20.dp, vertical = 20.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
         Text("내 설정", fontWeight = FontWeight.Bold, fontSize = 24.sp)
 
-        ProfileSetting()
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            ProfileSetting()
 
-        SleepSetting(switchColors)
+            SleepSetting(switchColors)
 
-        InductionSolutionSetting(switchColors)
+            InductionSolutionSetting(switchColors)
 
-        GeneralSetting(switchColors)
+            GeneralSetting(switchColors)
+        }
     }
+
+}
+
+@Preview
+@Composable
+fun PreviewUserSetting() {
+    UserSetting()
 }

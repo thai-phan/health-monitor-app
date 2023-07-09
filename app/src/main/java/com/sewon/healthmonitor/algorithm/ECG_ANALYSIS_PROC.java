@@ -1,13 +1,10 @@
-package sewon.algorithm.ECG_PROC;
+package com.sewon.healthmonitor.algorithm;
 
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.transform.DftNormalization;
 import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
-import sewon.algorithm.ECG_STRESS.ECG_STRESS;
-import sewon.algorithm.ECG_TOPPER.ECG_TOPPER;
-import sewon.algorithm.FREQ_DATA.FREQ_DATA;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package sewon.algorithm.ECG_TOPPER;
+package com.sewon.healthmonitor.algorithm;
 
 public class ECG_TOPPER {
   public double SDRP;

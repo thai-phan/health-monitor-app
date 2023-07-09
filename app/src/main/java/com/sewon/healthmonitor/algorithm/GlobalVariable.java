@@ -1,4 +1,4 @@
-package sewon.algorithm.util;
+package com.sewon.healthmonitor.algorithm;
 
 public class GlobalVariable {
   private static double dRThreshold; //R 값에 대한 Threshold

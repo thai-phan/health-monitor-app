@@ -11,7 +11,6 @@ import androidx.navigation.compose.rememberNavController
 import com.sewon.healthmonitor.ui.common.BottomBar
 import com.sewon.healthmonitor.ui.common.blackGreenBackground
 import com.sewon.healthmonitor.ui.theme.HealthAppTheme
-import com.sewon.healthmonitor.ui.ztemp.TestApp
 
 @Composable
 fun HealthApp(finishActivity: () -> Unit) {

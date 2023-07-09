@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import com.sewon.healthmonitor.ui.theme.BackgroundBottom
 import com.sewon.healthmonitor.ui.theme.BackgroundMiddle
 import com.sewon.healthmonitor.ui.theme.BackgroundTop
@@ -20,4 +21,16 @@ fun Modifier.blackGreenBackground(): Modifier = this.composed {
                 drawRect(gradientBrush)
             }
         }
+}
+
+@SuppressLint("UnnecessaryComposedModifier")
+fun Modifier.yellowBackground(): Modifier = this.composed {
+    Modifier.drawWithCache {
+        val gradientBrush = Brush.verticalGradient(
+            listOf(Color(0xFFFAFF00), Color(0xFFFF8A00))
+        )
+        onDrawBehind {
+            drawRect(gradientBrush)
+        }
+    }
 }

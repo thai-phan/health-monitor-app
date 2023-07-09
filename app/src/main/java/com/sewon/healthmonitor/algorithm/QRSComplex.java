@@ -1,4 +1,4 @@
-package sewon.algorithm.QRS;
+package com.sewon.healthmonitor.algorithm;
 
 public class QRSComplex {
   public double dTime;   //시간
