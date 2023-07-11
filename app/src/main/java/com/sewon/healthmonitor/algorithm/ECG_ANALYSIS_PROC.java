@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 
-
 public class ECG_ANALYSIS_PROC {
 
   //Input: 레이더 센서의 rri 데이터 리스트를 받아서, 주파수 분석을 한다.
