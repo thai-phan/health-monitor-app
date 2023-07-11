@@ -2,6 +2,7 @@ package com.sewon.healthmonitor.ui.screen.report
 
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -40,6 +42,7 @@ fun CircularChart(
     Canvas(
         modifier = modifier
             .fillMaxWidth()
+//            .background(Color(0xFF071224))
             .aspectRatio(1f)
             .onGloballyPositioned { coordinates ->
                 sizeCom = coordinates.size
@@ -65,7 +68,8 @@ fun CircularChart(
             topLeft = Offset(
                 x = (sizeCom.width.toFloat() - arcRadius) / 2,
                 y = (sizeCom.width.toFloat() - arcRadius) / 2
-            )
+            ),
+            blendMode = BlendMode.SrcOver
         )
     }
 }

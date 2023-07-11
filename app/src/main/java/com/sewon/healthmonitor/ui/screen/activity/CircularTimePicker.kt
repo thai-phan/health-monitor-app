@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
@@ -42,7 +43,7 @@ fun CircularTimePicker() {
             })
 
 //            timePicker.sliderColor = Color.parseColor("#88141218")
-            timePicker.sliderWidth = 20.px
+//            timePicker.sliderWidth = 20.px
 //            timePicker.sliderRangeColor = Color.parseColor("#03DAC5")
 
 //            timePicker.sliderColor
