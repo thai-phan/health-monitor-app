@@ -20,7 +20,7 @@ enum class MainTabs(
     @DrawableRes val icon: Int,
     val route: String
 ) {
-    ACTIVITY(R.string.activity_page, R.drawable.ic_grain, AppDestinations.ACTIVITY_ROUTE),
-    REPORT(R.string.report_page, R.drawable.baseline_list_alt_24, AppDestinations.REPORT_ROUTE),
-    USER(R.string.user_page, R.drawable.baseline_manage_accounts_24, AppDestinations.USER_ROUTE),
+    ACTIVITY(R.string.activity_page, R.drawable.ic_tab_activity, AppDestinations.ACTIVITY_ROUTE),
+    REPORT(R.string.report_page, R.drawable.ic_tab_report, AppDestinations.REPORT_ROUTE),
+    USER(R.string.user_page, R.drawable.ic_tab_setting, AppDestinations.USER_ROUTE),
 }

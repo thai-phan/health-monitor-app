@@ -66,7 +66,7 @@ fun SleepActivity(modifier: Modifier = Modifier) {
         modifier = modifier
             .padding(horizontal = 30.dp, vertical = 20.dp)
     ) {
-        Text("수면시간 체크", fontSize = 24.sp)
+        Text("수면시간 체크", fontWeight = FontWeight.Bold, fontSize = 24.sp)
         Spacer(modifier = Modifier.height(10.dp))
         CircularTimePicker()
         Spacer(modifier = Modifier.height(10.dp))

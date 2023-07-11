@@ -17,4 +17,4 @@
     app:trp_thumbColor="@color/cardview_light_background"
     app:trp_thumbIconColor="#000000"
     app:trp_thumbIconEnd="@drawable/ic_sunny"
-    app:trp_thumbIconStart="@drawable/ic_sleep" />
+    app:trp_thumbIconStart="@drawable/ic_moon" />
