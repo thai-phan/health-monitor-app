@@ -2,6 +2,9 @@ package com.sewon.healthmonitor.ui.screen.setting
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -20,9 +23,8 @@ import com.sewon.healthmonitor.ui.screen.setting.card2.SleepSetting
 import com.sewon.healthmonitor.ui.screen.setting.card3.InductionSolutionSetting
 import com.sewon.healthmonitor.ui.screen.setting.card4.GeneralSetting
 
-
 @Composable
-fun UserSetting() {
+fun UserSetting(modifier: Modifier = Modifier) {
     val switchColors: SwitchColors = SwitchDefaults.colors(
         checkedThumbColor = Color(0xFF09897D),
         checkedTrackColor = Color(0xFF03DAC5),
@@ -32,12 +34,16 @@ fun UserSetting() {
         uncheckedBorderColor = Color(0xFF938F99),
     )
     Column(
-        modifier = Modifier
-            .padding(horizontal = 20.dp, vertical = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+        modifier = modifier
+            .padding(
+                start = 20.dp,
+                top = 20.dp,
+                end = 20.dp,
+                bottom = 10.dp
+            ),
     ) {
         Text("내 설정", fontWeight = FontWeight.Bold, fontSize = 24.sp)
-
+        Spacer(modifier = Modifier.height(20.dp))
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState()),

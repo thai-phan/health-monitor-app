@@ -2,8 +2,10 @@ package com.sewon.healthmonitor.ui
 
 import android.os.Bundle
 import android.view.Window
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.core.view.WindowCompat
 
 
 // TODO: Check first load
@@ -18,7 +20,7 @@ class MainActivity : ComponentActivity() {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         actionBar?.hide();
         super.onCreate(savedInstanceState)
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             HealthApp {
                 finish()

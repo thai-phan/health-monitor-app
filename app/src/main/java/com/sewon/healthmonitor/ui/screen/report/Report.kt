@@ -5,8 +5,10 @@ import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -30,12 +32,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Report() {
+fun Report(modifier: Modifier) {
     val yellowBrush = Brush.verticalGradient(
         listOf(Color(0xFFFAFF00), Color(0xFFFF8A00))
     )
@@ -45,9 +48,19 @@ fun Report() {
 
 //    Donut chart 4 cai
 
-    Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
-        Text("수면 리포트")
-
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(
+                start = 10.dp,
+                top = 20.dp,
+                end = 10.dp,
+                bottom = 10.dp
+            )
+            .verticalScroll(rememberScrollState())
+    ) {
+        Text("수면 리포트", fontSize = 24.sp)
+        Spacer(modifier = Modifier.height(10.dp))
 
 
         Row() {
@@ -56,9 +69,11 @@ fun Report() {
             CircularChart(angle = 80f, modifier = Modifier.weight(1f), brush = yellowBrush)
             CircularChart(angle = 70f, modifier = Modifier.weight(1f), brush = blueBrush)
         }
+        Spacer(modifier = Modifier.height(20.dp))
+        Text("PQSI 수면평가점수")
+        Spacer(modifier = Modifier.height(20.dp))
 
         GradientProgressbar1()
-        Text("PQSI 수면평가점수")
 
 
     }
@@ -76,5 +91,5 @@ fun Report() {
 @Preview
 @Composable
 fun PreviewReport() {
-    Report()
+    Report(Modifier)
 }

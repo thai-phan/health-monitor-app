@@ -54,7 +54,7 @@ fun GeneralSetting(switchColors: SwitchColors) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("성별")
+                Text("1111")
 
                 var checked by remember { mutableStateOf(true) }
 
@@ -69,7 +69,7 @@ fun GeneralSetting(switchColors: SwitchColors) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("연령")
+                Text("132434")
 
                 var checked by remember { mutableStateOf(true) }
 
@@ -84,7 +84,7 @@ fun GeneralSetting(switchColors: SwitchColors) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("연령")
+                Text("3333")
 
                 var checked by remember { mutableStateOf(true) }
 
@@ -94,6 +94,22 @@ fun GeneralSetting(switchColors: SwitchColors) {
                     checked = checked,
                     onCheckedChange = { checked = it })
             }
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("5555")
+
+                var checked by remember { mutableStateOf(true) }
+
+                Switch(
+                    colors = switchColors,
+                    modifier = Modifier.semantics { contentDescription = "Demo" },
+                    checked = checked,
+                    onCheckedChange = { checked = it })
+            }
+
         }
     }
 }

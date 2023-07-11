@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,8 +28,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
@@ -35,7 +39,7 @@ import java.util.Locale
 @SuppressLint("RememberReturnType")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SleepActivity() {
+fun SleepActivity(modifier: Modifier = Modifier) {
 
     var showTimePicker by remember { mutableStateOf(false) }
     val state = rememberTimePickerState()
@@ -43,10 +47,14 @@ fun SleepActivity() {
     val snackState = remember { SnackbarHostState() }
     val snackScope = rememberCoroutineScope()
 
-    Column(modifier = Modifier.fillMaxSize().padding(horizontal = 30.dp)) {
-        Text("수면시간 체크")
+    Column(
+        modifier = modifier
+            .padding(horizontal = 30.dp, vertical = 20.dp)
+    ) {
+        Text("수면시간 체크", fontSize = 24.sp)
+        Spacer(modifier = Modifier.height(10.dp))
         CircularTimePicker()
-
+        Spacer(modifier = Modifier.height(10.dp))
         Row(modifier = Modifier.fillMaxWidth()) {
 
             Column(
@@ -55,7 +63,7 @@ fun SleepActivity() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("취침시간")
-                Text("12:00")
+                Text("12:00", fontWeight = FontWeight.Bold, fontSize = 30.sp)
                 Text("PM")
             }
             Column(
@@ -64,28 +72,32 @@ fun SleepActivity() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("기상시간")
-                Text("12:00")
+                Text("12:00", fontWeight = FontWeight.Bold, fontSize = 30.sp)
                 Text("AM")
             }
         }
 
-        Row(modifier = Modifier.fillMaxWidth(),
+        Row(
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("수면유도에너지")
             Switch(checked = true, onCheckedChange = {})
         }
-        Row(modifier = Modifier.fillMaxWidth(),
+        Row(
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("수면유도사운드")
             Switch(checked = true, onCheckedChange = {})
         }
-        Row(modifier = Modifier.fillMaxWidth(),
+        Row(
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically) {
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Button(onClick = { /*TODO*/ }) {
                 Text("기상")
             }

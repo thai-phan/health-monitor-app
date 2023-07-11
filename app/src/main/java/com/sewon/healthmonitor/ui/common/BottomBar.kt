@@ -1,6 +1,5 @@
 package com.sewon.healthmonitor.ui.common
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.navigationBars
@@ -9,8 +8,6 @@ import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemColors
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,7 +33,7 @@ fun BottomBar(navController: NavController, tabs: Array<MainTabs>) {
     if (currentRoute in routes) {
         NavigationBar(
 //            modifier = Modifier.windowInsetsBottomHeight(
-//                WindowInsets.navigationBars.add(WindowInsets(bottom = 56.dp))
+//                WindowInsets.navigationBars.add(WindowInsets(bottom = 90.dp))
 //            ),
             containerColor = Color(0xFF000103),
 //            contentColor =

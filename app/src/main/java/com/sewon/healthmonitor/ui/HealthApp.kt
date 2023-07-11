@@ -1,6 +1,8 @@
 package com.sewon.healthmonitor.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -18,21 +20,20 @@ fun HealthApp(finishActivity: () -> Unit) {
         val tabs = remember { MainTabs.values() }
         val navController = rememberNavController()
 
-//        TestApp()
-
         Scaffold(
             bottomBar = {
                 BottomBar(navController = navController, tabs)
             }
-        ) { innerPadding ->
+        ) { innerPaddingModifier ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.blackGreenBackground()
+                modifier = Modifier
+                    .blackGreenBackground()
             ) {
                 HealthNavGraph(
                     finishActivity = finishActivity,
                     navController = navController,
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier.padding(innerPaddingModifier)
                 )
             }
 

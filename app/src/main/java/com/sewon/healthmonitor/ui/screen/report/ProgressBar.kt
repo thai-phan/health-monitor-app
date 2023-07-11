@@ -121,24 +121,24 @@ class MyViewModel : ViewModel() {
                 val totalDownloadSize = 1024f
                 var downloadedSize = 0f
 
-                while (true) {
-
-                    downloadedSize += ((1..100).random().toFloat())
-
-                    if (downloadedSize < totalDownloadSize) {
-                        withContext(Dispatchers.Main) {
-                            downloadedPercentage.value =
-                                ((downloadedSize / totalDownloadSize) * 100)
-                        }
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            downloadedPercentage.value = 100f
-                        }
-                        break
-                    }
-
-                    delay(1000)
-                }
+//                while (true) {
+//
+//                    downloadedSize += ((1..100).random().toFloat())
+//
+//                    if (downloadedSize < totalDownloadSize) {
+//                        withContext(Dispatchers.Main) {
+//                            downloadedPercentage.value =
+//                                ((downloadedSize / totalDownloadSize) * 100)
+//                        }
+//                    } else {
+//                        withContext(Dispatchers.Main) {
+//                            downloadedPercentage.value = 100f
+//                        }
+//                        break
+//                    }
+//
+//                    delay(1000)
+//                }
 
             }
         }

@@ -19,7 +19,7 @@ fun NavGraphBuilder.mainNavGraph(
     modifier: Modifier = Modifier
 ) {
     composable(MainTabs.ACTIVITY.route) { from ->
-        SleepActivity()
+        SleepActivity(modifier)
         // Show onboarding instead if not shown yet.
 //        LaunchedEffect(onboardingComplete) {
 //            if (!onboardingComplete.value) {
@@ -37,7 +37,7 @@ fun NavGraphBuilder.mainNavGraph(
     }
 
     composable(MainTabs.REPORT.route) { from ->
-        Report()
+        Report(modifier)
 //        MyCourses(
 //            courses = courses,
 //            { id -> onCourseSelected(id, from) },
@@ -46,7 +46,7 @@ fun NavGraphBuilder.mainNavGraph(
     }
 
     composable(MainTabs.USER.route) {
-        UserSetting()
+        UserSetting(modifier)
     }
 
 //    composable(MainTabs.USER.route) { from ->
