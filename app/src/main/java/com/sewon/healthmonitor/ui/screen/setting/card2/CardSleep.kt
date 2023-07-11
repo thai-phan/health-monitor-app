@@ -59,8 +59,7 @@ fun SleepSetting(switchColors: SwitchColors) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("성별")
-
+                Text("기상알람시간")
                 Switch(
                     colors = switchColors,
                     modifier = Modifier.semantics { contentDescription = "Demo" },
@@ -76,7 +75,7 @@ fun SleepSetting(switchColors: SwitchColors) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("연령")
+                Text("취침시간")
                 Switch(
                     colors = switchColors,
                     modifier = Modifier.semantics { contentDescription = "Demo" },
@@ -92,7 +91,7 @@ fun SleepSetting(switchColors: SwitchColors) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("연령")
+                Text("알람설정")
                 Switch(
                     colors = switchColors,
                     modifier = Modifier.semantics { contentDescription = "Demo" },

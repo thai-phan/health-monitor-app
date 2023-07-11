@@ -29,17 +29,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
 @Composable
-fun GradientProgressbar1(
+fun GradientProgressbar(
     viewModel: MyViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
-    indicatorHeight: Dp = 24.dp,
+    indicatorHeight: Dp = 10.dp,
     backgroundIndicatorColor: Color = Color.LightGray.copy(alpha = 0.3f),
-    indicatorPadding: Dp = 24.dp,
+    indicatorPadding: Dp = 10.dp,
     gradientColors: List<Color> = listOf(
         Color(0xFF6ce0c4),
         Color(0xFF40c7e7),

@@ -20,8 +20,10 @@ public class ECG_ANALYSIS_PROC {
     try {
 
       //TOPPER 클래스를 계산한다.
-      resultNode.SDRP = CalcStdDev(rriData, CalcRRIAvg(rriData)); //RRI 표준편차 (전체 수면시간)
-      resultNode.RMSSD = CalcRMSSD(rriData); //RRI의 연속적 차이를 제곱 -> 평균 -> 제곱근
+      //RRI 표준편차 (전체 수면시간)
+      resultNode.SDRP = CalcStdDev(rriData, CalcRRIAvg(rriData));
+      //RRI의 연속적 차이를 제곱 -> 평균 -> 제곱근
+      resultNode.RMSSD = CalcRMSSD(rriData);
 
       //주파수분석 후 계산하는 항목
       //밴드패스필터를 통과하고 나온 신호로, 주파수 분석을 한다.
@@ -87,7 +89,9 @@ public class ECG_ANALYSIS_PROC {
     int sampleSize = (int) Math.pow(2, iLog2); //최대 2의 제곱수를 구한다. FFT 계산을 위해서임.
 
     int hz = 100;
-    double sampleRate = (double) hz / sampleSize / (hz * 0.4); //주파수 해상도 즉 주파수 변화량은 주파수÷샘플 수÷윈도우사이즈(hz의 40%) Hz로 주파수 도메인에서 한칸의 단위입니다.
+    //주파수 해상도 즉 주파수 변화량은 주파수÷샘플 수÷윈도우사이즈(hz의 40%) Hz로 주파수 도메인에서 한칸의 단위입니다.
+
+    double sampleRate = (double) hz / sampleSize / (hz * 0.4);
     double frequency = 0;
 
     double[] input = Arrays.copyOfRange(inputReal, 0, sampleSize);
@@ -101,12 +105,15 @@ public class ECG_ANALYSIS_PROC {
     try {
 
       Complex[] complx = fft.transform(input, TransformType.FORWARD);
-      for (int i = 0; i < (complx.length / 2); i++) {           // 대칭되는 값을 제외하기위해 절반만을 사용, 해석하고자 하는 신호의 최고 주파수임.
-        double dIMABS2 = Math.sqrt(Math.pow(complx[i].getReal(), 2) + Math.pow(complx[i].getImaginary(), 2)); //복소수의 절대값의 제곱의 sqrt
+      // 대칭되는 값을 제외하기위해 절반만을 사용, 해석하고자 하는 신호의 최고 주파수임.
+      for (int i = 0; i < (complx.length / 2); i++) {
+        //복소수의 절대값의 제곱의 sqrt
+        double dIMABS2 = Math.sqrt(Math.pow(complx[i].getReal(), 2) + Math.pow(complx[i].getImaginary(), 2));
         double dABSPower = dIMABS2 / (sampleSize / 2);
 
         FREQ_DATA node = new FREQ_DATA();
-        node.Freq_Domain = i * sampleRate;            // frequency계산
+        // frequency계산
+        node.Freq_Domain = i * sampleRate;
         node.Magnitude = dABSPower;
 
         listFreq.add(node);
