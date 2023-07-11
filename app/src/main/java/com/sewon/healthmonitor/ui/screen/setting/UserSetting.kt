@@ -22,16 +22,17 @@ import com.sewon.healthmonitor.ui.screen.setting.card1.ProfileSetting
 import com.sewon.healthmonitor.ui.screen.setting.card2.SleepSetting
 import com.sewon.healthmonitor.ui.screen.setting.card3.InductionSolutionSetting
 import com.sewon.healthmonitor.ui.screen.setting.card4.GeneralSetting
+import com.sewon.healthmonitor.ui.theme.*
 
 @Composable
 fun UserSetting(modifier: Modifier = Modifier) {
     val switchColors: SwitchColors = SwitchDefaults.colors(
-        checkedThumbColor = Color(0xFF09897D),
-        checkedTrackColor = Color(0xFF03DAC5),
-        checkedBorderColor = Color(0xFF03DAC5),
-        uncheckedThumbColor = Color(0xFF938F99),
-        uncheckedTrackColor = Color(0xFF36343B),
-        uncheckedBorderColor = Color(0xFF938F99),
+        checkedThumbColor = checkedThumbColor,
+        checkedTrackColor = checkedTrackColor,
+        checkedBorderColor = checkedBorderColor,
+        uncheckedThumbColor = uncheckedThumbColor,
+        uncheckedTrackColor = uncheckedTrackColor,
+        uncheckedBorderColor = uncheckedBorderColor,
     )
     Column(
         modifier = modifier

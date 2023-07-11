@@ -1,5 +1,6 @@
 package com.sewon.healthmonitor.ui.screen.setting.card2
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -49,50 +50,54 @@ fun SleepSetting(switchColors: SwitchColors) {
             Spacer(modifier = Modifier.height(5.dp))
             Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
             Spacer(modifier = Modifier.height(5.dp))
+
+            var checkedOne by remember { mutableStateOf(true) }
             Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = { checkedOne = !checkedOne }),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
             ) {
                 Text("성별")
 
-                var checked by remember { mutableStateOf(true) }
-
                 Switch(
                     colors = switchColors,
                     modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
+                    checked = checkedOne,
+                    onCheckedChange = { checkedOne = it })
             }
+
+            var checkedTwo by remember { mutableStateOf(true) }
             Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = { checkedTwo = !checkedTwo }),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
             ) {
                 Text("연령")
-
-                var checked by remember { mutableStateOf(true) }
-
                 Switch(
                     colors = switchColors,
                     modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
+                    checked = checkedTwo,
+                    onCheckedChange = { checkedTwo = it })
             }
+
+            var checkedThree by remember { mutableStateOf(true) }
             Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = { checkedThree = !checkedThree }),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
             ) {
                 Text("연령")
-
-                var checked by remember { mutableStateOf(true) }
-
                 Switch(
                     colors = switchColors,
                     modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
+                    checked = checkedThree,
+                    onCheckedChange = { checkedThree = it })
             }
         }
     }

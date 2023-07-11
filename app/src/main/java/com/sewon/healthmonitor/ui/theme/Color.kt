@@ -2,21 +2,19 @@ package com.sewon.healthmonitor.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+// Background color
 val BackgroundTop = Color(0xff006d63)
 val BackgroundMiddle = Color(0xff091d3f)
 val BackgroundBottom = Color(0xff071224)
 
 
-val ButtonAccept = Color(0xFF03DAC5)
-val OnButtonAccept = Color(0xFF000000)
-
-val ButtonCancel = Color(0xFF2F4974)
-val OnButtonCancel = Color(0xFFFFFFFF)
-
-val SwitchButton = Color(0xFF2F4974)
-val OnSwitchOn = Color(0xFF2F4974)
-val OnSwitchOff = Color(0xFF2F4974)
-
+// SwitchColors color
+val checkedThumbColor = Color(0xFF09897D)
+val checkedTrackColor = Color(0xFF03DAC5)
+val checkedBorderColor = Color(0xFF03DAC5)
+val uncheckedThumbColor = Color(0xFF938F99)
+val uncheckedTrackColor = Color(0xFF36343B)
+val uncheckedBorderColor = Color(0xFF938F99)
 
 
 // Dark Theme

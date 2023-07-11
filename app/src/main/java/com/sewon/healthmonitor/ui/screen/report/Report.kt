@@ -20,6 +20,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SwitchColors
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDateRangePickerState
@@ -34,11 +36,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import com.sewon.healthmonitor.ui.theme.checkedBorderColor
+import com.sewon.healthmonitor.ui.theme.checkedThumbColor
+import com.sewon.healthmonitor.ui.theme.checkedTrackColor
+import com.sewon.healthmonitor.ui.theme.uncheckedBorderColor
+import com.sewon.healthmonitor.ui.theme.uncheckedThumbColor
+import com.sewon.healthmonitor.ui.theme.uncheckedTrackColor
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Report(modifier: Modifier) {
+
+
     val yellowBrush = Brush.verticalGradient(
         listOf(Color(0xFFFAFF00), Color(0xFFFF8A00))
     )

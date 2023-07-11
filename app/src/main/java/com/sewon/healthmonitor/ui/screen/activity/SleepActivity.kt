@@ -16,6 +16,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchColors
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerColors
@@ -32,6 +34,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sewon.healthmonitor.ui.theme.checkedBorderColor
+import com.sewon.healthmonitor.ui.theme.checkedThumbColor
+import com.sewon.healthmonitor.ui.theme.checkedTrackColor
+import com.sewon.healthmonitor.ui.theme.uncheckedBorderColor
+import com.sewon.healthmonitor.ui.theme.uncheckedThumbColor
+import com.sewon.healthmonitor.ui.theme.uncheckedTrackColor
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
@@ -40,7 +48,14 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SleepActivity(modifier: Modifier = Modifier) {
-
+    val switchColors: SwitchColors = SwitchDefaults.colors(
+        checkedThumbColor = checkedThumbColor,
+        checkedTrackColor = checkedTrackColor,
+        checkedBorderColor = checkedBorderColor,
+        uncheckedThumbColor = uncheckedThumbColor,
+        uncheckedTrackColor = uncheckedTrackColor,
+        uncheckedBorderColor = uncheckedBorderColor,
+    )
     var showTimePicker by remember { mutableStateOf(false) }
     val state = rememberTimePickerState()
     val formatter = remember { SimpleDateFormat("hh:mm a", Locale.getDefault()) }
@@ -83,7 +98,7 @@ fun SleepActivity(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("수면유도에너지")
-            Switch(checked = true, onCheckedChange = {})
+            Switch(checked = true, colors = switchColors, onCheckedChange = {})
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -91,7 +106,7 @@ fun SleepActivity(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("수면유도사운드")
-            Switch(checked = true, onCheckedChange = {})
+            Switch(checked = true, colors = switchColors, onCheckedChange = {})
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
