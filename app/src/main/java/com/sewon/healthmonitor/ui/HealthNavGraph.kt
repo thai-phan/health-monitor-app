@@ -25,7 +25,7 @@ fun HealthNavGraph(
     modifier: Modifier = Modifier,
     finishActivity: () -> Unit = {},
     navController: NavHostController = rememberNavController(),
-    startDestination: String = AppDestinations.MAIN_ROUTE,
+    startDestination: String = AppDestinations.REPORT_ROUTE,
     showOnboardingInitially: Boolean = false
 ) {
     val context = LocalContext.current

@@ -43,7 +43,7 @@ val DarkOnBackground = Color(0xFFFFFFFF)
 val DarkSurface = Color(0xFF071224)
 
 val DarkOnSurface = Color(0xFF03dac5)
-val DarkSurfaceVariant = Color(0xff006d63)
+val DarkSurfaceVariant = Color(0xFF032EFF)
 val DarkOnSurfaceVariant = Color(0xFFFFFFFF)
 val DarkOutline = Color(0xFF01B8A7)
 val DarkInverseOnSurface = Color(0xFFFABBBB)

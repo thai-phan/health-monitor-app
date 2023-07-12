@@ -9,11 +9,14 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,12 +54,15 @@ fun TermAgreement(navController: NavController, redirectRoute: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .statusBarsPadding()
+            .systemBarsPadding()
             .padding(horizontal = 20.dp, vertical = 20.dp)
     ) {
         Text("건강모니터링 토퍼", fontWeight = FontWeight.Bold, fontSize = 24.sp)
         Spacer(modifier = Modifier.height(20.dp))
         Card(
-            shape = RoundedCornerShape(size = 10.dp)
+            shape = RoundedCornerShape(size = 10.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -100,7 +106,7 @@ fun TermAgreement(navController: NavController, redirectRoute: String) {
                             navController.navigate(redirectRoute)
                         },
                     )
-                    Text(text = "Agree", modifier = Modifier.padding(16.dp))
+                    Text(text = "동의", modifier = Modifier.padding(16.dp))
                 }
                 Button(
                     onClick = {
