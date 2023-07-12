@@ -79,10 +79,7 @@ fun TermAgreement(navController: NavController, redirectRoute: String) {
                 Text(
                     "생체신호 모니터링 매트리스 앱 서비스 이용동의서",
                     fontSize = 20.sp,
-                    fontWeight = FontWeight(700),
-                    fontFamily = FontFamily(
-                        Font(R.font.suite_regular)
-                    )
+                    fontWeight = FontWeight(700)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(

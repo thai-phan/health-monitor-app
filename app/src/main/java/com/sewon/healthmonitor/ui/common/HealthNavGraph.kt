@@ -14,7 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.sewon.healthmonitor.config.AppDataStore
+import com.sewon.healthmonitor.data.AppDataStore
 import com.sewon.healthmonitor.ui.singleview.TermAgreement
 import com.sewon.healthmonitor.ui.singleview.SplashScreen
 
@@ -27,6 +27,8 @@ fun HealthNavGraph(
     startDestination: String = AppDestinations.MAIN_ROUTE,
     showOnboardingInitially: Boolean = false
 ) {
+    val mainStartDestination = MainDestinations.REPORT_ROUTE
+
     val context = LocalContext.current
     val store = AppDataStore(context)
     val isAccepted = store.getIsTermAgreementAccepted.collectAsState(initial = false)
@@ -34,6 +36,7 @@ fun HealthNavGraph(
     val onboardingComplete = remember(showOnboardingInitially) {
         mutableStateOf(!showOnboardingInitially)
     }
+
     val actions = remember(navController) { MainActions(navController) }
     NavHost(
         navController = navController,
@@ -64,7 +67,7 @@ fun HealthNavGraph(
 
         navigation(
             route = AppDestinations.MAIN_ROUTE,
-            startDestination = MainTabs.REPORT.route
+            startDestination = mainStartDestination
         ) {
             mainNavGraph(
                 onCourseSelected = actions.openCourse,

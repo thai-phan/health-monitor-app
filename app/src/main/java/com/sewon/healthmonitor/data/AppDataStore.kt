@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.config
+package com.sewon.healthmonitor.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore

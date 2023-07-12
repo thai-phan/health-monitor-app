@@ -1,11 +1,10 @@
 package com.sewon.healthmonitor.ui
 
 import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
+import com.sewon.healthmonitor.data.RegularClass
 
 
 // TODO: Check first load
@@ -21,6 +20,10 @@ class MainActivity : ComponentActivity() {
         actionBar?.hide();
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        val regularClass = RegularClass(this)
+        regularClass.findResource()
+
         setContent {
             HealthApp {
                 finish()
