@@ -13,7 +13,7 @@ import androidx.core.view.WindowCompat
 // TODO: Run back ground
 // TODO: Add multi language
 // TODO: Back button
-// TODO: Scroll view
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

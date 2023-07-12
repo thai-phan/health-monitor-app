@@ -7,7 +7,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.sewon.healthmonitor.ui.MainTabs
 import com.sewon.healthmonitor.ui.screen.activity.SleepActivity
 import com.sewon.healthmonitor.ui.screen.report.Report
 import com.sewon.healthmonitor.ui.screen.setting.UserSetting

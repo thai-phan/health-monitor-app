@@ -67,16 +67,9 @@ fun Report(modifier: Modifier) {
         GradientProgressbar()
 
 
+        ThisChart()
 
     }
-
-
-//    progress bar
-
-
-//    line chart
-
-
 }
 
 

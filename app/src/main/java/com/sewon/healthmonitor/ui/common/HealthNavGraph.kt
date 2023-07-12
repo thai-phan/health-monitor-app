@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.ui
+package com.sewon.healthmonitor.ui.common
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
@@ -15,7 +15,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.sewon.healthmonitor.config.AppDataStore
-import com.sewon.healthmonitor.ui.common.mainNavGraph
 import com.sewon.healthmonitor.ui.singleview.TermAgreement
 import com.sewon.healthmonitor.ui.singleview.SplashScreen
 
@@ -25,7 +24,7 @@ fun HealthNavGraph(
     modifier: Modifier = Modifier,
     finishActivity: () -> Unit = {},
     navController: NavHostController = rememberNavController(),
-    startDestination: String = AppDestinations.REPORT_ROUTE,
+    startDestination: String = AppDestinations.MAIN_ROUTE,
     showOnboardingInitially: Boolean = false
 ) {
     val context = LocalContext.current
@@ -42,7 +41,7 @@ fun HealthNavGraph(
     ) {
         var redirectRoute = AppDestinations.TERM_AGREEMENT_ROUTE
         if (isAccepted.value) {
-            redirectRoute = AppDestinations.ACTIVITY_ROUTE
+            redirectRoute = MainDestinations.ACTIVITY_ROUTE
         }
 
         composable(AppDestinations.SPLASH_ROUTE) {
@@ -59,7 +58,7 @@ fun HealthNavGraph(
         composable(AppDestinations.TERM_AGREEMENT_ROUTE) {
             TermAgreement(
                 navController = navController,
-                redirectRoute = AppDestinations.ACTIVITY_ROUTE
+                redirectRoute = MainDestinations.ACTIVITY_ROUTE
             )
         }
 
@@ -105,7 +104,7 @@ class MainActions(navController: NavHostController) {
     val openCourse = { newCourseId: Long, from: NavBackStackEntry ->
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
-            navController.navigate("${AppDestinations.USER_ROUTE}/$newCourseId")
+            navController.navigate("${MainDestinations.USER_ROUTE}/$newCourseId")
         }
     }
 
@@ -113,7 +112,7 @@ class MainActions(navController: NavHostController) {
     val relatedCourse = { newCourseId: Long, from: NavBackStackEntry ->
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
-            navController.navigate("${AppDestinations.REPORT_ROUTE}/$newCourseId")
+            navController.navigate("${MainDestinations.REPORT_ROUTE}/$newCourseId")
         }
     }
 
