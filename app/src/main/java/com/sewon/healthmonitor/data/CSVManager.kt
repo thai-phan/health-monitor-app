@@ -1,6 +1,7 @@
 package com.sewon.healthmonitor.data
 
 import android.content.Context
+import android.util.Half.toFloat
 import android.util.Log
 import java.io.BufferedReader
 import java.io.IOException
@@ -8,12 +9,13 @@ import java.io.InputStreamReader
 import java.nio.charset.Charset
 
 import com.sewon.healthmonitor.R
+import com.sewon.healthmonitor.data.entity.Topper
 
 
 class RegularClass(private val context: Context) {
 
     fun findResource() {
-        val inputStreammm = context.resources.openRawResource(R.raw.sewon_data)
+        val inputStreammm = context.resources.openRawResource(R.raw.sewon_data_1)
         print("asdf")
         val reader = BufferedReader(
             InputStreamReader(inputStreammm, Charset.forName("UTF-8"))
@@ -26,6 +28,24 @@ class RegularClass(private val context: Context) {
                     .toTypedArray()
 
                 // Read the data and store it in the WellData POJO.
+
+
+                var topper: Topper = Topper(
+
+                    rb = tokens[0].toFloat(),
+
+                    hr = tokens[0].toFloat(),
+
+                    rri = tokens[0].toFloat(),
+
+                    moving = tokens[0],
+
+                    detect = tokens[0],
+
+                    noOne = tokens[0],
+
+                    stable = tokens[0]
+                )
 //                val wellData = WellData()
 //                wellData.setOwner(tokens[0])
 //                wellData.setApi(tokens[1])

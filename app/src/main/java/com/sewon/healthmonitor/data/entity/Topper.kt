@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "topper")
 data class Topper(
-    @PrimaryKey
-    val uid: Int,
+    @PrimaryKey(autoGenerate = true)
+    var uid: Int,
 
     @ColumnInfo(name = "rb")
     val rb: Float,
@@ -30,4 +30,7 @@ data class Topper(
 
     @ColumnInfo(name = "stable")
     val stable: String,
-)
+) {
+
+
+}
