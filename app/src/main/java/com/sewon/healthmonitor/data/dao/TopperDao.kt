@@ -5,14 +5,15 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.sewon.healthmonitor.data.entity.Topper
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TopperDao {
     @Query("SELECT * FROM topper")
-    fun getAll(): List<Topper>
+    fun getAll(): Flow<List<Topper>>
 
-    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
-    fun loadAllByIds(userIds: IntArray): List<Topper>
+//    @Query("SELECT * FROM topper WHERE uid IN (:userIds)")
+//    fun loadAllByIds(userIds: IntArray): List<Topper>
 
     @Insert
     fun insertAll(vararg topper: Topper)

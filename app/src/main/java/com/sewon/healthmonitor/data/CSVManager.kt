@@ -21,6 +21,9 @@ class RegularClass(private val context: Context) {
             InputStreamReader(inputStreammm, Charset.forName("UTF-8"))
         )
         var line = ""
+        var sampleDb = AppDatabase.getInstance(context);
+        var dao = sampleDb?.topperDao();
+
         try {
             while (reader.readLine().also { line = it } != null) {
                 // Split the line into different tokens (using the comma as a separator).
@@ -31,21 +34,20 @@ class RegularClass(private val context: Context) {
 
 
                 var topper: Topper = Topper(
-
                     rb = tokens[0].toFloat(),
-
                     hr = tokens[0].toFloat(),
-
                     rri = tokens[0].toFloat(),
-
                     moving = tokens[0],
-
                     detect = tokens[0],
-
                     noOne = tokens[0],
-
                     stable = tokens[0]
                 )
+
+                if (dao != null) {
+                    dao.insertAll(topper)
+                }
+
+
 //                val wellData = WellData()
 //                wellData.setOwner(tokens[0])
 //                wellData.setApi(tokens[1])

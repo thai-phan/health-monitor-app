@@ -4,7 +4,7 @@ plugins {
     id 'com.google.devtools.ksp' version '1.8.10-1.0.9'
 }
 
-def room_version = "2.5.2"
+
 
 android {
     namespace 'com.sewon.healthmonitor'
@@ -43,6 +43,8 @@ android {
     }
 }
 
+def room_version = "2.5.2"
+
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.10.1'
@@ -57,13 +59,13 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'androidx.annotation:annotation:1.6.0'
-
     implementation 'androidx.activity:activity-compose:1.7.2'
 
     // Database
     //
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
     // To use Kotlin Symbol Processing (KSP)
     ksp "androidx.room:room-compiler:$room_version"
     // optional - RxJava3 support for Room
@@ -75,12 +77,15 @@ dependencies {
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:$room_version"
 
+    // DataStore
+    //
     // Preferences DataStore (SharedPreferences like APIs)
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     // optional - RxJava3 support
     implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
 
     // UI Compose
+    //
     def compose_version = "1.4.3"
     implementation "androidx.compose.compiler:compiler:1.4.8"
     implementation "androidx.compose.material3:material3:1.1.1"
@@ -103,8 +108,11 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:$compose_version")
 
     // Algorithm
+    //
     implementation 'org.apache.commons:commons-math3:3.6.1'
 
+    // Chart
+    //
     // Includes the core logic for charts and other elements.
     implementation "com.patrykandpatrick.vico:core:1.6.5"
     // For Jetpack Compose.
@@ -112,7 +120,8 @@ dependencies {
     // For `compose`. Creates a `ChartStyle` based on an M3 Material Theme.
     implementation "com.patrykandpatrick.vico:compose-m3:1.6.5"
 
-
+    // Test
+    //
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
