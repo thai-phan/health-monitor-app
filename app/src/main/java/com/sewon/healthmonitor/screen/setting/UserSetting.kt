@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -13,22 +12,20 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sewon.healthmonitor.theme.checkedBorderColor
-import com.sewon.healthmonitor.theme.checkedThumbColor
-import com.sewon.healthmonitor.theme.checkedTrackColor
-import com.sewon.healthmonitor.theme.uncheckedBorderColor
-import com.sewon.healthmonitor.theme.uncheckedThumbColor
-import com.sewon.healthmonitor.theme.uncheckedTrackColor
 import com.sewon.healthmonitor.screen.setting.card1.ProfileSetting
 import com.sewon.healthmonitor.screen.setting.card2.SleepSetting
 import com.sewon.healthmonitor.screen.setting.card3.InductionSolutionSetting
 import com.sewon.healthmonitor.screen.setting.card4.GeneralSetting
-import com.sewon.healthmonitor.theme.*
+import com.sewon.healthmonitor.common.theme.checkedBorderColor
+import com.sewon.healthmonitor.common.theme.checkedThumbColor
+import com.sewon.healthmonitor.common.theme.checkedTrackColor
+import com.sewon.healthmonitor.common.theme.uncheckedBorderColor
+import com.sewon.healthmonitor.common.theme.uncheckedThumbColor
+import com.sewon.healthmonitor.common.theme.uncheckedTrackColor
 
 @Composable
 fun UserSetting(modifier: Modifier = Modifier) {

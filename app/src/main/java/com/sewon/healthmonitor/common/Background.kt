@@ -6,9 +6,9 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.sewon.healthmonitor.theme.BackgroundBottom
-import com.sewon.healthmonitor.theme.BackgroundMiddle
-import com.sewon.healthmonitor.theme.BackgroundTop
+import com.sewon.healthmonitor.common.theme.BackgroundBottom
+import com.sewon.healthmonitor.common.theme.BackgroundMiddle
+import com.sewon.healthmonitor.common.theme.BackgroundTop
 
 
 @SuppressLint("UnnecessaryComposedModifier")

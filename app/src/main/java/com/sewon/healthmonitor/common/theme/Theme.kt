@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.theme
+package com.sewon.healthmonitor.common.theme
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable

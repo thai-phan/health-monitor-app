@@ -1,5 +1,5 @@
 
-package com.sewon.healthmonitor.theme
+package com.sewon.healthmonitor.common.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -12,7 +12,7 @@ import com.sewon.healthmonitor.common.BottomBar
 import com.sewon.healthmonitor.common.HealthNavGraph
 import com.sewon.healthmonitor.common.MainTabs
 import com.sewon.healthmonitor.common.blackGreenBackground
-import com.sewon.healthmonitor.theme.HealthAppTheme
+import com.sewon.healthmonitor.common.theme.HealthAppTheme
 
 @Composable
 fun HealthApp(finishActivity: () -> Unit) {
