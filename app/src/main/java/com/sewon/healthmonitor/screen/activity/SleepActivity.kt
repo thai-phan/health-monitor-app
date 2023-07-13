@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sewon.healthmonitor.common.theme.checkedBorderColor
 import com.sewon.healthmonitor.common.theme.checkedThumbColor
 import com.sewon.healthmonitor.common.theme.checkedTrackColor
@@ -47,7 +48,11 @@ import java.util.Locale
 @SuppressLint("RememberReturnType")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SleepActivity(modifier: Modifier = Modifier) {
+fun SleepActivity(
+    modifier: Modifier = Modifier,
+
+    viewModel: SleepActivityViewModel = hiltViewModel()
+) {
     val switchColors: SwitchColors = SwitchDefaults.colors(
         checkedThumbColor = checkedThumbColor,
         checkedTrackColor = checkedTrackColor,

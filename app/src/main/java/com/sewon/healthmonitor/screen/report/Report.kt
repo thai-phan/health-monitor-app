@@ -27,8 +27,8 @@ fun Report(modifier: Modifier) {
 
     val context = LocalContext.current
 
-    val regularClass = RegularClass(context)
-    regularClass.findResource()
+//    val regularClass = RegularClass(context)
+//    regularClass.findResource()
 
     val yellowBrush = Brush.verticalGradient(
         listOf(Color(0xFFFAFF00), Color(0xFFFF8A00))
