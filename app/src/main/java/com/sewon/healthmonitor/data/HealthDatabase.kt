@@ -11,19 +11,19 @@ import com.sewon.healthmonitor.data.entity.User
 
 
 @Database(entities = [User::class, Topper::class], version = 1)
-abstract class AppDatabase : RoomDatabase() {
+abstract class HealthDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun topperDao(): TopperDao
 
 
     companion object { @Volatile
-        private var instance: AppDatabase? = null
+        private var instance: HealthDatabase? = null
 
-        fun getInstance(context: Context?): AppDatabase? {
+        fun getInstance(context: Context?): HealthDatabase? {
             if (instance == null) {
                 instance = databaseBuilder(
                     context!!,
-                    AppDatabase::class.java,
+                    HealthDatabase::class.java,
                     "healthMonitor.db"
                 )
 //                .createFromAsset("database/myapp.db")

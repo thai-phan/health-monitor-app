@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sewon.healthmonitor.common.theme.checkedBorderColor
 import com.sewon.healthmonitor.common.theme.checkedThumbColor
@@ -53,6 +54,9 @@ fun SleepActivity(
 
     viewModel: SleepActivityViewModel = hiltViewModel()
 ) {
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     val switchColors: SwitchColors = SwitchDefaults.colors(
         checkedThumbColor = checkedThumbColor,
         checkedTrackColor = checkedTrackColor,
@@ -72,6 +76,13 @@ fun SleepActivity(
             .padding(horizontal = 30.dp, vertical = 20.dp)
     ) {
         Text("수면시간 체크", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        Button(onClick = { viewModel.createNewTask() }) {
+            Text("Click meee to add data")
+        }
+//        Button(onClick = { viewModel.createNewTask() }) {
+//            Text("Click meee to add data")
+//        }
+
         Spacer(modifier = Modifier.height(10.dp))
         CircularTimePicker()
         Spacer(modifier = Modifier.height(10.dp))

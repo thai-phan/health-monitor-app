@@ -14,15 +14,15 @@ import com.sewon.healthmonitor.data.entity.Topper
 
 class RegularClass(private val context: Context) {
 
-    fun findResource() {
+    suspend fun findResource() {
         val inputStreammm = context.resources.openRawResource(R.raw.sewon_data_1)
         print("asdf")
         val reader = BufferedReader(
             InputStreamReader(inputStreammm, Charset.forName("UTF-8"))
         )
         var line = ""
-        var sampleDb = AppDatabase.getInstance(context);
-        var dao = sampleDb?.topperDao();
+//        var sampleDb = AppDatabase.getInstance(context);
+//        var dao = sampleDb?.topperDao();
 
         try {
             while (reader.readLine().also { line = it } != null) {
@@ -42,10 +42,10 @@ class RegularClass(private val context: Context) {
                     noOne = tokens[0],
                     stable = tokens[0]
                 )
-
-                if (dao != null) {
-                    dao.insertAll(topper)
-                }
+//
+//                if (dao != null) {
+//                    dao.insertAll(topper)
+//                }
 
 
 //                val wellData = WellData()

@@ -10,7 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class AppDataStore(private var context: Context) {
+class HealthDataStore(private var context: Context) {
 //    // At the top level of your kotlin file:
 //    private val dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     companion object {

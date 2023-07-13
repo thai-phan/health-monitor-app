@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Upsert
 import com.sewon.healthmonitor.data.entity.Topper
 import kotlinx.coroutines.flow.Flow
 
@@ -16,9 +17,15 @@ interface TopperDao {
 //    fun loadAllByIds(userIds: IntArray): List<Topper>
 
     @Insert
-    fun insertAll(vararg topper: Topper)
+    suspend fun insertAll(vararg topper: Topper)
 
     @Delete
-    fun delete(user: Topper)
+    suspend fun delete(user: Topper)
+
+    @Upsert
+    suspend fun upsert(topper: Topper)
+
+    @Upsert
+    suspend fun upsertAll(toppers: List<Topper>)
 
 }

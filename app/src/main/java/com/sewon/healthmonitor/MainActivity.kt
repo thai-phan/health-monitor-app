@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import com.sewon.healthmonitor.HealthApp
+import dagger.hilt.android.AndroidEntryPoint
 
 
 // TODO: Check first load
@@ -13,7 +14,7 @@ import com.sewon.healthmonitor.HealthApp
 // TODO: Add multi language
 // TODO: Back button
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
