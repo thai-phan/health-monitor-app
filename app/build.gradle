@@ -4,7 +4,8 @@ plugins {
     id 'com.google.devtools.ksp' version '1.8.10-1.0.9'
     id 'kotlin-kapt'
 
-    id 'com.google.dagger.hilt.android' version '2.44' apply false
+    id 'com.google.dagger.hilt.android'
+
 }
 
 
@@ -22,6 +23,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+//            }
+//        }
     }
 
     buildTypes {
@@ -64,6 +71,20 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'androidx.annotation:annotation:1.6.0'
     implementation 'androidx.activity:activity-compose:1.7.2'
+
+    // Hilt dependency injection
+    implementation 'com.google.dagger:hilt-android:2.46.1'
+//    kapt 'com.google.dagger:hilt-compiler:2.46.1'
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
+    kapt 'com.google.dagger:hilt-android-compiler:2.44.2'
+
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+
+
+    // Algorithm
+    //
+    implementation 'org.apache.commons:commons-math3:3.6.1'
+
 
     // Database
     //
@@ -111,16 +132,6 @@ dependencies {
     implementation("androidx.compose.material:material-icons-core:$compose_version")
     implementation("androidx.compose.material:material-icons-extended:$compose_version")
 
-
-    // Hilt dependency injection
-
-    implementation "com.google.dagger:hilt-android:2.44.2"
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
-    kapt "com.google.dagger:hilt-compiler:2.44.2"
-
-    // Algorithm
-    //
-    implementation 'org.apache.commons:commons-math3:3.6.1'
 
     // Chart
     //

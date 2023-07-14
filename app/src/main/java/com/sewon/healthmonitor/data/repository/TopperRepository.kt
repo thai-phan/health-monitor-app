@@ -7,5 +7,7 @@ interface TopperRepository {
 
     fun getTopper(): Flow<List<Topper>>
 
+    fun getCountTopper(): Flow<Int>
+
     suspend fun createTopper(topper: Topper): String
 }

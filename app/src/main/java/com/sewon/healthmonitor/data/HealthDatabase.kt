@@ -16,20 +16,20 @@ abstract class HealthDatabase : RoomDatabase() {
     abstract fun topperDao(): TopperDao
 
 
-    companion object { @Volatile
-        private var instance: HealthDatabase? = null
-
-        fun getInstance(context: Context?): HealthDatabase? {
-            if (instance == null) {
-                instance = databaseBuilder(
-                    context!!,
-                    HealthDatabase::class.java,
-                    "healthMonitor.db"
-                )
-//                .createFromAsset("database/myapp.db")
-                    .build()
-            }
-            return instance
-        }
-    }
+//    companion object { @Volatile
+//        private var instance: HealthDatabase? = null
+//
+//        fun getInstance(context: Context?): HealthDatabase? {
+//            if (instance == null) {
+//                instance = databaseBuilder(
+//                    context!!,
+//                    HealthDatabase::class.java,
+//                    "healthMonitor.db"
+//                )
+////                .createFromAsset("database/myapp.db")
+//                    .build()
+//            }
+//            return instance
+//        }
+//    }
 }

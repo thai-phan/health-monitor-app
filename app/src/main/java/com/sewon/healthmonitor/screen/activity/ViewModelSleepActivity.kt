@@ -1,5 +1,6 @@
 package com.sewon.healthmonitor.screen.activity
 
+import androidx.compose.compiler.plugins.kotlin.analysis.stabilityOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.data.entity.Topper
@@ -8,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -42,4 +44,24 @@ class SleepActivityViewModel @Inject constructor(
             it.copy(status1 = "Ahahahah")
         }
     }
+
+    fun getToppers() = viewModelScope.launch {
+
+        var aaa = topperRepository.getTopper()
+
+        _uiState.update {
+            it.copy(status2 = aaa.first().get(0).moving)
+        }
+    }
+
+    fun getCount() = viewModelScope.launch {
+
+        var bbb = topperRepository.getCountTopper()
+
+        _uiState.update {
+            it.copy(status3 = bbb.first().toString())
+        }
+    }
+
+
 }

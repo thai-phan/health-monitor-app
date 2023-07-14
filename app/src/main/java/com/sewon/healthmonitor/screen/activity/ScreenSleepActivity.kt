@@ -3,17 +3,14 @@ package com.sewon.healthmonitor.screen.activity
 import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchColors
@@ -79,9 +76,17 @@ fun SleepActivity(
         Button(onClick = { viewModel.createNewTask() }) {
             Text("Click meee to add data")
         }
-//        Button(onClick = { viewModel.createNewTask() }) {
-//            Text("Click meee to add data")
-//        }
+        Text(text = uiState.status1)
+
+        Button(onClick = { viewModel.getToppers() }) {
+            Text("Load data")
+        }
+        Text(text = uiState.status2)
+
+        Button(onClick = { viewModel.getCount() }) {
+            Text("Get count")
+        }
+        Text(text = uiState.status3)
 
         Spacer(modifier = Modifier.height(10.dp))
         CircularTimePicker()

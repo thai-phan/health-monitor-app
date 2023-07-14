@@ -18,8 +18,16 @@ class DefaultTopperRepository @Inject constructor(
 
 
     override fun getTopper(): Flow<List<Topper>> {
-        TODO("Not yet implemented")
+        return localDataSource.getAllTopper()
     }
+
+
+    override fun getCountTopper(): Flow<Int> {
+        return localDataSource.countTopper()
+    }
+//     Count number recrod
+
+
 
     override suspend fun createTopper(topper: Topper): String {
         localDataSource.upsert(topper)
