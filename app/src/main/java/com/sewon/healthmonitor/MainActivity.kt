@@ -9,10 +9,15 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 // TODO: Check first load
-// TODO: Navigate
+
 // TODO: Run back ground
+
 // TODO: Add multi language
+
 // TODO: Back button
+
+// TODO: Navigate
+// TODO: Inspect database
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
