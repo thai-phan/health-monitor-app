@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "topper")
+@Entity(tableName = "setting")
 data class Setting(
     @ColumnInfo(name = "rb") val rb: Float,
     @ColumnInfo(name = "hr") val hr: Float,
