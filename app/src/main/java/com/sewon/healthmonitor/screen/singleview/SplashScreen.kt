@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.singleview
+package com.sewon.healthmonitor.screen.singleview
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.tween

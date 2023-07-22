@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.singleview
+package com.sewon.healthmonitor.screen.singleview
 
 import android.content.res.AssetManager
 import androidx.compose.foundation.layout.Arrangement
