@@ -49,7 +49,7 @@ import java.util.Locale
 fun SleepActivity(
     modifier: Modifier = Modifier,
 
-    viewModel: SleepActivityViewModel = hiltViewModel()
+    viewModel: ViewModelSleepActivity = hiltViewModel()
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

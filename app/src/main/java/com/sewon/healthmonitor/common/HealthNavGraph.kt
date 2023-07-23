@@ -27,7 +27,7 @@ fun HealthNavGraph(
     startDestination: String = AppDestinations.MAIN_ROUTE,
     showOnboardingInitially: Boolean = false
 ) {
-    val mainStartDestination = MainDestinations.REPORT_ROUTE
+    val mainStartDestination = MainDestinations.USER_ROUTE
 
     val context = LocalContext.current
     val store = HealthDataStore(context)
@@ -61,7 +61,8 @@ fun HealthNavGraph(
         composable(AppDestinations.TERM_AGREEMENT_ROUTE) {
             TermAgreement(
                 navController = navController,
-                redirectRoute = MainDestinations.ACTIVITY_ROUTE
+                redirectRoute = MainDestinations.ACTIVITY_ROUTE,
+
             )
         }
 

@@ -20,8 +20,11 @@ import android.content.Context
 import androidx.room.Room
 import com.sewon.healthmonitor.data.HealthDatabase
 import com.sewon.healthmonitor.data.dao.TopperDao
+import com.sewon.healthmonitor.data.dao.UserSettingDao
 import com.sewon.healthmonitor.data.repository.DefaultTopperRepository
-import com.sewon.healthmonitor.data.repository.TopperRepository
+import com.sewon.healthmonitor.data.repository.ITopperRepository
+import com.sewon.healthmonitor.data.repository.IUserSettingRepository
+import com.sewon.healthmonitor.data.repository.UserSettingRepository
 
 import dagger.Binds
 import dagger.Module
@@ -33,12 +36,46 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
+object DatabaseModule {
+
+    @Singleton
+    @Provides
+    fun provideDataBase(@ApplicationContext context: Context): HealthDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            HealthDatabase::class.java,
+            "HealthMonitor.db"
+        ).build()
+    }
+
+    @Provides
+    fun provideTopperDao(database: HealthDatabase): TopperDao = database.topperDao()
+
+    @Provides
+    fun provideUserSettingDao(database: HealthDatabase): UserSettingDao = database.userSettingDao()
+}
+
+
+@Module
+@InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindTaskRepository(repository: DefaultTopperRepository): TopperRepository
+    abstract fun bindTopperRepository(topperRepository: DefaultTopperRepository): ITopperRepository
+
 }
+
+//@Module
+//@InstallIn(SingletonComponent::class)
+//abstract class SettingRepositoryModule {
+//
+//    @Singleton
+//    @Binds
+//    abstract fun bindUserSettingRepository(userSettingRepository: UserSettingRepository): IUserSettingRepository
+//
+//}
+
 
 //@Module
 //@InstallIn(SingletonComponent::class)
@@ -49,20 +86,3 @@ abstract class RepositoryModule {
 //    abstract fun bindNetworkDataSource(dataSource: TaskNetworkDataSource): NetworkDataSource
 //}
 
-@Module
-@InstallIn(SingletonComponent::class)
-object DatabaseModule {
-
-    @Singleton
-    @Provides
-    fun provideDataBase(@ApplicationContext context: Context): HealthDatabase {
-        return Room.databaseBuilder(
-            context.applicationContext,
-            HealthDatabase::class.java,
-            "Tasks.db"
-        ).build()
-    }
-
-    @Provides
-    fun provideTopperDao(database: HealthDatabase): TopperDao = database.topperDao()
-}

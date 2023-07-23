@@ -3,7 +3,8 @@ package com.sewon.healthmonitor.data.repository
 import com.sewon.healthmonitor.data.entity.Topper
 import kotlinx.coroutines.flow.Flow
 
-interface TopperRepository {
+
+interface ITopperRepository {
 
     fun getTopper(): Flow<List<Topper>>
 

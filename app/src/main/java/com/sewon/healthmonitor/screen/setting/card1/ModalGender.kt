@@ -23,12 +23,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.healthmonitor.R
+import com.sewon.healthmonitor.screen.activity.ViewModelSleepActivity
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalGender(onOpenGenderModal: () -> Unit) {
+fun ModalGender(
+    viewModel: ViewModelCardProfile,
+    onOpenGenderModal: () -> Unit,
+) {
+//    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
@@ -45,8 +52,11 @@ fun ModalGender(onOpenGenderModal: () -> Unit) {
         sheetState = bottomSheetState,
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().height(200.dp),
-            horizontalArrangement = Arrangement.Center) {
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
             AndroidView(
                 factory = { context ->
 
@@ -72,13 +82,19 @@ fun ModalGender(onOpenGenderModal: () -> Unit) {
             )
         }
 
-        Row(modifier = Modifier.fillMaxWidth().height(100.dp),
-            horizontalArrangement = Arrangement.Center) {
-            Button(onClick = onOpenGenderModal) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Button(onClick = {
+                viewModel.loadUserSetting()
+            }) {
                 Text("취소")
             }
             Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {}) {
+            Button(onClick = { viewModel.changeGender() }) {
                 Text("저장")
             }
         }

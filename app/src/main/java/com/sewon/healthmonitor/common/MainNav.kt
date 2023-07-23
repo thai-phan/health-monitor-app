@@ -2,7 +2,10 @@
 package com.sewon.healthmonitor.common
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -17,7 +20,14 @@ fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    composable(MainTabs.ACTIVITY.route) { from ->
+    composable(MainTabs.ACTIVITY.route) { backStackEntry ->
+//        val parentEntry = remember(backStackEntry) {
+//            navController.getBackStackEntry("parentNavigationRoute")
+//        }
+
+//        val parentViewModel = hiltViewModel(parentEntry)
+
+
         SleepActivity(modifier)
         // Show onboarding instead if not shown yet.
 //        LaunchedEffect(onboardingComplete) {

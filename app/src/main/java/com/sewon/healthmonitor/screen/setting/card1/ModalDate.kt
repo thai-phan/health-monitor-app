@@ -28,7 +28,10 @@ import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalDate(onToggleDateModal: () -> Unit) {
+fun ModalDate(
+    viewModel: ViewModelCardProfile,
+    onToggleDateModal: () -> Unit
+) {
 
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
     var edgeToEdgeEnabled by remember { mutableStateOf(false) }

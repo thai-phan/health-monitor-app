@@ -4,20 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
-import com.sewon.healthmonitor.HealthApp
 import dagger.hilt.android.AndroidEntryPoint
 
 
+// TODO: Add multi language
 // TODO: Check first load
 
 // TODO: Run back ground
 
-// TODO: Add multi language
+
 
 // TODO: Back button
 
 // TODO: Navigate
-// TODO: Inspect database
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

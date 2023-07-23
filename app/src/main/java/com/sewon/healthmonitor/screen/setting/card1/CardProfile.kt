@@ -26,11 +26,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun ProfileSetting() {
+fun ProfileSetting(
+    viewModel: ViewModelCardProfile = hiltViewModel()
+
+) {
 
 
 
@@ -100,11 +104,11 @@ fun ProfileSetting() {
     }
 
     if (openGenderModal) {
-        ModalGender(onOpenGenderModal = { openGenderModal =! openGenderModal})
+        ModalGender(viewModel, onOpenGenderModal = { openGenderModal =! openGenderModal})
     }
 
     if (openDateModal) {
-        ModalDate(onToggleDateModal={ openDateModal = !openDateModal})
+        ModalDate(viewModel, onToggleDateModal={ openDateModal = !openDateModal})
     }
 
 }

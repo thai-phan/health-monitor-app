@@ -13,7 +13,7 @@ class DefaultTopperRepository @Inject constructor(
     private val localDataSource: TopperDao,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationScope private val scope: CoroutineScope,
-) : TopperRepository {
+) : ITopperRepository {
 
 
 

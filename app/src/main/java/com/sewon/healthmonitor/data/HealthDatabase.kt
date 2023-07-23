@@ -6,13 +6,23 @@ import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 import com.sewon.healthmonitor.data.dao.TopperDao
 import com.sewon.healthmonitor.data.dao.UserDao
+import com.sewon.healthmonitor.data.dao.UserSettingDao
 import com.sewon.healthmonitor.data.entity.Topper
 import com.sewon.healthmonitor.data.entity.User
+import com.sewon.healthmonitor.data.entity.UserSetting
 
 
-@Database(entities = [User::class, Topper::class], version = 1)
+@Database(
+    entities = [
+        User::class,
+        Topper::class,
+        UserSetting::class
+
+    ], version = 1
+)
 abstract class HealthDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract fun userSettingDao(): UserSettingDao
     abstract fun topperDao(): TopperDao
 
 
