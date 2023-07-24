@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import androidx.room.Upsert
 import com.sewon.healthmonitor.data.entity.User
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,9 @@ interface UserDao {
 
     @Query("SELECT * FROM user where name = :name")
     fun getCurrentUser(name: String): Flow<User>
+
+    @Update
+    suspend fun updateUser(user: User)
 
     @Upsert
     suspend fun upsert(user: User)

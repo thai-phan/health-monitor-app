@@ -24,7 +24,7 @@ class UserRepository @Inject constructor(
     }
 
     suspend fun updateUserSetting(user: User): String {
-        var aaa = userDao.upsert(user)
+        var aaa = userDao.updateUser(user)
         return "Done"
     }
 }

@@ -35,7 +35,7 @@ class ViewModelCardProfile @Inject constructor(
 
         viewModelScope.launch {
             Log.d("Log", "onLoad viewModelScope")
-            user = userRepository.getCurrentUser("admin")
+
             print("asdf")
 
         }
@@ -72,10 +72,11 @@ class ViewModelCardProfile @Inject constructor(
     }
 
     fun changeGender(gender: String) = viewModelScope.launch {
-//        val user = user.first()
-//        user.gender = gender
-//        userDao.upsert(user)
+        user = userRepository.getCurrentUser("admin")
+        val thisuser  = user.first()
+        thisuser.gender = "new gender"
 
+        userRepository.updateUserSetting(thisuser)
     }
 
     fun changeBirthday() = viewModelScope.launch {
