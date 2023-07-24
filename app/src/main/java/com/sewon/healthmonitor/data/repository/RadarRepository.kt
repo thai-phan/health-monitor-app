@@ -2,35 +2,36 @@ package com.sewon.healthmonitor.data.repository
 
 import com.example.android.architecture.blueprints.todoapp.di.ApplicationScope
 import com.example.android.architecture.blueprints.todoapp.di.DefaultDispatcher
-import com.sewon.healthmonitor.data.dao.TopperDao
-import com.sewon.healthmonitor.data.entity.Topper
+import com.sewon.healthmonitor.data.dao.RadarDao
+import com.sewon.healthmonitor.data.entity.Radar
+import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class DefaultTopperRepository @Inject constructor(
-    private val localDataSource: TopperDao,
+class RadarRepository @Inject constructor(
+    private val RadarDao: RadarDao,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationScope private val scope: CoroutineScope,
-) : ITopperRepository {
+) : IRadarRepository {
 
 
 
-    override fun getTopper(): Flow<List<Topper>> {
-        return localDataSource.getAllTopper()
+    override fun getTopper(): Flow<List<Radar>> {
+        return RadarDao.getAllTopper()
     }
 
 
     override fun getCountTopper(): Flow<Int> {
-        return localDataSource.countTopper()
+        return RadarDao.countTopper()
     }
 //     Count number record
 
 
 
-    override suspend fun createTopper(topper: Topper): String {
-        localDataSource.upsert(topper)
+    override suspend fun createTopper(radar: Radar): String {
+        RadarDao.upsert(radar)
         return "Done"
     }
 

@@ -19,12 +19,11 @@ package com.example.android.architecture.blueprints.todoapp.di
 import android.content.Context
 import androidx.room.Room
 import com.sewon.healthmonitor.data.HealthDatabase
-import com.sewon.healthmonitor.data.dao.TopperDao
+import com.sewon.healthmonitor.data.dao.RadarDao
+import com.sewon.healthmonitor.data.dao.UserDao
 import com.sewon.healthmonitor.data.dao.UserSettingDao
-import com.sewon.healthmonitor.data.repository.DefaultTopperRepository
-import com.sewon.healthmonitor.data.repository.ITopperRepository
-import com.sewon.healthmonitor.data.repository.IUserSettingRepository
-import com.sewon.healthmonitor.data.repository.UserSettingRepository
+import com.sewon.healthmonitor.data.repository.RadarRepository
+import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
 
 import dagger.Binds
 import dagger.Module
@@ -49,10 +48,13 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideTopperDao(database: HealthDatabase): TopperDao = database.topperDao()
+    fun provideTopperDao(database: HealthDatabase): RadarDao = database.topperDao()
 
     @Provides
     fun provideUserSettingDao(database: HealthDatabase): UserSettingDao = database.userSettingDao()
+
+    @Provides
+    fun provideUserInformationDao(database: HealthDatabase): UserDao = database.userInformationDao()
 }
 
 
@@ -62,7 +64,7 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindTopperRepository(topperRepository: DefaultTopperRepository): ITopperRepository
+    abstract fun bindTopperRepository(topperRepository: RadarRepository): IRadarRepository
 
 }
 

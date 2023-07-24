@@ -5,9 +5,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "user")
-data class User (
-    @PrimaryKey val uid: Int,
-    @ColumnInfo(name = "first_name") val  firstName: String?,
-    @ColumnInfo(name = "last_name") val lastName: String?,
-    @ColumnInfo(name = "region") val region: String?
-)
+data class User(
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "gender") var gender: String,
+    @ColumnInfo(name = "age") val age: String,
+    @ColumnInfo(name = "signup_date") val signupDate: String,
+    @ColumnInfo(name = "created_at") val createdAt: String,
+    @ColumnInfo(name = "updated_at") val updatedAt: String,
+) {
+    @PrimaryKey(autoGenerate = true)
+    var uid: Int = 0
+}

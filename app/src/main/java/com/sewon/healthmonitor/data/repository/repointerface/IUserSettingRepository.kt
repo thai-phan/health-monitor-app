@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.data.repository
+package com.sewon.healthmonitor.data.repository.repointerface
 
 import com.sewon.healthmonitor.data.entity.UserSetting
 import kotlinx.coroutines.flow.Flow

@@ -3,14 +3,17 @@ package com.sewon.healthmonitor.screen.setting.card1
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sewon.healthmonitor.data.dao.UserDao
+import com.sewon.healthmonitor.data.entity.User
 import com.sewon.healthmonitor.data.entity.UserSetting
+import com.sewon.healthmonitor.data.repository.UserRepository
 import com.sewon.healthmonitor.data.repository.UserSettingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,29 +21,29 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewModelCardProfile @Inject constructor(
     private val userSettingRepository: UserSettingRepository,
-) : ViewModel() {
+    private val userRepository: UserRepository,
+
+    ) : ViewModel() {
+
+    lateinit var user: Flow<User>
 
     lateinit var userSetting: Flow<List<UserSetting>>
-
+//    private var _state = MutableStateFlow<State>(State.Loading)
+//    val state = _state.asStateFlow()
     init {
 
 
         viewModelScope.launch {
             Log.d("Log", "onLoad viewModelScope")
-            userSetting = userSettingRepository.loadUserSetting()
-//            if (userSetting.onEmpty {
-//
-//                }) {
-//                print(userSetting.first().get(0).gender)
-//
-//            }
+            user = userRepository.getCurrentUser("admin")
+            print("asdf")
+
         }
 
 
 //        https://stackoverflow.com/questions/73839026/jetpack-compose-displaying-data-in-compose-using-mvvm
         CoroutineScope(Dispatchers.IO).launch {
             Log.d("Log", "onLoad CoroutineScope IO")
-
 //            userSetting = userSettingRepository.loadUserSetting()
 //            print(userSetting.first().get(0).gender)
         }
@@ -56,19 +59,22 @@ class ViewModelCardProfile @Inject constructor(
 //    private val _uiState = MutableStateFlow(UiState())
 //    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    fun loadUserSetting() = viewModelScope.launch {
+    fun addUser() = viewModelScope.launch {
+        var user = User("admin", "aa", "bb", "cc", "dd", "eee")
+        userRepository.addUser(user)
         userSetting = userSettingRepository.loadUserSetting()
-        if (userSetting.first().size > 0) {
-            print(userSetting.first().get(0).gender)
-
-        }
-        var userSetting: Flow<List<UserSetting>> = userSettingRepository.loadUserSetting()
+//        if (userSetting.first().size > 0) {
+//            print(userSetting.first().get(0).gender)
+//
+//        }
+//        var userSetting: Flow<List<UserSetting>> = userSettingRepository.loadUserSetting()
 
     }
 
-    fun changeGender() = viewModelScope.launch {
-        var userSetting = UserSetting("Men", "2020")
-        userSettingRepository.updateUserSetting(userSetting)
+    fun changeGender(gender: String) = viewModelScope.launch {
+//        val user = user.first()
+//        user.gender = gender
+//        userDao.upsert(user)
 
     }
 
