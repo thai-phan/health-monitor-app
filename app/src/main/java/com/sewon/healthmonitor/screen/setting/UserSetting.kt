@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sewon.healthmonitor.screen.setting.card1.ProfileSetting
 import com.sewon.healthmonitor.screen.setting.card2.SleepSetting
 import com.sewon.healthmonitor.screen.setting.card3.InductionSolutionSetting
@@ -26,9 +27,12 @@ import com.sewon.healthmonitor.common.theme.checkedTrackColor
 import com.sewon.healthmonitor.common.theme.uncheckedBorderColor
 import com.sewon.healthmonitor.common.theme.uncheckedThumbColor
 import com.sewon.healthmonitor.common.theme.uncheckedTrackColor
+import com.sewon.healthmonitor.screen.setting.card1.ViewModelCardProfile
 
 @Composable
-fun UserSetting(modifier: Modifier = Modifier) {
+fun UserSetting(modifier: Modifier = Modifier,
+
+) {
     val switchColors: SwitchColors = SwitchDefaults.colors(
         checkedThumbColor = checkedThumbColor,
         checkedTrackColor = checkedTrackColor,
@@ -61,6 +65,9 @@ fun UserSetting(modifier: Modifier = Modifier) {
 
             GeneralSetting(switchColors)
         }
+
+//        PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))
+
     }
 
 }

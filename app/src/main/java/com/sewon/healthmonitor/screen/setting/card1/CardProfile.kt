@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 
 @SuppressLint("UnrememberedMutableState")
@@ -36,6 +37,8 @@ fun ProfileSetting(
 
 ) {
 
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
 
     var openGenderModal by rememberSaveable { mutableStateOf(false) }
@@ -67,7 +70,9 @@ fun ProfileSetting(
                         openGenderModal = !openGenderModal
                     },
                 ) {
-                    Text("Select", color = Color.White)
+                    uiState.user?.let {
+                        Text(it.gender, color = Color.White)
+                    }
                     Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -90,7 +95,9 @@ fun ProfileSetting(
                         openDateModal = !openDateModal
                     },
                 ) {
-                    Text("Select", color = Color.White)
+                    uiState.user?.let {
+                        Text(it.birthday, color = Color.White)
+                    }
                     Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                     Icon(
                         Icons.Filled.ChevronRight,

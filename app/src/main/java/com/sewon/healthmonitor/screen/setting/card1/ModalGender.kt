@@ -85,9 +85,9 @@ fun ModalGender(
                 Text("취소")
             }
             Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {viewModel.addUser()}) {
-                Text("add")
-            }
+//            Button(onClick = {viewModel.addUser()}) {
+//                Text("add")
+//            }
             Button(onClick = {
                 viewModel.changeGender(genderValue)
                 onOpenGenderModal()
