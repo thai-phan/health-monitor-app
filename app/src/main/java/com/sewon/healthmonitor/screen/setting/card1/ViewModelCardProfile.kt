@@ -52,16 +52,15 @@ class ViewModelCardProfile @Inject constructor(
 
 
         viewModelScope.launch {
-            Log.d("Log", "onLoad viewModelScope")
+            Log.d("asdfasdf", "viewModelScope")
 //            user = userRepository.getCurrentUser("admin")
             print("asdf")
-
         }
 
 
 //        https://stackoverflow.com/questions/73839026/jetpack-compose-displaying-data-in-compose-using-mvvm
         CoroutineScope(Dispatchers.IO).launch {
-            Log.d("Log", "onLoad CoroutineScope IO")
+            Log.d("asdfasdf", "CoroutineScope IO")
 //            userSetting = userSettingRepository.loadUserSetting()
 //            print(userSetting.first().get(0).gender)
         }
@@ -101,7 +100,7 @@ class ViewModelCardProfile @Inject constructor(
     }
 
     override fun onCleared() {
-        Log.d("onCleared", "onCleared")
+        Log.d("asdfasdf", "onCleared")
 //        coroutineScope.cancel()
     }
 

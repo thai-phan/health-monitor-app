@@ -36,10 +36,7 @@ fun ProfileSetting(
     viewModel: ViewModelCardProfile = hiltViewModel()
 
 ) {
-
-
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
 
     var openGenderModal by rememberSaveable { mutableStateOf(false) }
     var openDateModal by rememberSaveable { mutableStateOf(false) }
@@ -115,7 +112,7 @@ fun ProfileSetting(
     }
 
     if (openDateModal) {
-        ModalDate(viewModel, onToggleDateModal={ openDateModal = !openDateModal})
+        ModalDate( onToggleDateModal ={ openDateModal = !openDateModal})
     }
 
 }

@@ -1,7 +1,9 @@
 package com.sewon.healthmonitor.screen.setting.card1
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.DatePicker
+import android.widget.DatePicker.OnDateChangedListener
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,8 +31,8 @@ import java.util.Calendar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalDate(
-    viewModel: ViewModelCardProfile,
-    onToggleDateModal: () -> Unit
+    onToggleDateModal: () -> Unit,
+    onUpdateBirthday: (() -> Unit)? = null
 ) {
 
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
@@ -40,6 +42,8 @@ fun ModalDate(
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = skipPartiallyExpanded
     )
+
+
 
     ModalBottomSheet(
         onDismissRequest = onToggleDateModal,
@@ -53,15 +57,18 @@ fun ModalDate(
                 val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
                 val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
                 val calendar = Calendar.getInstance() // show today by default
+
                 datePicker.init(
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
+                    calendar.get(Calendar.DAY_OF_MONTH),
+
                 ) { _, year, monthOfYear, dayOfMonth ->
                     val date = Calendar.getInstance().apply {
                         set(year, monthOfYear, dayOfMonth)
                     }.time
-//                onSelectedDateUpdate(date)
+                    Log.d("asdfasdf","Date value")
+
                 }
                 datePicker
             }
@@ -77,7 +84,7 @@ fun ModalDate(
                 Text("취소")
             }
             Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {}) {
+            Button(onClick = {  }) {
                 Text("저장")
             }
         }

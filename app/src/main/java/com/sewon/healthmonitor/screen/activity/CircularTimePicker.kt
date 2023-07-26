@@ -30,7 +30,7 @@ fun CircularTimePicker() {
             val timePicker = view.findViewById<TimeRangePicker>(R.id.circularTimePicker)
             timePicker.setOnTimeChangeListener(object : TimeRangePicker.OnTimeChangeListener {
                 override fun onStartTimeChange(startTime: TimeRangePicker.Time) {
-                    Log.d("TimeRangePicker", "Start time: " + startTime)
+                    Log.d("asdfasdf", "Start time: " + startTime)
                 }
 
                 override fun onEndTimeChange(endTime: TimeRangePicker.Time) {
