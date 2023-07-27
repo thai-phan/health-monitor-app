@@ -29,8 +29,8 @@ import com.sewon.healthmonitor.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalGender(
-    viewModel: ViewModelCardProfile,
-    onOpenGenderModal: () -> Unit,
+    onChangeGender: (value: String) -> Unit,
+    onToggleModal: () -> Unit,
 ) {
 //    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -45,7 +45,7 @@ fun ModalGender(
 
 
     ModalBottomSheet(
-        onDismissRequest = onOpenGenderModal,
+        onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
         Row(
@@ -81,16 +81,13 @@ fun ModalGender(
                 .height(100.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            Button(onClick = onOpenGenderModal) {
+            Button(onClick = onToggleModal) {
                 Text("취소")
             }
             Spacer(modifier = Modifier.width(20.dp))
-//            Button(onClick = {viewModel.addUser()}) {
-//                Text("add")
-//            }
             Button(onClick = {
-                viewModel.changeGender(genderValue)
-                onOpenGenderModal()
+                onChangeGender(genderValue)
+                onToggleModal()
             }) {
                 Text("저장")
             }
