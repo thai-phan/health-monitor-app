@@ -106,7 +106,7 @@ class ViewModelUserSetting @Inject constructor(
 
 //        https://stackoverflow.com/questions/73839026/jetpack-compose-displaying-data-in-compose-using-mvvm
         CoroutineScope(Dispatchers.IO).launch {
-            Timber.d("CoroutineScope IO")
+            Timber.d("Userrr CoroutineScope IO")
 //            userSetting = userSettingRepository.loadUserSetting()
 //            print(userSetting.first().get(0).gender)
         }

@@ -79,32 +79,7 @@ class ViewModelCardProfile @Inject constructor(
             initialValue = ProfileSettingUiState(isLoading = true)
         )
 
-//    private fun loadUser() {
-//        viewModelScope.launch {
-//            userRepository.getCurrentUser("admin").let { user ->
-//                if (user != null) {
-//                    _uiState.update {
-//                        it.copy(
-//                            birthdayString = user.,
-//                            gender = user.description,
-//                            isLoading = false
-//                        )
-//                    }
-//                } else {
-//                    _uiState.update {
-//                        it.copy(isLoading = false)
-//                    }
-//                }
-//            }
-//
-//        }
-//    }
-
-
-    //    private var _state = MutableStateFlow<State>(State.Loading)
-//    val state = _state.asStateFlow()
     init {
-//        loadUser()
 //        https://stackoverflow.com/questions/73839026/jetpack-compose-displaying-data-in-compose-using-mvvm
         CoroutineScope(Dispatchers.IO).launch {
             Timber.tag("asdfasdf").d("CoroutineScope IO")
@@ -120,14 +95,13 @@ class ViewModelCardProfile @Inject constructor(
 //            Log.d("HomeViewModel", "init: ${_posts.value[1].id}")
 //        }
     }
-//    private val _uiState = MutableStateFlow(UiState())
-//    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
     fun changeGender(gender: String) = viewModelScope.launch {
         userRepository.updateUserGender("admin", gender)
     }
 
     fun changeBirthday(year: Int, month: Int, day: Int) = viewModelScope.launch {
+        Timber.d("changeBirthday")
         val date = Calendar.getInstance().apply {
             set(year, month, day)
         }.time
@@ -136,7 +110,6 @@ class ViewModelCardProfile @Inject constructor(
 
     override fun onCleared() {
         Timber.d("onCleared")
-//        coroutineScope.cancel()
     }
 
     private fun handleUser(user: User?): Async<User?> {
@@ -145,6 +118,4 @@ class ViewModelCardProfile @Inject constructor(
         }
         return Async.Success(user)
     }
-
-
 }
