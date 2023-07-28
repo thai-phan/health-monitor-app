@@ -3,13 +3,13 @@ package com.sewon.healthmonitor.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.sewon.healthmonitor.data.dao.RadarDao
-import com.sewon.healthmonitor.data.dao.UserDao
-import com.sewon.healthmonitor.data.dao.UserSettingDao
-import com.sewon.healthmonitor.data.entity.DateConverter
-import com.sewon.healthmonitor.data.entity.Radar
-import com.sewon.healthmonitor.data.entity.LocalUser
-import com.sewon.healthmonitor.data.entity.UserSetting
+import com.sewon.healthmonitor.data.source.local.dao.RadarDao
+import com.sewon.healthmonitor.data.source.local.dao.UserDao
+import com.sewon.healthmonitor.data.source.local.dao.UserSettingDao
+import com.sewon.healthmonitor.data.source.local.entity.DateConverter
+import com.sewon.healthmonitor.data.source.local.entity.Radar
+import com.sewon.healthmonitor.data.source.local.entity.LocalUser
+import com.sewon.healthmonitor.data.source.local.entity.UserSetting
 
 
 @Database(

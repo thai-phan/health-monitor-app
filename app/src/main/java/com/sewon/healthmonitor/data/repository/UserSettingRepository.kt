@@ -2,8 +2,8 @@ package com.sewon.healthmonitor.data.repository
 
 import com.example.android.architecture.blueprints.todoapp.di.ApplicationScope
 import com.example.android.architecture.blueprints.todoapp.di.DefaultDispatcher
-import com.sewon.healthmonitor.data.dao.UserSettingDao
-import com.sewon.healthmonitor.data.entity.UserSetting
+import com.sewon.healthmonitor.data.source.local.dao.UserSettingDao
+import com.sewon.healthmonitor.data.source.local.entity.UserSetting
 import com.sewon.healthmonitor.data.repository.repointerface.IUserSettingRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

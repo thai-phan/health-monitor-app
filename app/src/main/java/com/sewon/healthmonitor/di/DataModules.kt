@@ -19,9 +19,9 @@ package com.example.android.architecture.blueprints.todoapp.di
 import android.content.Context
 import androidx.room.Room
 import com.sewon.healthmonitor.data.HealthDatabase
-import com.sewon.healthmonitor.data.dao.RadarDao
-import com.sewon.healthmonitor.data.dao.UserDao
-import com.sewon.healthmonitor.data.dao.UserSettingDao
+import com.sewon.healthmonitor.data.source.local.dao.RadarDao
+import com.sewon.healthmonitor.data.source.local.dao.UserDao
+import com.sewon.healthmonitor.data.source.local.dao.UserSettingDao
 import com.sewon.healthmonitor.data.repository.RadarRepository
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
 

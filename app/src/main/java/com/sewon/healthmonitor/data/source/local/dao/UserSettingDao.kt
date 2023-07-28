@@ -1,9 +1,9 @@
-package com.sewon.healthmonitor.data.dao
+package com.sewon.healthmonitor.data.source.local.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
-import com.sewon.healthmonitor.data.entity.UserSetting
+import com.sewon.healthmonitor.data.source.local.entity.UserSetting
 import kotlinx.coroutines.flow.Flow
 
 

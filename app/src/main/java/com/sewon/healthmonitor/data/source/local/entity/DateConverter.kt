@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.data.entity
+package com.sewon.healthmonitor.data.source.local.entity
 
 import androidx.room.TypeConverter
 import java.util.Date

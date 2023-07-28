@@ -1,6 +1,6 @@
 package com.sewon.healthmonitor.data.repository.repointerface
 
-import com.sewon.healthmonitor.data.entity.UserSetting
+import com.sewon.healthmonitor.data.source.local.entity.UserSetting
 import kotlinx.coroutines.flow.Flow
 
 

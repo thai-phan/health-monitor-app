@@ -2,8 +2,8 @@ package com.sewon.healthmonitor.data.repository
 
 import com.example.android.architecture.blueprints.todoapp.di.ApplicationScope
 import com.example.android.architecture.blueprints.todoapp.di.DefaultDispatcher
-import com.sewon.healthmonitor.data.dao.RadarDao
-import com.sewon.healthmonitor.data.entity.Radar
+import com.sewon.healthmonitor.data.source.local.dao.RadarDao
+import com.sewon.healthmonitor.data.source.local.entity.Radar
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

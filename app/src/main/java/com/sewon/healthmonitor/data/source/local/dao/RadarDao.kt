@@ -1,11 +1,11 @@
-package com.sewon.healthmonitor.data.dao
+package com.sewon.healthmonitor.data.source.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Upsert
-import com.sewon.healthmonitor.data.entity.Radar
+import com.sewon.healthmonitor.data.source.local.entity.Radar
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -24,24 +24,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
+import java.util.Calendar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalGender(
+    uiState: ProfileSettingUiState,
     onChangeGender: (value: String) -> Unit,
     onToggleModal: () -> Unit,
 ) {
-//    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-    var skipPartiallyExpanded by remember { mutableStateOf(false) }
+    val (gender, setGender) = remember { mutableStateOf(uiState.gender) }
 
-    val scope = rememberCoroutineScope()
+    val skipPartiallyExpanded by remember { mutableStateOf(false) }
+
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = skipPartiallyExpanded
     )
-    var genderValue = "Male"
 
 
     ModalBottomSheet(
@@ -56,21 +56,18 @@ fun ModalGender(
         ) {
             AndroidView(
                 factory = { context ->
-
                     val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
-
                     val picker = view.findViewById<NumberPicker>(R.id.number_picker)
-
-                    val data = arrayOf("Male", "Female")
+                    val data = arrayOf("남성", "여성")
                     picker.minValue = 0
                     picker.maxValue = data.size - 1
                     picker.displayedValues = data
+                    picker.value = data.indexOf(gender)
                     picker.setOnValueChangedListener { picker, oldVal, newVal ->
-                        genderValue = data.get(newVal)
+                        setGender(data.get(newVal))
                         // do your other stuff depends on the new value
                     }
                     picker
-
                 }
             )
         }
@@ -86,13 +83,11 @@ fun ModalGender(
             }
             Spacer(modifier = Modifier.width(20.dp))
             Button(onClick = {
-                onChangeGender(genderValue)
+                onChangeGender(gender)
                 onToggleModal()
             }) {
                 Text("저장")
             }
         }
-
-
     }
 }

@@ -8,7 +8,8 @@ import java.io.InputStreamReader
 import java.nio.charset.Charset
 
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.data.entity.Radar
+import com.sewon.healthmonitor.data.source.local.entity.Radar
+import timber.log.Timber
 
 
 class RegularClass(private val context: Context) {
@@ -55,10 +56,8 @@ class RegularClass(private val context: Context) {
 //                wellData.setProperty(tokens[4])
 //                wellData.setWellName(tokens[5])
 //                wellDataList.add(wellData)
-                Log.d("MainActivity", "Just Created wellData")
             }
         } catch (e1: IOException) {
-            Log.e("MainActivity", "Error$line", e1)
             e1.printStackTrace()
         }
     }

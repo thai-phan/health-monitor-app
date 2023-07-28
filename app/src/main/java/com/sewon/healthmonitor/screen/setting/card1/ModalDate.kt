@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
+import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
 
@@ -31,22 +32,20 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalDate(
-    uiState: UiState,
-    onUpdateBirthday: (Date) -> Unit,
-    onSubmitBirthday: (Date) -> Unit,
+    uiState: ProfileSettingUiState,
+    onSubmitBirthday: (Int, Int, Int) -> Unit,
     onToggleModal: () -> Unit,
+) {
+    val (year, setYear) = remember { mutableStateOf(uiState.calendar.get(Calendar.YEAR)) }
+    val (month, setMonth) = remember { mutableStateOf(uiState.calendar.get(Calendar.MONTH)) }
+    val (day, setDay) = remember { mutableStateOf(uiState.calendar.get(Calendar.DAY_OF_MONTH)) }
 
-    ) {
+    val skipPartiallyExpanded by remember { mutableStateOf(false) }
 
-    var skipPartiallyExpanded by remember { mutableStateOf(false) }
-    var edgeToEdgeEnabled by remember { mutableStateOf(false) }
-
-    val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = skipPartiallyExpanded
     )
-    val calendar = Calendar.getInstance() // show today by default
-    var date: Date = calendar.time
+
 
     ModalBottomSheet(
         onDismissRequest = onToggleModal,
@@ -60,25 +59,15 @@ fun ModalDate(
                 val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
                 val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
 
-
-                if (uiState.localUser != null) {
-                    calendar.time = uiState.localUser.birthday
-                }
-
-
                 datePicker.init(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH),
-                    { view, year, monthOfYear, dayOfMonth ->
-                        // onDateChanged
-                        date = Calendar.getInstance().apply {
-                            set(year, monthOfYear, dayOfMonth)
-                        }.time
-                        Log.d("asdfasdf","Date value")
-
-                    }
-                )
+                    year,
+                    month,
+                    day
+                ) { _, year, monthOfYear, dayOfMonth ->
+                    setYear(year)
+                    setMonth(monthOfYear)
+                    setDay(dayOfMonth)
+                }
                 datePicker
             }
         )
@@ -94,7 +83,8 @@ fun ModalDate(
             }
             Spacer(modifier = Modifier.width(20.dp))
             Button(onClick = {
-                onSubmitBirthday(date)
+                onSubmitBirthday(year, month, day)
+                onToggleModal()
             }) {
                 Text("저장")
             }

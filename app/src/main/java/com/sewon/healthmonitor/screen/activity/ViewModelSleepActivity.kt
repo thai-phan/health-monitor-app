@@ -2,7 +2,7 @@ package com.sewon.healthmonitor.screen.activity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sewon.healthmonitor.data.entity.Radar
+import com.sewon.healthmonitor.data.source.local.entity.Radar
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

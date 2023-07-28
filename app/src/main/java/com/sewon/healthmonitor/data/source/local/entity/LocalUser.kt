@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.data.entity
+package com.sewon.healthmonitor.data.source.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

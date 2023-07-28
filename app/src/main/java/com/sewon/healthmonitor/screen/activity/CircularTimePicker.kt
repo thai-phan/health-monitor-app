@@ -3,7 +3,6 @@ package com.sewon.healthmonitor.screen.activity
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
 import nl.joery.timerangepicker.TimeRangePicker
+import timber.log.Timber
 
 
 val Int.px: Int
@@ -30,15 +30,15 @@ fun CircularTimePicker() {
             val timePicker = view.findViewById<TimeRangePicker>(R.id.circularTimePicker)
             timePicker.setOnTimeChangeListener(object : TimeRangePicker.OnTimeChangeListener {
                 override fun onStartTimeChange(startTime: TimeRangePicker.Time) {
-                    Log.d("asdfasdf", "Start time: " + startTime)
+                    Timber.d("Start time: %s", startTime)
                 }
 
                 override fun onEndTimeChange(endTime: TimeRangePicker.Time) {
-                    Log.d("TimeRangePicker", "End time: " + endTime.hour)
+                    Timber.d("End time: %s", endTime.hour)
                 }
 
                 override fun onDurationChange(duration: TimeRangePicker.TimeDuration) {
-                    Log.d("TimeRangePicker", "Duration: " + duration.hour)
+                    Timber.d("Duration: %s", duration.hour)
                 }
             })
 

@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.data.dao
+package com.sewon.healthmonitor.data.source.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Upsert
-import com.sewon.healthmonitor.data.entity.LocalUser
+import com.sewon.healthmonitor.data.source.local.entity.LocalUser
 import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
@@ -17,7 +17,6 @@ interface UserDao {
 
     @Query("SELECT * FROM user WHERE uid IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<LocalUser>
-
 
     @Query("SELECT * FROM user WHERE birthday = :targetDate")
     fun findUsersBornOnDate(targetDate: Date): List<LocalUser>
@@ -36,6 +35,9 @@ interface UserDao {
 
     @Upsert
     suspend fun upsert(localUser: LocalUser)
+
+    @Query("SELECT count(username) FROM user")
+    fun countUser(): Flow<Int>
 
 
 //    @Query("SELECT * FROM user WHERE name LIKE :name LIMIT 1")

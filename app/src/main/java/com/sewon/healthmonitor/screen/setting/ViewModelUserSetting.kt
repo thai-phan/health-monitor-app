@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.setting.card1
+package com.sewon.healthmonitor.screen.setting
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.data.model.User
 import com.sewon.healthmonitor.data.repository.UserRepository
+import com.sewon.healthmonitor.data.repository.UserSettingRepository
 import com.sewon.healthmonitor.util.Async
 import com.sewon.healthmonitor.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -27,7 +29,7 @@ import javax.inject.Inject
 
 data class ProfileSettingUiState(
     val calendar: Calendar = Calendar.getInstance(),
-    val birthday: String = "",
+    val birthdayString: String = "",
     val gender: String = "",
     val isLoading: Boolean = false,
     val userMessage: Int? = null
@@ -35,15 +37,19 @@ data class ProfileSettingUiState(
 
 
 @HiltViewModel
-class ViewModelCardProfile @Inject constructor(
+class ViewModelUserSetting @Inject constructor(
+    private val userSettingRepository: UserSettingRepository,
     private val userRepository: UserRepository,
-) : ViewModel() {
+
+    ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(false)
     private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
     private var _userAsync = userRepository.getCurrentUser("admin")
-        .map { handleUser(it) }
+        .map { handleTask(it) }
         .catch { emit(Async.Error(R.string.loading_user_error)) }
+
+    private val _uiState = MutableStateFlow(ProfileSettingUiState())
 
 
     val uiState: StateFlow<ProfileSettingUiState> =
@@ -66,8 +72,7 @@ class ViewModelCardProfile @Inject constructor(
                     val birthdayString = dateformat.format(calendar.time)
                     ProfileSettingUiState(
                         calendar = calendar,
-                        gender = userAsync.data!!.gender,
-                        birthday = birthdayString,
+                        birthdayString = birthdayString,
                         isLoading = isLoading,
                         userMessage = userMessage
                     )
@@ -79,35 +84,29 @@ class ViewModelCardProfile @Inject constructor(
             initialValue = ProfileSettingUiState(isLoading = true)
         )
 
-//    private fun loadUser() {
-//        viewModelScope.launch {
-//            userRepository.getCurrentUser("admin").let { user ->
-//                if (user != null) {
-//                    _uiState.update {
-//                        it.copy(
-//                            birthdayString = user.,
-//                            gender = user.description,
-//                            isLoading = false
-//                        )
-//                    }
-//                } else {
-//                    _uiState.update {
-//                        it.copy(isLoading = false)
-//                    }
-//                }
-//            }
-//
-//        }
-//    }
+    private fun loadUser() {
+        viewModelScope.launch {
+            if (userRepository.countUser().first() == 0) {
+                val str = "1993-12-27"
+                val df = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+                val date: Date = df.parse(str)
+                val user = User("admin_id", "admin", "남성", date, "cc", "dd", "eee")
+                userRepository.addUser(user)
+            }
+        }
+    }
 
 
     //    private var _state = MutableStateFlow<State>(State.Loading)
 //    val state = _state.asStateFlow()
     init {
-//        loadUser()
+
+        loadUser()
+
+
 //        https://stackoverflow.com/questions/73839026/jetpack-compose-displaying-data-in-compose-using-mvvm
         CoroutineScope(Dispatchers.IO).launch {
-            Timber.tag("asdfasdf").d("CoroutineScope IO")
+            Timber.d("CoroutineScope IO")
 //            userSetting = userSettingRepository.loadUserSetting()
 //            print(userSetting.first().get(0).gender)
         }
@@ -115,35 +114,23 @@ class ViewModelCardProfile @Inject constructor(
 //            _posts.value = KtorClient.httpClient.get("https://learnchn.herokuapp.com/") {
 //                header("Content-Type", "application/json")
 //            }
-//
-//            Log.d("HomeViewModel", "init: ${_posts.value[1].phrase}")
-//            Log.d("HomeViewModel", "init: ${_posts.value[1].id}")
 //        }
     }
 //    private val _uiState = MutableStateFlow(UiState())
 //    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    fun changeGender(gender: String) = viewModelScope.launch {
-        userRepository.updateUserGender("admin", gender)
-    }
 
-    fun changeBirthday(year: Int, month: Int, day: Int) = viewModelScope.launch {
-        val date = Calendar.getInstance().apply {
-            set(year, month, day)
-        }.time
-        userRepository.updateUserBirthday("admin", date)
+
+    private fun handleTask(user: User?): Async<User?> {
+        if (user == null) {
+            return Async.Error(R.string.user_not_found)
+        }
+        return Async.Success(user)
     }
 
     override fun onCleared() {
         Timber.d("onCleared")
 //        coroutineScope.cancel()
-    }
-
-    private fun handleUser(user: User?): Async<User?> {
-        if (user == null) {
-            return Async.Error(R.string.user_not_found)
-        }
-        return Async.Success(user)
     }
 
 

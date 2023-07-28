@@ -1,6 +1,6 @@
 package com.sewon.healthmonitor.data.repository.repointerface
 
-import com.sewon.healthmonitor.data.entity.Radar
+import com.sewon.healthmonitor.data.source.local.entity.Radar
 import kotlinx.coroutines.flow.Flow
 
 

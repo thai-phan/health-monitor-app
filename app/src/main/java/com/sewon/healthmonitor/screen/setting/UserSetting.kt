@@ -30,8 +30,9 @@ import com.sewon.healthmonitor.common.theme.uncheckedTrackColor
 import com.sewon.healthmonitor.screen.setting.card1.ViewModelCardProfile
 
 @Composable
-fun UserSetting(modifier: Modifier = Modifier,
-
+fun UserSetting(
+    modifier: Modifier = Modifier,
+    viewModel: ViewModelUserSetting = hiltViewModel()
 ) {
     val switchColors: SwitchColors = SwitchDefaults.colors(
         checkedThumbColor = checkedThumbColor,

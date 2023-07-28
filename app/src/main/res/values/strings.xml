@@ -4,4 +4,8 @@
     <string name="activity_page">Activity</string>
     <string name="report_page">Report</string>
     <string name="user_page">User</string>
+
+    <string name="user_not_found">User not found</string>
+    <string name="loading_user_error">Error while loading user</string>
+
 </resources>

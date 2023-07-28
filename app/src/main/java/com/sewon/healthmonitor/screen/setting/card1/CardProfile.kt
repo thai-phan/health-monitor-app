@@ -67,9 +67,7 @@ fun ProfileSetting(
                         openGenderModal = !openGenderModal
                     },
                 ) {
-                    uiState.localUser?.let {
-                        Text(it.gender, color = Color.White)
-                    }
+                    Text(uiState.gender, color = Color.White)
                     Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -92,7 +90,7 @@ fun ProfileSetting(
                         openDateModal = !openDateModal
                     },
                 ) {
-                    Text(uiState.birthdayString, color = Color.White)
+                    Text(uiState.birthday, color = Color.White)
                     Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -107,6 +105,7 @@ fun ProfileSetting(
 
     if (openGenderModal) {
         ModalGender(
+            uiState,
             onChangeGender = viewModel::changeGender,
             onToggleModal = { openGenderModal = !openGenderModal })
     }
@@ -114,7 +113,6 @@ fun ProfileSetting(
     if (openDateModal) {
         ModalDate(
             uiState,
-            onUpdateBirthday = viewModel::changeBirthday,
             onSubmitBirthday = viewModel::changeBirthday,
             onToggleModal = { openDateModal = !openDateModal })
     }
