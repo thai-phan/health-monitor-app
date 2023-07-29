@@ -20,12 +20,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
 
-data class ProfileSettingUiState(
+data class ProfileUiState(
     val calendar: Calendar = Calendar.getInstance(),
     val birthday: String = "",
     val gender: String = "",
@@ -38,23 +37,22 @@ data class ProfileSettingUiState(
 class ViewModelCardProfile @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
-
+    var curUsername = "admin_id"
     private val _isLoading = MutableStateFlow(false)
     private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
-    private var _userAsync = userRepository.getCurrentUser("admin")
-        .map { handleUser(it) }
+    private var _userAsync = userRepository.getUserByUsername(curUsername).map { handleUser(it) }
         .catch { emit(Async.Error(R.string.loading_user_error)) }
 
 
-    val uiState: StateFlow<ProfileSettingUiState> =
+    val uiState: StateFlow<ProfileUiState> =
         combine(_userAsync, _userMessage, _isLoading) { userAsync, userMessage, isLoading ->
             when (userAsync) {
                 Async.Loading -> {
-                    ProfileSettingUiState(isLoading = true)
+                    ProfileUiState(isLoading = true)
                 }
 
                 is Async.Error -> {
-                    ProfileSettingUiState(userMessage = userAsync.errorMessage)
+                    ProfileUiState(userMessage = userAsync.errorMessage)
                 }
 
                 is Async.Success -> {
@@ -64,7 +62,7 @@ class ViewModelCardProfile @Inject constructor(
                     }
                     val dateformat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
                     val birthdayString = dateformat.format(calendar.time)
-                    ProfileSettingUiState(
+                    ProfileUiState(
                         calendar = calendar,
                         gender = userAsync.data!!.gender,
                         birthday = birthdayString,
@@ -76,7 +74,7 @@ class ViewModelCardProfile @Inject constructor(
         }.stateIn(
             scope = viewModelScope,
             started = WhileUiSubscribed,
-            initialValue = ProfileSettingUiState(isLoading = true)
+            initialValue = ProfileUiState(isLoading = true)
         )
 
     init {
@@ -97,7 +95,7 @@ class ViewModelCardProfile @Inject constructor(
     }
 
     fun changeGender(gender: String) = viewModelScope.launch {
-        userRepository.updateUserGender("admin", gender)
+        userRepository.updateUserGender(curUsername, gender)
     }
 
     fun changeBirthday(year: Int, month: Int, day: Int) = viewModelScope.launch {
@@ -105,7 +103,7 @@ class ViewModelCardProfile @Inject constructor(
         val date = Calendar.getInstance().apply {
             set(year, month, day)
         }.time
-        userRepository.updateUserBirthday("admin", date)
+        userRepository.updateUserBirthday(curUsername, date)
     }
 
     override fun onCleared() {

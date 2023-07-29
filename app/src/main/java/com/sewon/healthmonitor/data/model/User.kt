@@ -10,8 +10,8 @@ data class User(
     var gender: String,
     val birthday: Date,
     val signupDate: String,
-    val createdAt: String,
-    val updatedAt: String,
+    val createdAt: Date,
+    val updatedAt: Date,
 )
 
 // Model mapping

@@ -9,7 +9,7 @@ import com.sewon.healthmonitor.data.source.local.entity.Radar
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface RadarDao {
+interface LocalRadarDao {
     @Query("SELECT * FROM radar")
     fun getAllTopper(): Flow<List<Radar>>
 

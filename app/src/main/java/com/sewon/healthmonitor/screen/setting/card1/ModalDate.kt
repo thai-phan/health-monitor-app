@@ -1,6 +1,5 @@
 package com.sewon.healthmonitor.screen.setting.card1
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
@@ -18,21 +17,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
-import timber.log.Timber
 import java.util.Calendar
-import java.util.Date
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalDate(
-    uiState: ProfileSettingUiState,
+    uiState: ProfileUiState,
     onSubmitBirthday: (Int, Int, Int) -> Unit,
     onToggleModal: () -> Unit,
 ) {

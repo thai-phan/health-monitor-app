@@ -27,11 +27,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sewon.healthmonitor.screen.setting.card1.ViewModelCardProfile
 
 // Card 2
 @Composable
-fun SleepSetting(switchColors: SwitchColors) {
+fun SleepSetting(
+    viewModel: ViewModelCardSleep = hiltViewModel(),
+    switchColors: SwitchColors
+) {
 
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    var openSleepTimeModel by rememberSaveable { mutableStateOf(false) }
+    var openDateModal by rememberSaveable { mutableStateOf(false) }
+
+    var checkedOne by remember { mutableStateOf(uiState.alarmOn) }
+    var checkedTwo by remember { mutableStateOf(uiState.alarmOn) }
+    var checkedThree by remember { mutableStateOf(uiState.alarmOn) }
 
     Card(
         shape = RoundedCornerShape(size = 10.dp),
@@ -51,7 +66,6 @@ fun SleepSetting(switchColors: SwitchColors) {
             Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
             Spacer(modifier = Modifier.height(5.dp))
 
-            var checkedOne by remember { mutableStateOf(true) }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -67,7 +81,6 @@ fun SleepSetting(switchColors: SwitchColors) {
                     onCheckedChange = { checkedOne = it })
             }
 
-            var checkedTwo by remember { mutableStateOf(true) }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -83,7 +96,6 @@ fun SleepSetting(switchColors: SwitchColors) {
                     onCheckedChange = { checkedTwo = it })
             }
 
-            var checkedThree by remember { mutableStateOf(true) }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

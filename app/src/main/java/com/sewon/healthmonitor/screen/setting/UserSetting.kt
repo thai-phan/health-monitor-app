@@ -31,8 +31,7 @@ import com.sewon.healthmonitor.screen.setting.card1.ViewModelCardProfile
 
 @Composable
 fun UserSetting(
-    modifier: Modifier = Modifier,
-    viewModel: ViewModelUserSetting = hiltViewModel()
+    modifier: Modifier = Modifier, viewModel: ViewModelUserSetting = hiltViewModel()
 ) {
     val switchColors: SwitchColors = SwitchDefaults.colors(
         checkedThumbColor = checkedThumbColor,
@@ -43,28 +42,23 @@ fun UserSetting(
         uncheckedBorderColor = uncheckedBorderColor,
     )
     Column(
-        modifier = modifier
-            .padding(
-                start = 20.dp,
-                top = 20.dp,
-                end = 20.dp,
-                bottom = 10.dp
+        modifier = modifier.padding(
+                start = 20.dp, top = 20.dp, end = 20.dp, bottom = 10.dp
             ),
     ) {
         Text("내 설정", fontWeight = FontWeight.Bold, fontSize = 24.sp)
         Spacer(modifier = Modifier.height(20.dp))
         Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState()),
+            modifier = Modifier.verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             ProfileSetting()
 
-            SleepSetting(switchColors)
+            SleepSetting(switchColors = switchColors)
 
-            InductionSolutionSetting(switchColors)
+            InductionSolutionSetting(switchColors = switchColors)
 
-            GeneralSetting(switchColors)
+            GeneralSetting(switchColors = switchColors)
         }
 
 //        PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))

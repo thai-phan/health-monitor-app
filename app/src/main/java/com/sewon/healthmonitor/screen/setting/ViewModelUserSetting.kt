@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.data.model.User
 import com.sewon.healthmonitor.data.repository.UserRepository
-import com.sewon.healthmonitor.data.repository.UserSettingRepository
+import com.sewon.healthmonitor.data.repository.SettingRepository
 import com.sewon.healthmonitor.util.Async
 import com.sewon.healthmonitor.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,14 +38,14 @@ data class ProfileSettingUiState(
 
 @HiltViewModel
 class ViewModelUserSetting @Inject constructor(
-    private val userSettingRepository: UserSettingRepository,
+    private val settingRepository: SettingRepository,
     private val userRepository: UserRepository,
 
     ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(false)
     private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
-    private var _userAsync = userRepository.getCurrentUser("admin")
+    private var _userAsync = userRepository.getUserByUsername("admin")
         .map { handleTask(it) }
         .catch { emit(Async.Error(R.string.loading_user_error)) }
 
@@ -87,10 +87,11 @@ class ViewModelUserSetting @Inject constructor(
     private fun loadUser() {
         viewModelScope.launch {
             if (userRepository.countUser().first() == 0) {
-                val str = "1993-12-27"
+                val str = "1955-04-16"
                 val df = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
                 val date: Date = df.parse(str)
-                val user = User("admin_id", "admin", "남성", date, "cc", "dd", "eee")
+                val curDate = Calendar.getInstance().time
+                val user = User("admin_id", "admin", "남성", date, "cc", curDate, curDate)
                 userRepository.addUser(user)
             }
         }
