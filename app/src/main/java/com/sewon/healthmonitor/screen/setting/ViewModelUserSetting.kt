@@ -87,7 +87,7 @@ class ViewModelUserSetting @Inject constructor(
     private fun loadUser() {
         viewModelScope.launch {
             if (userRepository.countUser().first() == 0) {
-                val str = "1993-12-27"
+                val str = "1955-04-16"
                 val df = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
                 val date: Date = df.parse(str)
                 val user = User("admin_id", "admin", "남성", date, "cc", "dd", "eee")
