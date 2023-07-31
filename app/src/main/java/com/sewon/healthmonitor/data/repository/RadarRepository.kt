@@ -3,7 +3,7 @@ package com.sewon.healthmonitor.data.repository
 import com.example.android.architecture.blueprints.todoapp.di.ApplicationScope
 import com.example.android.architecture.blueprints.todoapp.di.DefaultDispatcher
 import com.sewon.healthmonitor.data.source.local.dao.LocalRadarDao
-import com.sewon.healthmonitor.data.source.local.entity.Radar
+import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +18,7 @@ class RadarRepository @Inject constructor(
 
 
 
-    override fun getTopper(): Flow<List<Radar>> {
+    override fun getTopper(): Flow<List<LocalRadar>> {
         return LocalRadarDao.getAllTopper()
     }
 
@@ -30,8 +30,8 @@ class RadarRepository @Inject constructor(
 
 
 
-    override suspend fun createTopper(radar: Radar): String {
-        LocalRadarDao.upsert(radar)
+    override suspend fun createTopper(localRadar: LocalRadar): String {
+        LocalRadarDao.upsert(localRadar)
         return "Done"
     }
 

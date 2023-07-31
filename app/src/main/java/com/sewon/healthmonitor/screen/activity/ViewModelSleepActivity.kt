@@ -2,7 +2,7 @@ package com.sewon.healthmonitor.screen.activity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sewon.healthmonitor.data.source.local.entity.Radar
+import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,9 +36,9 @@ class ViewModelSleepActivity @Inject constructor(
 
 
     fun createNewTask() = viewModelScope.launch {
-        val radar = Radar(0.1f, 0.1f, 0.1f, "X", "X", "X", "X")
+        val localRadar = LocalRadar(0.1f, 0.1f, 0.1f, "X", "X", "X", "X")
 
-        IRadarRepository.createTopper(radar)
+        IRadarRepository.createTopper(localRadar)
         _uiState.update {
             it.copy(status1 = "Ahahahah")
         }

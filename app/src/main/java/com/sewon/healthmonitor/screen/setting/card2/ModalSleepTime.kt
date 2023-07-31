@@ -1,7 +1,7 @@
 package com.sewon.healthmonitor.screen.setting.card2
 
 import android.view.LayoutInflater
-import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,54 +17,54 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
-import java.util.Calendar
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalAlarmSetting(
+fun ModalSleepTime(
     uiState: SleepUiState,
-    onToggleModal: () -> Unit) {
+    onChangeAlarm: (value: Boolean) -> Unit,
+    onToggleModal: () -> Unit
+) {
 
-    var skipPartiallyExpanded by remember { mutableStateOf(false) }
-    var edgeToEdgeEnabled by remember { mutableStateOf(false) }
+    val (time, setTime) = remember { mutableStateOf(uiState.alarmTime) }
 
-    val scope = rememberCoroutineScope()
+    val skipPartiallyExpanded by remember { mutableStateOf(false) }
+
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = skipPartiallyExpanded
     )
+
 
     ModalBottomSheet(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
-        AndroidView(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),
-            factory = { context ->
-                val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
-                val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
-                val calendar = Calendar.getInstance() // show today by default
-                datePicker.init(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-                ) { _, year, monthOfYear, dayOfMonth ->
-                    val date = Calendar.getInstance().apply {
-                        set(year, monthOfYear, dayOfMonth)
-                    }.time
-//                onSelectedDateUpdate(date)
+            horizontalArrangement = Arrangement.Center
+        ) {
+            AndroidView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                factory = { context ->
+                    val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
+                    val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
+
+                    timePicker.hour = 0x07
+                    timePicker.minute = 0x07
+
+                    timePicker
                 }
-                datePicker
-            }
-        )
+            )
+
+        }
 
         Row(
             modifier = Modifier
@@ -76,7 +76,9 @@ fun ModalAlarmSetting(
                 Text("취소")
             }
             Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {}) {
+            Button(onClick = {
+                onToggleModal()
+            }) {
                 Text("저장")
             }
         }

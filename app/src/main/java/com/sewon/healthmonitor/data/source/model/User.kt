@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.data.model
+package com.sewon.healthmonitor.data.source.model
 
 import com.sewon.healthmonitor.data.source.local.entity.LocalUser
 import java.util.Date

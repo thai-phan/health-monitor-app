@@ -17,7 +17,6 @@ import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,23 +29,20 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sewon.healthmonitor.screen.setting.card1.ViewModelCardProfile
 
 // Card 2
 @Composable
 fun SleepSetting(
-    viewModel: ViewModelCardSleep = hiltViewModel(),
-    switchColors: SwitchColors
+    viewModel: ViewModelCardSleep = hiltViewModel(), switchColors: SwitchColors
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var openSleepTimeModel by rememberSaveable { mutableStateOf(false) }
-    var openDateModal by rememberSaveable { mutableStateOf(false) }
+    var openSleepTimeModal by rememberSaveable { mutableStateOf(false) }
+    var openWakeupModal by rememberSaveable { mutableStateOf(false) }
+    var openAlarmModal by rememberSaveable { mutableStateOf(false) }
 
-    var checkedOne by remember { mutableStateOf(uiState.alarmOn) }
-    var checkedTwo by remember { mutableStateOf(uiState.alarmOn) }
-    var checkedThree by remember { mutableStateOf(uiState.alarmOn) }
+    var openDateModal by rememberSaveable { mutableStateOf(false) }
 
     Card(
         shape = RoundedCornerShape(size = 10.dp),
@@ -69,47 +65,71 @@ fun SleepSetting(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { checkedOne = !checkedOne }),
+                    .clickable(onClick = { openSleepTimeModal = !openSleepTimeModal }),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text("기상알람시간")
-                Switch(
-                    colors = switchColors,
+                Switch(colors = switchColors,
                     modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checkedOne,
-                    onCheckedChange = { checkedOne = it })
+                    checked = uiState.alarmOn,
+                    onCheckedChange = {
+                        viewModel.toggleAlarmSetting(it)
+                    })
             }
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { checkedTwo = !checkedTwo }),
+                    .clickable(onClick = { openDateModal = !openDateModal }),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text("취침시간")
-                Switch(
-                    colors = switchColors,
+                Switch(colors = switchColors,
                     modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checkedTwo,
-                    onCheckedChange = { checkedTwo = it })
+                    checked = uiState.alarmOn,
+                    onCheckedChange = {
+                        viewModel.toggleAlarmSetting(it)
+                    })
             }
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { checkedThree = !checkedThree }),
+                    .clickable(onClick = { openAlarmModal = !openAlarmModal }),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text("알람설정")
-                Switch(
-                    colors = switchColors,
+                Switch(colors = switchColors,
                     modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checkedThree,
-                    onCheckedChange = { checkedThree = it })
+                    checked = uiState.alarmOn,
+                    onCheckedChange = {
+                        viewModel.toggleAlarmSetting(it)
+                    })
             }
         }
+    }
+
+
+    if (openSleepTimeModal) {
+        ModalSleepTime(
+            uiState,
+            onChangeAlarm = viewModel::toggleAlarmSetting,
+            onToggleModal = { openSleepTimeModal = !openSleepTimeModal })
+    }
+
+    if (openWakeupModal) {
+        ModelWakeUpTime(
+            uiState,
+            onChangeAlarm = viewModel::toggleAlarmSetting,
+            onToggleModal = { openWakeupModal = !openWakeupModal })
+    }
+
+    if (openAlarmModal) {
+        ModalAlarmSetting(
+            uiState,
+            onToggleModal = { openDateModal = !openDateModal })
     }
 }

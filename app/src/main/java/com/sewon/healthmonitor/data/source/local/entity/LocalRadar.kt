@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "radar")
-data class Radar(
+data class LocalRadar(
     @ColumnInfo(name = "rb") val rb: Float,
     @ColumnInfo(name = "hr") val hr: Float,
     @ColumnInfo(name = "rri") val rri: Float,

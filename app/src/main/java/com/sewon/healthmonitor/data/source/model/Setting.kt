@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.data.model
+package com.sewon.healthmonitor.data.source.model
 
 import com.sewon.healthmonitor.data.source.local.entity.LocalSetting
 import java.util.Date
@@ -6,13 +6,13 @@ import java.util.Date
 data class Setting(
     val userId: Int,
     val alarmTime: String,
-    val bedTime: Float,
+    val bedTime: String,
     val alarmOn: Boolean,
-    val energyOn: String,
-    val soundOn: String,
-    val cacheOn: String,
-    val initOn: String,
-    val sosOn: String,
+    val energyOn: Boolean,
+    val soundOn: Boolean,
+    val cacheOn: Boolean,
+    val initOn: Boolean,
+    val sosOn: Boolean,
     val productSn: String,
     val threshold: String,
     val createdAt: Date,

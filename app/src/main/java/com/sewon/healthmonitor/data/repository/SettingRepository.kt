@@ -2,12 +2,11 @@ package com.sewon.healthmonitor.data.repository
 
 import com.example.android.architecture.blueprints.todoapp.di.ApplicationScope
 import com.example.android.architecture.blueprints.todoapp.di.DefaultDispatcher
-import com.sewon.healthmonitor.data.model.Setting
-import com.sewon.healthmonitor.data.model.toExternal
-import com.sewon.healthmonitor.data.model.toLocal
+import com.sewon.healthmonitor.data.source.model.Setting
+import com.sewon.healthmonitor.data.source.model.toExternal
 import com.sewon.healthmonitor.data.source.local.dao.LocalSettingDao
-import com.sewon.healthmonitor.data.source.local.entity.LocalSetting
 import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
+import com.sewon.healthmonitor.data.source.model.toLocal
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -20,13 +19,21 @@ class SettingRepository @Inject constructor(
     @ApplicationScope private val scope: CoroutineScope,
 ): ISettingRepository {
 
-    override fun loadUserSetting(user_id: Int): Flow<Setting> {
-        return localSettingDao.queryUserSetting(user_id).map { it.toExternal() }
+    suspend fun addSetting(setting: Setting) {
+        return localSettingDao.upsert(setting.toLocal())
+    }
+
+    override fun loadUserSetting(userId: Int): Flow<Setting> {
+        return localSettingDao.querySettingByUserId(userId).map { it.toExternal() }
     }
 
     override suspend fun updateUserAlarm(userId: Int, alarmOn: Boolean): String {
         var aaa = localSettingDao.updateAlarmSetting(userId, alarmOn)
         return "Done"
+    }
+
+    suspend fun countSetting(): Flow<Int> {
+        return localSettingDao.countSetting()
     }
 
 

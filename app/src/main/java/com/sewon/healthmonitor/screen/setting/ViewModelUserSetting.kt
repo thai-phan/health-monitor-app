@@ -5,7 +5,8 @@ import android.icu.util.Calendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.data.model.User
+import com.sewon.healthmonitor.data.source.model.Setting
+import com.sewon.healthmonitor.data.source.model.User
 import com.sewon.healthmonitor.data.repository.UserRepository
 import com.sewon.healthmonitor.data.repository.SettingRepository
 import com.sewon.healthmonitor.util.Async
@@ -40,49 +41,7 @@ data class ProfileSettingUiState(
 class ViewModelUserSetting @Inject constructor(
     private val settingRepository: SettingRepository,
     private val userRepository: UserRepository,
-
-    ) : ViewModel() {
-
-    private val _isLoading = MutableStateFlow(false)
-    private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
-    private var _userAsync = userRepository.getUserByUsername("admin")
-        .map { handleTask(it) }
-        .catch { emit(Async.Error(R.string.loading_user_error)) }
-
-    private val _uiState = MutableStateFlow(ProfileSettingUiState())
-
-
-    val uiState: StateFlow<ProfileSettingUiState> =
-        combine(_userAsync, _userMessage, _isLoading) { userAsync, userMessage, isLoading ->
-            when (userAsync) {
-                Async.Loading -> {
-                    ProfileSettingUiState(isLoading = true)
-                }
-
-                is Async.Error -> {
-                    ProfileSettingUiState(userMessage = userAsync.errorMessage)
-                }
-
-                is Async.Success -> {
-                    val calendar = Calendar.getInstance()
-                    if (userAsync.data !== null) {
-                        calendar.time = userAsync.data.birthday
-                    }
-                    val dateformat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
-                    val birthdayString = dateformat.format(calendar.time)
-                    ProfileSettingUiState(
-                        calendar = calendar,
-                        birthdayString = birthdayString,
-                        isLoading = isLoading,
-                        userMessage = userMessage
-                    )
-                }
-            }
-        }.stateIn(
-            scope = viewModelScope,
-            started = WhileUiSubscribed,
-            initialValue = ProfileSettingUiState(isLoading = true)
-        )
+) : ViewModel() {
 
     private fun loadUser() {
         viewModelScope.launch {
@@ -94,33 +53,34 @@ class ViewModelUserSetting @Inject constructor(
                 val user = User("admin_id", "admin", "남성", date, "cc", curDate, curDate)
                 userRepository.addUser(user)
             }
+
+            if (settingRepository.countSetting().first() == 0) {
+                val curDate = Calendar.getInstance().time
+                val setting = Setting(
+                    userId = 0,
+                    alarmTime = "07:00",
+                    bedTime = "22:00",
+                    alarmOn = false,
+                    energyOn = false,
+                    soundOn = false,
+                    cacheOn = false,
+                    initOn = false,
+                    sosOn = false,
+                    productSn = "aa",
+                    threshold = "threshold",
+                    createdAt = curDate,
+                    updatedAt = curDate,
+                    )
+                settingRepository.addSetting(setting)
+
+            }
         }
     }
 
-
-    //    private var _state = MutableStateFlow<State>(State.Loading)
-//    val state = _state.asStateFlow()
     init {
-
+        // Seed data
         loadUser()
-
-
-//        https://stackoverflow.com/questions/73839026/jetpack-compose-displaying-data-in-compose-using-mvvm
-        CoroutineScope(Dispatchers.IO).launch {
-            Timber.d("Userrr CoroutineScope IO")
-//            userSetting = userSettingRepository.loadUserSetting()
-//            print(userSetting.first().get(0).gender)
-        }
-//            /* _posts.value is used now due to the datatype change */
-//            _posts.value = KtorClient.httpClient.get("https://learnchn.herokuapp.com/") {
-//                header("Content-Type", "application/json")
-//            }
-//        }
     }
-//    private val _uiState = MutableStateFlow(UiState())
-//    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
-
-
 
     private fun handleTask(user: User?): Async<User?> {
         if (user == null) {

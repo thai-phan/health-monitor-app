@@ -7,7 +7,7 @@ import com.sewon.healthmonitor.data.source.local.dao.LocalRadarDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalUserDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalSettingDao
 import com.sewon.healthmonitor.data.source.local.entity.DateConverter
-import com.sewon.healthmonitor.data.source.local.entity.Radar
+import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 import com.sewon.healthmonitor.data.source.local.entity.LocalUser
 import com.sewon.healthmonitor.data.source.local.entity.LocalSetting
 
@@ -15,7 +15,7 @@ import com.sewon.healthmonitor.data.source.local.entity.LocalSetting
 @Database(
     entities = [
         LocalUser::class,
-        Radar::class,
+        LocalRadar::class,
         LocalSetting::class
 
     ], version = 1

@@ -1,15 +1,13 @@
 package com.sewon.healthmonitor.data
 
 import android.content.Context
-import android.util.Log
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.nio.charset.Charset
 
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.data.source.local.entity.Radar
-import timber.log.Timber
+import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 
 
 class RegularClass(private val context: Context) {
@@ -33,7 +31,7 @@ class RegularClass(private val context: Context) {
                 // Read the data and store it in the WellData POJO.
 
 
-                var radar: Radar = Radar(
+                var localRadar: LocalRadar = LocalRadar(
                     rb = tokens[0].toFloat(),
                     hr = tokens[0].toFloat(),
                     rri = tokens[0].toFloat(),

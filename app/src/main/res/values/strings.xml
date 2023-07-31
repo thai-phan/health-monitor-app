@@ -8,4 +8,6 @@
     <string name="user_not_found">User not found</string>
     <string name="loading_user_error">Error while loading user</string>
 
+    <string name="setting_not_found">Setting not found</string>
+
 </resources>

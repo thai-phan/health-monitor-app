@@ -5,7 +5,7 @@ import android.icu.util.Calendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.data.model.User
+import com.sewon.healthmonitor.data.source.model.User
 import com.sewon.healthmonitor.data.repository.UserRepository
 import com.sewon.healthmonitor.util.Async
 import com.sewon.healthmonitor.util.WhileUiSubscribed
