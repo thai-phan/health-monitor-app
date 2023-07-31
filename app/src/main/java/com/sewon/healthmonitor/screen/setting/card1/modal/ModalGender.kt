@@ -1,7 +1,7 @@
-package com.sewon.healthmonitor.screen.setting.card2
+package com.sewon.healthmonitor.screen.setting.card1.modal
 
 import android.view.LayoutInflater
-import android.widget.TimePicker
+import android.widget.NumberPicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,16 +21,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
+import com.sewon.healthmonitor.screen.setting.card1.ProfileUiState
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalSleepTime(
-    uiState: SleepUiState,
-    onChangeAlarm: (value: Boolean) -> Unit,
-    onToggleModal: () -> Unit
+fun ModalGender(
+    uiState: ProfileUiState,
+    onChangeGender: (value: String) -> Unit,
+    onToggleModal: () -> Unit,
 ) {
 
-    val (time, setTime) = remember { mutableStateOf(uiState.alarmTime) }
+    val (gender, setGender) = remember { mutableStateOf(uiState.gender) }
 
     val skipPartiallyExpanded by remember { mutableStateOf(false) }
 
@@ -50,20 +52,21 @@ fun ModalSleepTime(
             horizontalArrangement = Arrangement.Center
         ) {
             AndroidView(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
                 factory = { context ->
-                    val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
-                    val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
-
-                    timePicker.hour = 0x07
-                    timePicker.minute = 0x07
-
-                    timePicker
+                    val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
+                    val picker = view.findViewById<NumberPicker>(R.id.number_picker)
+                    val data = arrayOf("남성", "여성")
+                    picker.minValue = 0
+                    picker.maxValue = data.size - 1
+                    picker.displayedValues = data
+                    picker.value = data.indexOf(gender)
+                    picker.setOnValueChangedListener { picker, oldVal, newVal ->
+                        setGender(data.get(newVal))
+                        // do your other stuff depends on the new value
+                    }
+                    picker
                 }
             )
-
         }
 
         Row(
@@ -77,6 +80,7 @@ fun ModalSleepTime(
             }
             Spacer(modifier = Modifier.width(20.dp))
             Button(onClick = {
+                onChangeGender(gender)
                 onToggleModal()
             }) {
                 Text("저장")

@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.setting.card3
+package com.sewon.healthmonitor.screen.setting.card3.modal
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet

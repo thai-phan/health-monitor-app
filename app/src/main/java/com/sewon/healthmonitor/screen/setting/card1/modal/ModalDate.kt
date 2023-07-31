@@ -1,7 +1,7 @@
-package com.sewon.healthmonitor.screen.setting.card2
+package com.sewon.healthmonitor.screen.setting.card1.modal
 
 import android.view.LayoutInflater
-import android.widget.TimePicker
+import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,16 +21,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
+import com.sewon.healthmonitor.screen.setting.card1.ProfileUiState
+import java.util.Calendar
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModelWakeUpTime(
-    uiState: SleepUiState,
-    onChangeAlarm: (value: Boolean) -> Unit,
-    onToggleModal: () -> Unit
+fun ModalDate(
+    uiState: ProfileUiState,
+    onSubmitBirthday: (Int, Int, Int) -> Unit,
+    onToggleModal: () -> Unit,
 ) {
-
-    val (time, setTime) = remember { mutableStateOf(uiState.alarmTime) }
+    val (year, setYear) = remember { mutableStateOf(uiState.calendar.get(Calendar.YEAR)) }
+    val (month, setMonth) = remember { mutableStateOf(uiState.calendar.get(Calendar.MONTH)) }
+    val (day, setDay) = remember { mutableStateOf(uiState.calendar.get(Calendar.DAY_OF_MONTH)) }
 
     val skipPartiallyExpanded by remember { mutableStateOf(false) }
 
@@ -43,28 +47,26 @@ fun ModelWakeUpTime(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
-        Row(
+        AndroidView(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            AndroidView(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                factory = { context ->
-                    val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
-                    val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
+            factory = { context ->
+                val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
+                val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
 
-                    timePicker.hour = 0x07
-                    timePicker.minute = 0x07
-
-                    timePicker
+                datePicker.init(
+                    year,
+                    month,
+                    day
+                ) { _, year, monthOfYear, dayOfMonth ->
+                    setYear(year)
+                    setMonth(monthOfYear)
+                    setDay(dayOfMonth)
                 }
-            )
-
-        }
+                datePicker
+            }
+        )
 
         Row(
             modifier = Modifier
@@ -77,6 +79,7 @@ fun ModelWakeUpTime(
             }
             Spacer(modifier = Modifier.width(20.dp))
             Button(onClick = {
+                onSubmitBirthday(year, month, day)
                 onToggleModal()
             }) {
                 Text("저장")

@@ -1,7 +1,7 @@
-package com.sewon.healthmonitor.screen.setting.card1
+package com.sewon.healthmonitor.screen.setting.card4.modal
 
 import android.view.LayoutInflater
-import android.widget.NumberPicker
+import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,56 +17,55 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
+import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
+import java.util.Calendar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalGender(
-    uiState: ProfileUiState,
-    onChangeGender: (value: String) -> Unit,
-    onToggleModal: () -> Unit,
-) {
+fun ModalAlarmSetting(
+    uiState: SleepUiState,
+    onToggleModal: () -> Unit) {
 
-    val (gender, setGender) = remember { mutableStateOf(uiState.gender) }
+    var skipPartiallyExpanded by remember { mutableStateOf(false) }
+    var edgeToEdgeEnabled by remember { mutableStateOf(false) }
 
-    val skipPartiallyExpanded by remember { mutableStateOf(false) }
-
+    val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = skipPartiallyExpanded
     )
-
 
     ModalBottomSheet(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
-        Row(
+        AndroidView(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            AndroidView(
-                factory = { context ->
-                    val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
-                    val picker = view.findViewById<NumberPicker>(R.id.number_picker)
-                    val data = arrayOf("남성", "여성")
-                    picker.minValue = 0
-                    picker.maxValue = data.size - 1
-                    picker.displayedValues = data
-                    picker.value = data.indexOf(gender)
-                    picker.setOnValueChangedListener { picker, oldVal, newVal ->
-                        setGender(data.get(newVal))
-                        // do your other stuff depends on the new value
-                    }
-                    picker
+            factory = { context ->
+                val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
+                val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
+                val calendar = Calendar.getInstance() // show today by default
+                datePicker.init(
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                ) { _, year, monthOfYear, dayOfMonth ->
+                    val date = Calendar.getInstance().apply {
+                        set(year, monthOfYear, dayOfMonth)
+                    }.time
+//                onSelectedDateUpdate(date)
                 }
-            )
-        }
+                datePicker
+            }
+        )
 
         Row(
             modifier = Modifier
@@ -78,10 +77,7 @@ fun ModalGender(
                 Text("취소")
             }
             Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {
-                onChangeGender(gender)
-                onToggleModal()
-            }) {
+            Button(onClick = {}) {
                 Text("저장")
             }
         }

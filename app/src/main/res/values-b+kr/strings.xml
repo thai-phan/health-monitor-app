@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Health Monitor Krrr</string>
+
+    <string name="activity_page">Activity Krrr</string>
+    <string name="report_page">Report Krrr</string>
+    <string name="user_page">User Krrr</string>
+
+    <string name="user_not_found">User not found Krrr</string>
+    <string name="loading_user_error">Error while loading user Krrr</string>
+
+    <string name="setting_not_found">Setting not found Krrr</string>
+
+</resources>

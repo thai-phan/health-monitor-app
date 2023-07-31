@@ -29,6 +29,9 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sewon.healthmonitor.screen.setting.card2.modal.ModalAlarmSetting
+import com.sewon.healthmonitor.screen.setting.card2.modal.ModalSleepTime
+import com.sewon.healthmonitor.screen.setting.card2.modal.ModelWakeUpTime
 
 // Card 2
 @Composable
@@ -42,7 +45,6 @@ fun SleepSetting(
     var openWakeupModal by rememberSaveable { mutableStateOf(false) }
     var openAlarmModal by rememberSaveable { mutableStateOf(false) }
 
-    var openDateModal by rememberSaveable { mutableStateOf(false) }
 
     Card(
         shape = RoundedCornerShape(size = 10.dp),
@@ -81,7 +83,7 @@ fun SleepSetting(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { openDateModal = !openDateModal }),
+                    .clickable(onClick = { openWakeupModal = !openWakeupModal }),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -130,6 +132,6 @@ fun SleepSetting(
     if (openAlarmModal) {
         ModalAlarmSetting(
             uiState,
-            onToggleModal = { openDateModal = !openDateModal })
+            onToggleModal = { openAlarmModal = !openAlarmModal })
     }
 }

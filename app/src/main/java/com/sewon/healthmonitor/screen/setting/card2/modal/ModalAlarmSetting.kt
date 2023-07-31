@@ -1,7 +1,7 @@
-package com.sewon.healthmonitor.screen.setting.card3
+package com.sewon.healthmonitor.screen.setting.card2.modal
 
 import android.view.LayoutInflater
-import android.widget.NumberPicker
+import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,63 +18,62 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
+import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
+import java.util.Calendar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalScoreTheshold(onOpenGenderModal: () -> Unit) {
+fun ModalAlarmSetting(
+    uiState: SleepUiState,
+    onToggleModal: () -> Unit) {
 
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
+    var edgeToEdgeEnabled by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = skipPartiallyExpanded
     )
-    var test = "aaaa"
-
 
     ModalBottomSheet(
-        onDismissRequest = onOpenGenderModal,
+        onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().height(200.dp),
-            horizontalArrangement = Arrangement.Center) {
-            AndroidView(
-                factory = { context ->
-
-                    val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
-
-                    val picker = view.findViewById<NumberPicker>(R.id.number_picker)
-
-                    val data = arrayOf("Male", "Female")
-//                picker.textColor =  Color.parseColor("#FABBBB")
-//                picker.div
-                    picker.minValue = 0
-                    picker.maxValue = data.size - 1
-                    picker.displayedValues = data
-                    picker.setOnValueChangedListener { picker, oldVal, newVal ->
-                        test = data.get(newVal)
-                        println("thaiph")
-                        println(test)
-                        // do your other stuff depends on the new value
-                    }
-                    picker
-
+        AndroidView(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp),
+            factory = { context ->
+                val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
+                val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
+                val calendar = Calendar.getInstance() // show today by default
+                datePicker.init(
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                ) { _, year, monthOfYear, dayOfMonth ->
+                    val date = Calendar.getInstance().apply {
+                        set(year, monthOfYear, dayOfMonth)
+                    }.time
+//                onSelectedDateUpdate(date)
                 }
-            )
-        }
+                datePicker
+            }
+        )
 
-        Row(modifier = Modifier.fillMaxWidth().height(100.dp),
-            horizontalArrangement = Arrangement.Center) {
-            Button(onClick = onOpenGenderModal) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Button(onClick = onToggleModal) {
                 Text("취소")
             }
             Spacer(modifier = Modifier.width(20.dp))
@@ -82,7 +81,5 @@ fun ModalScoreTheshold(onOpenGenderModal: () -> Unit) {
                 Text("저장")
             }
         }
-
-
     }
 }
