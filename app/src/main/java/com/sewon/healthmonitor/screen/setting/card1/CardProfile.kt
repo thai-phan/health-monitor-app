@@ -1,5 +1,6 @@
 package com.sewon.healthmonitor.screen.setting.card1
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,11 +26,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.screen.setting.card1.modal.ModalDate
 import com.sewon.healthmonitor.screen.setting.card1.modal.ModalGender
 
@@ -56,13 +59,18 @@ fun ProfileSetting(
 
         ) {
             Text(
-                "프로필", fontSize = 16.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
+                stringResource(R.string.profile),
+                fontSize = 16.sp,
+                fontWeight = FontWeight(900),
+                color = Color(0xFFEDEDED)
             )
 
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = { openGenderModal = !openGenderModal }),
             ) {
                 Text("성별")
                 TextButton(
@@ -85,7 +93,9 @@ fun ProfileSetting(
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = { openDateModal = !openDateModal }),
             ) {
                 Text("연령")
                 TextButton(
@@ -107,15 +117,13 @@ fun ProfileSetting(
     }
 
     if (openGenderModal) {
-        ModalGender(
-            uiState,
+        ModalGender(uiState,
             onChangeGender = viewModel::changeGender,
             onToggleModal = { openGenderModal = !openGenderModal })
     }
 
     if (openDateModal) {
-        ModalDate(
-            uiState,
+        ModalDate(uiState,
             onSubmitBirthday = viewModel::changeBirthday,
             onToggleModal = { openDateModal = !openDateModal })
     }

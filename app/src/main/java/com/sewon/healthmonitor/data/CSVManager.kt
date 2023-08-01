@@ -10,7 +10,7 @@ import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 
 
-class RegularClass(private val context: Context) {
+class CSVManager(private val context: Context) {
 
     suspend fun findResource() {
         val inputStreammm = context.resources.openRawResource(R.raw.sewon_data_1)
@@ -40,20 +40,7 @@ class RegularClass(private val context: Context) {
                     noOne = tokens[0],
                     stable = tokens[0]
                 )
-//
-//                if (dao != null) {
-//                    dao.insertAll(topper)
-//                }
 
-
-//                val wellData = WellData()
-//                wellData.setOwner(tokens[0])
-//                wellData.setApi(tokens[1])
-//                wellData.setLongitude(tokens[2])
-//                wellData.setLatitude(tokens[3])
-//                wellData.setProperty(tokens[4])
-//                wellData.setWellName(tokens[5])
-//                wellDataList.add(wellData)
             }
         } catch (e1: IOException) {
             e1.printStackTrace()

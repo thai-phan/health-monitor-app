@@ -29,8 +29,7 @@ import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalAlarmSetting(
-    uiState: SleepUiState,
+fun ModalDeviceAccess(
     onToggleModal: () -> Unit) {
 
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
@@ -45,27 +44,9 @@ fun ModalAlarmSetting(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
-        AndroidView(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp),
-            factory = { context ->
-                val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
-                val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
-                val calendar = Calendar.getInstance() // show today by default
-                datePicker.init(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-                ) { _, year, monthOfYear, dayOfMonth ->
-                    val date = Calendar.getInstance().apply {
-                        set(year, monthOfYear, dayOfMonth)
-                    }.time
-//                onSelectedDateUpdate(date)
-                }
-                datePicker
-            }
-        )
+        Text("핸드폰 캐시 접근 권한 설정")
+
+        Text("핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?")
 
         Row(
             modifier = Modifier

@@ -12,11 +12,13 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.screen.setting.card1.ProfileSetting
 import com.sewon.healthmonitor.screen.setting.card2.SleepSetting
 import com.sewon.healthmonitor.screen.setting.card3.InductionSolutionSetting
@@ -27,7 +29,7 @@ import com.sewon.healthmonitor.common.theme.checkedTrackColor
 import com.sewon.healthmonitor.common.theme.uncheckedBorderColor
 import com.sewon.healthmonitor.common.theme.uncheckedThumbColor
 import com.sewon.healthmonitor.common.theme.uncheckedTrackColor
-import com.sewon.healthmonitor.screen.setting.card1.ViewModelCardProfile
+import com.sewon.healthmonitor.screen.setting.card5.DeviceConnectionSetting
 
 @Composable
 fun UserSetting(
@@ -46,7 +48,7 @@ fun UserSetting(
                 start = 20.dp, top = 20.dp, end = 20.dp, bottom = 10.dp
             ),
     ) {
-        Text("내 설정", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        Text(stringResource(R.string.setting_title), fontWeight = FontWeight.Bold, fontSize = 24.sp)
         Spacer(modifier = Modifier.height(20.dp))
         Column(
             modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -59,6 +61,8 @@ fun UserSetting(
             InductionSolutionSetting(switchColors = switchColors)
 
             GeneralSetting(switchColors = switchColors)
+
+            DeviceConnectionSetting()
         }
 
 //        PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))

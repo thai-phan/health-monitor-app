@@ -1,7 +1,7 @@
-package com.sewon.healthmonitor.screen.setting.card3.modal
+package com.sewon.healthmonitor.screen.setting.card4.modal
 
 import android.view.LayoutInflater
-import android.widget.NumberPicker
+import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,61 +12,53 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
+import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
+import java.util.Calendar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalScoreThreshold(onToggleModal: () -> Unit) {
+fun ModalSOSRecipient(
+    onToggleModal: () -> Unit) {
 
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
+    var edgeToEdgeEnabled by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = skipPartiallyExpanded
     )
-    var test = "aaaa"
-
 
     ModalBottomSheet(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
+        Text("알람 수신자 설정")
+
+        TextField(value = "관계", onValueChange = {})
+        TextField(value = "연락처", onValueChange = {})
+
+        TextField(value = "aassas", onValueChange = {})
+
+
         Row(
-            modifier = Modifier.fillMaxWidth().height(200.dp),
-            horizontalArrangement = Arrangement.Center) {
-            AndroidView(
-                factory = { context ->
-                    val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
-                    val picker = view.findViewById<NumberPicker>(R.id.number_picker)
-                    val data = arrayOf("80", "81")
-
-                    picker.minValue = 0
-                    picker.maxValue = data.size - 1
-                    picker.displayedValues = data
-                    picker.setOnValueChangedListener { picker, oldVal, newVal ->
-                        test = data.get(newVal)
-                    }
-                    picker
-
-                }
-            )
-        }
-
-        Row(modifier = Modifier.fillMaxWidth().height(100.dp),
-            horizontalArrangement = Arrangement.Center) {
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
             Button(onClick = onToggleModal) {
                 Text("취소")
             }

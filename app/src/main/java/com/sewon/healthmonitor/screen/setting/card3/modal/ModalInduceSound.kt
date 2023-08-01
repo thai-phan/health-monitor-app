@@ -1,7 +1,7 @@
 package com.sewon.healthmonitor.screen.setting.card3.modal
 
 import android.view.LayoutInflater
-import android.widget.DatePicker
+import android.widget.NumberPicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,53 +18,37 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
-import java.util.Calendar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalAlarmSetting(
-    uiState: SleepUiState,
-    onToggleModal: () -> Unit) {
+fun ModalInduceSound(
+    onToggleModal: () -> Unit
+) {
 
+    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
-    var edgeToEdgeEnabled by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = skipPartiallyExpanded
     )
+    var test = "aaaa"
+
 
     ModalBottomSheet(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
-        AndroidView(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp),
-            factory = { context ->
-                val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
-                val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
-                val calendar = Calendar.getInstance() // show today by default
-                datePicker.init(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-                ) { _, year, monthOfYear, dayOfMonth ->
-                    val date = Calendar.getInstance().apply {
-                        set(year, monthOfYear, dayOfMonth)
-                    }.time
-//                onSelectedDateUpdate(date)
-                }
-                datePicker
-            }
+
+        Text(
+            "특허받은 엠씨스퀘어 브레인동조화 사운드를 이용해 알파파를 유도하여 잠에 빨리 들 수 있도록 도와줍니다. 백색소음에 익숙한 사용자에게 추천합니다"
         )
 
         Row(
@@ -81,5 +65,7 @@ fun ModalAlarmSetting(
                 Text("저장")
             }
         }
+
+
     }
 }

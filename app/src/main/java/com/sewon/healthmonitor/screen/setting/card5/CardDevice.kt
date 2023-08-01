@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.setting.card4
+package com.sewon.healthmonitor.screen.setting.card5
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,23 +28,10 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sewon.healthmonitor.screen.setting.card3.modal.ModalInduceEnergy
-import com.sewon.healthmonitor.screen.setting.card3.modal.ModalInduceSound
-import com.sewon.healthmonitor.screen.setting.card3.modal.ModalScoreThreshold
-import com.sewon.healthmonitor.screen.setting.card4.modal.ModalClearHistory
-import com.sewon.healthmonitor.screen.setting.card4.modal.ModalDeviceAccess
-import com.sewon.healthmonitor.screen.setting.card4.modal.ModalSOSRecipient
 
 
-// Card 4
 @Composable
-fun GeneralSetting(switchColors: SwitchColors =  SwitchDefaults.colors()) {
-
-    var openDeviceAccessModal by rememberSaveable { mutableStateOf(false) }
-    var openClearHistoryModal by rememberSaveable { mutableStateOf(false) }
-    var openSOSRecipientModal by rememberSaveable { mutableStateOf(false) }
-
-
+fun DeviceConnectionSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
     Card(
         shape = RoundedCornerShape(size = 10.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
@@ -58,18 +44,18 @@ fun GeneralSetting(switchColors: SwitchColors =  SwitchDefaults.colors()) {
 
         ) {
             Text(
-                "일반설정", fontSize = 16.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
+                "제품등록 / 연결", fontSize = 16.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
             )
             Spacer(modifier = Modifier.height(5.dp))
             Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
             Spacer(modifier = Modifier.height(5.dp))
+
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-//                Cell phone cache access rights
-                Text("핸드폰 캐시 접근 권한")
+                Text("제품번호등록 (S/N)")
 
                 var checked by remember { mutableStateOf(true) }
 
@@ -84,25 +70,7 @@ fun GeneralSetting(switchColors: SwitchColors =  SwitchDefaults.colors()) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-//                Clear all sleep history
-                Text("수면 기록 모두 지우기")
-
-                var checked by remember { mutableStateOf(true) }
-
-                Switch(
-                    colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
-            }
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-
-//                Emergency SOS Recipient Settings
-                Text("위급 SOS 수신자 설정")
+                Text("블루투스연결")
 
                 var checked by remember { mutableStateOf(true) }
 
@@ -113,20 +81,5 @@ fun GeneralSetting(switchColors: SwitchColors =  SwitchDefaults.colors()) {
                     onCheckedChange = { checked = it })
             }
         }
-    }
-
-    if (openDeviceAccessModal) {
-        ModalDeviceAccess(
-            onToggleModal = { openDeviceAccessModal = !openDeviceAccessModal })
-    }
-
-    if (openClearHistoryModal) {
-        ModalClearHistory(
-            onToggleModal = { openClearHistoryModal = !openClearHistoryModal })
-    }
-
-    if (openSOSRecipientModal) {
-        ModalSOSRecipient(
-            onToggleModal = { openSOSRecipientModal = !openSOSRecipientModal })
     }
 }

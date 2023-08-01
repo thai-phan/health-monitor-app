@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.setting.card4
+package com.sewon.healthmonitor.screen.setting.card3
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,7 +6,6 @@ import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.data.source.model.Setting
 import com.sewon.healthmonitor.data.repository.UserRepository
 import com.sewon.healthmonitor.data.repository.SettingRepository
-import com.sewon.healthmonitor.screen.setting.card5.SleepUiState
 import com.sewon.healthmonitor.util.Async
 import com.sewon.healthmonitor.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +26,7 @@ data class SleepUiState(
 )
 
 @HiltViewModel
-class ViewModelCardSleep @Inject constructor(
+class ViewModelCardSolution @Inject constructor(
     private val userRepository: UserRepository,
     private val settingRepository: SettingRepository
 ) : ViewModel() {

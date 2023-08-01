@@ -52,6 +52,10 @@ android {
         viewBinding true
         compose true
     }
+//    androidResources {
+//        generateLocaleConfig true
+//    }
+
 }
 
 def room_version = "2.5.2"

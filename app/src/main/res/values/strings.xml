@@ -1,13 +1,17 @@
 <resources>
-    <string name="app_name">Health Monitor</string>
+  <string name="app_name">Health Monitor</string>
 
-    <string name="activity_page">Activity</string>
-    <string name="report_page">Report</string>
-    <string name="user_page">User</string>
+  <string name="activity_page">Activity</string>
+  <string name="report_page">Report</string>
+  <string name="user_page">User</string>
 
-    <string name="user_not_found">User not found</string>
-    <string name="loading_user_error">Error while loading user</string>
+  <!--  User page -->
+  <string name="setting_title">My Setting</string>
+  <string name="profile">Profile</string>
 
-    <string name="setting_not_found">Setting not found</string>
+  <string name="user_not_found">User not found</string>
+  <string name="loading_user_error">Error while loading user</string>
+
+  <string name="setting_not_found">Setting not found</string>
 
 </resources>

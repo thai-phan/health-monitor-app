@@ -14,6 +14,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchColors
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -33,10 +34,10 @@ import com.sewon.healthmonitor.screen.setting.card2.modal.ModalAlarmSetting
 import com.sewon.healthmonitor.screen.setting.card2.modal.ModalSleepTime
 import com.sewon.healthmonitor.screen.setting.card2.modal.ModelWakeUpTime
 
-// Card 2
 @Composable
 fun SleepSetting(
-    viewModel: ViewModelCardSleep = hiltViewModel(), switchColors: SwitchColors
+    switchColors: SwitchColors = SwitchDefaults.colors(),
+    viewModel: ViewModelCardSleep = hiltViewModel(),
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -71,9 +72,9 @@ fun SleepSetting(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+//                기상알람시간 Weather alarm time
                 Text("기상알람시간")
                 Switch(colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
                     checked = uiState.alarmOn,
                     onCheckedChange = {
                         viewModel.toggleAlarmSetting(it)
@@ -87,9 +88,9 @@ fun SleepSetting(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+//                취침시간 Bedtime
                 Text("취침시간")
                 Switch(colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
                     checked = uiState.alarmOn,
                     onCheckedChange = {
                         viewModel.toggleAlarmSetting(it)
@@ -103,9 +104,9 @@ fun SleepSetting(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+//                알람설정 Alarm settings
                 Text("알람설정")
                 Switch(colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
                     checked = uiState.alarmOn,
                     onCheckedChange = {
                         viewModel.toggleAlarmSetting(it)
