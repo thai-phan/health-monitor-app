@@ -80,7 +80,7 @@ fun SleepSetting(
                         viewModel.toggleAlarmSetting(it)
                     })
             }
-
+            Text(uiState.alarmTime)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -96,7 +96,7 @@ fun SleepSetting(
                         viewModel.toggleAlarmSetting(it)
                     })
             }
-
+            Text(uiState.bedTime)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

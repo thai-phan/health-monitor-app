@@ -12,6 +12,7 @@ data class LocalSetting(
     @ColumnInfo(name = "alarm_time") val alarmTime: String,
     @ColumnInfo(name = "bed_time") val bedTime: String,
     @ColumnInfo(name = "alarm_on") val alarmOn: Boolean,
+    @ColumnInfo(name = "bed_on") val bedOn: Boolean,
     @ColumnInfo(name = "energy_on") val energyOn: Boolean,
     @ColumnInfo(name = "sound_on") val soundOn: Boolean,
     @ColumnInfo(name = "cache_on") val cacheOn: Boolean,

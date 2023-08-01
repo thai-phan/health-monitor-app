@@ -18,6 +18,9 @@ interface LocalSettingDao {
     @Query("UPDATE setting SET alarm_on = :alarmOn WHERE user_id = :userid")
     suspend fun updateAlarmSetting(userid: Int, alarmOn: Boolean)
 
+    @Query("UPDATE setting SET bed_on = :bedOn WHERE user_id = :userid")
+    suspend fun updateBedSetting(userid: Int, bedOn: Boolean)
+
     @Query("SELECT count(user_id) FROM setting")
     fun countSetting(): Flow<Int>
 

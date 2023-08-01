@@ -24,6 +24,10 @@ import javax.inject.Inject
 data class SleepUiState(
     val alarmTime: String = "",
     val alarmOn: Boolean = false,
+
+    val bedTime: String = "",
+    val bedOn: Boolean = false,
+
     val isLoading: Boolean = false,
     val message: Int? = null
 )
@@ -69,6 +73,10 @@ class ViewModelCardSleep @Inject constructor(
     )
 
     fun toggleAlarmSetting(alarmOn: Boolean) = viewModelScope.launch {
+        settingRepository.updateUserAlarm(userId, alarmOn)
+    }
+
+    fun toggleBedSetting(alarmOn: Boolean) = viewModelScope.launch {
         settingRepository.updateUserAlarm(userId, alarmOn)
     }
 

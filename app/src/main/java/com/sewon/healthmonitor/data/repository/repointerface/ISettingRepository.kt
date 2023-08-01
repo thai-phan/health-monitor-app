@@ -9,5 +9,8 @@ interface ISettingRepository {
 
     fun loadUserSetting(userId: Int): Flow<Setting>
 
-    suspend fun updateUserAlarm(userId: Int, alarmOn: Boolean): String
+    suspend fun updateAlarmSetting(userId: Int, alarmOn: Boolean): String
+
+    suspend fun updateBedSetting(userId: Int, alarmOn: Boolean): String
+
 }

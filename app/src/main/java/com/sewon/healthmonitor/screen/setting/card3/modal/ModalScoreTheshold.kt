@@ -28,7 +28,9 @@ import com.sewon.healthmonitor.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalScoreThreshold(onToggleModal: () -> Unit) {
+fun ModalScoreThreshold(
+    onToggleModal: () -> Unit
+) {
 
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
