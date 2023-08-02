@@ -5,10 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.data.source.model.Setting
-import com.sewon.healthmonitor.data.source.model.User
 import com.sewon.healthmonitor.data.repository.UserRepository
 import com.sewon.healthmonitor.data.repository.SettingRepository
-import com.sewon.healthmonitor.screen.setting.card1.ProfileUiState
 import com.sewon.healthmonitor.util.Async
 import com.sewon.healthmonitor.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,8 +56,11 @@ class ViewModelCardSleep @Inject constructor(
             }
 
             is Async.Success -> {
+
+
+
                 SleepUiState(
-                    alarmTime = settingAsync.data!!.alarmTime,
+                    alarmTime = settingAsync.data!!.alarmTime.toString(),
                     alarmOn = settingAsync.data.alarmOn,
                     message= message,
                     isLoading = isLoading
@@ -72,12 +73,23 @@ class ViewModelCardSleep @Inject constructor(
         initialValue = SleepUiState(isLoading = true)
     )
 
-    fun toggleAlarmSetting(alarmOn: Boolean) = viewModelScope.launch {
-        settingRepository.updateAlarmSetting(userId, alarmOn)
+    fun toggleAlarmOnSetting(alarmOn: Boolean) = viewModelScope.launch {
+        settingRepository.updateAlarmOnSetting(userId, alarmOn)
     }
 
-    fun toggleBedSetting(alarmOn: Boolean) = viewModelScope.launch {
-        settingRepository.updateBedSetting(userId, alarmOn)
+    fun changeAlarmTime(alarmTime: String) = viewModelScope.launch {
+        val date = Calendar.getInstance().apply {
+            set(0, 0, 0, )
+        }.time
+        settingRepository.updateAlarmTimeSetting(userId, date)
+    }
+
+    fun toggleBedSetting(bedOn: Boolean) = viewModelScope.launch {
+        settingRepository.updateBedSetting(userId, bedOn)
+    }
+
+    fun changeAlarmTypeSetting(alarmType: String) = viewModelScope.launch {
+        settingRepository.updateAlarmTypeSetting(userId, alarmType)
     }
 
     private fun handleSetting(setting: Setting?): Async<Setting?> {

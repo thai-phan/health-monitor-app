@@ -53,7 +53,7 @@ class ViewModelCardSleep @Inject constructor(
 
             is Async.Success -> {
                 SleepUiState(
-                    alarmTime = settingAsync.data!!.alarmTime,
+                    alarmTime = settingAsync.data!!.alarmTime.toString(),
                     alarmOn = settingAsync.data.alarmOn,
                     message= message,
                     isLoading = isLoading
@@ -67,7 +67,7 @@ class ViewModelCardSleep @Inject constructor(
     )
 
     fun toggleAlarmSetting(alarmOn: Boolean) = viewModelScope.launch {
-        settingRepository.updateUserAlarm(userId, alarmOn)
+//        settingRepository.updateAlarmSetting(userId, alarmOn)
     }
 
     private fun handleSetting(setting: Setting?): Async<Setting?> {

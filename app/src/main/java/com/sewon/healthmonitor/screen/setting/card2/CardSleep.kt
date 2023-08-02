@@ -21,8 +21,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,9 +40,9 @@ fun SleepSetting(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var openSleepTimeModal by rememberSaveable { mutableStateOf(false) }
     var openWakeupModal by rememberSaveable { mutableStateOf(false) }
-    var openAlarmModal by rememberSaveable { mutableStateOf(false) }
+    var openSleepTimeModal by rememberSaveable { mutableStateOf(false) }
+    var openAlarmTypeModal by rememberSaveable { mutableStateOf(false) }
 
 
     Card(
@@ -68,23 +66,23 @@ fun SleepSetting(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { openSleepTimeModal = !openSleepTimeModal }),
+                    .clickable(onClick = { openWakeupModal = !openWakeupModal }),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-//                기상알람시간 Weather alarm time
+//                기상알람시간 Wake Up alarm time
                 Text("기상알람시간")
                 Switch(colors = switchColors,
                     checked = uiState.alarmOn,
                     onCheckedChange = {
-                        viewModel.toggleAlarmSetting(it)
+                        viewModel.toggleAlarmOnSetting(it)
                     })
             }
             Text(uiState.alarmTime)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { openWakeupModal = !openWakeupModal }),
+                    .clickable(onClick = { openSleepTimeModal = !openSleepTimeModal }),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -93,14 +91,15 @@ fun SleepSetting(
                 Switch(colors = switchColors,
                     checked = uiState.alarmOn,
                     onCheckedChange = {
-                        viewModel.toggleBedSetting(it)
+                        openSleepTimeModal = !openSleepTimeModal
+
                     })
             }
             Text(uiState.bedTime)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = { openAlarmModal = !openAlarmModal }),
+                    .clickable(onClick = { openAlarmTypeModal = !openAlarmTypeModal }),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -109,30 +108,32 @@ fun SleepSetting(
                 Switch(colors = switchColors,
                     checked = uiState.alarmOn,
                     onCheckedChange = {
-                        viewModel.toggleAlarmSetting(it)
+
                     })
             }
         }
     }
 
 
-    if (openSleepTimeModal) {
-        ModalSleepTime(
-            uiState,
-            onChangeAlarm = viewModel::toggleAlarmSetting,
-            onToggleModal = { openSleepTimeModal = !openSleepTimeModal })
-    }
-
     if (openWakeupModal) {
         ModelWakeUpTime(
             uiState,
-            onChangeAlarm = viewModel::toggleAlarmSetting,
+            onChangeAlarmTime = viewModel::changeAlarmTime,
             onToggleModal = { openWakeupModal = !openWakeupModal })
     }
 
-    if (openAlarmModal) {
+    if (openSleepTimeModal) {
+        ModalSleepTime(
+            uiState,
+            onChangeSleepTime = viewModel::toggleBedSetting,
+            onToggleModal = { openSleepTimeModal = !openSleepTimeModal })
+    }
+
+
+    if (openAlarmTypeModal) {
         ModalAlarmSetting(
             uiState,
-            onToggleModal = { openAlarmModal = !openAlarmModal })
+            onChangeAlarmType = viewModel::changeAlarmTypeSetting,
+            onToggleModal = { openAlarmTypeModal = !openAlarmTypeModal })
     }
 }

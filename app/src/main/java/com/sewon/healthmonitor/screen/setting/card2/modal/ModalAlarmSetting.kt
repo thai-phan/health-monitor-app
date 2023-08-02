@@ -46,7 +46,9 @@ import java.util.Calendar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalAlarmSetting(
-    uiState: SleepUiState, onToggleModal: () -> Unit
+    uiState: SleepUiState,
+    onChangeAlarmType : (String) -> Unit,
+    onToggleModal: () -> Unit
 ) {
 
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
@@ -120,7 +122,7 @@ fun ModalAlarmSetting(
                 Text("취소")
             }
             Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {}) {
+            Button(onClick = {onChangeAlarmType(selectedOption)}) {
                 Text("저장")
             }
         }

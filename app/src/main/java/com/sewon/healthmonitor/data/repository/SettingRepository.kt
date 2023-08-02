@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.util.Date
 import javax.inject.Inject
 
 class SettingRepository @Inject constructor(
@@ -27,13 +28,27 @@ class SettingRepository @Inject constructor(
         return localSettingDao.querySettingByUserId(userId).map { it.toExternal() }
     }
 
-    override suspend fun updateAlarmSetting(userId: Int, alarmOn: Boolean): String {
-        var aaa = localSettingDao.updateAlarmSetting(userId, alarmOn)
+    override suspend fun updateAlarmOnSetting(userId: Int, alarmOn: Boolean): String {
+        var aaa = localSettingDao.updateAlarmOnQuery(userId, alarmOn)
         return "Done"
     }
 
-    override suspend fun updateBedSetting(userId: Int, alarmOn: Boolean): String {
-        var aaa = localSettingDao.updateBedSetting(userId, alarmOn)
+    override suspend fun updateAlarmTimeSetting(userId: Int, alarmTime: Date): String {
+        var aaa = localSettingDao.updateAlarmTimeQuery(userId, alarmTime)
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateBedSetting(userId: Int, bedOn: Boolean): String {
+        var aaa = localSettingDao.updateBedSettingQuery(userId, bedOn)
+        return "Done"
+    }
+
+    override suspend fun updateBedTimeSetting(userId: Int, bedTime: String): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateAlarmTypeSetting(userId: Int, alarmSetting: String): String {
+        var aaa = localSettingDao.updateAlarmTypeSettingQuery(userId, alarmSetting)
         return "Done"
     }
 

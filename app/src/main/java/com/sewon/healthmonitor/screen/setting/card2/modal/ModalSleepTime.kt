@@ -27,7 +27,7 @@ import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
 @Composable
 fun ModalSleepTime(
     uiState: SleepUiState,
-    onChangeAlarm: (value: Boolean) -> Unit,
+    onChangeSleepTime: (value: Boolean) -> Unit,
     onToggleModal: () -> Unit
 ) {
 

@@ -5,9 +5,10 @@ import java.util.Date
 
 data class Setting(
     val userId: Int,
-    val alarmTime: String,
-    val bedTime: String,
+    val alarmTime: Date,
+    val bedTime: Date,
     val alarmOn: Boolean,
+    val alarmSetting: String,
     val bedOn: Boolean,
     val energyOn: Boolean,
     val soundOn: Boolean,
@@ -25,6 +26,7 @@ fun Setting.toLocal() = LocalSetting(
     alarmTime = alarmTime,
     bedTime = bedTime,
     alarmOn = alarmOn,
+    alarmSetting = alarmSetting,
     bedOn = bedOn,
     energyOn = energyOn,
     soundOn = soundOn,
@@ -45,6 +47,7 @@ fun LocalSetting.toExternal() = Setting(
     alarmTime = alarmTime,
     bedTime = bedTime,
     alarmOn = alarmOn,
+    alarmSetting = alarmSetting,
     bedOn = bedOn,
     energyOn = energyOn,
     soundOn = soundOn,

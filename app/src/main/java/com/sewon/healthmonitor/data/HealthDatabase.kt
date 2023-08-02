@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.sewon.healthmonitor.data.source.local.dao.LocalRadarDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalUserDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalSettingDao
-import com.sewon.healthmonitor.data.source.local.entity.DateConverter
+import com.sewon.healthmonitor.data.source.local.entity.converter.DateConverter
 import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 import com.sewon.healthmonitor.data.source.local.entity.LocalUser
 import com.sewon.healthmonitor.data.source.local.entity.LocalSetting

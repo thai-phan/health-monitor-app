@@ -27,7 +27,7 @@ import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
 @Composable
 fun ModelWakeUpTime(
     uiState: SleepUiState,
-    onChangeAlarm: (value: Boolean) -> Unit,
+    onChangeAlarmTime: (value: String) -> Unit,
     onToggleModal: () -> Unit
 ) {
 

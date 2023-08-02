@@ -58,9 +58,11 @@ class ViewModelUserSetting @Inject constructor(
                 val curDate = Calendar.getInstance().time
                 val setting = Setting(
                     userId = 0,
-                    alarmTime = "07:00",
-                    bedTime = "22:00",
+                    alarmTime = curDate,
+                    bedTime = curDate,
                     alarmOn = false,
+                    alarmSetting = "123",
+                    bedOn = false,
                     energyOn = false,
                     soundOn = false,
                     cacheOn = false,
