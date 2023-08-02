@@ -73,11 +73,11 @@ class ViewModelCardSleep @Inject constructor(
     )
 
     fun toggleAlarmSetting(alarmOn: Boolean) = viewModelScope.launch {
-        settingRepository.updateUserAlarm(userId, alarmOn)
+        settingRepository.updateAlarmSetting(userId, alarmOn)
     }
 
     fun toggleBedSetting(alarmOn: Boolean) = viewModelScope.launch {
-        settingRepository.updateUserAlarm(userId, alarmOn)
+        settingRepository.updateBedSetting(userId, alarmOn)
     }
 
     private fun handleSetting(setting: Setting?): Async<Setting?> {

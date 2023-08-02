@@ -93,7 +93,7 @@ fun SleepSetting(
                 Switch(colors = switchColors,
                     checked = uiState.alarmOn,
                     onCheckedChange = {
-                        viewModel.toggleAlarmSetting(it)
+                        viewModel.toggleBedSetting(it)
                     })
             }
             Text(uiState.bedTime)
