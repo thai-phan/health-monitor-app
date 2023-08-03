@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.LocalTime
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
@@ -56,10 +57,11 @@ class ViewModelUserSetting @Inject constructor(
 
             if (settingRepository.countSetting().first() == 0) {
                 val curDate = Calendar.getInstance().time
+                val aaa = LocalTime.now()
                 val setting = Setting(
                     userId = 0,
-                    alarmTime = curDate,
-                    bedTime = curDate,
+                    alarmTime = aaa,
+                    bedTime = aaa,
                     alarmOn = false,
                     alarmSetting = "123",
                     bedOn = false,

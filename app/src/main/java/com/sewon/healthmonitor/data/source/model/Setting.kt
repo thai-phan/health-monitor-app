@@ -1,12 +1,13 @@
 package com.sewon.healthmonitor.data.source.model
 
 import com.sewon.healthmonitor.data.source.local.entity.LocalSetting
+import java.time.LocalTime
 import java.util.Date
 
 data class Setting(
     val userId: Int,
-    val alarmTime: Date,
-    val bedTime: Date,
+    val alarmTime: LocalTime,
+    val bedTime: LocalTime,
     val alarmOn: Boolean,
     val alarmSetting: String,
     val bedOn: Boolean,

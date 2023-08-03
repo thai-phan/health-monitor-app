@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalTime
 import java.util.Date
 import javax.inject.Inject
 
@@ -33,9 +34,9 @@ class SettingRepository @Inject constructor(
         return "Done"
     }
 
-    override suspend fun updateAlarmTimeSetting(userId: Int, alarmTime: Date): String {
+    override suspend fun updateAlarmTimeSetting(userId: Int, alarmTime: LocalTime): String {
         var aaa = localSettingDao.updateAlarmTimeQuery(userId, alarmTime)
-        TODO("Not yet implemented")
+        return "Done"
     }
 
     override suspend fun updateBedSetting(userId: Int, bedOn: Boolean): String {
@@ -43,8 +44,9 @@ class SettingRepository @Inject constructor(
         return "Done"
     }
 
-    override suspend fun updateBedTimeSetting(userId: Int, bedTime: String): String {
-        TODO("Not yet implemented")
+    override suspend fun updateBedTimeSetting(userId: Int, bedTime: LocalTime): String {
+        var aaa = localSettingDao.updateBedTimeQuery(userId, bedTime)
+        return "Done"
     }
 
     override suspend fun updateAlarmTypeSetting(userId: Int, alarmSetting: String): String {

@@ -1,12 +1,11 @@
 package com.sewon.healthmonitor.screen.setting.card2
 
-import android.icu.util.Calendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.data.source.model.Setting
-import com.sewon.healthmonitor.data.repository.UserRepository
 import com.sewon.healthmonitor.data.repository.SettingRepository
+import com.sewon.healthmonitor.data.repository.UserRepository
+import com.sewon.healthmonitor.data.source.model.Setting
 import com.sewon.healthmonitor.util.Async
 import com.sewon.healthmonitor.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,13 +16,16 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-data class SleepUiState(
-    val alarmTime: String = "",
-    val alarmOn: Boolean = false,
 
-    val bedTime: String = "",
+data class SleepUiState(
+    val alarmTime: LocalTime = LocalTime.now(),
+    val alarmOn: Boolean = false,
+    val alarmType: String = "",
+    val bedTime: LocalTime = LocalTime.now(),
     val bedOn: Boolean = false,
 
     val isLoading: Boolean = false,
@@ -57,11 +59,14 @@ class ViewModelCardSleep @Inject constructor(
 
             is Async.Success -> {
 
-
+                val dtf = DateTimeFormatter.ofPattern("HH:mm")
 
                 SleepUiState(
-                    alarmTime = settingAsync.data!!.alarmTime.toString(),
-                    alarmOn = settingAsync.data.alarmOn,
+                    alarmOn = settingAsync.data!!.alarmOn,
+                    alarmTime = settingAsync.data.alarmTime,
+                    alarmType = settingAsync.data.alarmSetting,
+                    bedOn = settingAsync.data.bedOn,
+                    bedTime = settingAsync.data.bedTime,
                     message= message,
                     isLoading = isLoading
                 )
@@ -73,19 +78,20 @@ class ViewModelCardSleep @Inject constructor(
         initialValue = SleepUiState(isLoading = true)
     )
 
-    fun toggleAlarmOnSetting(alarmOn: Boolean) = viewModelScope.launch {
+    fun toggleAlarmOn(alarmOn: Boolean) = viewModelScope.launch {
         settingRepository.updateAlarmOnSetting(userId, alarmOn)
     }
 
-    fun changeAlarmTime(alarmTime: String) = viewModelScope.launch {
-        val date = Calendar.getInstance().apply {
-            set(0, 0, 0, )
-        }.time
-        settingRepository.updateAlarmTimeSetting(userId, date)
+    fun changeAlarmTime(alarmTime: LocalTime) = viewModelScope.launch {
+        settingRepository.updateAlarmTimeSetting(userId, alarmTime)
     }
 
-    fun toggleBedSetting(bedOn: Boolean) = viewModelScope.launch {
+    fun toggleBedOn(bedOn: Boolean) = viewModelScope.launch {
         settingRepository.updateBedSetting(userId, bedOn)
+    }
+
+    fun changeBedTime(bedTime: LocalTime) = viewModelScope.launch {
+        settingRepository.updateBedTimeSetting(userId, bedTime)
     }
 
     fun changeAlarmTypeSetting(alarmType: String) = viewModelScope.launch {

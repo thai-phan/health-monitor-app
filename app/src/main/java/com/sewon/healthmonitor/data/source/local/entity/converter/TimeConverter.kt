@@ -3,7 +3,7 @@ package com.sewon.healthmonitor.data.source.local.entity.converter
 import androidx.room.TypeConverter
 import java.time.LocalTime
 
-class TimeConverters {
+class TimeConverter {
 
     @TypeConverter
     fun fromTimestamp(value: String?): LocalTime? {

@@ -70,7 +70,7 @@ fun ModalAlarmSetting(
             listOf(R.drawable.ic_bell_on, R.drawable.ic_speaker_phone, R.drawable.ic_volume_off)
 
         val radioOptions = listOf("벨소리", "진동", "무음")
-        val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
+        val (selectedOption, onOptionSelected) = remember { mutableStateOf(uiState.alarmType) }
 
         // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
         Column(
@@ -122,7 +122,10 @@ fun ModalAlarmSetting(
                 Text("취소")
             }
             Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {onChangeAlarmType(selectedOption)}) {
+            Button(onClick = {
+                onChangeAlarmType(selectedOption)
+                onToggleModal()
+            }) {
                 Text("저장")
             }
         }

@@ -75,10 +75,13 @@ fun SleepSetting(
                 Switch(colors = switchColors,
                     checked = uiState.alarmOn,
                     onCheckedChange = {
-                        viewModel.toggleAlarmOnSetting(it)
+                        viewModel.toggleAlarmOn(it)
                     })
             }
-            Text(uiState.alarmTime)
+            Text(uiState.alarmTime.toString())
+            Spacer(modifier = Modifier.height(5.dp))
+            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+            Spacer(modifier = Modifier.height(5.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -89,13 +92,15 @@ fun SleepSetting(
 //                취침시간 Bedtime
                 Text("취침시간")
                 Switch(colors = switchColors,
-                    checked = uiState.alarmOn,
+                    checked = uiState.bedOn,
                     onCheckedChange = {
-                        openSleepTimeModal = !openSleepTimeModal
-
+                        viewModel.toggleBedOn(it)
                     })
             }
-            Text(uiState.bedTime)
+            Text(uiState.bedTime.toString())
+            Spacer(modifier = Modifier.height(5.dp))
+            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+            Spacer(modifier = Modifier.height(5.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -106,11 +111,12 @@ fun SleepSetting(
 //                알람설정 Alarm settings
                 Text("알람설정")
                 Switch(colors = switchColors,
-                    checked = uiState.alarmOn,
+                    checked = openAlarmTypeModal,
                     onCheckedChange = {
-
+                        openAlarmTypeModal = !openAlarmTypeModal
                     })
             }
+            Text(uiState.alarmType)
         }
     }
 
@@ -125,7 +131,7 @@ fun SleepSetting(
     if (openSleepTimeModal) {
         ModalSleepTime(
             uiState,
-            onChangeSleepTime = viewModel::toggleBedSetting,
+            onChangeBedTime = viewModel::changeBedTime,
             onToggleModal = { openSleepTimeModal = !openSleepTimeModal })
     }
 

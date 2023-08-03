@@ -22,12 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
+import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalSleepTime(
     uiState: SleepUiState,
-    onChangeSleepTime: (value: Boolean) -> Unit,
+    onChangeBedTime: (LocalTime) -> Unit,
     onToggleModal: () -> Unit
 ) {
 
@@ -58,9 +59,11 @@ fun ModalSleepTime(
                     val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
                     val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
 
-                    timePicker.hour = 0x07
-                    timePicker.minute = 0x07
-
+                    timePicker.hour = time.hour
+                    timePicker.minute = time.minute
+                    timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
+                        setTime(LocalTime.of(hourOfDay, minute))
+                    }
                     timePicker
                 }
             )
@@ -78,6 +81,7 @@ fun ModalSleepTime(
             }
             Spacer(modifier = Modifier.width(20.dp))
             Button(onClick = {
+                onChangeBedTime(time)
                 onToggleModal()
             }) {
                 Text("저장")
