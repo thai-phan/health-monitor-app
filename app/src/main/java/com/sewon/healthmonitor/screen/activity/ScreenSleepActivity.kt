@@ -74,22 +74,9 @@ fun SleepActivity(
         modifier = modifier
             .padding(horizontal = 30.dp, vertical = 20.dp)
     ) {
+
+
         Text("수면시간 체크", fontWeight = FontWeight.Bold, fontSize = 24.sp)
-        Button(onClick = { viewModel.createNewTask() }) {
-            Text("Click meee to add data")
-        }
-        Text(text = uiState.status1)
-
-        Button(onClick = { viewModel.getToppers() }) {
-            Text("Load data")
-        }
-        Text(text = uiState.status2)
-
-        Button(onClick = { viewModel.getCount() }) {
-            Text("Get count")
-        }
-        Text(text = uiState.status3)
-
         Spacer(modifier = Modifier.height(10.dp))
         CircularTimePicker()
         Spacer(modifier = Modifier.height(10.dp))

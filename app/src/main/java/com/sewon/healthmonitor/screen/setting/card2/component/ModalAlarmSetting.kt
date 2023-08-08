@@ -36,9 +36,7 @@ import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalAlarmSetting(
-    uiState: SleepUiState,
-    onChangeAlarmType : (String) -> Unit,
-    onToggleModal: () -> Unit
+    uiState: SleepUiState, onChangeAlarmType: (String) -> Unit, onToggleModal: () -> Unit
 ) {
 
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
@@ -56,8 +54,11 @@ fun ModalAlarmSetting(
     ) {
 
 
-        val iconOptions =
-            listOf(R.drawable.ic_bell_on, R.drawable.ic_speaker_phone, R.drawable.ic_volume_off)
+        val iconOptions = listOf(
+            R.drawable.ic_bell_on,
+            R.drawable.ic_speaker_phone,
+            R.drawable.ic_volume_off
+        )
 
         val radioOptions = listOf("벨소리", "진동", "무음")
         val (selectedOption, onOptionSelected) = remember { mutableStateOf(uiState.alarmType) }

@@ -33,7 +33,8 @@ import com.sewon.healthmonitor.screen.setting.card5.DeviceConnectionSetting
 
 @Composable
 fun UserSetting(
-    modifier: Modifier = Modifier, viewModel: ViewModelUserSetting = hiltViewModel()
+    modifier: Modifier = Modifier,
+    viewModel: ViewModelUserSetting = hiltViewModel()
 ) {
     val switchColors: SwitchColors = SwitchDefaults.colors(
         checkedThumbColor = checkedThumbColor,
