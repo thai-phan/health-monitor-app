@@ -29,12 +29,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sewon.healthmonitor.screen.setting.card3.modal.ModalInduceEnergy
-import com.sewon.healthmonitor.screen.setting.card3.modal.ModalInduceSound
-import com.sewon.healthmonitor.screen.setting.card3.modal.ModalScoreThreshold
-import com.sewon.healthmonitor.screen.setting.card4.modal.ModalClearHistory
-import com.sewon.healthmonitor.screen.setting.card4.modal.ModalDeviceAccess
-import com.sewon.healthmonitor.screen.setting.card4.modal.ModalSOSRecipient
+import com.sewon.healthmonitor.screen.setting.card4.component.ModalClearHistory
+import com.sewon.healthmonitor.screen.setting.card4.component.ModalDeviceAccess
+import com.sewon.healthmonitor.screen.setting.card4.component.ModalSOSRecipient
 
 
 // Card 4

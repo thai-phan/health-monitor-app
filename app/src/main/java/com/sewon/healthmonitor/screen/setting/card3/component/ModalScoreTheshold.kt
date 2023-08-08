@@ -1,7 +1,7 @@
-package com.sewon.healthmonitor.screen.setting.card2.modal
+package com.sewon.healthmonitor.screen.setting.card3.component
 
 import android.view.LayoutInflater
-import android.widget.TimePicker
+import android.widget.NumberPicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,28 +17,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
-import java.time.LocalTime
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalSleepTime(
-    uiState: SleepUiState,
-    onChangeBedTime: (LocalTime) -> Unit,
+fun ModalScoreThreshold(
     onToggleModal: () -> Unit
 ) {
 
-    val (time, setTime) = remember { mutableStateOf(uiState.alarmTime) }
+    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+    var skipPartiallyExpanded by remember { mutableStateOf(false) }
 
-    val skipPartiallyExpanded by remember { mutableStateOf(false) }
-
+    val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = skipPartiallyExpanded
     )
+    var test = "aaaa"
 
 
     ModalBottomSheet(
@@ -46,44 +47,33 @@ fun ModalSleepTime(
         sheetState = bottomSheetState,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
+            modifier = Modifier.fillMaxWidth().height(200.dp),
+            horizontalArrangement = Arrangement.Center) {
             AndroidView(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
                 factory = { context ->
-                    val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
-                    val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
+                    val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
+                    val picker = view.findViewById<NumberPicker>(R.id.number_picker)
+                    val data = arrayOf("80", "81")
 
-                    timePicker.hour = time.hour
-                    timePicker.minute = time.minute
-                    timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-                        setTime(LocalTime.of(hourOfDay, minute))
+                    picker.minValue = 0
+                    picker.maxValue = data.size - 1
+                    picker.displayedValues = data
+                    picker.setOnValueChangedListener { picker, oldVal, newVal ->
+                        test = data.get(newVal)
                     }
-                    timePicker
+                    picker
+
                 }
             )
-
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
+        Row(modifier = Modifier.fillMaxWidth().height(100.dp),
+            horizontalArrangement = Arrangement.Center) {
             Button(onClick = onToggleModal) {
                 Text("취소")
             }
             Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {
-                onChangeBedTime(time)
-                onToggleModal()
-            }) {
+            Button(onClick = {}) {
                 Text("저장")
             }
         }

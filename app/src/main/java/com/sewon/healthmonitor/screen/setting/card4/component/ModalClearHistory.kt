@@ -1,7 +1,5 @@
-package com.sewon.healthmonitor.screen.setting.card3.modal
+package com.sewon.healthmonitor.screen.setting.card4.component
 
-import android.view.LayoutInflater
-import android.widget.NumberPicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,57 +16,39 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import com.sewon.healthmonitor.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalScoreThreshold(
-    onToggleModal: () -> Unit
-) {
+fun ModalClearHistory(
+    onToggleModal: () -> Unit) {
 
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
+    var edgeToEdgeEnabled by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = skipPartiallyExpanded
     )
-    var test = "aaaa"
-
 
     ModalBottomSheet(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
+        Text("수면기록 모두 지우기")
+
+        Text("실행으로 모든 수면 기록과 분석결과가 삭제되어 과거 레포트를 확인하실 수 없습니다.\n" +
+                "실행 하시겠습니까?")
+
         Row(
-            modifier = Modifier.fillMaxWidth().height(200.dp),
-            horizontalArrangement = Arrangement.Center) {
-            AndroidView(
-                factory = { context ->
-                    val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
-                    val picker = view.findViewById<NumberPicker>(R.id.number_picker)
-                    val data = arrayOf("80", "81")
-
-                    picker.minValue = 0
-                    picker.maxValue = data.size - 1
-                    picker.displayedValues = data
-                    picker.setOnValueChangedListener { picker, oldVal, newVal ->
-                        test = data.get(newVal)
-                    }
-                    picker
-
-                }
-            )
-        }
-
-        Row(modifier = Modifier.fillMaxWidth().height(100.dp),
-            horizontalArrangement = Arrangement.Center) {
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
             Button(onClick = onToggleModal) {
                 Text("취소")
             }

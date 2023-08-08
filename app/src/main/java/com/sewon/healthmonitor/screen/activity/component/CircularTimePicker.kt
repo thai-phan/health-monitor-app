@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.activity
+package com.sewon.healthmonitor.screen.activity.component
 
 import android.annotation.SuppressLint
 import android.content.res.Resources

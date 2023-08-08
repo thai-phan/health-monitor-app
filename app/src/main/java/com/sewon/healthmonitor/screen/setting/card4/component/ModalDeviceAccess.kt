@@ -1,7 +1,5 @@
-package com.sewon.healthmonitor.screen.setting.card4.modal
+package com.sewon.healthmonitor.screen.setting.card4.component
 
-import android.view.LayoutInflater
-import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,15 +19,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
-import java.util.Calendar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalClearHistory(
+fun ModalDeviceAccess(
     onToggleModal: () -> Unit) {
 
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
@@ -44,10 +38,9 @@ fun ModalClearHistory(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
-        Text("수면기록 모두 지우기")
+        Text("핸드폰 캐시 접근 권한 설정")
 
-        Text("실행으로 모든 수면 기록과 분석결과가 삭제되어 과거 레포트를 확인하실 수 없습니다.\n" +
-                "실행 하시겠습니까?")
+        Text("핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?")
 
         Row(
             modifier = Modifier

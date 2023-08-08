@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.activity
+package com.sewon.healthmonitor.screen.activity.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

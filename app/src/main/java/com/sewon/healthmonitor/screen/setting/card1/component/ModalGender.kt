@@ -1,7 +1,7 @@
-package com.sewon.healthmonitor.screen.setting.card1.modal
+package com.sewon.healthmonitor.screen.setting.card1.component
 
 import android.view.LayoutInflater
-import android.widget.DatePicker
+import android.widget.NumberPicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,19 +27,17 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.screen.setting.card1.ProfileUiState
-import java.util.Calendar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalDate(
+fun ModalGender(
     uiState: ProfileUiState,
-    onSubmitBirthday: (Int, Int, Int) -> Unit,
+    onChangeGender: (value: String) -> Unit,
     onToggleModal: () -> Unit,
 ) {
-    val (year, setYear) = remember { mutableStateOf(uiState.calendar.get(Calendar.YEAR)) }
-    val (month, setMonth) = remember { mutableStateOf(uiState.calendar.get(Calendar.MONTH)) }
-    val (day, setDay) = remember { mutableStateOf(uiState.calendar.get(Calendar.DAY_OF_MONTH)) }
+
+    val (gender, setGender) = remember { mutableStateOf(uiState.gender) }
 
     val skipPartiallyExpanded by remember { mutableStateOf(false) }
 
@@ -53,22 +51,31 @@ fun ModalDate(
         sheetState = bottomSheetState,
     ) {
         Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-            Text("성별", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
-            AndroidView(modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp), factory = { context ->
-                val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
-                val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
+            Text("연령", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
 
-                datePicker.init(
-                    year, month, day
-                ) { _, year, monthOfYear, dayOfMonth ->
-                    setYear(year)
-                    setMonth(monthOfYear)
-                    setDay(dayOfMonth)
-                }
-                datePicker
-            })
+                AndroidView(
+                    factory = { context ->
+                        val view =
+                            LayoutInflater.from(context).inflate(R.layout.number_picker, null)
+                        val picker = view.findViewById<NumberPicker>(R.id.number_picker)
+                        val data = arrayOf("남성", "여성")
+                        picker.minValue = 0
+                        picker.maxValue = data.size - 1
+                        picker.displayedValues = data
+                        picker.value = data.indexOf(gender)
+                        picker.setOnValueChangedListener { picker, oldVal, newVal ->
+                            setGender(data.get(newVal))
+                            // do your other stuff depends on the new value
+                        }
+                        picker
+                    }
+                )
+            }
 
             Row(
                 modifier = Modifier
@@ -81,7 +88,7 @@ fun ModalDate(
                 }
                 Spacer(modifier = Modifier.width(20.dp))
                 Button(onClick = {
-                    onSubmitBirthday(year, month, day)
+                    onChangeGender(gender)
                     onToggleModal()
                 }) {
                     Text("저장")

@@ -1,8 +1,7 @@
-package com.sewon.healthmonitor.screen.setting.card2.modal
+package com.sewon.healthmonitor.screen.setting.card2.component
 
 import android.view.LayoutInflater
 import android.widget.TimePicker
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,12 +24,11 @@ import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
 import java.time.LocalTime
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModelWakeUpTime(
+fun ModalSleepTime(
     uiState: SleepUiState,
-    onChangeAlarmTime: (LocalTime) -> Unit,
+    onChangeBedTime: (LocalTime) -> Unit,
     onToggleModal: () -> Unit
 ) {
 
@@ -66,7 +64,6 @@ fun ModelWakeUpTime(
                     timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
                         setTime(LocalTime.of(hourOfDay, minute))
                     }
-
                     timePicker
                 }
             )
@@ -84,7 +81,7 @@ fun ModelWakeUpTime(
             }
             Spacer(modifier = Modifier.width(20.dp))
             Button(onClick = {
-                onChangeAlarmTime(time)
+                onChangeBedTime(time)
                 onToggleModal()
             }) {
                 Text("저장")

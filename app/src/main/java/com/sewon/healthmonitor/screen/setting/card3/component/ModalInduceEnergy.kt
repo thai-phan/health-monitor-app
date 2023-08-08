@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.setting.card3.modal
+package com.sewon.healthmonitor.screen.setting.card3.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

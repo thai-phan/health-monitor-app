@@ -28,9 +28,9 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sewon.healthmonitor.screen.setting.card2.modal.ModalAlarmSetting
-import com.sewon.healthmonitor.screen.setting.card2.modal.ModalSleepTime
-import com.sewon.healthmonitor.screen.setting.card2.modal.ModelWakeUpTime
+import com.sewon.healthmonitor.screen.setting.card2.component.ModalAlarmSetting
+import com.sewon.healthmonitor.screen.setting.card2.component.ModalSleepTime
+import com.sewon.healthmonitor.screen.setting.card2.component.ModelWakeUpTime
 
 @Composable
 fun SleepSetting(

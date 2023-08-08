@@ -30,12 +30,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sewon.healthmonitor.screen.setting.card2.modal.ModalAlarmSetting
-import com.sewon.healthmonitor.screen.setting.card2.modal.ModalSleepTime
-import com.sewon.healthmonitor.screen.setting.card2.modal.ModelWakeUpTime
-import com.sewon.healthmonitor.screen.setting.card3.modal.ModalInduceEnergy
-import com.sewon.healthmonitor.screen.setting.card3.modal.ModalInduceSound
-import com.sewon.healthmonitor.screen.setting.card3.modal.ModalScoreThreshold
+import com.sewon.healthmonitor.screen.setting.card3.component.ModalInduceEnergy
+import com.sewon.healthmonitor.screen.setting.card3.component.ModalInduceSound
+import com.sewon.healthmonitor.screen.setting.card3.component.ModalScoreThreshold
 
 
 // Card 3

@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.report
+package com.sewon.healthmonitor.screen.report.component
 
 import androidx.compose.runtime.Composable
 import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis

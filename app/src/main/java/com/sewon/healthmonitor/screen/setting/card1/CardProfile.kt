@@ -33,8 +33,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.screen.setting.card1.modal.ModalDate
-import com.sewon.healthmonitor.screen.setting.card1.modal.ModalGender
+import com.sewon.healthmonitor.screen.setting.card1.component.ModalDate
+import com.sewon.healthmonitor.screen.setting.card1.component.ModalGender
 
 
 @Composable
