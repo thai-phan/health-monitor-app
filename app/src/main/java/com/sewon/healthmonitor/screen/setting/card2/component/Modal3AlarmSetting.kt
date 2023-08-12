@@ -109,8 +109,6 @@ fun Modal3AlarmSetting(
                         )
                     }
                 }
-
-
             }
             Row(
                 modifier = Modifier

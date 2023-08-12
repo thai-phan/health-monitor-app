@@ -3,10 +3,12 @@ package com.sewon.healthmonitor.screen.setting.card2.component
 import android.view.LayoutInflater
 import android.widget.TimePicker
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,50 +51,55 @@ fun Modal1WakeUpTime(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
+        Column(modifier = Modifier.padding(horizontal = 50.dp)) {
             Text("기상알람시간설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
-            AndroidView(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
-                factory = { context ->
-                    val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
-                    val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
+                horizontalArrangement = Arrangement.Center
+            ) {
 
-                    timePicker.hour = time.hour
-                    timePicker.minute = time.minute
-                    timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-                        setTime(LocalTime.of(hourOfDay, minute))
+
+                AndroidView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    factory = { context ->
+                        val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
+                        val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
+
+                        timePicker.hour = time.hour
+                        timePicker.minute = time.minute
+                        timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
+                            setTime(LocalTime.of(hourOfDay, minute))
+                        }
+
+                        timePicker
                     }
+                )
 
-                    timePicker
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(onClick = onToggleModal) {
+                    Text("취소")
                 }
-            )
-
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Button(onClick = onToggleModal) {
-                Text("취소")
-            }
-            Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {
-                onChangeAlarmTime(time)
-                onToggleModal()
-            }) {
-                Text("저장")
+                Spacer(modifier = Modifier.width(20.dp))
+                Button(onClick = {
+                    onChangeAlarmTime(time)
+                    onToggleModal()
+                }) {
+                    Text("저장")
+                }
             }
         }
+
     }
 }

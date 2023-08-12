@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,25 +50,33 @@ fun Modal2SleepTime(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
-        Text("취침시간", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+        Column(modifier = Modifier.padding(horizontal = 50.dp)) {
+            Text("취침시간", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
-        Column {
-            AndroidView(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
-                factory = { context ->
-                    val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
-                    val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
+                horizontalArrangement = Arrangement.Center
+            ) {
+                AndroidView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    factory = { context ->
+                        val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
+                        val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
 
-                    timePicker.hour = time.hour
-                    timePicker.minute = time.minute
-                    timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-                        setTime(LocalTime.of(hourOfDay, minute))
+                        timePicker.hour = time.hour
+                        timePicker.minute = time.minute
+                        timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
+                            setTime(LocalTime.of(hourOfDay, minute))
+                        }
+                        timePicker
                     }
-                    timePicker
-                }
-            )
+                )
+
+            }
 
             Row(
                 modifier = Modifier
@@ -86,16 +95,10 @@ fun Modal2SleepTime(
                     Text("저장")
                 }
             }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
 
 
         }
+
 
 
     }
