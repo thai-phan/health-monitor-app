@@ -30,9 +30,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sewon.healthmonitor.screen.setting.card3.component.ModalInduceEnergy
-import com.sewon.healthmonitor.screen.setting.card3.component.ModalInduceSound
-import com.sewon.healthmonitor.screen.setting.card3.component.ModalScoreThreshold
+import com.sewon.healthmonitor.screen.setting.card3.component.Modal1InduceEnergy
+import com.sewon.healthmonitor.screen.setting.card3.component.Modal2InduceSound
+import com.sewon.healthmonitor.screen.setting.card3.component.Modal3ScoreThreshold
 
 
 // Card 3
@@ -58,11 +58,9 @@ fun InductionSolutionSetting(
 
         ) {
             Text(
-                "수면유도 솔루션", fontSize = 16.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
+                "수면유도 솔루션", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
             )
-            Spacer(modifier = Modifier.height(5.dp))
-            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-            Spacer(modifier = Modifier.height(5.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth().clickable(onClick = { openInduceEnergyModal = !openInduceEnergyModal }),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -78,6 +76,9 @@ fun InductionSolutionSetting(
                     checked = checked,
                     onCheckedChange = { checked = it })
             }
+            Spacer(modifier = Modifier.height(5.dp))
+            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+            Spacer(modifier = Modifier.height(5.dp))
             Row(
                 modifier = Modifier.fillMaxWidth().clickable(onClick = { openInduceSoundModal = !openInduceSoundModal }),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -93,6 +94,9 @@ fun InductionSolutionSetting(
                     checked = checked,
                     onCheckedChange = { checked = it })
             }
+            Spacer(modifier = Modifier.height(5.dp))
+            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+            Spacer(modifier = Modifier.height(5.dp))
             Row(
                 modifier = Modifier.fillMaxWidth().clickable(onClick = { openScoreThresholdModal = !openScoreThresholdModal }),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -112,17 +116,17 @@ fun InductionSolutionSetting(
     }
 
     if (openInduceEnergyModal) {
-        ModalInduceEnergy(
+        Modal1InduceEnergy(
             onToggleModal = { openInduceEnergyModal = !openInduceEnergyModal })
     }
 
     if (openInduceSoundModal) {
-        ModalInduceSound(
+        Modal2InduceSound(
             onToggleModal = { openInduceSoundModal = !openInduceSoundModal })
     }
 
     if (openScoreThresholdModal) {
-        ModalScoreThreshold(
+        Modal3ScoreThreshold(
             onToggleModal = { openScoreThresholdModal = !openScoreThresholdModal })
     }
 }

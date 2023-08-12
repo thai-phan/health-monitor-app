@@ -13,9 +13,9 @@ import timber.log.Timber.Forest.plant
 // TODO: Add multi language
 // TODO: Check first load
 
+// TODO: Loading state
+
 // TODO: Run back ground
-
-
 
 // TODO: Back button
 

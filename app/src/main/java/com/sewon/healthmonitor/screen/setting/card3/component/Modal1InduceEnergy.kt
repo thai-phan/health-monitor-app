@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalInduceEnergy(
+fun Modal1InduceEnergy(
     onToggleModal: () -> Unit) {
 
     var skipPartiallyExpanded by remember { mutableStateOf(false) }

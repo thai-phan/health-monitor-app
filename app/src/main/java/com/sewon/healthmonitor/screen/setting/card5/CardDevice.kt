@@ -44,11 +44,9 @@ fun DeviceConnectionSetting(switchColors: SwitchColors = SwitchDefaults.colors()
 
         ) {
             Text(
-                "제품등록 / 연결", fontSize = 16.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
+                "제품등록 / 연결", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
             )
-            Spacer(modifier = Modifier.height(5.dp))
-            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-            Spacer(modifier = Modifier.height(5.dp))
+
 
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -65,6 +63,9 @@ fun DeviceConnectionSetting(switchColors: SwitchColors = SwitchDefaults.colors()
                     checked = checked,
                     onCheckedChange = { checked = it })
             }
+            Spacer(modifier = Modifier.height(5.dp))
+            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+            Spacer(modifier = Modifier.height(5.dp))
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,

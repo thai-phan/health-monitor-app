@@ -60,7 +60,7 @@ fun ProfileSetting(
         ) {
             Text(
                 stringResource(R.string.profile),
-                fontSize = 16.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight(900),
                 color = Color(0xFFEDEDED)
             )

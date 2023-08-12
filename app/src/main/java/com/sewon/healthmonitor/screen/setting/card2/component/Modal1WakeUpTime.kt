@@ -18,7 +18,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
@@ -27,7 +30,7 @@ import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModelWakeUpTime(
+fun Modal1WakeUpTime(
     uiState: SleepUiState,
     onChangeAlarmTime: (LocalTime) -> Unit,
     onToggleModal: () -> Unit
@@ -52,6 +55,8 @@ fun ModelWakeUpTime(
                 .height(200.dp),
             horizontalArrangement = Arrangement.Center
         ) {
+            Text("기상알람시간설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+
             AndroidView(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -10,7 +10,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,7 +23,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalSOSRecipient(
+fun Modal2ClearHistory(
     onToggleModal: () -> Unit) {
 
     var skipPartiallyExpanded by remember { mutableStateOf(false) }
@@ -39,13 +38,10 @@ fun ModalSOSRecipient(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
-        Text("알람 수신자 설정")
+        Text("수면기록 모두 지우기")
 
-        TextField(value = "관계", onValueChange = {})
-        TextField(value = "연락처", onValueChange = {})
-
-        TextField(value = "aassas", onValueChange = {})
-
+        Text("실행으로 모든 수면 기록과 분석결과가 삭제되어 과거 레포트를 확인하실 수 없습니다.\n" +
+                "실행 하시겠습니까?")
 
         Row(
             modifier = Modifier

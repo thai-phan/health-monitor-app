@@ -52,6 +52,7 @@ fun ModalGender(
     ) {
         Column(modifier = Modifier.padding(horizontal = 50.dp)) {
             Text("연령", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),

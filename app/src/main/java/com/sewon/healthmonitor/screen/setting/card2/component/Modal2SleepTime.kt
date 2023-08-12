@@ -3,6 +3,7 @@ package com.sewon.healthmonitor.screen.setting.card2.component
 import android.view.LayoutInflater
 import android.widget.TimePicker
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +19,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
@@ -26,7 +30,7 @@ import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalSleepTime(
+fun Modal2SleepTime(
     uiState: SleepUiState,
     onChangeBedTime: (LocalTime) -> Unit,
     onToggleModal: () -> Unit
@@ -45,12 +49,9 @@ fun ModalSleepTime(
         onDismissRequest = onToggleModal,
         sheetState = bottomSheetState,
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
+        Text("취침시간", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+
+        Column {
             AndroidView(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -68,24 +69,34 @@ fun ModalSleepTime(
                 }
             )
 
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(onClick = onToggleModal) {
+                    Text("취소")
+                }
+                Spacer(modifier = Modifier.width(20.dp))
+                Button(onClick = {
+                    onChangeBedTime(time)
+                    onToggleModal()
+                }) {
+                    Text("저장")
+                }
+            }
         }
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(100.dp),
+                .height(200.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            Button(onClick = onToggleModal) {
-                Text("취소")
-            }
-            Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {
-                onChangeBedTime(time)
-                onToggleModal()
-            }) {
-                Text("저장")
-            }
+
+
         }
+
+
     }
 }

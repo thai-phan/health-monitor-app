@@ -28,14 +28,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalAlarmSetting(
+fun Modal3AlarmSetting(
     uiState: SleepUiState, onChangeAlarmType: (String) -> Unit, onToggleModal: () -> Unit
 ) {
 
@@ -64,61 +66,71 @@ fun ModalAlarmSetting(
         val (selectedOption, onOptionSelected) = remember { mutableStateOf(uiState.alarmType) }
 
         // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
-        Column(
-            modifier = Modifier
-                .selectableGroup()
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Column(modifier = Modifier.padding(horizontal = 50.dp)) {
+            Text("알람설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
-            radioOptions.zip(iconOptions).forEach { pair ->
-                Row(
-                    modifier = Modifier
-                        .height(56.dp)
-                        .selectable(
-                            selected = (pair.first == selectedOption),
-                            onClick = { onOptionSelected(pair.first) },
-                            role = Role.RadioButton
-                        )
-                        .padding(horizontal = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    RadioButton(
-                        selected = (pair.first == selectedOption),
-                        onClick = null // null recommended for accessibility with screenreaders
-                    )
-                    Text(
-                        text = pair.first,
+            Column(
+                modifier = Modifier
+                    .selectableGroup()
+                    .fillMaxWidth()
+                    ,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+
+
+                radioOptions.zip(iconOptions).forEach { pair ->
+                    Row(
                         modifier = Modifier
-                            .padding(start = 16.dp)
-                            .width(50.dp),
-                        color = Color.White
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Image(
-                        painter = painterResource(id = pair.second),
-                        contentDescription = "Logo",
-                    )
+                            .height(56.dp)
+                            .selectable(
+                                selected = (pair.first == selectedOption),
+                                onClick = { onOptionSelected(pair.first) },
+                                role = Role.RadioButton
+                            )
+                            .padding(horizontal = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(
+                            selected = (pair.first == selectedOption),
+                            onClick = null // null recommended for accessibility with screenreaders
+                        )
+                        Text(
+                            text = pair.first,
+                            modifier = Modifier
+                                .padding(start = 16.dp)
+                                .width(50.dp),
+                            color = Color.White
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Image(
+                            painter = painterResource(id = pair.second),
+                            contentDescription = "Logo",
+                        )
+                    }
+                }
+
+
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(onClick = onToggleModal) {
+                    Text("취소")
+                }
+                Spacer(modifier = Modifier.width(20.dp))
+                Button(onClick = {
+                    onChangeAlarmType(selectedOption)
+                    onToggleModal()
+                }) {
+                    Text("저장")
                 }
             }
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Button(onClick = onToggleModal) {
-                Text("취소")
-            }
-            Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {
-                onChangeAlarmType(selectedOption)
-                onToggleModal()
-            }) {
-                Text("저장")
-            }
-        }
+
     }
 }

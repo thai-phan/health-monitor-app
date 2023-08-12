@@ -29,9 +29,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sewon.healthmonitor.screen.setting.card4.component.ModalClearHistory
-import com.sewon.healthmonitor.screen.setting.card4.component.ModalDeviceAccess
-import com.sewon.healthmonitor.screen.setting.card4.component.ModalSOSRecipient
+import com.sewon.healthmonitor.screen.setting.card4.component.Modal2ClearHistory
+import com.sewon.healthmonitor.screen.setting.card4.component.Modal1DeviceAccess
+import com.sewon.healthmonitor.screen.setting.card4.component.Modal3SOSRecipient
 
 
 // Card 4
@@ -55,11 +55,9 @@ fun GeneralSetting(switchColors: SwitchColors =  SwitchDefaults.colors()) {
 
         ) {
             Text(
-                "일반설정", fontSize = 16.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
+                "일반설정", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
             )
-            Spacer(modifier = Modifier.height(5.dp))
-            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-            Spacer(modifier = Modifier.height(5.dp))
+
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
@@ -76,6 +74,9 @@ fun GeneralSetting(switchColors: SwitchColors =  SwitchDefaults.colors()) {
                     checked = checked,
                     onCheckedChange = { checked = it })
             }
+            Spacer(modifier = Modifier.height(5.dp))
+            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+            Spacer(modifier = Modifier.height(5.dp))
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
@@ -92,6 +93,9 @@ fun GeneralSetting(switchColors: SwitchColors =  SwitchDefaults.colors()) {
                     checked = checked,
                     onCheckedChange = { checked = it })
             }
+            Spacer(modifier = Modifier.height(5.dp))
+            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+            Spacer(modifier = Modifier.height(5.dp))
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
@@ -113,17 +117,17 @@ fun GeneralSetting(switchColors: SwitchColors =  SwitchDefaults.colors()) {
     }
 
     if (openDeviceAccessModal) {
-        ModalDeviceAccess(
+        Modal1DeviceAccess(
             onToggleModal = { openDeviceAccessModal = !openDeviceAccessModal })
     }
 
     if (openClearHistoryModal) {
-        ModalClearHistory(
+        Modal2ClearHistory(
             onToggleModal = { openClearHistoryModal = !openClearHistoryModal })
     }
 
     if (openSOSRecipientModal) {
-        ModalSOSRecipient(
+        Modal3SOSRecipient(
             onToggleModal = { openSOSRecipientModal = !openSOSRecipientModal })
     }
 }
