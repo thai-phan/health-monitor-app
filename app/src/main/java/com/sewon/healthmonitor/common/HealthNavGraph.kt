@@ -3,8 +3,10 @@ package com.sewon.healthmonitor.common
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
@@ -12,11 +14,14 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.sewon.healthmonitor.data.HealthDataStore
 import com.sewon.healthmonitor.screen.singleview.TermAgreement
 import com.sewon.healthmonitor.screen.singleview.SplashScreen
+
+
 
 
 @Composable
@@ -27,6 +32,9 @@ fun HealthNavGraph(
     startDestination: String = AppDestinations.MAIN_ROUTE,
     showOnboardingInitially: Boolean = false
 ) {
+
+
+
     val mainStartDestination = MainDestinations.USER_ROUTE
 
     val context = LocalContext.current

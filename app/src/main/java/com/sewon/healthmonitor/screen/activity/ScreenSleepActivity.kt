@@ -42,11 +42,11 @@ import com.sewon.healthmonitor.common.theme.uncheckedTrackColor
 import com.sewon.healthmonitor.screen.activity.component.CircularTimePicker
 import com.sewon.healthmonitor.screen.activity.component.TimePickerDialog
 import kotlinx.coroutines.launch
+import nl.joery.timerangepicker.TimeRangePicker
 import java.util.Calendar
 import java.util.Locale
 
 @SuppressLint("RememberReturnType")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SleepActivity(
     modifier: Modifier = Modifier,
@@ -55,6 +55,10 @@ fun SleepActivity(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val start = TimeRangePicker.Time(1, 20)
+    val end = TimeRangePicker.Time(5, 30)
+    val startTime = remember { mutableStateOf(start) }
+    val endTime = remember { mutableStateOf(end) }
 
     val switchColors: SwitchColors = SwitchDefaults.colors(
         checkedThumbColor = checkedThumbColor,
@@ -64,21 +68,15 @@ fun SleepActivity(
         uncheckedTrackColor = uncheckedTrackColor,
         uncheckedBorderColor = uncheckedBorderColor,
     )
-    var showTimePicker by remember { mutableStateOf(false) }
-    val state = rememberTimePickerState()
-    val formatter = remember { SimpleDateFormat("hh:mm a", Locale.getDefault()) }
-    val snackState = remember { SnackbarHostState() }
-    val snackScope = rememberCoroutineScope()
 
     Column(
         modifier = modifier
             .padding(horizontal = 30.dp, vertical = 20.dp)
     ) {
-
-
         Text("수면시간 체크", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+
         Spacer(modifier = Modifier.height(10.dp))
-        CircularTimePicker()
+        CircularTimePicker(startTimeState = startTime, endTimeState = endTime)
         Spacer(modifier = Modifier.height(10.dp))
         Row(modifier = Modifier.fillMaxWidth()) {
 
@@ -88,7 +86,7 @@ fun SleepActivity(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("취침시간")
-                Text("12:00", fontWeight = FontWeight.Bold, fontSize = 30.sp)
+                Text(startTime.value.toString(), fontWeight = FontWeight.Bold, fontSize = 30.sp)
                 Text("PM")
             }
             Column(
@@ -97,7 +95,7 @@ fun SleepActivity(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("기상시간")
-                Text("12:00", fontWeight = FontWeight.Bold, fontSize = 30.sp)
+                Text(endTime.value.toString(), fontWeight = FontWeight.Bold, fontSize = 30.sp)
                 Text("AM")
             }
         }
@@ -126,47 +124,6 @@ fun SleepActivity(
             Button(onClick = { /*TODO*/ }) {
                 Text("기상")
             }
-        }
-
-    }
-
-
-    var timePickerColors: TimePickerColors = TimePickerDefaults.colors(
-//        clockDialColor = clockDialColor,
-//        clockDialSelectedContentColor = clockDialSelectedContentColor,
-//        clockDialUnselectedContentColor = clockDialUnselectedContentColor,
-//        selectorColor = selectorColor,
-//        containerColor = containerColor,
-//        periodSelectorBorderColor = periodSelectorBorderColor,
-//        periodSelectorSelectedContainerColor = periodSelectorSelectedContainerColor,
-//        periodSelectorUnselectedContainerColor = periodSelectorUnselectedContainerColor,
-//        periodSelectorSelectedContentColor = periodSelectorSelectedContentColor,
-//        periodSelectorUnselectedContentColor = periodSelectorUnselectedContentColor,
-//        timeSelectorSelectedContainerColor = timeSelectorSelectedContainerColor,
-//        timeSelectorUnselectedContainerColor = timeSelectorUnselectedContainerColor,
-//        timeSelectorSelectedContentColor = timeSelectorSelectedContentColor,
-//        timeSelectorUnselectedContentColor = timeSelectorUnselectedContentColor
-
-    )
-
-
-    if (showTimePicker) {
-        TimePickerDialog(
-            onCancel = { showTimePicker = false },
-            onConfirm = {
-                val cal = Calendar.getInstance()
-                cal.set(Calendar.HOUR_OF_DAY, state.hour)
-                cal.set(Calendar.MINUTE, state.minute)
-                cal.isLenient = false
-                snackScope.launch {
-                    snackState.showSnackbar("Entered time: ${formatter.format(cal.time)}")
-                }
-                showTimePicker = false
-            },
-        ) {
-            TimePicker(
-                colors = timePickerColors, state = state
-            )
         }
 
     }
