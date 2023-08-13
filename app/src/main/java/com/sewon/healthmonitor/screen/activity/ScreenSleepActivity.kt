@@ -55,7 +55,7 @@ fun SleepActivity(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val start = TimeRangePicker.Time(1, 20)
+    val start = TimeRangePicker.Time(0, 0)
     val end = TimeRangePicker.Time(5, 30)
     val startTime = remember { mutableStateOf(start) }
     val endTime = remember { mutableStateOf(end) }

@@ -29,8 +29,8 @@ fun CircularTimePicker(
         factory = { context ->
             val view = LayoutInflater.from(context).inflate(R.layout.circular_time_picker, null)
             val timePicker = view.findViewById<TimeRangePicker>(R.id.circularTimePicker)
-            timePicker.startTime = startTimeState.value
-            timePicker.endTime = endTimeState.value
+            timePicker.startTime = TimeRangePicker.Time(0, 10)
+            timePicker.endTime = TimeRangePicker.Time(5, 30)
 
             timePicker.setOnTimeChangeListener(object : TimeRangePicker.OnTimeChangeListener {
                 override fun onStartTimeChange(startTime: TimeRangePicker.Time) {
