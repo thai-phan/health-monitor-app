@@ -11,8 +11,8 @@ import kotlin.math.sin
 
 @Keep
 class DefaultClockRenderer(private val picker: TimeRangePicker): BitmapCachedClockRenderer {
-    private val _minuteTickWidth = dpToPx(1f)
-    private val _hourTickWidth = dpToPx(2f)
+    private val _minuteTickWidth = dpToPx(1f, picker.context)
+    private val _hourTickWidth = dpToPx(2f, picker.context)
     private var _middle: Float = 0f
 
     private var _bitmapCache: Bitmap? = null
@@ -36,7 +36,7 @@ class DefaultClockRenderer(private val picker: TimeRangePicker): BitmapCachedClo
                 TimeRangePicker.ClockFace.APPLE -> 6f
                 TimeRangePicker.ClockFace.SAMSUNG -> 4f
             }
-            return dpToPx(dp)
+            return dpToPx(dp, picker.context)
         }
 
     private val _tickCount: Int

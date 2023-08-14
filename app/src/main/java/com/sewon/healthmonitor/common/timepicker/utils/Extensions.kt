@@ -10,11 +10,24 @@ import androidx.core.content.ContextCompat
 private val displayMetrics = Resources.getSystem().displayMetrics
 private val density = displayMetrics.density
 private val invDensity = 1f / density
-private val sDensity = displayMetrics.scaledDensity
 
-fun dpToPx(value: Float): Float = value * density
+fun dpToPx(dp: Float, context: Context): Float {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        dp,
+        context.resources.displayMetrics
+    )
+}
+
 fun pxToDp(value: Float): Float = value * invDensity
-fun spToPx(value: Float): Float = value * sDensity
+
+fun spToPx(sp: Float, context: Context): Int {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_SP,
+        sp,
+        context.resources.displayMetrics
+    ).toInt()
+}
 
 @ColorInt
 internal fun Context.getColorResCompat(@AttrRes id: Int): Int {

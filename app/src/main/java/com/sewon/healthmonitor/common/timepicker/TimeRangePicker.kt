@@ -55,14 +55,14 @@ class TimeRangePicker @JvmOverloads constructor(
     private val _sliderRect: RectF = RectF()
     private val _sliderCapRect: RectF = RectF()
 
-    private var _sliderWidth: Int = dpToPx(8f).toInt()
+    private var _sliderWidth: Int = dpToPx(8f, context).toInt()
     private var _sliderColor by Delegates.notNull<Int>()
     private var _sliderRangeColor by Delegates.notNull<Int>()
     private var _sliderRangeGradientStart: Int? = null
     private var _sliderRangeGradientMiddle: Int? = null
     private var _sliderRangeGradientEnd: Int? = null
 
-    private var _thumbSize: Int = dpToPx(28f).toInt()
+    private var _thumbSize: Int = dpToPx(28f, context).toInt()
     private var _thumbSizeActiveGrow: Float = 1.2f
     private var _thumbIconStart: Drawable? = null
     private var _thumbIconEnd: Drawable? = null
@@ -73,7 +73,7 @@ class TimeRangePicker @JvmOverloads constructor(
 
     private var _clockVisible: Boolean = true
     private var _clockFace: ClockFace = ClockFace.APPLE
-    private var _clockLabelSize = spToPx(15f).toInt()
+    private var _clockLabelSize = spToPx(15f, context)
     private var _clockLabelColor by Delegates.notNull<Int>()
     private var _clockTickColor by Delegates.notNull<Int>()
 
@@ -126,15 +126,10 @@ class TimeRangePicker @JvmOverloads constructor(
     }
 
     private fun initColors() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val colorPrimary = context.getColorResCompat(android.R.attr.colorPrimary)
+        val colorPrimary = context.getColorResCompat(android.R.attr.colorPrimary)
 
-            _sliderRangeColor = colorPrimary
-            _thumbColor = colorPrimary
-        } else {
-            _sliderRangeColor = Color.BLUE
-            _thumbColor = Color.BLUE
-        }
+        _sliderRangeColor = colorPrimary
+        _thumbColor = colorPrimary
 
         _sliderColor = 0xFFE1E1E1.toInt()
 
@@ -550,7 +545,7 @@ class TimeRangePicker @JvmOverloads constructor(
 
         if (icon != null) {
             val iconSize =
-                _thumbIconSize?.toFloat() ?: min(dpToPx(24f), _thumbSize * 0.625f)
+                _thumbIconSize?.toFloat() ?: min(dpToPx(24f, context), _thumbSize * 0.625f)
             icon.setBounds(
                 (x - iconSize / 2).toInt(),
                 (y - iconSize / 2).toInt(),
@@ -733,7 +728,7 @@ class TimeRangePicker @JvmOverloads constructor(
     }
 
     private fun computeClockRadius(invalidate: Boolean = true) {
-        _clockRadius = _radius - max(_thumbSize, _sliderWidth) / 2f - dpToPx(8f)
+        _clockRadius = _radius - max(_thumbSize, _sliderWidth) / 2f - dpToPx(8f, context)
         invalidateBitmapCache()
 
         if(invalidate) {
@@ -1136,7 +1131,6 @@ class TimeRangePicker @JvmOverloads constructor(
             get() = totalMinutes % 60
 
         val localTime: LocalTime
-            @RequiresApi(Build.VERSION_CODES.O)
             get() = LocalTime.of(hour, minute)
 
         val calendar: Calendar
@@ -1200,11 +1194,9 @@ class TimeRangePicker @JvmOverloads constructor(
             get() = durationMinutes % 60
 
         val duration: Duration
-            @RequiresApi(Build.VERSION_CODES.O)
             get() = Duration.ofMinutes(durationMinutes.toLong())
 
         val classicDuration: javax.xml.datatype.Duration
-            @RequiresApi(Build.VERSION_CODES.FROYO)
             get() =
                 DatatypeFactory.newInstance().newDuration(true, 0, 0, 0, hour, minute, 0)
 
