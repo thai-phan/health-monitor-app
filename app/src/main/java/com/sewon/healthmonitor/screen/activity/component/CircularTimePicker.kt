@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
-import nl.joery.timerangepicker.TimeRangePicker
+import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
 import timber.log.Timber
 
 
@@ -29,8 +28,8 @@ fun CircularTimePicker(
         factory = { context ->
             val view = LayoutInflater.from(context).inflate(R.layout.circular_time_picker, null)
             val timePicker = view.findViewById<TimeRangePicker>(R.id.circularTimePicker)
-            timePicker.startTime = TimeRangePicker.Time(0, 10)
-            timePicker.endTime = TimeRangePicker.Time(5, 30)
+            timePicker.startTime = TimeRangePicker.Time(1, 0)
+            timePicker.endTime = TimeRangePicker.Time(13, 0)
 
             timePicker.setOnTimeChangeListener(object : TimeRangePicker.OnTimeChangeListener {
                 override fun onStartTimeChange(startTime: TimeRangePicker.Time) {

@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
-import nl.joery.timerangepicker.BuildConfig
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 

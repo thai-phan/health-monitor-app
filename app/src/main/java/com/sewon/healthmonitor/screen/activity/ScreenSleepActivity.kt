@@ -1,7 +1,6 @@
 package com.sewon.healthmonitor.screen.activity
 
 import android.annotation.SuppressLint
-import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,21 +9,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TimePicker
-import androidx.compose.material3.TimePickerColors
-import androidx.compose.material3.TimePickerDefaults
-import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -40,11 +32,7 @@ import com.sewon.healthmonitor.common.theme.uncheckedBorderColor
 import com.sewon.healthmonitor.common.theme.uncheckedThumbColor
 import com.sewon.healthmonitor.common.theme.uncheckedTrackColor
 import com.sewon.healthmonitor.screen.activity.component.CircularTimePicker
-import com.sewon.healthmonitor.screen.activity.component.TimePickerDialog
-import kotlinx.coroutines.launch
-import nl.joery.timerangepicker.TimeRangePicker
-import java.util.Calendar
-import java.util.Locale
+import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
 
 @SuppressLint("RememberReturnType")
 @Composable

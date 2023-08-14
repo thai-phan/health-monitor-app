@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<nl.joery.timerangepicker.TimeRangePicker xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sewon.healthmonitor.common.timepicker.TimeRangePicker xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/circularTimePicker"
     android:layout_width="match_parent"
@@ -8,11 +8,16 @@
     app:trp_clockFace="SAMSUNG"
     app:trp_clockLabelColor="#03DAC5"
     app:trp_clockTickColor="#03DAC5"
-    app:trp_hourFormat="FORMAT_SYSTEM"
+    app:trp_hourFormat="FORMAT_24"
     app:trp_sliderColor="#66141218"
     app:trp_sliderRangeColor="#FF03DAC5"
     app:trp_sliderWidth="20.dp"
     app:trp_thumbColor="@color/cardview_light_background"
     app:trp_thumbIconColor="#000000"
     app:trp_thumbIconEnd="@drawable/ic_sunny"
-    app:trp_thumbIconStart="@drawable/ic_moon" />
+    app:trp_thumbIconStart="@drawable/ic_moon"
+
+
+    />
+    <!--        app:trp_startTime="00:00"-->
+    <!--        app:trp_endTime="12:00"-->
