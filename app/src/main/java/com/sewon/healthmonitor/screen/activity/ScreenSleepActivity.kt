@@ -43,8 +43,10 @@ fun SleepActivity(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     val start = TimeRangePicker.Time(0, 0)
     val end = TimeRangePicker.Time(5, 30)
+
     val startTime = remember { mutableStateOf(start) }
     val endTime = remember { mutableStateOf(end) }
 
@@ -75,7 +77,7 @@ fun SleepActivity(
             ) {
                 Text("취침시간")
                 Text(startTime.value.toString(), fontWeight = FontWeight.Bold, fontSize = 30.sp)
-                Text("PM")
+//                Text("PM")
             }
             Column(
                 modifier = Modifier.weight(1f),
@@ -84,7 +86,7 @@ fun SleepActivity(
             ) {
                 Text("기상시간")
                 Text(endTime.value.toString(), fontWeight = FontWeight.Bold, fontSize = 30.sp)
-                Text("AM")
+//                Text("AM")
             }
         }
 
@@ -104,12 +106,16 @@ fun SleepActivity(
             Text("수면유도사운드")
             Switch(checked = true, colors = switchColors, onCheckedChange = {})
         }
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = {
+
+                viewModel.updateTime()
+            }) {
                 Text("기상")
             }
         }

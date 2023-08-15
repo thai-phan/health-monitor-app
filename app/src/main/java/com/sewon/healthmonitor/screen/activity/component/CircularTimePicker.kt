@@ -12,34 +12,28 @@ import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
 import timber.log.Timber
 
 
-val Int.px: Int
-    get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 @Composable
 fun CircularTimePicker(
     startTimeState: MutableState<TimeRangePicker.Time>,
     endTimeState: MutableState<TimeRangePicker.Time>
 ) {
-
-
     AndroidView(
         modifier = Modifier
             .fillMaxWidth(),
         factory = { context ->
             val view = LayoutInflater.from(context).inflate(R.layout.circular_time_picker, null)
             val timePicker = view.findViewById<TimeRangePicker>(R.id.circularTimePicker)
-            timePicker.startTime = TimeRangePicker.Time(1, 0)
-            timePicker.endTime = TimeRangePicker.Time(13, 0)
+            timePicker.startTime = startTimeState.value
+            timePicker.endTime = endTimeState.value
 
             timePicker.setOnTimeChangeListener(object : TimeRangePicker.OnTimeChangeListener {
                 override fun onStartTimeChange(startTime: TimeRangePicker.Time) {
                     startTimeState.value = startTime
-                    Timber.d("Start time: %s", startTime)
                 }
 
                 override fun onEndTimeChange(endTime: TimeRangePicker.Time) {
                     endTimeState.value = endTime
-                    Timber.d("End time: %s", endTime.hour)
                 }
 
                 override fun onDurationChange(duration: TimeRangePicker.TimeDuration) {
@@ -49,5 +43,4 @@ fun CircularTimePicker(
             timePicker
         }
     )
-//    custom_time_picker.xml
 }

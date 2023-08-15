@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
+import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +29,8 @@ data class UiState(
 
 @HiltViewModel
 class ViewModelSleepActivity @Inject constructor(
-    private val IRadarRepository: IRadarRepository,
+    private val radarRepository: IRadarRepository,
+    private val settingRepository: ISettingRepository,
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState())
@@ -38,7 +40,7 @@ class ViewModelSleepActivity @Inject constructor(
     fun createNewTask() = viewModelScope.launch {
         val localRadar = LocalRadar(0.1f, 0.1f, 0.1f, "X", "X", "X", "X")
 
-        IRadarRepository.createTopper(localRadar)
+        radarRepository.createTopper(localRadar)
         _uiState.update {
             it.copy(status1 = "Ahahahah")
         }
@@ -46,7 +48,7 @@ class ViewModelSleepActivity @Inject constructor(
 
     fun getToppers() = viewModelScope.launch {
 
-        var aaa = IRadarRepository.getTopper()
+        var aaa = radarRepository.getTopper()
 
         _uiState.update {
             it.copy(status2 = aaa.first().get(0).moving)
@@ -55,12 +57,16 @@ class ViewModelSleepActivity @Inject constructor(
 
     fun getCount() = viewModelScope.launch {
 
-        var bbb = IRadarRepository.getCountTopper()
+        var bbb = radarRepository.getCountTopper()
 
         _uiState.update {
             it.copy(status3 = bbb.first().toString())
         }
     }
 
+    fun updateTime() = viewModelScope.launch {
+//        settingRepository.updateAlarmOnSetting()
+
+    }
 
 }
