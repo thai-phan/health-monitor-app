@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.data.source.model
+package com.sewon.healthmonitor.data.model
 
 import com.sewon.healthmonitor.data.source.local.entity.LocalSetting
 import java.time.LocalTime

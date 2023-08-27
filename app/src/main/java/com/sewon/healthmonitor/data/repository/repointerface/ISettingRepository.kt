@@ -1,6 +1,6 @@
 package com.sewon.healthmonitor.data.repository.repointerface
 
-import com.sewon.healthmonitor.data.source.model.Setting
+import com.sewon.healthmonitor.data.model.Setting
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalTime
 
@@ -18,5 +18,6 @@ interface ISettingRepository {
     suspend fun updateBedTimeSetting(userId: Int, bedTime: LocalTime): String
 
     suspend fun updateAlarmTypeSetting(userId: Int, alarmSetting: String): String
+
 
 }

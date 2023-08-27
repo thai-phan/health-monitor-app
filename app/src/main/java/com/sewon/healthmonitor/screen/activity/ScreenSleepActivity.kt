@@ -114,7 +114,7 @@ fun SleepActivity(
         ) {
             Button(onClick = {
 
-                viewModel.updateTime()
+                viewModel.queryFromServer()
             }) {
                 Text("기상")
             }

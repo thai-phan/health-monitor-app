@@ -23,7 +23,9 @@ import com.sewon.healthmonitor.data.source.local.dao.LocalRadarDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalUserDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalSettingDao
 import com.sewon.healthmonitor.data.repository.RadarRepository
+import com.sewon.healthmonitor.data.repository.SettingRepository
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
+import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
 
 import dagger.Binds
 import dagger.Module
@@ -64,8 +66,12 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindTopperRepository(topperRepository: RadarRepository): IRadarRepository
+    abstract fun bindRadarRepository(radarRepository: RadarRepository): IRadarRepository
 
+
+    @Singleton
+    @Binds
+    abstract fun bindSettingRepository(settingRepository: SettingRepository): ISettingRepository
 }
 
 //@Module

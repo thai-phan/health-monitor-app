@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.data.repository.SettingRepository
 import com.sewon.healthmonitor.data.repository.UserRepository
-import com.sewon.healthmonitor.data.source.model.Setting
+import com.sewon.healthmonitor.data.model.Setting
 import com.sewon.healthmonitor.util.Async
 import com.sewon.healthmonitor.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel

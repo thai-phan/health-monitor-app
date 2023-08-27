@@ -2,6 +2,7 @@ package com.sewon.healthmonitor.screen.activity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sewon.healthmonitor.api.ServerService
 import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
@@ -31,7 +32,7 @@ data class UiState(
 class ViewModelSleepActivity @Inject constructor(
     private val radarRepository: IRadarRepository,
     private val settingRepository: ISettingRepository,
-): ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
@@ -64,8 +65,16 @@ class ViewModelSleepActivity @Inject constructor(
         }
     }
 
+    fun queryFromServer() = viewModelScope.launch {
+        val quotesApi = ServerService.create().testServer()
+        // launching a new coroutine
+
+
+        println("asdas")
+    }
+
     fun updateTime() = viewModelScope.launch {
-//        settingRepository.updateAlarmOnSetting()
+//        settingRepository.countSetting()
 
     }
 
