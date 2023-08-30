@@ -32,23 +32,23 @@ class MainActivity : ComponentActivity() {
         actionBar?.hide();
         super.onCreate(savedInstanceState)
 
-        val quotesApi = ServerService.create()
-        // launching a new coroutine
-        lifecycleScope.launch {
-            val result = quotesApi.testServer()
-            Timber.d("ayush: ", result.toString())
-        }
-
-
-
-//        WindowCompat.setDecorFitsSystemWindows(window, false)
-//
-//        setContent {
-//            HealthApp {
-//                finish()
-//            }
-//
+//        val quotesApi = ServerService.create()
+//        // launching a new coroutine
+//        lifecycleScope.launch {
+//            val result = quotesApi.testServer()
+//            Timber.d("ayush: ", result.toString())
 //        }
+
+
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        setContent {
+            HealthApp {
+                finish()
+            }
+
+        }
     }
 
     override fun onResume() {
