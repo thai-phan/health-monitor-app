@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -68,6 +69,9 @@ class ViewModelSleepActivity @Inject constructor(
 
     fun queryFromServerNew() = viewModelScope.launch {
         val quotesApi = HttpService.create().testServer()
+        quotesApi.let {
+            Timber.v(it.data.toString())
+        }
         // launching a new coroutine
         _uiState.update {
             it.copy(status3 = quotesApi.data)
@@ -79,6 +83,10 @@ class ViewModelSleepActivity @Inject constructor(
     fun queryFromServer() = viewModelScope.launch {
         val quotesApi = ServerService.create().testServer()
         // launching a new coroutine
+        quotesApi.let {
+            Timber.v(it.totalCount.toString())
+        }
+
         _uiState.update {
             it.copy(status3 = quotesApi.count.toString())
         }
