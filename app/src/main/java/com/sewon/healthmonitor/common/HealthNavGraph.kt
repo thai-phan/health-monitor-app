@@ -35,7 +35,7 @@ fun HealthNavGraph(
 
 
 
-    val mainStartDestination = MainDestinations.USER_ROUTE
+    val mainStartDestination = MainDestinations.ACTIVITY_ROUTE
 
     val context = LocalContext.current
     val store = HealthDataStore(context)

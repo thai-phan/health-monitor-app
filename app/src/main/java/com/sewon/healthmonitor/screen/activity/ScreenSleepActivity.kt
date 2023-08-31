@@ -106,7 +106,7 @@ fun SleepActivity(
             Text("수면유도사운드")
             Switch(checked = true, colors = switchColors, onCheckedChange = {})
         }
-
+        Text(uiState.status3)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
@@ -118,6 +118,13 @@ fun SleepActivity(
             }) {
                 Text("기상")
             }
+            Button(onClick = {
+
+                viewModel.queryFromServerNew()
+            }) {
+                Text("http")
+            }
+
         }
 
     }

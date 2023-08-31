@@ -2,6 +2,7 @@ package com.sewon.healthmonitor.screen.activity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sewon.healthmonitor.api.HttpService
 import com.sewon.healthmonitor.api.ServerService
 import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
@@ -65,10 +66,22 @@ class ViewModelSleepActivity @Inject constructor(
         }
     }
 
+    fun queryFromServerNew() = viewModelScope.launch {
+        val quotesApi = HttpService.create().testServer()
+        // launching a new coroutine
+        _uiState.update {
+            it.copy(status3 = quotesApi.data)
+        }
+
+        println("asdas")
+    }
+
     fun queryFromServer() = viewModelScope.launch {
         val quotesApi = ServerService.create().testServer()
         // launching a new coroutine
-
+        _uiState.update {
+            it.copy(status3 = quotesApi.count.toString())
+        }
 
         println("asdas")
     }
