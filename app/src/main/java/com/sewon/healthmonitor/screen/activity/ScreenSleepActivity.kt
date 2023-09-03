@@ -120,7 +120,7 @@ fun SleepActivity(
             }
             Button(onClick = {
 
-                viewModel.queryFromServerNew()
+                viewModel.queryFromServerHttp()
             }) {
                 Text("http")
             }

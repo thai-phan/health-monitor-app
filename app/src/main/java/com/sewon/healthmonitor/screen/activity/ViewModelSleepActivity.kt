@@ -8,6 +8,7 @@ import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -67,29 +68,49 @@ class ViewModelSleepActivity @Inject constructor(
         }
     }
 
-    fun queryFromServerNew() = viewModelScope.launch {
-        val quotesApi = HttpService.create().testServer()
-        quotesApi.let {
-            Timber.v(it.data.toString())
+
+
+    val exceptionHandler = CoroutineExceptionHandler { _, error ->
+        // Do what you want with the error
+        Timber.e( error)
+    }
+
+    fun queryFromServer() = viewModelScope.launch(exceptionHandler) {
+        try {
+            val quotesApi = ServerService.create().testServer()
+            quotesApi.let {
+                Timber.v(it.totalCount.toString())
+            }
+            _uiState.update {
+                it.copy(status3 = quotesApi.count.toString())
+            }
+        }  catch (error: Error) {
+            _uiState.update {
+                it.copy(status3 = "Disconnect")
+            }
         }
         // launching a new coroutine
-        _uiState.update {
-            it.copy(status3 = quotesApi.data)
-        }
 
         println("asdas")
     }
 
-    fun queryFromServer() = viewModelScope.launch {
-        val quotesApi = ServerService.create().testServer()
-        // launching a new coroutine
-        quotesApi.let {
-            Timber.v(it.totalCount.toString())
+    fun queryFromServerHttp() = viewModelScope.launch {
+        try {
+            val quotesApi = HttpService.create().testServer()
+            quotesApi.let {
+                Timber.v(it.data)
+            }
+            // launching a new coroutine
+            _uiState.update {
+                it.copy(status3 = quotesApi.data)
+            }
+        } catch (error: Error) {
+            Timber.v("catch")
+            _uiState.update {
+                it.copy(status3 = "Disconnect")
+            }
         }
 
-        _uiState.update {
-            it.copy(status3 = quotesApi.count.toString())
-        }
 
         println("asdas")
     }
