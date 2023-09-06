@@ -13,17 +13,17 @@ class BackgroundSoundService : Service() {
         return null
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        player = MediaPlayer.create(this, R.raw.idil)
-        player!!.isLooping = true // Set looping
-        player!!.setVolume(100f, 100f)
-    }
+//    override fun onCreate() {
+//        super.onCreate()
+//        player = MediaPlayer.create(this, R.raw.idil)
+//        player!!.isLooping = true // Set looping
+//        player!!.setVolume(100f, 100f)
+//    }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        player!!.start()
-        return 1
-    }
+//    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+//        player!!.start()
+//        return 1
+//    }
 
     override fun onStart(intent: Intent?, startId: Int) {
         // TO DO
