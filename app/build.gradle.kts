@@ -64,17 +64,17 @@ dependencies {
 
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.annotation:annotation:1.6.0")
+    implementation("androidx.annotation:annotation:1.7.0")
     implementation("androidx.core:core-i18n:1.0.0-alpha01")
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
-    implementation("androidx.navigation:navigation-compose:2.7.1")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+    implementation("androidx.navigation:navigation-compose:2.7.2")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
     implementation("androidx.preference:preference-ktx:1.2.1")
 
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
@@ -83,10 +83,10 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
     // Hilt dependency injection
-    implementation("com.google.dagger:hilt-android:2.47")
-//    kapt "com.google.dagger:hilt-compiler:2.46.1")
+    implementation("com.google.dagger:hilt-android:2.48")
+    // kapt "com.google.dagger:hilt-compiler:2.46.1")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
-    kapt("com.google.dagger:hilt-android-compiler:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
@@ -126,7 +126,7 @@ dependencies {
     implementation("androidx.compose.compiler:compiler:1.5.3")
     implementation("androidx.compose.material3:material3:1.1.1")
 
-    val composeVersion = "1.5.0"
+    val composeVersion = "1.5.1"
     implementation("androidx.compose.animation:animation:$composeVersion")
     implementation("androidx.compose.foundation:foundation:$composeVersion")
     implementation("androidx.compose.foundation:foundation-layout:$composeVersion")
@@ -149,7 +149,7 @@ dependencies {
 
     // Chart
     //
-    val vicoChartVersion = "1.9.2"
+    val vicoChartVersion = "1.11.3"
     // Includes the core logic for charts and other elements.
     implementation("com.patrykandpatrick.vico:core:$vicoChartVersion")
     // For Jetpack Compose.
