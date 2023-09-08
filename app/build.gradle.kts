@@ -6,11 +6,9 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 
-
 android {
     namespace = "com.sewon.healthmonitor"
     compileSdk = 34
-
     defaultConfig {
         applicationId  = "com.sewon.healthmonitor"
         minSdk  = 29
@@ -26,7 +24,6 @@ android {
 //            }
 //        }
     }
-
     buildTypes {
         release {
             isMinifyEnabled  =  false
@@ -54,12 +51,7 @@ android {
 
 }
 
-
-
-
-
 dependencies {
-
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.annotation:annotation:1.7.0")
