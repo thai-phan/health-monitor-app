@@ -37,101 +37,101 @@ import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
 @SuppressLint("RememberReturnType")
 @Composable
 fun SleepActivity(
-    modifier: Modifier = Modifier,
+  modifier: Modifier = Modifier,
 
-    viewModel: ViewModelSleepActivity = hiltViewModel()
+  viewModel: ViewModelSleepActivity = hiltViewModel()
 ) {
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val start = TimeRangePicker.Time(0, 0)
-    val end = TimeRangePicker.Time(5, 30)
+  val start = TimeRangePicker.Time(0, 0)
+  val end = TimeRangePicker.Time(5, 30)
 
-    val startTime = remember { mutableStateOf(start) }
-    val endTime = remember { mutableStateOf(end) }
+  val startTime = remember { mutableStateOf(start) }
+  val endTime = remember { mutableStateOf(end) }
 
-    val switchColors: SwitchColors = SwitchDefaults.colors(
-        checkedThumbColor = checkedThumbColor,
-        checkedTrackColor = checkedTrackColor,
-        checkedBorderColor = checkedBorderColor,
-        uncheckedThumbColor = uncheckedThumbColor,
-        uncheckedTrackColor = uncheckedTrackColor,
-        uncheckedBorderColor = uncheckedBorderColor,
-    )
+  val switchColors: SwitchColors = SwitchDefaults.colors(
+    checkedThumbColor = checkedThumbColor,
+    checkedTrackColor = checkedTrackColor,
+    checkedBorderColor = checkedBorderColor,
+    uncheckedThumbColor = uncheckedThumbColor,
+    uncheckedTrackColor = uncheckedTrackColor,
+    uncheckedBorderColor = uncheckedBorderColor,
+  )
 
-    Column(
-        modifier = modifier
-            .padding(horizontal = 30.dp, vertical = 20.dp)
-    ) {
-        Text("수면시간 체크", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+  Column(
+    modifier = modifier
+      .padding(horizontal = 30.dp, vertical = 20.dp)
+  ) {
+    Text("수면시간 체크", fontWeight = FontWeight.Bold, fontSize = 24.sp)
 
-        Spacer(modifier = Modifier.height(10.dp))
-        CircularTimePicker(startTimeState = startTime, endTimeState = endTime)
-        Spacer(modifier = Modifier.height(10.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
+    Spacer(modifier = Modifier.height(10.dp))
+    CircularTimePicker(startTimeState = startTime, endTimeState = endTime)
+    Spacer(modifier = Modifier.height(10.dp))
+    Row(modifier = Modifier.fillMaxWidth()) {
 
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("취침시간")
-                Text(startTime.value.toString(), fontWeight = FontWeight.Bold, fontSize = 30.sp)
+      Column(
+        modifier = Modifier.weight(1f),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+      ) {
+        Text("취침시간")
+        Text(startTime.value.toString(), fontWeight = FontWeight.Bold, fontSize = 30.sp)
 //                Text("PM")
-            }
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("기상시간")
-                Text(endTime.value.toString(), fontWeight = FontWeight.Bold, fontSize = 30.sp)
+      }
+      Column(
+        modifier = Modifier.weight(1f),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+      ) {
+        Text("기상시간")
+        Text(endTime.value.toString(), fontWeight = FontWeight.Bold, fontSize = 30.sp)
 //                Text("AM")
-            }
-        }
+      }
+    }
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("수면유도에너지")
-            Switch(checked = true, colors = switchColors, onCheckedChange = {})
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("수면유도사운드")
-            Switch(checked = true, colors = switchColors, onCheckedChange = {})
-        }
-        Text(uiState.status3)
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Button(onClick = {
+    Row(
+      modifier = Modifier.fillMaxWidth(),
+      horizontalArrangement = Arrangement.SpaceBetween,
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      Text("수면유도에너지")
+      Switch(checked = true, colors = switchColors, onCheckedChange = {})
+    }
+    Row(
+      modifier = Modifier.fillMaxWidth(),
+      horizontalArrangement = Arrangement.SpaceBetween,
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      Text("수면유도사운드")
+      Switch(checked = true, colors = switchColors, onCheckedChange = {})
+    }
+    Text(uiState.status3)
+    Row(
+      modifier = Modifier.fillMaxWidth(),
+      horizontalArrangement = Arrangement.Center,
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      Button(onClick = {
 
-                viewModel.queryFromServer()
-            }) {
-                Text("기상")
-            }
-            Button(onClick = {
+        viewModel.queryFromServer()
+      }) {
+        Text("기상")
+      }
+      Button(onClick = {
 
-                viewModel.queryFromServerHttp()
-            }) {
-                Text("http")
-            }
-
-        }
+        viewModel.queryFromServerHttp()
+      }) {
+        Text("http")
+      }
 
     }
+
+  }
 }
 
 @Preview
 @Composable
 fun PreviewSleepActivity() {
-    SleepActivity()
+  SleepActivity()
 }

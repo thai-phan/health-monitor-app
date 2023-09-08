@@ -1,4 +1,3 @@
-
 package com.sewon.healthmonitor.common
 
 import androidx.compose.runtime.State
@@ -15,12 +14,12 @@ import com.sewon.healthmonitor.screen.report.Report
 import com.sewon.healthmonitor.screen.setting.UserSetting
 
 fun NavGraphBuilder.mainNavGraph(
-    onCourseSelected: (Long, NavBackStackEntry) -> Unit,
-    onboardingComplete: State<Boolean>,
-    navController: NavHostController,
-    modifier: Modifier = Modifier
+  onCourseSelected: (Long, NavBackStackEntry) -> Unit,
+  onboardingComplete: State<Boolean>,
+  navController: NavHostController,
+  modifier: Modifier = Modifier
 ) {
-    composable(MainTabs.ACTIVITY.route) { backStackEntry ->
+  composable(MainTabs.ACTIVITY.route) { backStackEntry ->
 //        val parentEntry = remember(backStackEntry) {
 //            navController.getBackStackEntry("parentNavigationRoute")
 //        }
@@ -28,8 +27,8 @@ fun NavGraphBuilder.mainNavGraph(
 //        val parentViewModel = hiltViewModel(parentEntry)
 
 
-        SleepActivity(modifier)
-        // Show onboarding instead if not shown yet.
+    SleepActivity(modifier)
+    // Show onboarding instead if not shown yet.
 //        LaunchedEffect(onboardingComplete) {
 //            if (!onboardingComplete.value) {
 //                navController.navigate(AppDestinations.SPLASH_ROUTE)
@@ -43,20 +42,20 @@ fun NavGraphBuilder.mainNavGraph(
 //            )
 //        }
 
-    }
+  }
 
-    composable(MainTabs.REPORT.route) { from ->
-        Report(modifier)
+  composable(MainTabs.REPORT.route) { from ->
+    Report(modifier)
 //        MyCourses(
 //            courses = courses,
 //            { id -> onCourseSelected(id, from) },
 //            modifier
 //        )
-    }
+  }
 
-    composable(MainTabs.USER.route) {
-        UserSetting(modifier)
-    }
+  composable(MainTabs.USER.route) {
+    UserSetting(modifier)
+  }
 
 //    composable(MainTabs.USER.route) { from ->
 //        MyCourses(

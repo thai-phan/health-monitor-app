@@ -32,33 +32,33 @@ import retrofit2.http.Query
  * Used to connect to the Unsplash API to fetch photos
  */
 interface HttpService {
-    @GET("/")
-    suspend fun testServer(): HttpResponse
+  @GET("/")
+  suspend fun testServer(): HttpResponse
 
-    @GET("search/photos")
-    suspend fun searchPhotos(
-        @Query("query") query: String,
-        @Query("page") page: Int,
-        @Query("per_page") perPage: Int,
+  @GET("search/photos")
+  suspend fun searchPhotos(
+    @Query("query") query: String,
+    @Query("page") page: Int,
+    @Query("per_page") perPage: Int,
 //        @Query("client_id") clientId: String = BuildConfig.UNSPLASH_ACCESS_KEY
-    ): UnsplashSearchResponse
+  ): UnsplashSearchResponse
 
-    companion object {
-        private const val BASE_URL = "http://221.145.170.183:3000/"
+  companion object {
+    private const val BASE_URL = "http://221.145.170.183:3000/"
 
-        fun create(): HttpService {
-            val logger = HttpLoggingInterceptor().apply { level = Level.BASIC }
+    fun create(): HttpService {
+      val logger = HttpLoggingInterceptor().apply { level = Level.BASIC }
 
-            val client = OkHttpClient.Builder()
-                .addInterceptor(logger)
-                .build()
+      val client = OkHttpClient.Builder()
+        .addInterceptor(logger)
+        .build()
 
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(HttpService::class.java)
-        }
+      return Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(HttpService::class.java)
     }
+  }
 }

@@ -31,33 +31,33 @@ import retrofit2.http.Query
  * Used to connect to the Unsplash API to fetch photos
  */
 interface ServerService {
-    @GET("/quotes?page=1")
-    suspend fun testServer(): ServerResponse
+  @GET("/quotes?page=1")
+  suspend fun testServer(): ServerResponse
 
-    @GET("search/photos")
-    suspend fun searchPhotos(
-        @Query("query") query: String,
-        @Query("page") page: Int,
-        @Query("per_page") perPage: Int,
+  @GET("search/photos")
+  suspend fun searchPhotos(
+    @Query("query") query: String,
+    @Query("page") page: Int,
+    @Query("per_page") perPage: Int,
 //        @Query("client_id") clientId: String = BuildConfig.UNSPLASH_ACCESS_KEY
-    ): UnsplashSearchResponse
+  ): UnsplashSearchResponse
 
-    companion object {
-        private const val BASE_URL = "https://quotable.io/"
+  companion object {
+    private const val BASE_URL = "https://quotable.io/"
 
-        fun create(): ServerService {
-            val logger = HttpLoggingInterceptor().apply { level = Level.BASIC }
+    fun create(): ServerService {
+      val logger = HttpLoggingInterceptor().apply { level = Level.BASIC }
 
-            val client = OkHttpClient.Builder()
-                .addInterceptor(logger)
-                .build()
+      val client = OkHttpClient.Builder()
+        .addInterceptor(logger)
+        .build()
 
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(ServerService::class.java)
-        }
+      return Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(ServerService::class.java)
     }
+  }
 }

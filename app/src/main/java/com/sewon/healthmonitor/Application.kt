@@ -11,8 +11,8 @@ import java.util.Locale
 
 @HiltAndroidApp
 class Application : Application() {
-    override fun onCreate() {
-        super.onCreate()
+  override fun onCreate() {
+    super.onCreate()
 
 //        val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags("ko")
 //        // Call this on the main thread as it may require Activity.restart()
@@ -25,9 +25,9 @@ class Application : Application() {
 //        config.setLocale(locale)
 //        getBaseContext().getResources().configuration(config,
 //            getBaseContext().getResources().getDisplayMetrics());
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
+    if (BuildConfig.DEBUG) {
+      Timber.plant(Timber.DebugTree())
     }
+  }
 //    TODO: connect server`
 }
