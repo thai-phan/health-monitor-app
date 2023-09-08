@@ -62,7 +62,7 @@ fun SplashScreen(navController: NavController, redirectRoute: String) {
             .fillMaxSize(),
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_splash),
+            painter = painterResource(id = R.drawable.ic_splash_icon),
             contentDescription = "Logo",
             modifier = Modifier
                 .size(100.dp)
