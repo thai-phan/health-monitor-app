@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp") version("1.8.20-1.0.11")
+    id("com.google.devtools.ksp") version ("1.8.20-1.0.11")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 }
@@ -10,13 +10,13 @@ android {
     namespace = "com.sewon.healthmonitor"
     compileSdk = 34
     defaultConfig {
-        applicationId  = "com.sewon.healthmonitor"
-        minSdk  = 29
-        targetSdk  = 34
-        versionCode  = 1
-        versionName  = "1.0"
+        applicationId = "com.sewon.healthmonitor"
+        minSdk = 29
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
 
-        testInstrumentationRunner  =  "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
 //        javaCompileOptions {
 //            annotationProcessorOptions {
@@ -26,13 +26,15 @@ android {
     }
     buildTypes {
         release {
-            isMinifyEnabled  =  false
-            proguardFiles (getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
-        sourceCompatibility  = JavaVersion.VERSION_17
-        targetCompatibility  = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.6"
@@ -41,9 +43,9 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
-        buildConfig  = true
-        viewBinding =  true
-        compose  = true
+        buildConfig = true
+        viewBinding = true
+        compose = true
     }
 //    androidResources {
 //        generateLocaleConfig true
