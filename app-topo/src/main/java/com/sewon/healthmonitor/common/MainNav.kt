@@ -27,7 +27,7 @@ fun NavGraphBuilder.mainNavGraph(
 //        val parentViewModel = hiltViewModel(parentEntry)
 
 
-    SleepActivity(modifier)
+    SleepActivity(modifier, navController)
     // Show onboarding instead if not shown yet.
 //        LaunchedEffect(onboardingComplete) {
 //            if (!onboardingComplete.value) {

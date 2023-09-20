@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor
+package com.sewon.healthmonitor.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -12,15 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sewon.healthmonitor.common.BottomBar
-import com.sewon.healthmonitor.common.HealthNavGraph
-import com.sewon.healthmonitor.common.MainDestinations
-import com.sewon.healthmonitor.common.MainTabs
-import com.sewon.healthmonitor.common.blackGreenBackground
 import com.sewon.healthmonitor.common.theme.HealthAppTheme
+import com.sewon.healthmonitor.screen.NavigationGraph
 
 @Composable
-fun HealthApp(finishActivity: () -> Unit) {
+fun RootCompose(finishActivity: () -> Unit) {
 
   val navController = rememberNavController()
   val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -56,15 +52,13 @@ fun HealthApp(finishActivity: () -> Unit) {
         modifier = Modifier
           .blackGreenBackground()
       ) {
-        HealthNavGraph(
+        NavigationGraph(
           finishActivity = finishActivity,
           navController = navController,
           modifier = Modifier.padding(innerPaddingModifier)
         )
       }
-
     }
-
   }
 }
 

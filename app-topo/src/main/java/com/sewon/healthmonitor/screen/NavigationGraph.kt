@@ -1,12 +1,10 @@
-package com.sewon.healthmonitor.common
+package com.sewon.healthmonitor.screen
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
@@ -14,23 +12,26 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.sewon.healthmonitor.common.AppDestinations
+import com.sewon.healthmonitor.common.MainDestinations
+import com.sewon.healthmonitor.common.mainNavGraph
 import com.sewon.healthmonitor.data.HealthDataStore
+import com.sewon.healthmonitor.screen.device.DeviceScreen
 import com.sewon.healthmonitor.screen.singleview.TermAgreement
 import com.sewon.healthmonitor.screen.singleview.SplashScreen
 
 
 @Composable
-fun HealthNavGraph(
+fun NavigationGraph(
   modifier: Modifier = Modifier,
   finishActivity: () -> Unit = {},
   navController: NavHostController = rememberNavController(),
-  startDestination: String = AppDestinations.MAIN_ROUTE,
   showOnboardingInitially: Boolean = false
 ) {
 
+  val startDestination: String = AppDestinations.DEVICE_ROUTE
 
   val mainStartDestination = MainDestinations.ACTIVITY_ROUTE
 
@@ -67,6 +68,13 @@ fun HealthNavGraph(
       TermAgreement(
         navController = navController,
         redirectRoute = MainDestinations.ACTIVITY_ROUTE,
+
+        )
+    }
+
+    composable(AppDestinations.DEVICE_ROUTE) {
+      DeviceScreen(
+        navController = navController,
 
         )
     }

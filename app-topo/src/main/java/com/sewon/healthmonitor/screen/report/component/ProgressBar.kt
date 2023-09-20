@@ -46,7 +46,7 @@ fun GradientProgressbar(
     Color(0xFF40c7e7)
   ),
   numberStyle: TextStyle = TextStyle(
-    fontFamily = FontFamily(Font(R.font.suite_bold, FontWeight.Bold)),
+    fontFamily = FontFamily(Font(R.font.suite_regular, FontWeight.Bold)),
     fontSize = 32.sp
   ),
   animationDuration: Int = 1000,

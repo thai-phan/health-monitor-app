@@ -68,7 +68,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
     implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation("com.google.accompanist:accompanist-permissions:0.32.0")
 
+
+    // Http
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -115,10 +118,9 @@ dependencies {
 
     // UI Compose
     //
+    val composeVersion = "1.5.1"
     implementation("androidx.compose.compiler:compiler:1.5.3")
     implementation("androidx.compose.material3:material3:1.1.1")
-
-    val composeVersion = "1.5.1"
     implementation("androidx.compose.animation:animation:$composeVersion")
     implementation("androidx.compose.foundation:foundation:$composeVersion")
     implementation("androidx.compose.foundation:foundation-layout:$composeVersion")
@@ -132,12 +134,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
     implementation("androidx.compose.ui:ui-viewbinding:$composeVersion")
-
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
 
-
     //    implementation("nl.joery.timerangepicker:timerangepicker:1.0.0")
-
 
     // Chart
     //

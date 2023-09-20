@@ -8,6 +8,7 @@ import com.sewon.healthmonitor.R
 object AppDestinations {
   const val SPLASH_ROUTE = "splash_screen"
   const val TERM_AGREEMENT_ROUTE = "term_agreement"
+  const val DEVICE_ROUTE = "device"
   const val MAIN_ROUTE = "main"
 
 }
