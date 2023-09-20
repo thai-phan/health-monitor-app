@@ -26,50 +26,50 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CircularChart(
-    modifier: Modifier = Modifier,
-    angle: Float = 50f,
-    brush: Brush = Brush.verticalGradient(listOf(Color.White, Color.Black)),
-    backgroundCircleColor: Color = Color.LightGray.copy(alpha = 0.3f),
-    thickness: Dp = 12.dp,
-    gapBetweenCircles: Dp = 20.dp
+  modifier: Modifier = Modifier,
+  angle: Float = 50f,
+  brush: Brush = Brush.verticalGradient(listOf(Color.White, Color.Black)),
+  backgroundCircleColor: Color = Color.LightGray.copy(alpha = 0.3f),
+  thickness: Dp = 12.dp,
+  gapBetweenCircles: Dp = 20.dp
 ) {
-    val sweepAngles = 360 * angle / 100
+  val sweepAngles = 360 * angle / 100
 
-    var sizeCom by remember { mutableStateOf(IntSize.Zero) }
+  var sizeCom by remember { mutableStateOf(IntSize.Zero) }
 
 
 
-    Canvas(
-        modifier = modifier
-            .fillMaxWidth()
+  Canvas(
+    modifier = modifier
+      .fillMaxWidth()
 //            .background(Color(0xFF071224))
-            .aspectRatio(1f)
-            .onGloballyPositioned { coordinates ->
-                sizeCom = coordinates.size
-            }
-    ) {
-        var arcRadius = sizeCom.width.toFloat()
+      .aspectRatio(1f)
+      .onGloballyPositioned { coordinates ->
+        sizeCom = coordinates.size
+      }
+  ) {
+    var arcRadius = sizeCom.width.toFloat()
 
-        arcRadius -= gapBetweenCircles.toPx()
+    arcRadius -= gapBetweenCircles.toPx()
 
-        drawCircle(
-            color = backgroundCircleColor,
-            radius = arcRadius / 2,
-            style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt)
-        )
+    drawCircle(
+      color = backgroundCircleColor,
+      radius = arcRadius / 2,
+      style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt)
+    )
 
-        drawArc(
-            brush = brush,
-            startAngle = -90f,
-            sweepAngle = sweepAngles,
-            useCenter = false,
-            style = Stroke(width = thickness.toPx(), cap = StrokeCap.Round),
-            size = Size(arcRadius, arcRadius),
-            topLeft = Offset(
-                x = (sizeCom.width.toFloat() - arcRadius) / 2,
-                y = (sizeCom.width.toFloat() - arcRadius) / 2
-            ),
-            blendMode = BlendMode.SrcOver
-        )
-    }
+    drawArc(
+      brush = brush,
+      startAngle = -90f,
+      sweepAngle = sweepAngles,
+      useCenter = false,
+      style = Stroke(width = thickness.toPx(), cap = StrokeCap.Round),
+      size = Size(arcRadius, arcRadius),
+      topLeft = Offset(
+        x = (sizeCom.width.toFloat() - arcRadius) / 2,
+        y = (sizeCom.width.toFloat() - arcRadius) / 2
+      ),
+      blendMode = BlendMode.SrcOver
+    )
+  }
 }

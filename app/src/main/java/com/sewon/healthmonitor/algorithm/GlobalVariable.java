@@ -1,9 +1,12 @@
 package com.sewon.healthmonitor.algorithm;
 
 public class GlobalVariable {
-  private static double dRThreshold; //R 값에 대한 Threshold
-  private static double dRTime; //R 값에 대한 Time
-  private static double dRVal; //R 값에 대한 Peak
+  //R 값에 대한 Threshold
+  private static double dRThreshold;
+  //R 값에 대한 Time
+  private static double dRTime;
+  //R 값에 대한 Peak
+  private static double dRVal;
 
   public GlobalVariable() {
     this.dRThreshold = 0.0;

@@ -36,98 +36,98 @@ import com.sewon.healthmonitor.screen.setting.card4.component.Modal3SOSRecipient
 
 // Card 4
 @Composable
-fun GeneralSetting(switchColors: SwitchColors =  SwitchDefaults.colors()) {
+fun GeneralSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
 
-    var openDeviceAccessModal by rememberSaveable { mutableStateOf(false) }
-    var openClearHistoryModal by rememberSaveable { mutableStateOf(false) }
-    var openSOSRecipientModal by rememberSaveable { mutableStateOf(false) }
+  var openDeviceAccessModal by rememberSaveable { mutableStateOf(false) }
+  var openClearHistoryModal by rememberSaveable { mutableStateOf(false) }
+  var openSOSRecipientModal by rememberSaveable { mutableStateOf(false) }
 
 
-    Card(
-        shape = RoundedCornerShape(size = 10.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+  Card(
+    shape = RoundedCornerShape(size = 10.dp),
+    colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+  ) {
+    Column(
+      verticalArrangement = Arrangement.SpaceAround,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(20.dp)
+
     ) {
-        Column(
-            verticalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
+      Text(
+        "일반설정", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
+      )
 
-        ) {
-            Text(
-                "일반설정", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
-            )
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
+      Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+      ) {
 //                Cell phone cache access rights
-                Text("핸드폰 캐시 접근 권한")
+        Text("핸드폰 캐시 접근 권한")
 
-                var checked by remember { mutableStateOf(true) }
+        var checked by remember { mutableStateOf(true) }
 
-                Switch(
-                    colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
-            }
-            Spacer(modifier = Modifier.height(5.dp))
-            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-            Spacer(modifier = Modifier.height(5.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
+        Switch(
+          colors = switchColors,
+          modifier = Modifier.semantics { contentDescription = "Demo" },
+          checked = checked,
+          onCheckedChange = { checked = it })
+      }
+      Spacer(modifier = Modifier.height(5.dp))
+      Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+      Spacer(modifier = Modifier.height(5.dp))
+      Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+      ) {
 //                Clear all sleep history
-                Text("수면 기록 모두 지우기")
+        Text("수면 기록 모두 지우기")
 
-                var checked by remember { mutableStateOf(true) }
+        var checked by remember { mutableStateOf(true) }
 
-                Switch(
-                    colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
-            }
-            Spacer(modifier = Modifier.height(5.dp))
-            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-            Spacer(modifier = Modifier.height(5.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
+        Switch(
+          colors = switchColors,
+          modifier = Modifier.semantics { contentDescription = "Demo" },
+          checked = checked,
+          onCheckedChange = { checked = it })
+      }
+      Spacer(modifier = Modifier.height(5.dp))
+      Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+      Spacer(modifier = Modifier.height(5.dp))
+      Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+      ) {
 
 //                Emergency SOS Recipient Settings
-                Text("위급 SOS 수신자 설정")
+        Text("위급 SOS 수신자 설정")
 
-                var checked by remember { mutableStateOf(true) }
+        var checked by remember { mutableStateOf(true) }
 
-                Switch(
-                    colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
-            }
-        }
+        Switch(
+          colors = switchColors,
+          modifier = Modifier.semantics { contentDescription = "Demo" },
+          checked = checked,
+          onCheckedChange = { checked = it })
+      }
     }
+  }
 
-    if (openDeviceAccessModal) {
-        Modal1DeviceAccess(
-            onToggleModal = { openDeviceAccessModal = !openDeviceAccessModal })
-    }
+  if (openDeviceAccessModal) {
+    Modal1DeviceAccess(
+      onToggleModal = { openDeviceAccessModal = !openDeviceAccessModal })
+  }
 
-    if (openClearHistoryModal) {
-        Modal2ClearHistory(
-            onToggleModal = { openClearHistoryModal = !openClearHistoryModal })
-    }
+  if (openClearHistoryModal) {
+    Modal2ClearHistory(
+      onToggleModal = { openClearHistoryModal = !openClearHistoryModal })
+  }
 
-    if (openSOSRecipientModal) {
-        Modal3SOSRecipient(
-            onToggleModal = { openSOSRecipientModal = !openSOSRecipientModal })
-    }
+  if (openSOSRecipientModal) {
+    Modal3SOSRecipient(
+      onToggleModal = { openSOSRecipientModal = !openSOSRecipientModal })
+  }
 }

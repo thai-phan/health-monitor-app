@@ -14,33 +14,33 @@ import java.util.Date
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val localUserDao: LocalUserDao,
-    @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
-    @ApplicationScope private val scope: CoroutineScope,
+  private val localUserDao: LocalUserDao,
+  @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
+  @ApplicationScope private val scope: CoroutineScope,
 ) {
 
-    suspend fun addUser(user: User) {
-        return localUserDao.upsert(user.toLocal())
-    }
+  suspend fun addUser(user: User) {
+    return localUserDao.upsert(user.toLocal())
+  }
 
-    fun getUserByUsername(username: String): Flow<User> {
-        return localUserDao.getUserByUsername(username).map { it.toExternal() }
-    }
+  fun getUserByUsername(username: String): Flow<User> {
+    return localUserDao.getUserByUsername(username).map { it.toExternal() }
+  }
 
-    suspend fun updateUserBirthday(username: String, birthday: Date) {
-        localUserDao.updateUserBirthday(username, birthday)
-    }
+  suspend fun updateUserBirthday(username: String, birthday: Date) {
+    localUserDao.updateUserBirthday(username, birthday)
+  }
 
-    suspend fun updateUserGender(username: String, gender: String) {
-        localUserDao.updateUserGender(username, gender)
-    }
+  suspend fun updateUserGender(username: String, gender: String) {
+    localUserDao.updateUserGender(username, gender)
+  }
 
-    fun countUser(): Flow<Int> {
-        return localUserDao.countUser()
-    }
+  fun countUser(): Flow<Int> {
+    return localUserDao.countUser()
+  }
 
-    suspend fun updateUserSetting(user: User): String {
-        var aaa = localUserDao.updateUser(user.toLocal())
-        return "Done"
-    }
+  suspend fun updateUserSetting(user: User): String {
+    var aaa = localUserDao.updateUser(user.toLocal())
+    return "Done"
+  }
 }

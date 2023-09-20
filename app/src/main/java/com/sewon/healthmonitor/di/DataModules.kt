@@ -39,24 +39,25 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
-    @Singleton
-    @Provides
-    fun provideDataBase(@ApplicationContext context: Context): HealthDatabase {
-        return Room.databaseBuilder(
-            context.applicationContext,
-            HealthDatabase::class.java,
-            "HealthMonitor.db"
-        ).build()
-    }
+  @Singleton
+  @Provides
+  fun provideDataBase(@ApplicationContext context: Context): HealthDatabase {
+    return Room.databaseBuilder(
+      context.applicationContext,
+      HealthDatabase::class.java,
+      "HealthMonitor.db"
+    ).build()
+  }
 
-    @Provides
-    fun provideTopperDao(database: HealthDatabase): LocalRadarDao = database.topperDao()
+  @Provides
+  fun provideTopperDao(database: HealthDatabase): LocalRadarDao = database.topperDao()
 
-    @Provides
-    fun provideUserSettingDao(database: HealthDatabase): LocalSettingDao = database.userSettingDao()
+  @Provides
+  fun provideUserSettingDao(database: HealthDatabase): LocalSettingDao = database.userSettingDao()
 
-    @Provides
-    fun provideUserInformationDao(database: HealthDatabase): LocalUserDao = database.userInformationDao()
+  @Provides
+  fun provideUserInformationDao(database: HealthDatabase): LocalUserDao =
+    database.userInformationDao()
 }
 
 
@@ -64,14 +65,14 @@ object DatabaseModule {
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
-    @Singleton
-    @Binds
-    abstract fun bindRadarRepository(radarRepository: RadarRepository): IRadarRepository
+  @Singleton
+  @Binds
+  abstract fun bindRadarRepository(radarRepository: RadarRepository): IRadarRepository
 
 
-    @Singleton
-    @Binds
-    abstract fun bindSettingRepository(settingRepository: SettingRepository): ISettingRepository
+  @Singleton
+  @Binds
+  abstract fun bindSettingRepository(settingRepository: SettingRepository): ISettingRepository
 }
 
 //@Module

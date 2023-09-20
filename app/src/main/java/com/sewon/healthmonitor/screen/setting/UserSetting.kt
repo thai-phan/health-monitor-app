@@ -33,47 +33,47 @@ import com.sewon.healthmonitor.screen.setting.card5.DeviceConnectionSetting
 
 @Composable
 fun UserSetting(
-    modifier: Modifier = Modifier,
-    viewModel: ViewModelUserSetting = hiltViewModel()
+  modifier: Modifier = Modifier,
+  viewModel: ViewModelUserSetting = hiltViewModel()
 ) {
-    val switchColors: SwitchColors = SwitchDefaults.colors(
-        checkedThumbColor = checkedThumbColor,
-        checkedTrackColor = checkedTrackColor,
-        checkedBorderColor = checkedBorderColor,
-        uncheckedThumbColor = uncheckedThumbColor,
-        uncheckedTrackColor = uncheckedTrackColor,
-        uncheckedBorderColor = uncheckedBorderColor,
-    )
+  val switchColors: SwitchColors = SwitchDefaults.colors(
+    checkedThumbColor = checkedThumbColor,
+    checkedTrackColor = checkedTrackColor,
+    checkedBorderColor = checkedBorderColor,
+    uncheckedThumbColor = uncheckedThumbColor,
+    uncheckedTrackColor = uncheckedTrackColor,
+    uncheckedBorderColor = uncheckedBorderColor,
+  )
+  Column(
+    modifier = modifier.padding(
+      start = 20.dp, top = 20.dp, end = 20.dp, bottom = 10.dp
+    ),
+  ) {
+    Text(stringResource(R.string.setting_title), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+    Spacer(modifier = Modifier.height(20.dp))
     Column(
-        modifier = modifier.padding(
-                start = 20.dp, top = 20.dp, end = 20.dp, bottom = 10.dp
-            ),
+      modifier = Modifier.verticalScroll(rememberScrollState()),
+      verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-        Text(stringResource(R.string.setting_title), fontWeight = FontWeight.Bold, fontSize = 24.sp)
-        Spacer(modifier = Modifier.height(20.dp))
-        Column(
-            modifier = Modifier.verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-        ) {
-            ProfileSetting()
+      ProfileSetting()
 
-            SleepSetting(switchColors = switchColors)
+      SleepSetting(switchColors = switchColors)
 
-            InductionSolutionSetting(switchColors = switchColors)
+      InductionSolutionSetting(switchColors = switchColors)
 
-            GeneralSetting(switchColors = switchColors)
+      GeneralSetting(switchColors = switchColors)
 
-            DeviceConnectionSetting()
-        }
+      DeviceConnectionSetting()
+    }
 
 //        PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))
 
-    }
+  }
 
 }
 
 @Preview
 @Composable
 fun PreviewUserSetting() {
-    UserSetting()
+  UserSetting()
 }

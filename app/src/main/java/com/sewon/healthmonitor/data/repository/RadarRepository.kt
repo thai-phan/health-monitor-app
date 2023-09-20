@@ -11,28 +11,26 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RadarRepository @Inject constructor(
-    private val LocalRadarDao: LocalRadarDao,
-    @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
-    @ApplicationScope private val scope: CoroutineScope,
+  private val LocalRadarDao: LocalRadarDao,
+  @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
+  @ApplicationScope private val scope: CoroutineScope,
 ) : IRadarRepository {
 
 
+  override fun getTopper(): Flow<List<LocalRadar>> {
+    return LocalRadarDao.getAllTopper()
+  }
 
-    override fun getTopper(): Flow<List<LocalRadar>> {
-        return LocalRadarDao.getAllTopper()
-    }
 
-
-    override fun getCountTopper(): Flow<Int> {
-        return LocalRadarDao.countTopper()
-    }
+  override fun getCountTopper(): Flow<Int> {
+    return LocalRadarDao.countTopper()
+  }
 //     Count number record
 
 
-
-    override suspend fun createTopper(localRadar: LocalRadar): String {
-        LocalRadarDao.upsert(localRadar)
-        return "Done"
-    }
+  override suspend fun createTopper(localRadar: LocalRadar): String {
+    LocalRadarDao.upsert(localRadar)
+    return "Done"
+  }
 
 }

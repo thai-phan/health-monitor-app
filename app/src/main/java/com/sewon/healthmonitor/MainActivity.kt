@@ -21,42 +21,42 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+  override fun onCreate(savedInstanceState: Bundle?) {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        actionBar?.hide();
-        super.onCreate(savedInstanceState)
+    actionBar?.hide();
+    super.onCreate(savedInstanceState)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+    WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        setContent {
-            HealthApp {
-                finish()
-            }
+    setContent {
+      HealthApp {
+        finish()
+      }
 
-        }
     }
+  }
 
-    override fun onResume() {
-        super.onResume()
-    }
+  override fun onResume() {
+    super.onResume()
+  }
 
-    override fun onStart() {
-        super.onStart()
-    }
+  override fun onStart() {
+    super.onStart()
+  }
 
-    override fun onPause() {
-        super.onPause()
-    }
+  override fun onPause() {
+    super.onPause()
+  }
 
-    override fun onStop() {
-        super.onStop()
-    }
+  override fun onStop() {
+    super.onStop()
+  }
 
-    override fun onRestart() {
-        super.onRestart()
-    }
+  override fun onRestart() {
+    super.onRestart()
+  }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
+  override fun onDestroy() {
+    super.onDestroy()
+  }
 }

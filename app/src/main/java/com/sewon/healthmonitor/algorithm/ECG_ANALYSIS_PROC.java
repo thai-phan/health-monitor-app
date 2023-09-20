@@ -86,11 +86,12 @@ public class ECG_ANALYSIS_PROC {
 
   private static ECG_STRESS CalcFrequency(double[] inputReal) {
     int iLog2 = (int) (Math.log10(inputReal.length) / Math.log10(2));
-    int sampleSize = (int) Math.pow(2, iLog2); //최대 2의 제곱수를 구한다. FFT 계산을 위해서임.
+    //최대 2의 제곱수를 구한다. FFT 계산을 위해서임.
+    int sampleSize = (int) Math.pow(2, iLog2);
 
     int hz = 100;
-    //주파수 해상도 즉 주파수 변화량은 주파수÷샘플 수÷윈도우사이즈(hz의 40%) Hz로 주파수 도메인에서 한칸의 단위입니다.
 
+    //주파수 해상도 즉 주파수 변화량은 주파수÷샘플 수÷윈도우사이즈(hz의 40%) Hz로 주파수 도메인에서 한칸의 단위입니다.
     double sampleRate = (double) hz / sampleSize / (hz * 0.4);
     double frequency = 0;
 

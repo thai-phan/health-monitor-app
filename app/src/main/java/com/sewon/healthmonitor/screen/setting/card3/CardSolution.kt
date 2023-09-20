@@ -38,95 +38,101 @@ import com.sewon.healthmonitor.screen.setting.card3.component.Modal3ScoreThresho
 // Card 3
 @Composable
 fun InductionSolutionSetting(
-    switchColors: SwitchColors = SwitchDefaults.colors()
+  switchColors: SwitchColors = SwitchDefaults.colors()
 
 ) {
 
-    var openInduceEnergyModal by rememberSaveable { mutableStateOf(false) }
-    var openInduceSoundModal by rememberSaveable { mutableStateOf(false) }
-    var openScoreThresholdModal by rememberSaveable { mutableStateOf(false) }
+  var openInduceEnergyModal by rememberSaveable { mutableStateOf(false) }
+  var openInduceSoundModal by rememberSaveable { mutableStateOf(false) }
+  var openScoreThresholdModal by rememberSaveable { mutableStateOf(false) }
 
-    Card(
-        shape = RoundedCornerShape(size = 10.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+  Card(
+    shape = RoundedCornerShape(size = 10.dp),
+    colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+  ) {
+    Column(
+      verticalArrangement = Arrangement.SpaceAround,
+      modifier = Modifier
+          .fillMaxWidth()
+          .padding(20.dp)
+
     ) {
-        Column(
-            verticalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
+      Text(
+        "수면유도 솔루션", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
+      )
 
-        ) {
-            Text(
-                "수면유도 솔루션", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
-            )
+      Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { openInduceEnergyModal = !openInduceEnergyModal }),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
+        Text("수면유도 에너지")
 
-            Row(
-                modifier = Modifier.fillMaxWidth().clickable(onClick = { openInduceEnergyModal = !openInduceEnergyModal }),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text("수면유도 에너지")
+        var checked by remember { mutableStateOf(true) }
 
-                var checked by remember { mutableStateOf(true) }
+        Switch(
+          colors = switchColors,
+          modifier = Modifier.semantics { contentDescription = "Demo" },
+          checked = checked,
+          onCheckedChange = { checked = it })
+      }
+      Spacer(modifier = Modifier.height(5.dp))
+      Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+      Spacer(modifier = Modifier.height(5.dp))
+      Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { openInduceSoundModal = !openInduceSoundModal }),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
+        Text("수면유도 사운드")
 
-                Switch(
-                    colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
-            }
-            Spacer(modifier = Modifier.height(5.dp))
-            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-            Spacer(modifier = Modifier.height(5.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth().clickable(onClick = { openInduceSoundModal = !openInduceSoundModal }),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text("수면유도 사운드")
+        var checked by remember { mutableStateOf(true) }
 
-                var checked by remember { mutableStateOf(true) }
+        Switch(
+          colors = switchColors,
+          modifier = Modifier.semantics { contentDescription = "Demo" },
+          checked = checked,
+          onCheckedChange = { checked = it })
+      }
+      Spacer(modifier = Modifier.height(5.dp))
+      Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+      Spacer(modifier = Modifier.height(5.dp))
+      Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { openScoreThresholdModal = !openScoreThresholdModal }),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
+        Text("수면점수 임계값 설정")
 
-                Switch(
-                    colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
-            }
-            Spacer(modifier = Modifier.height(5.dp))
-            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-            Spacer(modifier = Modifier.height(5.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth().clickable(onClick = { openScoreThresholdModal = !openScoreThresholdModal }),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text("수면점수 임계값 설정")
+        var checked by remember { mutableStateOf(true) }
 
-                var checked by remember { mutableStateOf(true) }
-
-                Switch(
-                    colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
-            }
-        }
+        Switch(
+          colors = switchColors,
+          modifier = Modifier.semantics { contentDescription = "Demo" },
+          checked = checked,
+          onCheckedChange = { checked = it })
+      }
     }
+  }
 
-    if (openInduceEnergyModal) {
-        Modal1InduceEnergy(
-            onToggleModal = { openInduceEnergyModal = !openInduceEnergyModal })
-    }
+  if (openInduceEnergyModal) {
+    Modal1InduceEnergy(
+      onToggleModal = { openInduceEnergyModal = !openInduceEnergyModal })
+  }
 
-    if (openInduceSoundModal) {
-        Modal2InduceSound(
-            onToggleModal = { openInduceSoundModal = !openInduceSoundModal })
-    }
+  if (openInduceSoundModal) {
+    Modal2InduceSound(
+      onToggleModal = { openInduceSoundModal = !openInduceSoundModal })
+  }
 
-    if (openScoreThresholdModal) {
-        Modal3ScoreThreshold(
-            onToggleModal = { openScoreThresholdModal = !openScoreThresholdModal })
-    }
+  if (openScoreThresholdModal) {
+    Modal3ScoreThreshold(
+      onToggleModal = { openScoreThresholdModal = !openScoreThresholdModal })
+  }
 }

@@ -32,55 +32,55 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController, redirectRoute: String) {
-    val scale = remember {
-        androidx.compose.animation.core.Animatable(0f)
-    }
+  val scale = remember {
+    androidx.compose.animation.core.Animatable(0f)
+  }
 
-    // Animation
-    LaunchedEffect(key1 = true) {
-        scale.animateTo(
-            targetValue = 0.7f,
-            // tween Animation
-            animationSpec = tween(
-                durationMillis = 800,
-                easing = {
-                    OvershootInterpolator(4f).getInterpolation(it)
-                })
-        )
-        // Customize the delay time
-        delay(1000L)
-        navController.navigate(redirectRoute)
-    }
+  // Animation
+  LaunchedEffect(key1 = true) {
+    scale.animateTo(
+      targetValue = 0.7f,
+      // tween Animation
+      animationSpec = tween(
+        durationMillis = 800,
+        easing = {
+          OvershootInterpolator(4f).getInterpolation(it)
+        })
+    )
+    // Customize the delay time
+    delay(1000L)
+    navController.navigate(redirectRoute)
+  }
 
 
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .statusBarsPadding()
-            .systemBarsPadding()
-            .fillMaxSize(),
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_splash_icon),
-            contentDescription = "Logo",
-            modifier = Modifier
-                .size(100.dp)
-                .scale(scale.value)
-        )
-        Spacer(modifier = Modifier.height(1.dp))
-        Text(
-            buildAnnotatedString {
-                append("건강 ")
-                withStyle(style = SpanStyle(color = Color(0xFF03dac5))) {
-                    append("모니터링")
-                }
-                append(" 토-퍼")
-            },
+  Column(
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally,
+    modifier = Modifier
+        .statusBarsPadding()
+        .systemBarsPadding()
+        .fillMaxSize(),
+  ) {
+    Image(
+      painter = painterResource(id = R.drawable.ic_splash_icon),
+      contentDescription = "Logo",
+      modifier = Modifier
+          .size(100.dp)
+          .scale(scale.value)
+    )
+    Spacer(modifier = Modifier.height(1.dp))
+    Text(
+      buildAnnotatedString {
+        append("건강 ")
+        withStyle(style = SpanStyle(color = Color(0xFF03dac5))) {
+          append("모니터링")
+        }
+        append(" 토-퍼")
+      },
 //            color = MaterialTheme.colorScheme.onSecondary,
-            fontSize = 26.sp,
-        )
-    }
+      fontSize = 26.sp,
+    )
+  }
 
 
 }

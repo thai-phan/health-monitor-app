@@ -28,36 +28,36 @@ import kotlinx.coroutines.launch
 @Composable
 fun DatePicker() {
 
-    val state = rememberDateRangePickerState()
+  val state = rememberDateRangePickerState()
 
-    val snackState = remember { SnackbarHostState() }
-    val snackScope = rememberCoroutineScope()
-    SnackbarHost(hostState = snackState, Modifier.zIndex(1f))
+  val snackState = remember { SnackbarHostState() }
+  val snackScope = rememberCoroutineScope()
+  SnackbarHost(hostState = snackState, Modifier.zIndex(1f))
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 12.dp, end = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        IconButton(onClick = { /* dismiss the UI */ }) {
-            Icon(Icons.Filled.Close, contentDescription = "Localized description")
-        }
-        TextButton(
-            onClick = {
-                snackScope.launch {
-                    snackState.showSnackbar(
-                        "Saved range (timestamps): " +
-                                "${state.selectedStartDateMillis!!..state.selectedEndDateMillis!!}"
-                    )
-                }
-            },
-            enabled = state.selectedEndDateMillis != null
-        ) {
-            Text(text = "Save")
-        }
+  Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .padding(start = 12.dp, end = 12.dp),
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalArrangement = Arrangement.SpaceBetween
+  ) {
+    IconButton(onClick = { /* dismiss the UI */ }) {
+      Icon(Icons.Filled.Close, contentDescription = "Localized description")
     }
+    TextButton(
+      onClick = {
+        snackScope.launch {
+          snackState.showSnackbar(
+            "Saved range (timestamps): " +
+                "${state.selectedStartDateMillis!!..state.selectedEndDateMillis!!}"
+          )
+        }
+      },
+      enabled = state.selectedEndDateMillis != null
+    ) {
+      Text(text = "Save")
+    }
+  }
 
-    DateRangePicker(state = state)
+  DateRangePicker(state = state)
 }

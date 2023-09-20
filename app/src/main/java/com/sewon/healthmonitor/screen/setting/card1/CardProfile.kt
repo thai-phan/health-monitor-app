@@ -39,93 +39,93 @@ import com.sewon.healthmonitor.screen.setting.card1.component.ModalGender
 
 @Composable
 fun ProfileSetting(
-    viewModel: ViewModelCardProfile = hiltViewModel()
+  viewModel: ViewModelCardProfile = hiltViewModel()
 
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var openGenderModal by rememberSaveable { mutableStateOf(false) }
-    var openDateModal by rememberSaveable { mutableStateOf(false) }
+  var openGenderModal by rememberSaveable { mutableStateOf(false) }
+  var openDateModal by rememberSaveable { mutableStateOf(false) }
 
-    Card(
-        shape = RoundedCornerShape(size = 10.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+  Card(
+    shape = RoundedCornerShape(size = 10.dp),
+    colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+  ) {
+    Column(
+      verticalArrangement = Arrangement.SpaceAround,
+      modifier = Modifier
+          .fillMaxWidth()
+          .padding(vertical = 10.dp, horizontal = 20.dp)
+
     ) {
-        Column(
-            verticalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 10.dp, horizontal = 20.dp)
+      Text(
+        stringResource(R.string.profile),
+        fontSize = 18.sp,
+        fontWeight = FontWeight(900),
+        color = Color(0xFFEDEDED)
+      )
 
+      Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { openGenderModal = !openGenderModal }),
+      ) {
+        Text("성별")
+        TextButton(
+          onClick = {
+            openGenderModal = !openGenderModal
+          },
         ) {
-            Text(
-                stringResource(R.string.profile),
-                fontSize = 18.sp,
-                fontWeight = FontWeight(900),
-                color = Color(0xFFEDEDED)
-            )
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(onClick = { openGenderModal = !openGenderModal }),
-            ) {
-                Text("성별")
-                TextButton(
-                    onClick = {
-                        openGenderModal = !openGenderModal
-                    },
-                ) {
-                    Text(uiState.gender, color = Color.White)
-                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                    Icon(
-                        Icons.Filled.ChevronRight,
-                        tint = Color.White,
-                        contentDescription = "contentDescription",
-                        modifier = Modifier.size(ButtonDefaults.IconSize)
-                    )
-                }
-            }
-            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(onClick = { openDateModal = !openDateModal }),
-            ) {
-                Text("연령")
-                TextButton(
-                    onClick = {
-                        openDateModal = !openDateModal
-                    },
-                ) {
-                    Text(uiState.birthday, color = Color.White)
-                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                    Icon(
-                        Icons.Filled.ChevronRight,
-                        tint = Color.White,
-                        contentDescription = "contentDescription",
-                        modifier = Modifier.size(ButtonDefaults.IconSize)
-                    )
-                }
-            }
+          Text(uiState.gender, color = Color.White)
+          Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+          Icon(
+            Icons.Filled.ChevronRight,
+            tint = Color.White,
+            contentDescription = "contentDescription",
+            modifier = Modifier.size(ButtonDefaults.IconSize)
+          )
         }
-    }
+      }
+      Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
 
-    if (openGenderModal) {
-        ModalGender(uiState,
-            onChangeGender = viewModel::changeGender,
-            onToggleModal = { openGenderModal = !openGenderModal })
+      Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { openDateModal = !openDateModal }),
+      ) {
+        Text("연령")
+        TextButton(
+          onClick = {
+            openDateModal = !openDateModal
+          },
+        ) {
+          Text(uiState.birthday, color = Color.White)
+          Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+          Icon(
+            Icons.Filled.ChevronRight,
+            tint = Color.White,
+            contentDescription = "contentDescription",
+            modifier = Modifier.size(ButtonDefaults.IconSize)
+          )
+        }
+      }
     }
+  }
 
-    if (openDateModal) {
-        ModalDate(uiState,
-            onSubmitBirthday = viewModel::changeBirthday,
-            onToggleModal = { openDateModal = !openDateModal })
-    }
+  if (openGenderModal) {
+    ModalGender(uiState,
+      onChangeGender = viewModel::changeGender,
+      onToggleModal = { openGenderModal = !openGenderModal })
+  }
+
+  if (openDateModal) {
+    ModalDate(uiState,
+      onSubmitBirthday = viewModel::changeBirthday,
+      onToggleModal = { openDateModal = !openDateModal })
+  }
 
 }

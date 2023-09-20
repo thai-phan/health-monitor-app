@@ -27,9 +27,9 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    @Singleton
-    @Provides
-    fun provideUnsplashService(): UnsplashService {
-        return UnsplashService.create()
-    }
+  @Singleton
+  @Provides
+  fun provideUnsplashService(): UnsplashService {
+    return UnsplashService.create()
+  }
 }

@@ -34,59 +34,66 @@ import com.sewon.healthmonitor.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Modal3ScoreThreshold(
-    onToggleModal: () -> Unit
+  onToggleModal: () -> Unit
 ) {
 
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-    var skipPartiallyExpanded by remember { mutableStateOf(false) }
+  var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+  var skipPartiallyExpanded by remember { mutableStateOf(false) }
 
-    val scope = rememberCoroutineScope()
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = skipPartiallyExpanded
-    )
-    var test = "aaaa"
-
-
-    ModalBottomSheet(
-        onDismissRequest = onToggleModal,
-        sheetState = bottomSheetState,
-    ) {
-        Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-            Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+  val scope = rememberCoroutineScope()
+  val bottomSheetState = rememberModalBottomSheetState(
+    skipPartiallyExpanded = skipPartiallyExpanded
+  )
+  var test = "aaaa"
 
 
-            Row(
-                modifier = Modifier.fillMaxWidth().height(200.dp),
-                horizontalArrangement = Arrangement.Center) {
-                AndroidView(
-                    factory = { context ->
-                        val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
-                        val picker = view.findViewById<NumberPicker>(R.id.number_picker)
-                        val data = arrayOf("80", "81")
+  ModalBottomSheet(
+    onDismissRequest = onToggleModal,
+    sheetState = bottomSheetState,
+  ) {
+    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
+      Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
-                        picker.minValue = 0
-                        picker.maxValue = data.size - 1
-                        picker.displayedValues = data
-                        picker.setOnValueChangedListener { picker, oldVal, newVal ->
-                            test = data.get(newVal)
-                        }
-                        picker
 
-                    }
-                )
+      Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp),
+        horizontalArrangement = Arrangement.Center
+      ) {
+        AndroidView(
+          factory = { context ->
+            val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
+            val picker = view.findViewById<NumberPicker>(R.id.number_picker)
+            val data = arrayOf("80", "81")
+
+            picker.minValue = 0
+            picker.maxValue = data.size - 1
+            picker.displayedValues = data
+            picker.setOnValueChangedListener { picker, oldVal, newVal ->
+              test = data.get(newVal)
             }
+            picker
 
-            Row(modifier = Modifier.fillMaxWidth().height(100.dp),
-                horizontalArrangement = Arrangement.Center) {
-                Button(onClick = onToggleModal) {
-                    Text("취소")
-                }
-                Spacer(modifier = Modifier.width(20.dp))
-                Button(onClick = {}) {
-                    Text("저장")
-                }
-            }
+          }
+        )
+      }
+
+      Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp),
+        horizontalArrangement = Arrangement.Center
+      ) {
+        Button(onClick = onToggleModal) {
+          Text("취소")
         }
-
+        Spacer(modifier = Modifier.width(20.dp))
+        Button(onClick = {}) {
+          Text("저장")
+        }
+      }
     }
+
+  }
 }

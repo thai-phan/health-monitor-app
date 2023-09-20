@@ -30,47 +30,47 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Modal2InduceSound(
-    onToggleModal: () -> Unit
+  onToggleModal: () -> Unit
 ) {
 
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-    var skipPartiallyExpanded by remember { mutableStateOf(false) }
+  var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+  var skipPartiallyExpanded by remember { mutableStateOf(false) }
 
-    val scope = rememberCoroutineScope()
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = skipPartiallyExpanded
-    )
-    var test = "aaaa"
+  val scope = rememberCoroutineScope()
+  val bottomSheetState = rememberModalBottomSheetState(
+    skipPartiallyExpanded = skipPartiallyExpanded
+  )
+  var test = "aaaa"
 
 
-    ModalBottomSheet(
-        onDismissRequest = onToggleModal,
-        sheetState = bottomSheetState,
-    ) {
-        Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-            Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+  ModalBottomSheet(
+    onDismissRequest = onToggleModal,
+    sheetState = bottomSheetState,
+  ) {
+    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
+      Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
-            Text(
-                "특허받은 엠씨스퀘어 브레인동조화 사운드를 이용해 알파파를 유도하여 잠에 빨리 들 수 있도록 도와줍니다. 백색소음에 익숙한 사용자에게 추천합니다"
-            )
+      Text(
+        "특허받은 엠씨스퀘어 브레인동조화 사운드를 이용해 알파파를 유도하여 잠에 빨리 들 수 있도록 도와줍니다. 백색소음에 익숙한 사용자에게 추천합니다"
+      )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(onClick = onToggleModal) {
-                    Text("취소")
-                }
-                Spacer(modifier = Modifier.width(20.dp))
-                Button(onClick = {}) {
-                    Text("저장")
-                }
-            }
-
+      Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp),
+        horizontalArrangement = Arrangement.Center
+      ) {
+        Button(onClick = onToggleModal) {
+          Text("취소")
         }
-
+        Spacer(modifier = Modifier.width(20.dp))
+        Button(onClick = {}) {
+          Text("저장")
+        }
+      }
 
     }
+
+
+  }
 }

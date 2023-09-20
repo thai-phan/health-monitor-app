@@ -28,42 +28,45 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Modal1InduceEnergy(
-    onToggleModal: () -> Unit) {
+  onToggleModal: () -> Unit
+) {
 
-    var skipPartiallyExpanded by remember { mutableStateOf(false) }
-    var edgeToEdgeEnabled by remember { mutableStateOf(false) }
+  var skipPartiallyExpanded by remember { mutableStateOf(false) }
+  var edgeToEdgeEnabled by remember { mutableStateOf(false) }
 
-    val scope = rememberCoroutineScope()
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = skipPartiallyExpanded
-    )
+  val scope = rememberCoroutineScope()
+  val bottomSheetState = rememberModalBottomSheetState(
+    skipPartiallyExpanded = skipPartiallyExpanded
+  )
 
-    ModalBottomSheet(
-        onDismissRequest = onToggleModal,
-        sheetState = bottomSheetState,
-    ) {
-        Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-            Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+  ModalBottomSheet(
+    onDismissRequest = onToggleModal,
+    sheetState = bottomSheetState,
+  ) {
+    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
+      Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
-            Text(
-                "미주신경 자극으로 심신을 안정화시켜 잠에 빨리 들 수 있도록 도와줍니다. " +
-                        "소리에 민감한 사용자에게 추천합니다."
-            )
+      Text(
+        "미주신경 자극으로 심신을 안정화시켜 잠에 빨리 들 수 있도록 도와줍니다. " +
+            "소리에 민감한 사용자에게 추천합니다."
+      )
 
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp),
-                horizontalArrangement = Arrangement.Center) {
-                Button(onClick = onToggleModal) {
-                    Text("취소")
-                }
-                Spacer(modifier = Modifier.width(20.dp))
-                Button(onClick = {}) {
-                    Text("저장")
-                }
-            }
+      Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp),
+        horizontalArrangement = Arrangement.Center
+      ) {
+        Button(onClick = onToggleModal) {
+          Text("취소")
         }
-
-
+        Spacer(modifier = Modifier.width(20.dp))
+        Button(onClick = {}) {
+          Text("저장")
+        }
+      }
     }
+
+
+  }
 }

@@ -10,13 +10,13 @@ import com.patrykandpatrick.vico.core.entry.entryModelOf
 @Composable
 fun ThisChart() {
 
-    val chartEntryModel = entryModelOf(4f, 12f, 8f, 16f)
+  val chartEntryModel = entryModelOf(4f, 12f, 8f, 16f)
 
-    Chart(
-        chart = lineChart(),
-        model = chartEntryModel,
-        startAxis = startAxis(),
-        bottomAxis = bottomAxis(),
-    )
+  Chart(
+    chart = lineChart(),
+    model = chartEntryModel,
+    startAxis = startAxis(),
+    bottomAxis = bottomAxis(),
+  )
 
 }

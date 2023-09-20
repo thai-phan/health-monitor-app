@@ -14,16 +14,16 @@ import com.sewon.healthmonitor.data.source.local.entity.converter.TimeConverter
 
 
 @Database(
-    entities = [
-        LocalUser::class,
-        LocalRadar::class,
-        LocalSetting::class
+  entities = [
+    LocalUser::class,
+    LocalRadar::class,
+    LocalSetting::class
 
-    ], version = 1
+  ], version = 1
 )
 @TypeConverters(DateConverter::class, TimeConverter::class)
 abstract class HealthDatabase : RoomDatabase() {
-    abstract fun userInformationDao(): LocalUserDao
-    abstract fun userSettingDao(): LocalSettingDao
-    abstract fun topperDao(): LocalRadarDao
+  abstract fun userInformationDao(): LocalUserDao
+  abstract fun userSettingDao(): LocalSettingDao
+  abstract fun topperDao(): LocalRadarDao
 }

@@ -22,47 +22,49 @@ import com.sewon.healthmonitor.common.theme.HealthAppTheme
 @Composable
 fun HealthApp(finishActivity: () -> Unit) {
 
-    val navController = rememberNavController()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
+  val navController = rememberNavController()
+  val navBackStackEntry by navController.currentBackStackEntryAsState()
+  val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
 
-    when (navBackStackEntry?.destination?.route) {
-        MainDestinations.ACTIVITY_ROUTE -> {
-            bottomBarState.value = false
-        }
-        MainDestinations.REPORT_ROUTE -> {
-            bottomBarState.value = true
-        }
-        MainDestinations.USER_ROUTE -> {
-            bottomBarState.value = true
-        }
+  when (navBackStackEntry?.destination?.route) {
+    MainDestinations.ACTIVITY_ROUTE -> {
+      bottomBarState.value = false
     }
 
-    HealthAppTheme() {
-        val tabs = remember { MainTabs.values() }
+    MainDestinations.REPORT_ROUTE -> {
+      bottomBarState.value = true
+    }
 
-        Scaffold(
-            bottomBar = {
-                BottomBar(navController = navController, bottomBarState,  tabs)
-            },
+    MainDestinations.USER_ROUTE -> {
+      bottomBarState.value = true
+    }
+  }
+
+  HealthAppTheme() {
+    val tabs = remember { MainTabs.values() }
+
+    Scaffold(
+      bottomBar = {
+        BottomBar(navController = navController, bottomBarState, tabs)
+      },
 //            topBar = {
 //                Text("Top ")
 //            }
-        ) { innerPaddingModifier ->
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .blackGreenBackground()
-            ) {
-                HealthNavGraph(
-                    finishActivity = finishActivity,
-                    navController = navController,
-                    modifier = Modifier.padding(innerPaddingModifier)
-                )
-            }
-
-        }
+    ) { innerPaddingModifier ->
+      Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+          .blackGreenBackground()
+      ) {
+        HealthNavGraph(
+          finishActivity = finishActivity,
+          navController = navController,
+          modifier = Modifier.padding(innerPaddingModifier)
+        )
+      }
 
     }
+
+  }
 }
 

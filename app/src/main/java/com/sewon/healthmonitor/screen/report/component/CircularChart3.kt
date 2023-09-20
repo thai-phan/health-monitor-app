@@ -25,86 +25,86 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CircularChart3(
-    angleList: List<Float> = listOf(65f, 60f, 55f),
-    colors: List<Color> = listOf(
-        Color(0xFFbe1558),
-        Color(0xFFe75874),
-        Color(0xFFfbcbc9)
-    ),
-    backgroundCircleColor: Color = Color.LightGray.copy(alpha = 0.3f),
-    legend: List<String> = listOf("Mango", "Apple", "Melon"),
-    size: Dp = 200.dp,
-    thickness: Dp = 16.dp,
-    gapBetweenCircles: Dp = 42.dp
+  angleList: List<Float> = listOf(65f, 60f, 55f),
+  colors: List<Color> = listOf(
+    Color(0xFFbe1558),
+    Color(0xFFe75874),
+    Color(0xFFfbcbc9)
+  ),
+  backgroundCircleColor: Color = Color.LightGray.copy(alpha = 0.3f),
+  legend: List<String> = listOf("Mango", "Apple", "Melon"),
+  size: Dp = 200.dp,
+  thickness: Dp = 16.dp,
+  gapBetweenCircles: Dp = 42.dp
 ) {
 
-    // Convert each value to angle
-    val sweepAngles = angleList.map {
-        360 * it / 100
-    }
+  // Convert each value to angle
+  val sweepAngles = angleList.map {
+    360 * it / 100
+  }
 
-    Canvas(
-        modifier = Modifier
-            .size(size)
-    ) {
+  Canvas(
+    modifier = Modifier
+      .size(size)
+  ) {
 
-        var arcRadius = size.toPx()
+    var arcRadius = size.toPx()
 
-        for (index in angleList.indices) {
+    for (index in angleList.indices) {
 
-            arcRadius -= gapBetweenCircles.toPx()
+      arcRadius -= gapBetweenCircles.toPx()
 
-            drawCircle(
-                color = backgroundCircleColor,
-                radius = arcRadius / 2,
-                style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt)
-            )
+      drawCircle(
+        color = backgroundCircleColor,
+        radius = arcRadius / 2,
+        style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt)
+      )
 
-            drawArc(
-                color = colors[index],
-                startAngle = -90f,
-                sweepAngle = sweepAngles[index],
-                useCenter = false,
-                style = Stroke(width = thickness.toPx(), cap = StrokeCap.Round),
-                size = Size(arcRadius, arcRadius),
-                topLeft = Offset(
-                    x = (size.toPx() - arcRadius) / 2,
-                    y = (size.toPx() - arcRadius) / 2
-                )
-            )
-
-        }
+      drawArc(
+        color = colors[index],
+        startAngle = -90f,
+        sweepAngle = sweepAngles[index],
+        useCenter = false,
+        style = Stroke(width = thickness.toPx(), cap = StrokeCap.Round),
+        size = Size(arcRadius, arcRadius),
+        topLeft = Offset(
+          x = (size.toPx() - arcRadius) / 2,
+          y = (size.toPx() - arcRadius) / 2
+        )
+      )
 
     }
 
-    Spacer(modifier = Modifier.height(32.dp))
+  }
 
-    Column {
-        for (i in angleList.indices) {
-            DisplayLegend(color = colors[i], legend = legend[i])
-        }
+  Spacer(modifier = Modifier.height(32.dp))
+
+  Column {
+    for (i in angleList.indices) {
+      DisplayLegend(color = colors[i], legend = legend[i])
     }
+  }
 
 }
 
 @Composable
 fun DisplayLegend(color: Color, legend: String) {
 
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier
-                .size(10.dp)
-                .background(color = color, shape = CircleShape)
-        )
+  Row(
+    horizontalArrangement = Arrangement.Center,
+    verticalAlignment = Alignment.CenterVertically
+  ) {
+    Box(
+      modifier = Modifier
+          .size(10.dp)
+          .background(color = color, shape = CircleShape)
+    )
 
-        Spacer(modifier = Modifier.width(4.dp))
+    Spacer(modifier = Modifier.width(4.dp))
 
-        Text(
-            text = legend,
-            color = Color.White
-        )
-    }
+    Text(
+      text = legend,
+      color = Color.White
+    )
+  }
 }

@@ -29,44 +29,45 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Modal1DeviceAccess(
-    onToggleModal: () -> Unit) {
+  onToggleModal: () -> Unit
+) {
 
-    var skipPartiallyExpanded by remember { mutableStateOf(false) }
-    var edgeToEdgeEnabled by remember { mutableStateOf(false) }
+  var skipPartiallyExpanded by remember { mutableStateOf(false) }
+  var edgeToEdgeEnabled by remember { mutableStateOf(false) }
 
-    val scope = rememberCoroutineScope()
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = skipPartiallyExpanded
-    )
+  val scope = rememberCoroutineScope()
+  val bottomSheetState = rememberModalBottomSheetState(
+    skipPartiallyExpanded = skipPartiallyExpanded
+  )
 
-    ModalBottomSheet(
-        onDismissRequest = onToggleModal,
-        sheetState = bottomSheetState,
-    ) {
-        Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-            Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+  ModalBottomSheet(
+    onDismissRequest = onToggleModal,
+    sheetState = bottomSheetState,
+  ) {
+    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
+      Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
 
 
-            Text("핸드폰 캐시 접근 권한 설정")
+      Text("핸드폰 캐시 접근 권한 설정")
 
-            Text("핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?")
+      Text("핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?")
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(onClick = onToggleModal) {
-                    Text("취소")
-                }
-                Spacer(modifier = Modifier.width(20.dp))
-                Button(onClick = {}) {
-                    Text("저장")
-                }
-            }
+      Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp),
+        horizontalArrangement = Arrangement.Center
+      ) {
+        Button(onClick = onToggleModal) {
+          Text("취소")
         }
-
+        Spacer(modifier = Modifier.width(20.dp))
+        Button(onClick = {}) {
+          Text("저장")
+        }
+      }
     }
+
+  }
 }

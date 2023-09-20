@@ -41,87 +41,87 @@ import com.sewon.healthmonitor.R
 
 @Composable
 fun TermAgreement(navController: NavController, redirectRoute: String) {
-    val context = LocalContext.current
-    val assetFiles: AssetManager = context.assets
-    val termFile = "term_of_use.txt"
-    val text: String = assetFiles.open(termFile).bufferedReader().use {
-        it.readText()
-    }
+  val context = LocalContext.current
+  val assetFiles: AssetManager = context.assets
+  val termFile = "term_of_use.txt"
+  val text: String = assetFiles.open(termFile).bufferedReader().use {
+    it.readText()
+  }
 
-    val scroll = rememberScrollState(0)
+  val scroll = rememberScrollState(0)
 
 
-    Column(
+  Column(
+    modifier = Modifier
+        .fillMaxSize()
+        .statusBarsPadding()
+        .systemBarsPadding()
+        .padding(horizontal = 20.dp, vertical = 20.dp)
+  ) {
+    Text("건강모니터링 토퍼", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+    Spacer(modifier = Modifier.height(20.dp))
+    Card(
+      shape = RoundedCornerShape(size = 10.dp),
+      colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+    ) {
+      Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceAround,
         modifier = Modifier
             .fillMaxSize()
-            .statusBarsPadding()
-            .systemBarsPadding()
-            .padding(horizontal = 20.dp, vertical = 20.dp)
-    ) {
-        Text("건강모니터링 토퍼", fontWeight = FontWeight.Bold, fontSize = 24.sp)
-        Spacer(modifier = Modifier.height(20.dp))
-        Card(
-            shape = RoundedCornerShape(size = 10.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+            .shadow(
+                elevation = 24.dp,
+                spotColor = Color(0x40000000),
+                ambientColor = Color(0x40000000)
+            )
+            .padding(20.dp),
+      ) {
+        Text(
+          "생체신호 모니터링 매트리스 앱 서비스 이용동의서",
+          fontSize = 20.sp,
+          fontWeight = FontWeight(700)
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(
+          text = text,
+          textAlign = TextAlign.Justify,
+          modifier = Modifier
+              .fillMaxHeight(0.8f)
+              .verticalScroll(scroll),
+        )
+
+
+        val checkedState = remember { mutableStateOf(true) }
+        Row(
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.Center
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceAround,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .shadow(
-                        elevation = 24.dp,
-                        spotColor = Color(0x40000000),
-                        ambientColor = Color(0x40000000)
-                    )
-                    .padding(20.dp),
-            ) {
-                Text(
-                    "생체신호 모니터링 매트리스 앱 서비스 이용동의서",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight(700)
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(
-                    text = text,
-                    textAlign = TextAlign.Justify,
-                    modifier = Modifier
-                        .fillMaxHeight(0.8f)
-                        .verticalScroll(scroll),
-                )
-
-
-                val checkedState = remember { mutableStateOf(true) }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Checkbox(
-                        checked = false,
-                        onCheckedChange = {
-                            checkedState.value = it
-                            navController.navigate(redirectRoute)
-                        },
-                    )
-                    Text(text = "동의", modifier = Modifier.padding(16.dp))
-                }
-                Button(
-                    onClick = {
-                        navController.navigate(redirectRoute)
-
-                    }
-                ) {
-                    Text(text = "Agree")
-                }
-            }
-
+          Checkbox(
+            checked = false,
+            onCheckedChange = {
+              checkedState.value = it
+              navController.navigate(redirectRoute)
+            },
+          )
+          Text(text = "동의", modifier = Modifier.padding(16.dp))
         }
+        Button(
+          onClick = {
+            navController.navigate(redirectRoute)
+
+          }
+        ) {
+          Text(text = "Agree")
+        }
+      }
 
     }
+
+  }
 }
 
 @Preview
 @Composable
 fun TermAgreementPreview() {
-    TermAgreement(rememberNavController(), "String")
+  TermAgreement(rememberNavController(), "String")
 }

@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface IRadarRepository {
 
-    fun getTopper(): Flow<List<LocalRadar>>
+  fun getTopper(): Flow<List<LocalRadar>>
 
-    fun getCountTopper(): Flow<Int>
+  fun getCountTopper(): Flow<Int>
 
-    suspend fun createTopper(localRadar: LocalRadar): String
+  suspend fun createTopper(localRadar: LocalRadar): String
 }
