@@ -15,4 +15,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "health-monitor-app"
-include ':app'
+include ':app-topo'
