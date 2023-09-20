@@ -14,6 +14,7 @@ data class User(
   val updatedAt: Date,
 )
 
+
 // Model mapping
 // extension function
 fun User.toLocal() = LocalUser(

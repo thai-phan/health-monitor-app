@@ -42,9 +42,9 @@ class ViewModelSleepActivity @Inject constructor(
 
 
   fun createNewTask() = viewModelScope.launch {
-    val localRadar = LocalRadar(0.1f, 0.1f, 0.1f, "X", "X", "X", "X")
-
-    radarRepository.createTopper(localRadar)
+//    val localRadar = LocalRadar(0.1f, 0.1f, 0.1f, "X", "X", "X", "X")
+//
+//    radarRepository.createTopper(localRadar)
     _uiState.update {
       it.copy(status1 = "Ahahahah")
     }
@@ -55,7 +55,7 @@ class ViewModelSleepActivity @Inject constructor(
     var aaa = radarRepository.getTopper()
 
     _uiState.update {
-      it.copy(status2 = aaa.first().get(0).moving)
+      it.copy(status2 = aaa.first().get(0).rb.toString())
     }
   }
 

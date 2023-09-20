@@ -10,22 +10,25 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LocalRadarDao {
-    @Query("SELECT * FROM radar")
-    fun getAllTopper(): Flow<List<LocalRadar>>
+  @Query("SELECT * FROM radar")
+  fun getAllTopper(): Flow<List<LocalRadar>>
 
-    @Query("SELECT count(rb) FROM radar")
-    fun countTopper():  Flow<Int>
+  @Query("SELECT count(rb) FROM radar")
+  fun countTopper(): Flow<Int>
 
-    @Insert
-    suspend fun insertAll(vararg localRadar: LocalRadar)
+  @Insert
+  suspend fun insertAll(vararg localRadar: LocalRadar)
 
-    @Delete
-    suspend fun delete(user: LocalRadar)
+  @Delete
+  suspend fun delete(user: LocalRadar)
 
-    @Upsert
-    suspend fun upsert(localRadar: LocalRadar)
+  @Insert
+  fun insert(localRadar: LocalRadar)
 
-    @Upsert
-    suspend fun upsertAll(localRadars: List<LocalRadar>)
+  @Upsert
+  suspend fun upsert(localRadar: LocalRadar)
+
+  @Upsert
+  suspend fun upsertAll(localRadars: List<LocalRadar>)
 
 }

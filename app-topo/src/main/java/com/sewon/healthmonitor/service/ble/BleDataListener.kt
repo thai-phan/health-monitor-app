@@ -10,7 +10,9 @@ import com.sewon.healthmonitor.MainActivity
 import timber.log.Timber
 import java.util.ArrayDeque
 
+
 class BleDataListener : SerialListener {
+
 
   private enum class Connected {
     False, Pending, True
@@ -94,11 +96,19 @@ class BleDataListener : SerialListener {
 
 //  var prevValue = Constants.STABLE_MOVING;
 
-  var countNoVitalSign = 0
-  var countNoTarget = 0
+  private var countNoVitalSign = 0
+  private var countNoTarget = 0
+
+  private var updateDBCount = 0
 
   private fun processData(message: String) {
     val messageArray = message.split(" ").filter { it != "" }
+
+    if (updateDBCount == 5) {
+      MainActivity.bleHandleService.updateDatabase(messageArray)
+      updateDBCount = 0
+    }
+    updateDBCount += 1
 
     //  STABLE_NO_VITAL_SIGN = "1"
     if (messageArray[0] == Constants.STABLE_NO_VITAL_SIGN) {
@@ -140,21 +150,22 @@ class BleDataListener : SerialListener {
 //      }
       dataArrayList.clear()
     }
-    dataArrayList.add(messageArray.get(4).toDouble())
+    dataArrayList.add(messageArray.get(3).toDouble())
   }
 
   private var tempCount = 0
 
+
   private fun receive(datas: ArrayDeque<ByteArray>) {
-    val spn = SpannableStringBuilder()
+    val stringBuilder = SpannableStringBuilder()
     for (data in datas) {
       if (hexEnabled) {
-        spn.append(TextUtil.toHexString(data)).append('\n')
+        stringBuilder.append(TextUtil.toHexString(data)).append('\n')
       } else {
         val message = String(data)
         processData(message)
         val text = TextUtil.toCaretString(message, true)
-        spn.append(text)
+        stringBuilder.append(text)
       }
     }
 
@@ -164,7 +175,7 @@ class BleDataListener : SerialListener {
       tempCount = 0
     }
 
-    log.value = "$spn $tempCount"
+    log.value = "$stringBuilder $tempCount"
   }
 
 

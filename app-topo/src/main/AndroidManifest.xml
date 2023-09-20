@@ -6,6 +6,7 @@
   <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
   <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+  <uses-permission android:name="android.permission.VIBRATE" />
 
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
@@ -18,13 +19,15 @@
   <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
   <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
 
+  <uses-permission android:name="android.permission.VIBRATE" />
+
   <application
       android:name=".Application"
-      android:allowBackup="true"
+      android:allowBackup="false"
       android:icon="@drawable/ic_splash_icon"
       android:label="@string/app_name"
       android:supportsRtl="true"
-      android:theme="@style/Theme.Health"
+      android:theme="@style/Theme.AppCompat.Light"
       android:usesCleartextTraffic="true">
 
     <service
@@ -38,7 +41,7 @@
     <service android:name=".service.ble.BleHandleService" />
 
     <activity
-        android:name=".MainActivity"
+        android:name=".service.AlarmActivity"
         android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

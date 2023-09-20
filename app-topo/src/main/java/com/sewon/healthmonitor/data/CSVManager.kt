@@ -31,15 +31,15 @@ class CSVManager(private val context: Context) {
         // Read the data and store it in the WellData POJO.
 
 
-        var localRadar: LocalRadar = LocalRadar(
-          rb = tokens[0].toFloat(),
-          hr = tokens[0].toFloat(),
-          rri = tokens[0].toFloat(),
-          moving = tokens[0],
-          detect = tokens[0],
-          noOne = tokens[0],
-          stable = tokens[0]
-        )
+//        var localRadar: LocalRadar = LocalRadar(
+//          rb = tokens[0].toFloat(),
+//          hr = tokens[0].toFloat(),
+//          rri = tokens[0].toFloat(),
+//          moving = tokens[0],
+//          detect = tokens[0],
+//          noOne = tokens[0],
+//          stable = tokens[0]
+//        )
 
       }
     } catch (e1: IOException) {

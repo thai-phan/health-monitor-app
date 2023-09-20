@@ -4,35 +4,23 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+//  Stable 3
+//  HR 111
+//  BR 11
+//  HRV 0.5
+//  HR-wfm -28.262
+//  BR-wfm 358.991
 
 @Entity(tableName = "radar")
 data class LocalRadar(
-    @ColumnInfo(name = "rb") val rb: Float,
-    @ColumnInfo(name = "hr") val hr: Float,
-    @ColumnInfo(name = "rri") val rri: Float,
-    @ColumnInfo(name = "moving") val moving: String,
-    @ColumnInfo(name = "detect") val detect: String,
-    @ColumnInfo(name = "no_one") val noOne: String,
-    @ColumnInfo(name = "stable") val stable: String,
+  @ColumnInfo(name = "stable") val stable: Int,
+  @ColumnInfo(name = "hr") val hr: Int,
+  @ColumnInfo(name = "rb") val rb: Int,
+  @ColumnInfo(name = "hrv") val hrv: Double,
+  @ColumnInfo(name = "hr_wfm") val hrWfm: Double,
+  @ColumnInfo(name = "br_wfm") val brWfm: Double,
 ) {
-    @PrimaryKey(autoGenerate = true)
-    var uid: Int = 0
-//    constructor(
-//        rb: Float,
-//        hr: Float,
-//        rri: Float,
-//        moving: String,
-//        detect: String,
-//        noOne: String,
-//        stable: String
-//    ) : this(
-//        rb,
-//        hr,
-//        rri,
-//        moving,
-//        detect,
-//        noOne,
-//        stable
-//    )
+  @PrimaryKey(autoGenerate = true)
+  var uid: Int = 0
 
 }

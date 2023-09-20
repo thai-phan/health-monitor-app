@@ -16,15 +16,33 @@ import android.os.Looper
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
 import com.sewon.healthmonitor.R
+import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
+import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.ArrayDeque
+import javax.inject.Inject
 
 
 /**
  * create notification and queue serial data while activity is not in the foreground
  * use listener chain: SerialSocket -> SerialService -> UI fragment
  */
+@AndroidEntryPoint
 class BleHandleService : Service(), SerialListener {
+
+  private val job = SupervisorJob()
+  private val scope = CoroutineScope(Dispatchers.IO + job)
+
+
+  @Inject
+  lateinit var radarRepository: IRadarRepository
+
+
   inner class SerialBinder : Binder() {
     val service: BleHandleService
       get() = this@BleHandleService
@@ -122,7 +140,6 @@ class BleHandleService : Service(), SerialListener {
   }
 
   fun attach(listener: BleDataListener) {
-
     require(Looper.getMainLooper().thread === Thread.currentThread()) { "not in main thread" }
     cancelNotification()
     // use synchronized() to prevent new items in queue2
@@ -156,6 +173,19 @@ class BleHandleService : Service(), SerialListener {
     bleDataListener = null
   }
 
+  fun updateDatabase(stringList: List<String>) {
+    scope.launch {
+      val localRadar = LocalRadar(
+        stringList[0].toInt(),
+        stringList[1].toInt(),
+        stringList[2].toInt(),
+        stringList[3].toDouble(),
+        stringList[4].toDouble(),
+        stringList[5].toDouble()
+      )
+      radarRepository.createTopper(localRadar)
+    }
+  }
 
   fun createNotificationHealth() {
     val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)

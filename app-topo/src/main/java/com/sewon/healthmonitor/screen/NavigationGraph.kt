@@ -33,7 +33,7 @@ fun NavigationGraph(
 
   val startDestination: String = AppDestinations.DEVICE_ROUTE
 
-  val mainStartDestination = MainDestinations.ACTIVITY_ROUTE
+  val mainStartDestination = MainDestinations.REPORT_ROUTE
 
   val context = LocalContext.current
   val store = HealthDataStore(context)

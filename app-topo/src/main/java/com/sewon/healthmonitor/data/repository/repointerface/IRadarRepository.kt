@@ -10,5 +10,5 @@ interface IRadarRepository {
 
   fun getCountTopper(): Flow<Int>
 
-  suspend fun createTopper(localRadar: LocalRadar): String
+  fun createTopper(localRadar: LocalRadar): String
 }

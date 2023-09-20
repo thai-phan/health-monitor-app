@@ -50,7 +50,7 @@ object DatabaseModule {
   }
 
   @Provides
-  fun provideTopperDao(database: HealthDatabase): LocalRadarDao = database.topperDao()
+  fun provideTopperDao(database: HealthDatabase): LocalRadarDao = database.radarDao()
 
   @Provides
   fun provideUserSettingDao(database: HealthDatabase): LocalSettingDao = database.userSettingDao()

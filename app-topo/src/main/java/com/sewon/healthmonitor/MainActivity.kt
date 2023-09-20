@@ -1,5 +1,6 @@
 package com.sewon.healthmonitor
 
+import android.app.AlarmManager
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
@@ -20,7 +21,10 @@ class MainActivity : ComponentActivity() {
 
   companion object {
     lateinit var bleHandleService: BleHandleService
+    lateinit var alarmManager: AlarmManager
+
     var bleDataListener = BleDataListener()
+
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +47,9 @@ class MainActivity : ComponentActivity() {
 
   override fun onStart() {
     super.onStart()
+
+    alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager;
+
     val intent = Intent(this, BleHandleService::class.java)
     startService(intent)
     bindService(intent, mServiceConnection, BIND_AUTO_CREATE)

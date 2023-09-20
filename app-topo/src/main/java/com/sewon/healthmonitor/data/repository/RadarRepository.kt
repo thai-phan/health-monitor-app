@@ -28,9 +28,9 @@ class RadarRepository @Inject constructor(
 //     Count number record
 
 
-  override suspend fun createTopper(localRadar: LocalRadar): String {
-    LocalRadarDao.upsert(localRadar)
-    return "Done"
+  override fun createTopper(localRadar: LocalRadar): String {
+    LocalRadarDao.insert(localRadar)
+    return "true"
   }
 
 }

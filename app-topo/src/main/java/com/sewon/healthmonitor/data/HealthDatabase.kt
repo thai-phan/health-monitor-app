@@ -25,5 +25,5 @@ import com.sewon.healthmonitor.data.source.local.entity.converter.TimeConverter
 abstract class HealthDatabase : RoomDatabase() {
   abstract fun userInformationDao(): LocalUserDao
   abstract fun userSettingDao(): LocalSettingDao
-  abstract fun topperDao(): LocalRadarDao
+  abstract fun radarDao(): LocalRadarDao
 }

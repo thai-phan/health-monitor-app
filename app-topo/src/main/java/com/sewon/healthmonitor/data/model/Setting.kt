@@ -22,6 +22,9 @@ data class Setting(
   val updatedAt: Date,
 )
 
+
+// Model mapping
+// extension function
 fun Setting.toLocal() = LocalSetting(
   userId = userId,
   alarmTime = alarmTime,

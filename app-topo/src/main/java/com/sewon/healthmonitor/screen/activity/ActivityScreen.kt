@@ -1,10 +1,12 @@
 package com.sewon.healthmonitor.screen.activity
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,6 +37,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.sewon.healthmonitor.MainActivity
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.common.MainDestinations
 import com.sewon.healthmonitor.common.theme.checkedBorderColor
@@ -45,6 +48,7 @@ import com.sewon.healthmonitor.common.theme.uncheckedThumbColor
 import com.sewon.healthmonitor.common.theme.uncheckedTrackColor
 import com.sewon.healthmonitor.screen.activity.component.CircularTimePicker
 import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
+import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 
 @SuppressLint("RememberReturnType")
 @Composable
@@ -76,8 +80,18 @@ fun SleepActivity(
 //    MainActivity.serialService.
 
   }
+
+  fun disconnect() {
+//    val a = AlarmManager()
+    val list = listOf("1", "2", "3", "4.0", "5.0", "6.0")
+    MainActivity.bleHandleService.updateDatabase(list)
+//    MainActivity.bleHandleService.disconnect()
+//    navController.navigate(AppDestinations.MAIN_ROUTE)
+  }
   Column(
-    modifier = modifier.padding(horizontal = 30.dp, vertical = 20.dp)
+    modifier = modifier
+      .fillMaxSize()
+      .padding(horizontal = 30.dp, vertical = 20.dp)
   ) {
     Text("수면시간 체크", fontWeight = FontWeight.Bold, fontSize = 24.sp)
 
@@ -160,7 +174,7 @@ fun SleepActivity(
 //        Icon(imageVector = Icons.Rounded.AddAlert, contentDescription = "")
 //        Text("건강이상감지", style = textStyle)
 //      }
-      
+
       Button(colors = ButtonDefaults.buttonColors(Color(0xFF03DAC5)),
         shape = RoundedCornerShape(size = 100.dp),
         modifier = Modifier
@@ -172,6 +186,14 @@ fun SleepActivity(
         )
       }
 
+      Button(
+        colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
+        onClick = { disconnect() }
+      ) {
+        Text(
+          text = "연결됨"
+        )
+      }
 //      Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
 //        shape = RoundedCornerShape(size = 100.dp),
 //        modifier = Modifier
