@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlgorithmTest {
+public class ECGTest {
 
   public static void main(String[] args) {
     String COMMA_DELIMITER = ",";
@@ -20,7 +20,7 @@ public class AlgorithmTest {
     }
     //List<ECG_ES_Object> listECG = new ArrayList<ECG_ES_Object>(); //ES서버에 전송하기 위한 데이터 구조
 
-    double[] array = listDouble.stream().mapToDouble(i->i).toArray();
+    double[] array = listDouble.stream().mapToDouble(i -> i).toArray();
 
     ECG_TOPPER listECGResult = ECG_ANALYSIS_PROC.ECG_PPG_AnalysisData(array);
 
