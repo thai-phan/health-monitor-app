@@ -2,6 +2,8 @@ package com.sewon.healthmonitor.screen.activity
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -33,11 +36,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sewon.healthmonitor.MainActivity
+import com.sewon.healthmonitor.MainActivity.Companion.alarmManager
+import com.sewon.healthmonitor.MainActivity.Companion.alarmPendingIntent
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.common.MainDestinations
 import com.sewon.healthmonitor.common.theme.checkedBorderColor
@@ -46,9 +51,11 @@ import com.sewon.healthmonitor.common.theme.checkedTrackColor
 import com.sewon.healthmonitor.common.theme.uncheckedBorderColor
 import com.sewon.healthmonitor.common.theme.uncheckedThumbColor
 import com.sewon.healthmonitor.common.theme.uncheckedTrackColor
-import com.sewon.healthmonitor.screen.activity.component.CircularTimePicker
 import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
-import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
+import com.sewon.healthmonitor.screen.activity.component.CircularTimePicker
+import com.sewon.healthmonitor.service.AlarmReceiver
+import com.sewon.healthmonitor.service.AlarmReceiver.Companion.ringtone
+import java.util.Calendar
 
 @SuppressLint("RememberReturnType")
 @Composable
@@ -57,7 +64,7 @@ fun SleepActivity(
   navController: NavHostController = rememberNavController(),
   viewModel: ViewModelSleepActivity = hiltViewModel()
 ) {
-
+  var context = LocalContext.current
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   val start = TimeRangePicker.Time(0, 0)
@@ -76,8 +83,35 @@ fun SleepActivity(
   )
 
   fun startSleep() {
-    navController.navigate(MainDestinations.REPORT_ROUTE)
+
+    
+    val alarmIntent = Intent(context, AlarmReceiver::class.java)
+
+    alarmPendingIntent =
+      PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_MUTABLE)
+
+    val c = Calendar.getInstance()
+    c[Calendar.HOUR_OF_DAY] = c[Calendar.HOUR_OF_DAY]
+    c[Calendar.MINUTE] = c[Calendar.MINUTE]
+    c[Calendar.SECOND] = c[Calendar.SECOND] + 5
+//          ((AlarmManager) context.getSystemService(Context.ALARM_SERVICE)).setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), DAY, pendingIntent);
+    //          ((AlarmManager) context.getSystemService(Context.ALARM_SERVICE)).setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), DAY, pendingIntent);
+    alarmManager.set(AlarmManager.RTC_WAKEUP, c.timeInMillis, alarmPendingIntent)
+//    navController.navigate(MainDestinations.REPORT_ROUTE)
 //    MainActivity.serialService.
+  }
+
+  fun cancelSleep() {
+//      AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//      Intent myIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
+//      PendingIntent pendingIntent = PendingIntent.getBroadcast(
+//          getApplicationContext(), 1, myIntent, PendingIntent.FLAG_IMMUTABLE);
+    alarmManager.cancel(alarmPendingIntent)
+    ringtone.stop()
+  }
+
+  fun stopSound() {
+
 
   }
 
@@ -94,6 +128,18 @@ fun SleepActivity(
       .padding(horizontal = 30.dp, vertical = 20.dp)
   ) {
     Text("수면시간 체크", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+
+    Row {
+      Button(onClick = { cancelSleep() }) {
+        Text("cancel")
+      }
+
+      Button(onClick = { stopSound() }) {
+        Text("stop")
+      }
+    }
+
+
 
     Spacer(modifier = Modifier.height(10.dp))
     CircularTimePicker(startTimeState = startTime, endTimeState = endTime)

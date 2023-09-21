@@ -30,6 +30,15 @@
       android:theme="@style/Theme.AppCompat.Light"
       android:usesCleartextTraffic="true">
 
+    <activity
+        android:name=".MainActivity"
+        android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+
     <service
         android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
         android:enabled="false"
@@ -40,14 +49,7 @@
     </service>
     <service android:name=".service.ble.BleHandleService" />
 
-    <activity
-        android:name=".service.AlarmActivity"
-        android:exported="true">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
-  </application>
+    <receiver android:name=".service.AlarmReceiver" />
 
+  </application>
 </manifest>

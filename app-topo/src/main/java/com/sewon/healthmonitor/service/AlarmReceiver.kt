@@ -4,18 +4,18 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Context.VIBRATOR_SERVICE
 import android.content.Intent
+import android.media.Ringtone
 import android.media.RingtoneManager
-import android.os.Build
 import android.os.Vibrator
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 
 
 class AlarmReceiver : BroadcastReceiver() {
-  // implement onReceive() method
-  override fun onReceive(context: Context, intent: Intent) {
+  companion object {
+    lateinit var ringtone: Ringtone
+  }
 
-    // we will use vibrator first
+  override fun onReceive(context: Context, intent: Intent) {
     val vibrator = context.getSystemService(VIBRATOR_SERVICE) as Vibrator
     vibrator.vibrate(4000)
     Toast.makeText(context, "Alarm! Wake up! Wake up!", Toast.LENGTH_LONG).show()
@@ -23,10 +23,8 @@ class AlarmReceiver : BroadcastReceiver() {
     if (alarmUri == null) {
       alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
     }
-
     // setting default ringtone
-    val ringtone = RingtoneManager.getRingtone(context, alarmUri)
-
+    ringtone = RingtoneManager.getRingtone(context, alarmUri)
     // play ringtone
     ringtone.play()
   }
