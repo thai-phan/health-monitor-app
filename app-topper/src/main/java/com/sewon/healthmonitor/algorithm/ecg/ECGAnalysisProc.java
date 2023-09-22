@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.algorithm;
+package com.sewon.healthmonitor.algorithm.ecg;
 
 
 import org.apache.commons.math3.complex.Complex;
@@ -11,12 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class ECG_ANALYSIS_PROC {
+public class ECGAnalysisProc {
 
   //Input: 레이더 센서의 rri 데이터 리스트를 받아서, 주파수 분석을 한다.
   //Output: 수면시간동안의 주파수 분석 데이터를 리턴한다.
-  public static ECG_TOPPER ECG_PPG_AnalysisData(double[] rriData) {
-    ECG_TOPPER resultNode = new ECG_TOPPER();
+  public static ECGTopper ECG_PPG_AnalysisData(double[] rriData) {
+    ECGTopper resultNode = new ECGTopper();
     try {
 
       //TOPPER 클래스를 계산한다.
@@ -27,7 +27,7 @@ public class ECG_ANALYSIS_PROC {
 
       //주파수분석 후 계산하는 항목
       //밴드패스필터를 통과하고 나온 신호로, 주파수 분석을 한다.
-      ECG_STRESS stressNode = new ECG_STRESS();
+      ECGStress stressNode = new ECGStress();
       stressNode = CalcFrequency(rriData);
 
       resultNode.LF = stressNode.LF;
@@ -84,7 +84,7 @@ public class ECG_ANALYSIS_PROC {
     return sd;
   }
 
-  private static ECG_STRESS CalcFrequency(double[] inputReal) {
+  private static ECGStress CalcFrequency(double[] inputReal) {
     int iLog2 = (int) (Math.log10(inputReal.length) / Math.log10(2));
     //최대 2의 제곱수를 구한다. FFT 계산을 위해서임.
     int sampleSize = (int) Math.pow(2, iLog2);
@@ -96,7 +96,7 @@ public class ECG_ANALYSIS_PROC {
     double frequency = 0;
 
     double[] input = Arrays.copyOfRange(inputReal, 0, sampleSize);
-    List<FREQ_DATA> listFreq = new ArrayList<FREQ_DATA>();
+    List<FreqData> listFreq = new ArrayList<FreqData>();
 
     //double[] tempConversion = new double[input.length/2];
 
@@ -112,7 +112,7 @@ public class ECG_ANALYSIS_PROC {
         double dIMABS2 = Math.sqrt(Math.pow(complx[i].getReal(), 2) + Math.pow(complx[i].getImaginary(), 2));
         double dABSPower = dIMABS2 / (sampleSize / 2);
 
-        FREQ_DATA node = new FREQ_DATA();
+        FreqData node = new FreqData();
         // frequency계산
         node.Freq_Domain = i * sampleRate;
         node.Magnitude = dABSPower;
@@ -150,7 +150,7 @@ public class ECG_ANALYSIS_PROC {
       }
     }
 
-    ECG_STRESS node = new ECG_STRESS();
+    ECGStress node = new ECGStress();
     node.TotalPower = dVLF + dLF + dHF;
     node.LF = dLF;
     node.HF = dHF;

@@ -5,6 +5,7 @@ import android.text.SpannableStringBuilder
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import com.sewon.healthmonitor.MainActivity
+import com.sewon.healthmonitor.algorithm.sleep.SleepAlgorithm
 
 
 import timber.log.Timber
@@ -101,17 +102,21 @@ class BleDataListener : SerialListener {
 
   private var updateDBCount = 0
 
-  private fun processData(message: String) {
-    val messageArray = message.split(" ").filter { it != "" }
+  private fun processData(messageList: List<String>) {
+
+
+    SleepAlgorithm.inputData(messageList)
+
+
+    MainActivity.bleHandleService.updateDatabase(messageList)
 
     if (updateDBCount == 5) {
-      MainActivity.bleHandleService.updateDatabase(messageArray)
       updateDBCount = 0
     }
     updateDBCount += 1
 
     //  STABLE_NO_VITAL_SIGN = "1"
-    if (messageArray[0] == Constants.STABLE_NO_VITAL_SIGN) {
+    if (messageList[0] == Constants.STABLE_NO_VITAL_SIGN) {
       countNoVitalSign += 1
       if (countNoVitalSign == Constants.NO_VITAL_SIGN_THRESHOLD) {
         resetTimer()
@@ -122,7 +127,7 @@ class BleDataListener : SerialListener {
     }
 
     //  STABLE_NO_TARGET = "0"
-    if (messageArray[0] == Constants.STABLE_NO_TARGET) {
+    if (messageList[0] == Constants.STABLE_NO_TARGET) {
       countNoTarget += 1
       if (countNoTarget == Constants.NO_TARGET_THRESHOLD) {
         resetTimer()
@@ -133,14 +138,6 @@ class BleDataListener : SerialListener {
     }
 
 
-//    if (prevValue == Constants.STABLE_NO_TARGET && messageArray[0] != Constants.STABLE_NO_TARGET) {
-////      countNoTarget += 1
-////      if (countNoTarget == Constants.NO_TARGET_THRESHOLD) {
-////        stretchDetected()
-////      }
-//      resetTimer()
-//    }
-
 //    prevValue = messageArray[0]
 
     if (dataArrayList.size == 9) {
@@ -150,11 +147,22 @@ class BleDataListener : SerialListener {
 //      }
       dataArrayList.clear()
     }
-    dataArrayList.add(messageArray.get(3).toDouble())
+    dataArrayList.add(messageList.get(3).toDouble())
+  }
+
+  val isWrongDeviceType = mutableStateOf(false)
+
+  private fun validateDataFormatAndProcess(dataStr: String) {
+    val messageList = dataStr.split(" ").filter { it != "" }
+    if (messageList.size == 6 && messageList[0].matches(regex)) {
+      processData(messageList)
+    } else {
+      isWrongDeviceType.value = true
+      MainActivity.bleHandleService.disconnect()
+    }
   }
 
   private var tempCount = 0
-
 
   private fun receive(datas: ArrayDeque<ByteArray>) {
     val stringBuilder = SpannableStringBuilder()

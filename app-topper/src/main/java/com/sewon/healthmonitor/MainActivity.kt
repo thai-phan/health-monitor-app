@@ -5,6 +5,9 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
+import android.hardware.Sensor
+import android.hardware.SensorManager
+import android.hardware.SensorManager.SENSOR_DELAY_NORMAL
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
@@ -13,6 +16,7 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
 import com.sewon.healthmonitor.common.RootCompose
+import com.sewon.healthmonitor.service.LightSensorListener
 import com.sewon.healthmonitor.service.ble.BleDataListener
 import com.sewon.healthmonitor.service.ble.BleHandleService
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +31,10 @@ class MainActivity : ComponentActivity() {
     lateinit var alarmManager: AlarmManager
     lateinit var alarmPendingIntent: PendingIntent
 
+    lateinit var mSensorManager: SensorManager
+    lateinit var mLightSensor: Sensor
+    lateinit var sensorListener: LightSensorListener
+
     var bleDataListener = BleDataListener()
 
   }
@@ -35,6 +43,10 @@ class MainActivity : ComponentActivity() {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
     actionBar?.hide();
     super.onCreate(savedInstanceState)
+
+
+    mSensorManager = getSystemService(SENSOR_SERVICE) as SensorManager;
+    mLightSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)!!;
 
     WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -48,6 +60,9 @@ class MainActivity : ComponentActivity() {
   @RequiresApi(Build.VERSION_CODES.S)
   override fun onResume() {
     super.onResume()
+
+    mSensorManager.registerListener(sensorListener, mLightSensor, SENSOR_DELAY_NORMAL)
+
 //    val alarmManager: AlarmManager = getSystemService<AlarmManager>()!!
 //
 //    if (alarmManager.canScheduleExactAlarms()) {

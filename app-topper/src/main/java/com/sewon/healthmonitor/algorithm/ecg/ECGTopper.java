@@ -1,6 +1,6 @@
-package com.sewon.healthmonitor.algorithm;
+package com.sewon.healthmonitor.algorithm.ecg;
 
-public class ECG_TOPPER {
+public class ECGTopper {
   public double SDRP;
   public double RMSSD;
   public double LF;

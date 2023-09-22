@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.algorithm;
+package com.sewon.healthmonitor.algorithm.ecg;
 
 
 import java.io.*;
@@ -22,7 +22,7 @@ public class ECGTest {
 
     double[] array = listDouble.stream().mapToDouble(i -> i).toArray();
 
-    ECG_TOPPER listECGResult = ECG_ANALYSIS_PROC.ECG_PPG_AnalysisData(array);
+    ECGTopper listECGResult = ECGAnalysisProc.ECG_PPG_AnalysisData(array);
 
     System.out.println("asdfasdf");
 
