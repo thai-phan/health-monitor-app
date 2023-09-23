@@ -19,7 +19,7 @@ package com.example.android.architecture.blueprints.todoapp.di
 import android.content.Context
 import androidx.room.Room
 import com.sewon.healthmonitor.data.HealthDatabase
-import com.sewon.healthmonitor.data.source.local.dao.LocalRadarDao
+import com.sewon.healthmonitor.data.source.local.dao.LocalSensorDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalUserDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalSettingDao
 import com.sewon.healthmonitor.data.repository.RadarRepository
@@ -50,7 +50,7 @@ object DatabaseModule {
   }
 
   @Provides
-  fun provideTopperDao(database: HealthDatabase): LocalRadarDao = database.radarDao()
+  fun provideTopperDao(database: HealthDatabase): LocalSensorDao = database.radarDao()
 
   @Provides
   fun provideUserSettingDao(database: HealthDatabase): LocalSettingDao = database.userSettingDao()

@@ -16,8 +16,10 @@ import android.os.Looper
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
 import com.sewon.healthmonitor.R
+import com.sewon.healthmonitor.algorithm.sleep.SensorData
+import com.sewon.healthmonitor.data.model.toLocal
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
-import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
+import com.sewon.healthmonitor.data.source.local.entity.LocalSensor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -173,17 +175,10 @@ class BleHandleService : Service(), SerialListener {
     bleDataListener = null
   }
 
-  fun updateDatabase(stringList: List<String>) {
+  fun updateDatabase(sensorData: SensorData) {
     scope.launch {
-      val localRadar = LocalRadar(
-        stringList[0].toInt(),
-        stringList[1].toInt(),
-        stringList[2].toInt(),
-        stringList[3].toDouble(),
-        stringList[4].toDouble(),
-        stringList[5].toDouble()
-      )
-      radarRepository.createTopper(localRadar)
+      val localSensor = sensorData.toSensorModel().toLocal()
+      radarRepository.createTopper(localSensor)
     }
   }
 

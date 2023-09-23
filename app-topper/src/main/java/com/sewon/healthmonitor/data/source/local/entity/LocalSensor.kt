@@ -11,14 +11,15 @@ import androidx.room.PrimaryKey
 //  HR-wfm -28.262
 //  BR-wfm 358.991
 
-@Entity(tableName = "radar")
-data class LocalRadar(
+@Entity(tableName = "sensor")
+data class LocalSensor(
   @ColumnInfo(name = "stable") val stable: Int,
   @ColumnInfo(name = "hr") val hr: Int,
-  @ColumnInfo(name = "rb") val rb: Int,
+  @ColumnInfo(name = "br") val br: Int,
   @ColumnInfo(name = "hrv") val hrv: Double,
   @ColumnInfo(name = "hr_wfm") val hrWfm: Double,
   @ColumnInfo(name = "br_wfm") val brWfm: Double,
+  @ColumnInfo(name = "is_sleep") val isSleep: Boolean,
 ) {
   @PrimaryKey(autoGenerate = true)
   var uid: Int = 0

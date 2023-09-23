@@ -7,7 +7,6 @@ import java.io.InputStreamReader
 import java.nio.charset.Charset
 
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 
 
 class CSVManager(private val context: Context) {

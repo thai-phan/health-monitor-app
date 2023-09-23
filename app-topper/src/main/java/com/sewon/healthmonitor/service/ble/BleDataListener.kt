@@ -5,7 +5,7 @@ import android.text.SpannableStringBuilder
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import com.sewon.healthmonitor.MainActivity
-import com.sewon.healthmonitor.algorithm.sleep.SleepAlgorithm
+import com.sewon.healthmonitor.algorithm.sleep.AlgorithmRealtime
 
 
 import timber.log.Timber
@@ -105,10 +105,10 @@ class BleDataListener : SerialListener {
   private fun processData(messageList: List<String>) {
 
 
-    SleepAlgorithm.inputData(messageList)
+    AlgorithmRealtime.inputData(messageList)
 
 
-    MainActivity.bleHandleService.updateDatabase(messageList)
+
 
     if (updateDBCount == 5) {
       updateDBCount = 0
@@ -152,6 +152,8 @@ class BleDataListener : SerialListener {
 
   val isWrongDeviceType = mutableStateOf(false)
 
+  private val regex = Regex("[01234]")
+
   private fun validateDataFormatAndProcess(dataStr: String) {
     val messageList = dataStr.split(" ").filter { it != "" }
     if (messageList.size == 6 && messageList[0].matches(regex)) {
@@ -170,9 +172,9 @@ class BleDataListener : SerialListener {
       if (hexEnabled) {
         stringBuilder.append(TextUtil.toHexString(data)).append('\n')
       } else {
-        val message = String(data)
-        processData(message)
-        val text = TextUtil.toCaretString(message, true)
+        val dataStr = String(data)
+        validateDataFormatAndProcess(dataStr)
+        val text = TextUtil.toCaretString(dataStr, true)
         stringBuilder.append(text)
       }
     }

@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.api.HttpService
 import com.sewon.healthmonitor.api.ServerService
-import com.sewon.healthmonitor.data.source.local.entity.LocalRadar
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -55,7 +54,7 @@ class ViewModelSleepActivity @Inject constructor(
     var aaa = radarRepository.getTopper()
 
     _uiState.update {
-      it.copy(status2 = aaa.first().get(0).rb.toString())
+      it.copy(status2 = aaa.first().get(0).br.toString())
     }
   }
 
