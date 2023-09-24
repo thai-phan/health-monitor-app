@@ -84,7 +84,7 @@ fun SleepActivity(
 
   fun startSleep() {
 
-    
+
     val alarmIntent = Intent(context, AlarmReceiver::class.java)
 
     alarmPendingIntent =
@@ -117,8 +117,8 @@ fun SleepActivity(
 
   fun disconnect() {
 //    val a = AlarmManager()
-    val list = listOf("1", "2", "3", "4.0", "5.0", "6.0")
-    MainActivity.bleHandleService.updateDatabase(list)
+//    val list = listOf("1", "2", "3", "4.0", "5.0", "6.0")
+//    MainActivity.bleHandleService.updateDatabase(list)
 //    MainActivity.bleHandleService.disconnect()
 //    navController.navigate(AppDestinations.MAIN_ROUTE)
   }

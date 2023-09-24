@@ -21,6 +21,11 @@
 
   <uses-permission android:name="android.permission.VIBRATE" />
 
+  <uses-feature
+      android:name="android.hardware.sensor.light"
+      android:required="true" />
+
+
   <application
       android:name=".Application"
       android:allowBackup="false"
@@ -31,7 +36,7 @@
       android:usesCleartextTraffic="true">
 
     <activity
-        android:name=".MainActivity"
+        android:name=".service.LightActivity"
         android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

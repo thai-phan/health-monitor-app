@@ -53,8 +53,6 @@ class AlgorithmRealtime {
     var countDeepSleep = 0
 
     fun sleepStart(sensorData: SensorData) {
-
-
       if (sensorData.stable == 0 || sensorData.stable == 1) {
         if (countInsomniaValue == 1200) {
           callInsomnia(sensorData)

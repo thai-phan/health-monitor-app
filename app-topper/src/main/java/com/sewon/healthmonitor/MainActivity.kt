@@ -77,6 +77,7 @@ class MainActivity : ComponentActivity() {
 
   }
 
+
   override fun onStart() {
     super.onStart()
 
@@ -108,6 +109,8 @@ class MainActivity : ComponentActivity() {
   }
 
   override fun onPause() {
+    mSensorManager.unregisterListener(sensorListener)
+
     super.onPause()
   }
 
