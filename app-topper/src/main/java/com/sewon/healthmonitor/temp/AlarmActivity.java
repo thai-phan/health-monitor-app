@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.service;
+package com.sewon.healthmonitor.temp;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -12,6 +12,7 @@ import android.widget.ToggleButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sewon.healthmonitor.R;
+import com.sewon.healthmonitor.service.alarm.AlarmReceiver;
 
 import java.util.Calendar;
 

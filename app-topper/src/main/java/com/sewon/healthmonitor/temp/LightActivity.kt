@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.service
+package com.sewon.healthmonitor.temp
 
 import android.app.Activity
 import android.hardware.Sensor

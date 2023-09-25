@@ -1,6 +1,5 @@
-package com.sewon.healthmonitor.algorithm.sleep
+package com.sewon.healthmonitor.service.algorithm.sleep
 
-import com.sewon.healthmonitor.MainActivity
 
 class AlgorithmRealtime {
 
@@ -18,8 +17,7 @@ class AlgorithmRealtime {
     var curlux = 10
 
 
-    fun inputData(dataList: List<String>) {
-      val sensorData = SensorData(dataList)
+    fun inputData(sensorData: SensorData) {
 
       countReferenceData += 1
 
@@ -36,11 +34,9 @@ class AlgorithmRealtime {
       }
 
       if (curlux < lux) {
-
-
-        if (sensorData.HRV > firstMeanHRV * Constants.HRV_THRESHOLD) {
-          if (sensorData.HR < firstMeanHR * Constants.HR_THRESHOLD) {
-            if (sensorData.BR < firstMeanBR * Constants.BR_THRESHOLD) {
+        if (sensorData.HRV > firstMeanHRV * Constants.REALTIME_HRV_THRESHOLD) {
+          if (sensorData.HR < firstMeanHR * Constants.REALTIME_HR_THRESHOLD) {
+            if (sensorData.BR < firstMeanBR * Constants.REALTIME_BR_THRESHOLD) {
               sleepStart(sensorData)
             }
           }
@@ -86,7 +82,7 @@ class AlgorithmRealtime {
 
     fun callDeepSleep(sensorData: SensorData) {
       var curTime = 0
-      var sleepTime = 0
+      var sleepTime = 1
       var isWakeup = true
       if (curTime < sleepTime) {
         saveDatabase(sensorData)
@@ -108,18 +104,7 @@ class AlgorithmRealtime {
     }
 
     fun saveDatabase(sensorData: SensorData) {
-      MainActivity.bleHandleService.updateDatabase(sensorData)
+//      MainActivity.bleHandleService.updateDatabase(sensorData)
     }
-
-
-    // Sleep ble data
-
-    // First 3 min data
-
-    // Mean HRV, HR, BR
-
-    // Lux check < 10
-
-    //
   }
 }

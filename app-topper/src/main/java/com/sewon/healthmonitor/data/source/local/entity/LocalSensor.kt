@@ -3,13 +3,8 @@ package com.sewon.healthmonitor.data.source.local.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalTime
 
-//  Stable 3
-//  HR 111
-//  BR 11
-//  HRV 0.5
-//  HR-wfm -28.262
-//  BR-wfm 358.991
 
 @Entity(tableName = "sensor")
 data class LocalSensor(
@@ -20,8 +15,9 @@ data class LocalSensor(
   @ColumnInfo(name = "hr_wfm") val hrWfm: Double,
   @ColumnInfo(name = "br_wfm") val brWfm: Double,
   @ColumnInfo(name = "is_sleep") val isSleep: Boolean,
+  @ColumnInfo(name = "session_id") val sessionId: Int,
+  @ColumnInfo(name = "created_at") val createdAt: LocalTime,
 ) {
   @PrimaryKey(autoGenerate = true)
   var uid: Int = 0
-
 }

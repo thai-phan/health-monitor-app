@@ -5,7 +5,7 @@ import android.text.SpannableStringBuilder
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import com.sewon.healthmonitor.MainActivity
-import com.sewon.healthmonitor.algorithm.sleep.AlgorithmRealtime
+import com.sewon.healthmonitor.service.algorithm.sleep.DataProcessing
 
 
 import timber.log.Timber
@@ -82,89 +82,11 @@ class BleDataListener : SerialListener {
     isStretch.value = true
   }
 
-  fun stretchStop() {
-    isStretch.value = false
-  }
-
-  fun stressDetected() {
-    MainActivity.bleHandleService.createNotificationHealth()
-    isStress.value = true
-  }
-
-  fun stressStop() {
-    isStress.value = false
-  }
 
 //  var prevValue = Constants.STABLE_MOVING;
 
-  private var countNoVitalSign = 0
-  private var countNoTarget = 0
 
-  private var updateDBCount = 0
-
-  private fun processData(messageList: List<String>) {
-
-
-    AlgorithmRealtime.inputData(messageList)
-
-
-
-
-    if (updateDBCount == 5) {
-      updateDBCount = 0
-    }
-    updateDBCount += 1
-
-    //  STABLE_NO_VITAL_SIGN = "1"
-    if (messageList[0] == Constants.STABLE_NO_VITAL_SIGN) {
-      countNoVitalSign += 1
-      if (countNoVitalSign == Constants.NO_VITAL_SIGN_THRESHOLD) {
-        resetTimer()
-        countNoVitalSign = 0
-      }
-    } else {
-      countNoVitalSign = 0
-    }
-
-    //  STABLE_NO_TARGET = "0"
-    if (messageList[0] == Constants.STABLE_NO_TARGET) {
-      countNoTarget += 1
-      if (countNoTarget == Constants.NO_TARGET_THRESHOLD) {
-        resetTimer()
-        countNoTarget = 0
-      }
-    } else {
-      countNoTarget = 0
-    }
-
-
-//    prevValue = messageArray[0]
-
-    if (dataArrayList.size == 9) {
-//      val result = ECG_ANALYSIS_PROC.ECG_AnalysisData(dataArrayList)
-//      if (result.get(0).stress_State == "stress") {
-//        stressDetected()
-//      }
-      dataArrayList.clear()
-    }
-    dataArrayList.add(messageList.get(3).toDouble())
-  }
-
-  val isWrongDeviceType = mutableStateOf(false)
-
-  private val regex = Regex("[01234]")
-
-  private fun validateDataFormatAndProcess(dataStr: String) {
-    val messageList = dataStr.split(" ").filter { it != "" }
-    if (messageList.size == 6 && messageList[0].matches(regex)) {
-      processData(messageList)
-    } else {
-      isWrongDeviceType.value = true
-      MainActivity.bleHandleService.disconnect()
-    }
-  }
-
-  private var tempCount = 0
+  private var sensorLoopCount = 0
 
   private fun receive(datas: ArrayDeque<ByteArray>) {
     val stringBuilder = SpannableStringBuilder()
@@ -173,19 +95,19 @@ class BleDataListener : SerialListener {
         stringBuilder.append(TextUtil.toHexString(data)).append('\n')
       } else {
         val dataStr = String(data)
-        validateDataFormatAndProcess(dataStr)
+        DataProcessing.validateDataFormatAndProcess(dataStr)
         val text = TextUtil.toCaretString(dataStr, true)
         stringBuilder.append(text)
       }
     }
 
-    if (tempCount < 2) {
-      tempCount += 1
+    if (sensorLoopCount < 2) {
+      sensorLoopCount += 1
     } else {
-      tempCount = 0
+      sensorLoopCount = 0
     }
 
-    log.value = "$stringBuilder $tempCount"
+    log.value = "$stringBuilder $sensorLoopCount"
   }
 
 

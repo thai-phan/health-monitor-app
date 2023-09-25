@@ -10,15 +10,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.sewon.healthmonitor.common.AppDestinations
 import com.sewon.healthmonitor.common.MainDestinations
+import com.sewon.healthmonitor.common.MainTabs
 import com.sewon.healthmonitor.common.mainNavGraph
 import com.sewon.healthmonitor.data.HealthDataStore
+import com.sewon.healthmonitor.screen.activity.SleepActivity
 import com.sewon.healthmonitor.screen.device.DeviceScreen
+import com.sewon.healthmonitor.screen.report.Report
+import com.sewon.healthmonitor.screen.setting.UserSetting
 import com.sewon.healthmonitor.screen.singleview.TermAgreement
 import com.sewon.healthmonitor.screen.singleview.SplashScreen
 
@@ -45,8 +51,7 @@ fun NavigationGraph(
 
   val actions = remember(navController) { MainActions(navController) }
   NavHost(
-    navController = navController,
-    startDestination = startDestination
+    navController = navController, startDestination = startDestination
   ) {
     var redirectRoute = AppDestinations.TERM_AGREEMENT_ROUTE
     if (isAccepted.value) {
@@ -59,8 +64,7 @@ fun NavigationGraph(
         finishActivity()
       }
       SplashScreen(
-        navController = navController,
-        redirectRoute = redirectRoute
+        navController = navController, redirectRoute = redirectRoute
       )
     }
 
@@ -83,6 +87,51 @@ fun NavigationGraph(
       route = AppDestinations.MAIN_ROUTE,
       startDestination = mainStartDestination
     ) {
+
+      composable(
+        "${MainTabs.ACTIVITY.route}/{deviceAddress}",
+        arguments = listOf(navArgument("deviceAddress") { type = NavType.StringType })
+
+      ) { backStackEntry ->
+        val arguments = requireNotNull(backStackEntry.arguments)
+        val deviceAddress = arguments.getString("deviceAddress")
+
+//        val parentEntry = remember(backStackEntry) {
+//            navController.getBackStackEntry("parentNavigationRoute")
+//        }
+
+//        val parentViewModel = hiltViewModel(parentEntry)
+
+
+        if (deviceAddress != null) {
+          SleepActivity(modifier, navController, deviceAddress = deviceAddress)
+        }
+        // Show onboarding instead if not shown yet.
+//        LaunchedEffect(onboardingComplete) {
+//            if (!onboardingComplete.value) {
+//                navController.navigate(AppDestinations.SPLASH_ROUTE)
+//            }
+//        }
+//        if (onboardingComplete.value) { // Avoid glitch when showing onboarding
+//            FeaturedCourses(
+//                courses = courses,
+//                selectCourse = { id -> onCourseSelected(id, from) },
+//                modifier = modifier
+//            )
+//        }
+
+      }
+
+      composable(MainTabs.REPORT.route) { from ->
+        Report(modifier)
+      }
+
+      composable(MainTabs.USER.route) {
+        UserSetting(modifier)
+      }
+
+
+
       mainNavGraph(
         onCourseSelected = actions.openCourse,
         onboardingComplete = onboardingComplete,

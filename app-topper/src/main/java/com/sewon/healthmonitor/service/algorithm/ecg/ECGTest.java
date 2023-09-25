@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.algorithm.ecg;
+package com.sewon.healthmonitor.service.algorithm.ecg;
 
 
 import java.io.*;

@@ -21,7 +21,10 @@ import com.sewon.healthmonitor.data.source.local.entity.converter.TimeConverter
 
   ], version = 1
 )
-@TypeConverters(DateConverter::class, TimeConverter::class)
+@TypeConverters(
+  DateConverter::class,
+  TimeConverter::class
+)
 abstract class HealthDatabase : RoomDatabase() {
   abstract fun userInformationDao(): LocalUserDao
   abstract fun userSettingDao(): LocalSettingDao

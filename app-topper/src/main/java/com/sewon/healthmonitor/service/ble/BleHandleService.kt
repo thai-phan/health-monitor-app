@@ -16,10 +16,9 @@ import android.os.Looper
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.algorithm.sleep.SensorData
+import com.sewon.healthmonitor.service.algorithm.sleep.SensorData
 import com.sewon.healthmonitor.data.model.toLocal
 import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
-import com.sewon.healthmonitor.data.source.local.entity.LocalSensor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

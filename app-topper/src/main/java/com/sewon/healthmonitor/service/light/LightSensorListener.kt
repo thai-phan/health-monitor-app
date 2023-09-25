@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.service
+package com.sewon.healthmonitor.service.light
 
 import android.hardware.Sensor
 import android.hardware.SensorEvent

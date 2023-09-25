@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.service
+package com.sewon.healthmonitor.service.alarm
 
 import android.content.BroadcastReceiver
 import android.content.Context

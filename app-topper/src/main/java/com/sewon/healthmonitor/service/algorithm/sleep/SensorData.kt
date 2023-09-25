@@ -1,6 +1,7 @@
-package com.sewon.healthmonitor.algorithm.sleep
+package com.sewon.healthmonitor.service.algorithm.sleep
 
 import com.sewon.healthmonitor.data.model.Sensor
+import java.time.LocalTime
 
 class SensorData(stringList: List<String>) {
   var stable: Int
@@ -10,6 +11,8 @@ class SensorData(stringList: List<String>) {
   var HRWfm: Double
   var BRWfm: Double
   var isSleep: Boolean
+  var sessionId: Int
+  var createdAt: LocalTime
 
   init {
     stable = stringList[0].toInt()
@@ -19,6 +22,8 @@ class SensorData(stringList: List<String>) {
     HRWfm = stringList[4].toDouble()
     BRWfm = stringList[5].toDouble()
     isSleep = true
+    sessionId = 1
+    createdAt = LocalTime.now()
   }
 
   fun toSensorModel(): Sensor {
@@ -29,7 +34,9 @@ class SensorData(stringList: List<String>) {
       hrv = HRV,
       hrWfm = HRWfm,
       brWfm = BRWfm,
-      isSleep = isSleep
+      isSleep = isSleep,
+      sessionId = sessionId,
+      createdAt = createdAt
     )
   }
 }

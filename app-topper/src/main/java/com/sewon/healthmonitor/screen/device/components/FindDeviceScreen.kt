@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.sewon.healthmonitor.screen.device.components.BluetoothScanEffect
 import kotlinx.coroutines.delay
 import timber.log.Timber
 
@@ -46,7 +45,10 @@ import timber.log.Timber
 @SuppressLint("InlinedApi", "MissingPermission")
 @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
 @Composable
-internal fun FindDevicesScreen(navController: NavHostController = rememberNavController()) {
+internal fun FindDevicesScreen(
+  navController: NavHostController = rememberNavController(),
+  onSelectBle: (bleDevice: BluetoothDevice) -> Unit
+) {
   val context = LocalContext.current
   val adapter = checkNotNull(context.getSystemService<BluetoothManager>()?.adapter)
 
@@ -62,6 +64,8 @@ internal fun FindDevicesScreen(navController: NavHostController = rememberNavCon
     // Get a list of previously paired devices
     mutableStateListOf<BluetoothDevice>(*adapter.bondedDevices.toTypedArray())
   }
+
+
 
   val scanSettings: ScanSettings = ScanSettings.Builder()
     .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
@@ -130,6 +134,9 @@ internal fun FindDevicesScreen(navController: NavHostController = rememberNavCon
           Color(0xFFE3ECA6),
           navController = navController,
           bluetoothDevice = item,
+          onSelectBle = {
+            onSelectBle(item)
+          }
         )
       }
 
@@ -141,6 +148,9 @@ internal fun FindDevicesScreen(navController: NavHostController = rememberNavCon
           DeviceItem(
             Color(0xFFE3ECA6),
             bluetoothDevice = it,
+            onSelectBle = {
+              onSelectBle(it)
+            }
           )
         }
       }

@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.algorithm.ecg;
+package com.sewon.healthmonitor.service.algorithm.ecg;
 
 public class FreqData {
   public double Freq_Domain;
