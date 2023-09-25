@@ -22,10 +22,13 @@ import com.sewon.healthmonitor.data.HealthDatabase
 import com.sewon.healthmonitor.data.source.local.dao.LocalSensorDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalUserDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalSettingDao
-import com.sewon.healthmonitor.data.repository.RadarRepository
+import com.sewon.healthmonitor.data.repository.SensorRepository
+import com.sewon.healthmonitor.data.repository.SessionRepository
 import com.sewon.healthmonitor.data.repository.SettingRepository
-import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
+import com.sewon.healthmonitor.data.repository.repointerface.ISensorRepository
+import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
+import com.sewon.healthmonitor.data.source.local.dao.LocalSessionDao
 
 import dagger.Binds
 import dagger.Module
@@ -50,14 +53,16 @@ object DatabaseModule {
   }
 
   @Provides
-  fun provideTopperDao(database: HealthDatabase): LocalSensorDao = database.radarDao()
+  fun provideSensorDao(database: HealthDatabase): LocalSensorDao = database.sensorDao()
 
   @Provides
-  fun provideUserSettingDao(database: HealthDatabase): LocalSettingDao = database.userSettingDao()
+  fun provideUserSettingDao(database: HealthDatabase): LocalSettingDao = database.settingDao()
 
   @Provides
-  fun provideUserInformationDao(database: HealthDatabase): LocalUserDao =
-    database.userInformationDao()
+  fun provideUserDao(database: HealthDatabase): LocalUserDao = database.userDao()
+
+  @Provides
+  fun provideSessionDao(database: HealthDatabase): LocalSessionDao = database.sessionDao()
 }
 
 
@@ -67,12 +72,17 @@ abstract class RepositoryModule {
 
   @Singleton
   @Binds
-  abstract fun bindRadarRepository(radarRepository: RadarRepository): IRadarRepository
+  abstract fun bindRadarRepository(radarRepository: SensorRepository): ISensorRepository
 
 
   @Singleton
   @Binds
   abstract fun bindSettingRepository(settingRepository: SettingRepository): ISettingRepository
+
+
+  @Singleton
+  @Binds
+  abstract fun bindSessionRepository(sessionRepository: SessionRepository): ISessionRepository
 }
 
 //@Module

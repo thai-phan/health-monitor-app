@@ -30,16 +30,12 @@ import com.sewon.healthmonitor.screen.device.components.FindDevicesScreen
 fun DeviceScreen(
   modifier: Modifier = Modifier,
   navController: NavHostController = rememberNavController(),
-  viewModel: ViewModelUserSetting = hiltViewModel()
+  viewModel: DeviceScreenViewModel = hiltViewModel()
 ) {
   val context = LocalContext.current
 
   fun selectBleDevice(bleDevice: BluetoothDevice) {
-    //
-
-    navController.navigate("${MainDestinations.ACTIVITY_ROUTE}/${bleDevice.name}")
-
-
+    navController.navigate("${MainDestinations.ACTIVITY_ROUTE}/${bleDevice.address}")
   }
 
   Column(

@@ -10,17 +10,8 @@ import com.sewon.healthmonitor.data.model.User
 import com.sewon.healthmonitor.data.repository.UserRepository
 import com.sewon.healthmonitor.data.repository.SettingRepository
 import com.sewon.healthmonitor.util.Async
-import com.sewon.healthmonitor.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalTime
@@ -39,7 +30,7 @@ data class ProfileSettingUiState(
 
 
 @HiltViewModel
-class ViewModelUserSetting @Inject constructor(
+class UserSettingViewModel @Inject constructor(
   private val settingRepository: SettingRepository,
   private val userRepository: UserRepository,
 ) : ViewModel() {

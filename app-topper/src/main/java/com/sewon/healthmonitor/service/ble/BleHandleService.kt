@@ -18,7 +18,7 @@ import androidx.core.app.NotificationCompat
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.service.algorithm.sleep.SensorData
 import com.sewon.healthmonitor.data.model.toLocal
-import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
+import com.sewon.healthmonitor.data.repository.repointerface.ISensorRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +41,7 @@ class BleHandleService : Service(), SerialListener {
 
 
   @Inject
-  lateinit var radarRepository: IRadarRepository
+  lateinit var radarRepository: ISensorRepository
 
 
   inner class SerialBinder : Binder() {

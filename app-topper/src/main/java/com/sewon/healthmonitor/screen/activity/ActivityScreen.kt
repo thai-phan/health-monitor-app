@@ -1,10 +1,7 @@
 package com.sewon.healthmonitor.screen.activity
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
-import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,9 +40,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sewon.healthmonitor.MainActivity
-import com.sewon.healthmonitor.MainActivity.Companion.alarmManager
-import com.sewon.healthmonitor.MainActivity.Companion.alarmPendingIntent
 import com.sewon.healthmonitor.R
+import com.sewon.healthmonitor.common.MainDestinations
 import com.sewon.healthmonitor.common.theme.checkedBorderColor
 import com.sewon.healthmonitor.common.theme.checkedThumbColor
 import com.sewon.healthmonitor.common.theme.checkedTrackColor
@@ -54,18 +50,15 @@ import com.sewon.healthmonitor.common.theme.uncheckedThumbColor
 import com.sewon.healthmonitor.common.theme.uncheckedTrackColor
 import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
 import com.sewon.healthmonitor.screen.activity.component.CircularTimePicker
-import com.sewon.healthmonitor.service.alarm.AlarmReceiver
-import com.sewon.healthmonitor.service.alarm.AlarmReceiver.Companion.ringtone
 import com.sewon.healthmonitor.service.ble.SerialSocket
 import timber.log.Timber
-import java.util.Calendar
 
 @SuppressLint("RememberReturnType")
 @Composable
 fun SleepActivity(
   modifier: Modifier = Modifier,
   navController: NavHostController = rememberNavController(),
-  viewModel: ViewModelSleepActivity = hiltViewModel(),
+  viewModel: ActivityViewModel = hiltViewModel(),
   deviceAddress: String = ""
 ) {
   val context = LocalContext.current
@@ -93,6 +86,15 @@ fun SleepActivity(
     }
   }
 
+  fun disconnect() {
+    MainActivity.bleHandleService.disconnect()
+    navController.navigate(MainDestinations.REPORT_ROUTE)
+//    val a = AlarmManager()
+//    val list = listOf("1", "2", "3", "4.0", "5.0", "6.0")
+//    MainActivity.bleHandleService.updateDatabase(list)
+//    MainActivity.bleHandleService.disconnect()
+
+  }
 
   fun startSleep() {
     connectToSensor()
@@ -106,20 +108,12 @@ fun SleepActivity(
 //      Intent myIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
 //      PendingIntent pendingIntent = PendingIntent.getBroadcast(
 //          getApplicationContext(), 1, myIntent, PendingIntent.FLAG_IMMUTABLE);
-
   }
 
   fun stopSound() {
 
   }
 
-  fun disconnect() {
-//    val a = AlarmManager()
-//    val list = listOf("1", "2", "3", "4.0", "5.0", "6.0")
-//    MainActivity.bleHandleService.updateDatabase(list)
-//    MainActivity.bleHandleService.disconnect()
-//    navController.navigate(AppDestinations.MAIN_ROUTE)
-  }
 
   Column(
     modifier = modifier

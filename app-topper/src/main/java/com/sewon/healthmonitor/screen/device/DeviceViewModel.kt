@@ -19,7 +19,7 @@ data class ProfileSettingUiState(
 
 
 @HiltViewModel
-class ViewModelUserSetting @Inject constructor(
+class DeviceScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
     private fun loadUser() {

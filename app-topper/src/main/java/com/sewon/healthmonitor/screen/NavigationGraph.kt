@@ -129,15 +129,6 @@ fun NavigationGraph(
       composable(MainTabs.USER.route) {
         UserSetting(modifier)
       }
-
-
-
-      mainNavGraph(
-        onCourseSelected = actions.openCourse,
-        onboardingComplete = onboardingComplete,
-        navController = navController,
-        modifier = modifier
-      )
     }
 //        composable(
 //            "${MainDestinations.COURSE_DETAIL_ROUTE}/{$COURSE_DETAIL_ID_KEY}",

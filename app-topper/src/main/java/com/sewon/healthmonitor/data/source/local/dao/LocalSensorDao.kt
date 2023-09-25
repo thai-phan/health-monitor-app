@@ -23,7 +23,7 @@ interface LocalSensorDao {
   suspend fun delete(user: LocalSensor)
 
   @Insert
-  fun insert(localSensor: LocalSensor)
+  suspend fun insert(localSensor: LocalSensor)
 
   @Upsert
   suspend fun upsert(localSensor: LocalSensor)

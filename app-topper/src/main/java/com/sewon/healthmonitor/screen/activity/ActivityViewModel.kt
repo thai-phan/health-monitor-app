@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.api.HttpService
 import com.sewon.healthmonitor.api.ServerService
-import com.sewon.healthmonitor.data.repository.repointerface.IRadarRepository
+import com.sewon.healthmonitor.data.model.Session
+import com.sewon.healthmonitor.data.repository.repointerface.ISensorRepository
+import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -15,6 +17,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.LocalTime
 import javax.inject.Inject
 
 
@@ -31,8 +34,9 @@ data class UiState(
 
 
 @HiltViewModel
-class ViewModelSleepActivity @Inject constructor(
-  private val radarRepository: IRadarRepository,
+class ActivityViewModel @Inject constructor(
+  private val sensorRepository: ISensorRepository,
+  private val sessionRepository: ISessionRepository,
   private val settingRepository: ISettingRepository,
 ) : ViewModel() {
 
@@ -51,7 +55,7 @@ class ViewModelSleepActivity @Inject constructor(
 
   fun getToppers() = viewModelScope.launch {
 
-    var aaa = radarRepository.getTopper()
+    var aaa = sensorRepository.getTopper()
 
     _uiState.update {
       it.copy(status2 = aaa.first().get(0).br.toString())
@@ -60,7 +64,7 @@ class ViewModelSleepActivity @Inject constructor(
 
   fun getCount() = viewModelScope.launch {
 
-    var bbb = radarRepository.getCountTopper()
+    var bbb = sensorRepository.getCountTopper()
 
     _uiState.update {
       it.copy(status3 = bbb.first().toString())
@@ -113,9 +117,5 @@ class ViewModelSleepActivity @Inject constructor(
     println("asdas")
   }
 
-  fun updateTime() = viewModelScope.launch {
-//        settingRepository.countSetting()
-
-  }
 
 }
