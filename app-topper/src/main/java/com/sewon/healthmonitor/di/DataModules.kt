@@ -25,9 +25,11 @@ import com.sewon.healthmonitor.data.source.local.dao.LocalSettingDao
 import com.sewon.healthmonitor.data.repository.SensorRepository
 import com.sewon.healthmonitor.data.repository.SessionRepository
 import com.sewon.healthmonitor.data.repository.SettingRepository
+import com.sewon.healthmonitor.data.repository.UserRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISensorRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
+import com.sewon.healthmonitor.data.repository.repointerface.IUserRepository
 import com.sewon.healthmonitor.data.source.local.dao.LocalSessionDao
 
 import dagger.Binds
@@ -83,6 +85,12 @@ abstract class RepositoryModule {
   @Singleton
   @Binds
   abstract fun bindSessionRepository(sessionRepository: SessionRepository): ISessionRepository
+
+
+  @Singleton
+  @Binds
+  abstract fun bindUserRepository(userRepository: UserRepository): IUserRepository
+
 }
 
 //@Module
