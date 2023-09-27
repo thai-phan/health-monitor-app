@@ -36,7 +36,7 @@ class UserRepository @Inject constructor(
     localUserDao.updateUserGender(username, gender)
   }
 
-  override fun countUser(): Flow<Int> {
+  override suspend fun countUser(): Int {
     return localUserDao.countUser()
   }
 

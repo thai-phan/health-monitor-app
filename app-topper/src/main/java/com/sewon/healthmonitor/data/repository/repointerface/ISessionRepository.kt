@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ISessionRepository {
 
-  fun getSessionById(id: Int): LocalSession
+  suspend fun getSessionById(id: Int): LocalSession
 
   fun getCountTopper(): Flow<Int>
 

@@ -22,7 +22,7 @@ class SessionRepository @Inject constructor(
   @ApplicationScope private val scope: CoroutineScope,
 ) : ISessionRepository {
 
-  override fun getSessionById(id: Int): LocalSession {
+  override suspend fun getSessionById(id: Int): LocalSession {
     return localSessionDao.loadById(id)
   }
 

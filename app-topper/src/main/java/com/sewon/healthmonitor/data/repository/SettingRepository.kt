@@ -54,7 +54,7 @@ class SettingRepository @Inject constructor(
     return "Done"
   }
 
-  suspend fun countSetting(): Flow<Int> {
+  suspend fun countSetting(): Int {
     return localSettingDao.countSetting()
   }
 

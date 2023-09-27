@@ -9,14 +9,14 @@ import java.util.Date
 
 interface IUserRepository {
   suspend fun addUser(user: User)
-  
+
   fun getUserByUsername(username: String): Flow<User>
 
   suspend fun updateUserBirthday(username: String, birthday: Date)
 
   suspend fun updateUserGender(username: String, gender: String)
 
-  fun countUser(): Flow<Int>
+  suspend fun countUser(): Int
 
   suspend fun updateUserSetting(user: User): String
 }

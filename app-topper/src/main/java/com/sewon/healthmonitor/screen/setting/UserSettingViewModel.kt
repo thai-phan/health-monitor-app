@@ -37,7 +37,7 @@ class UserSettingViewModel @Inject constructor(
 
   private fun loadUser() {
     viewModelScope.launch {
-      if (userRepository.countUser().first() == 0) {
+      if (userRepository.countUser() == 0) {
         val str = "1955-04-16"
         val df = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
         val date: Date = df.parse(str)
@@ -46,7 +46,7 @@ class UserSettingViewModel @Inject constructor(
         userRepository.addUser(user)
       }
 
-      if (settingRepository.countSetting().first() == 0) {
+      if (settingRepository.countSetting() == 0) {
         val curDate = Calendar.getInstance().time
         val aaa = LocalTime.now()
         val setting = Setting(

@@ -37,7 +37,7 @@ interface LocalUserDao {
   suspend fun upsert(localUser: LocalUser)
 
   @Query("SELECT count(username) FROM user")
-  fun countUser(): Flow<Int>
+  suspend fun countUser(): Int
 
   @Insert
   fun insertAll(vararg localUsers: LocalUser)

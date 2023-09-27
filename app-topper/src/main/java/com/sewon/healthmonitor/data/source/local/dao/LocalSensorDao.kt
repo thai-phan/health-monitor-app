@@ -16,6 +16,7 @@ interface LocalSensorDao {
   @Query("SELECT count(br) FROM sensor")
   fun countTopper(): Flow<Int>
 
+
   @Insert
   suspend fun insertAll(vararg localSensor: LocalSensor)
 
