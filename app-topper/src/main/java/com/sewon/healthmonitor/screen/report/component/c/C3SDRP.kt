@@ -1,4 +1,8 @@
 package com.sewon.healthmonitor.screen.report.component.c
 
-class C3SDRP {
+import androidx.compose.runtime.Composable
+
+
+@Composable
+fun C3SDRP() {
 }

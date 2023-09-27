@@ -1,4 +1,7 @@
 package com.sewon.healthmonitor.screen.report.component.c
 
-class C7HighFreq {
+import androidx.compose.runtime.Composable
+
+@Composable
+fun C7HighFreq() {
 }

@@ -1,4 +1,9 @@
 package com.sewon.healthmonitor.screen.report.component.c
 
-class C2MeanBR {
+import androidx.compose.runtime.Composable
+
+@Composable
+fun C2MeanBR() {
+
+
 }

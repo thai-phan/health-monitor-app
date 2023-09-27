@@ -1,4 +1,10 @@
 package com.sewon.healthmonitor.screen.report.component.c
 
-class C6LowFreq {
+import androidx.compose.runtime.Composable
+
+
+@Composable
+fun C6LowFreq() {
+
+
 }

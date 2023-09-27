@@ -1,7 +1,6 @@
-package com.sewon.healthmonitor.screen.report.component
+package com.sewon.healthmonitor.screen.report.component.b
 
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
@@ -34,8 +35,8 @@ import kotlinx.coroutines.withContext
 
 
 @Composable
-fun GradientProgressbar(
-  viewModel: MyViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+fun Progressbar(
+  viewModel: MyViewModel = viewModel(),
   indicatorHeight: Dp = 10.dp,
   backgroundIndicatorColor: Color = Color.LightGray.copy(alpha = 0.3f),
   indicatorPadding: Dp = 10.dp,
@@ -46,21 +47,19 @@ fun GradientProgressbar(
     Color(0xFF40c7e7)
   ),
   numberStyle: TextStyle = TextStyle(
-    fontFamily = FontFamily(Font(R.font.suite_regular, FontWeight.Bold)),
-    fontSize = 32.sp
+    fontFamily = FontFamily(Font(R.font.suite_regular, FontWeight.Bold)), fontSize = 32.sp
   ),
   animationDuration: Int = 1000,
   animationDelay: Int = 0
 ) {
   val downloadedPercentage by viewModel.downloadedPercentage.observeAsState(initial = 0f)
 
-  val animateNumber = animateFloatAsState(
-    targetValue = downloadedPercentage,
-    animationSpec = tween(
-      durationMillis = animationDuration,
-      delayMillis = animationDelay
-    )
-  )
+  val animateNumber = 50f
+//  val animateNumber = animateFloatAsState(
+//    targetValue = downloadedPercentage, animationSpec = tween(
+//      durationMillis = animationDuration, delayMillis = animationDelay
+//    ), label = "test"
+//  )
 
   LaunchedEffect(Unit) {
     viewModel.startThreadGradient()
@@ -68,9 +67,9 @@ fun GradientProgressbar(
 
   Canvas(
     modifier = Modifier
-        .fillMaxWidth()
-        .height(indicatorHeight)
-        .padding(start = indicatorPadding, end = indicatorPadding)
+      .fillMaxWidth()
+      .height(indicatorHeight)
+      .padding(start = indicatorPadding, end = indicatorPadding)
   ) {
 
     // Background indicator
@@ -84,7 +83,7 @@ fun GradientProgressbar(
 
     // Convert the downloaded percentage into progress (width of foreground indicator)
     val progress =
-      (animateNumber.value / 100) * size.width // size.width returns the width of the canvas
+      (animateNumber / 100) * size.width // size.width returns the width of the canvas
 
     // Foreground indicator
     drawLine(
@@ -102,8 +101,7 @@ fun GradientProgressbar(
   Spacer(modifier = Modifier.height(8.dp))
 
   Text(
-    text = downloadedPercentage.toInt().toString() + "%",
-    style = numberStyle
+    text = downloadedPercentage.toInt().toString() + "%", style = numberStyle
   )
 
 }

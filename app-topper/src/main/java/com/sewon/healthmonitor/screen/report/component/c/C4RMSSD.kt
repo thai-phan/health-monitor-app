@@ -1,4 +1,7 @@
 package com.sewon.healthmonitor.screen.report.component.c
 
-class C4RMSSD {
+import androidx.compose.runtime.Composable
+
+@Composable
+fun C4RMSSD() {
 }

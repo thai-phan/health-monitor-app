@@ -1,5 +1,9 @@
 package com.sewon.healthmonitor.screen.report.component.c
 
-class C8LFRatio {
+import androidx.compose.runtime.Composable
+
+
+@Composable
+fun C8LFRatio() {
 
 }
