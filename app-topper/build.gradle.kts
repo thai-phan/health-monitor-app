@@ -153,6 +153,8 @@ dependencies {
     //
     implementation("com.jakewharton.timber:timber:5.0.1")
 
+    implementation("com.squareup.leakcanary:leakcanary-android:2.12")
+
     // Test
     //
     testImplementation("junit:junit:4.13.2")
