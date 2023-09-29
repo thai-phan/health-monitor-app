@@ -1,8 +1,5 @@
 package com.sewon.healthmonitor.service.algorithm.sleep
 
-import com.sewon.healthmonitor.service.algorithm.sleep.AlgorithmRealtime.Companion.firstMeanBR
-import com.sewon.healthmonitor.service.algorithm.sleep.AlgorithmRealtime.Companion.firstMeanHR
-import com.sewon.healthmonitor.service.algorithm.sleep.AlgorithmRealtime.Companion.firstMeanHRV
 
 class AlgorithmReport {
   companion object {
@@ -22,18 +19,18 @@ class AlgorithmReport {
     var countWake = 0
 
 
-    fun processReport() {
-      if (meanHrv < firstMeanHRV * Constants.REPORT_HRV_THRESHOLD) {
+    fun processReport(meanHRV: Double, meanHR: Double, meanBR: Double) {
+      if (meanHrv < meanHRV * Constants.REPORT_HRV_THRESHOLD) {
         countREM + 1
       } else {
-        if (meanHr >= firstMeanHR * Constants.REPORT_HR_THRESHOLD) {
-          if (meanBr >= firstMeanBR * Constants.REPORT_HRUP_BR_THRESHOLD) {
+        if (meanHr >= meanHR * Constants.REPORT_HR_THRESHOLD) {
+          if (meanBr >= meanBR * Constants.REPORT_HRUP_BR_THRESHOLD) {
             countN2 += 1
           } else {
             countN3 += 1
           }
         } else {
-          if (meanBr >= firstMeanBR * Constants.REPORT_HRDOWN_BR_THRESHOLD) {
+          if (meanBr >= meanBR * Constants.REPORT_HRDOWN_BR_THRESHOLD) {
             countWake += 1
           } else {
             countN1 += 1

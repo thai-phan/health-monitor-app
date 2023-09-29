@@ -35,7 +35,7 @@ import kotlinx.coroutines.withContext
 
 
 @Composable
-fun Progressbar(
+fun ProgressBar(
   viewModel: MyViewModel = viewModel(),
   indicatorHeight: Dp = 10.dp,
   backgroundIndicatorColor: Color = Color.LightGray.copy(alpha = 0.3f),

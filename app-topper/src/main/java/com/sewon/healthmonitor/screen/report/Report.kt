@@ -18,11 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sewon.healthmonitor.screen.report.component.ThisChart
 import com.sewon.healthmonitor.screen.report.component.a.SleepChart
-import com.sewon.healthmonitor.screen.report.component.b.B1SleepScore
-import com.sewon.healthmonitor.screen.report.component.b.B2ChartEyeMovement
-import com.sewon.healthmonitor.screen.report.component.b.B3ChartRPI
+import com.sewon.healthmonitor.screen.report.component.b.SleepScore
 
 @Composable
 fun Report(
@@ -53,10 +50,8 @@ fun Report(
   ) {
     Text("수면 리포트", fontSize = 24.sp)
     SleepChart()
-    B1SleepScore()
-    B2ChartEyeMovement()
-    B3ChartRPI()
-    ThisChart()
+    SleepScore()
+
 
   }
 }

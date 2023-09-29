@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.report.component.a
+package com.sewon.healthmonitor.screen.report.component.c
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
@@ -10,9 +10,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sewon.healthmonitor.screen.report.component.a.CircularChart
+
 
 @Composable
-fun SleepChart(viewModel: SleepChartViewModel = hiltViewModel()) {
+fun SleepDetail(viewModel: SleepDetailViewModel = hiltViewModel()) {
+
 
   val yellowBrush = Brush.verticalGradient(
     listOf(Color(0xFFFAFF00), Color(0xFFFF8A00))
@@ -24,11 +27,27 @@ fun SleepChart(viewModel: SleepChartViewModel = hiltViewModel()) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   Row() {
+//    C1MeanHR.kt
     CircularChart(angle = uiState.sleepTime, modifier = Modifier.weight(1f), brush = yellowBrush)
+//    C2MeanBR.kt
     CircularChart(
       angle = uiState.sleepEfficiency, modifier = Modifier.weight(1f), brush = blueBrush
     )
+//    C3SDRP.kt
     CircularChart(angle = uiState.sleepLatency, modifier = Modifier.weight(1f), brush = yellowBrush)
+//    C4RMSSD.kt
+    CircularChart(angle = uiState.wakeupOnSleep, modifier = Modifier.weight(1f), brush = blueBrush)
+  }
+  Row() {
+//    C5RPITriangular.kt
+    CircularChart(angle = uiState.sleepTime, modifier = Modifier.weight(1f), brush = yellowBrush)
+//    C6LowFreq.kt
+    CircularChart(
+      angle = uiState.sleepEfficiency, modifier = Modifier.weight(1f), brush = blueBrush
+    )
+//    C7HighFreq.kt
+    CircularChart(angle = uiState.sleepLatency, modifier = Modifier.weight(1f), brush = yellowBrush)
+//    C8LFRatio.kt
     CircularChart(angle = uiState.wakeupOnSleep, modifier = Modifier.weight(1f), brush = blueBrush)
   }
   Button(onClick = {
@@ -36,5 +55,4 @@ fun SleepChart(viewModel: SleepChartViewModel = hiltViewModel()) {
   }) {
     Text("Load data")
   }
-
 }

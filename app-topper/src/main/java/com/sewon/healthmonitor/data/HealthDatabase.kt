@@ -7,12 +7,12 @@ import com.sewon.healthmonitor.data.source.local.dao.LocalSensorDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalSessionDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalUserDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalSettingDao
-import com.sewon.healthmonitor.data.source.local.entity.converter.DateConverter
+import com.sewon.healthmonitor.data.source.local.converter.DateConverter
 import com.sewon.healthmonitor.data.source.local.entity.LocalSensor
 import com.sewon.healthmonitor.data.source.local.entity.LocalSession
 import com.sewon.healthmonitor.data.source.local.entity.LocalUser
 import com.sewon.healthmonitor.data.source.local.entity.LocalSetting
-import com.sewon.healthmonitor.data.source.local.entity.converter.TimeConverter
+import com.sewon.healthmonitor.data.source.local.converter.TimeConverter
 
 
 @Database(
