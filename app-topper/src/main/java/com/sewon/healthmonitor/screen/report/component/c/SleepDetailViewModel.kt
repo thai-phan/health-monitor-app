@@ -2,6 +2,7 @@ package com.sewon.healthmonitor.screen.report.component.c
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sewon.healthmonitor.data.repository.repointerface.ISensorRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
 import com.sewon.healthmonitor.data.source.local.entity.LocalSession
 import com.sewon.healthmonitor.service.algorithm.sleep.AlgorithmReport
@@ -26,7 +27,9 @@ data class UiState(
 @HiltViewModel
 class SleepDetailViewModel @Inject constructor(
   private val sessionRepository: ISessionRepository,
-) : ViewModel() {
+  private val sensorRepository: ISensorRepository,
+
+  ) : ViewModel() {
 
   private val _uiState = MutableStateFlow(UiState())
   val uiState: StateFlow<UiState> = _uiState.asStateFlow()
@@ -42,14 +45,23 @@ class SleepDetailViewModel @Inject constructor(
   }
 
   fun loadData() {
-    getSleepScore()
-    getSleepStage()
-    getSleepRPI()
+    getMeanHR()
+//    getMeanBR()
+//    getSDRP()
+//    getRMSSD()
+//    getRPITriangular()
+//    getLowFrequence()
+//    getHighFrequence()
+//    getLFRatio()
   }
 
 
-  fun getSleepScore() = viewModelScope.launch {
+  fun getMeanHR() = viewModelScope.launch {
 //    TODO: Get sleep score by 5 day
+
+    var aaa = sensorRepository.getDataFromSession(1)
+
+
     val session: LocalSession = sessionRepository.getSessionById(1)
     val startTime: LocalTime = session.startTime
     val endTime: LocalTime = session.endTime
@@ -60,18 +72,17 @@ class SleepDetailViewModel @Inject constructor(
     }
   }
 
-  fun getSleepStage() = viewModelScope.launch {
+  fun getMeanBR() = viewModelScope.launch {
     //    TODO: query all data -> Sleep Stage
     val session: LocalSession = sessionRepository.getSessionById(1)
-    AlgorithmReport.processReport(session.meanHRV, session.meanHR, session.meanBR)
+    AlgorithmReport.processReport(session.refHRV, session.refHR, session.refBR)
     val sleepEfficiency = session.rating.toFloat()
     _uiState.update {
       it.copy(sleepEfficiency = sleepEfficiency)
     }
   }
 
-
-  fun getSleepRPI() = viewModelScope.launch {
+  fun getSDRP() = viewModelScope.launch {
 //    TODO: query all data -> Sleep RPI
     val sleepLatency = 0.0f
 
@@ -80,5 +91,49 @@ class SleepDetailViewModel @Inject constructor(
     }
   }
 
+  fun getRMSSD() = viewModelScope.launch {
+//    TODO: query all data -> Sleep RPI
+    val sleepLatency = 0.0f
+
+    _uiState.update {
+      it.copy(sleepLatency = sleepLatency)
+    }
+  }
+
+  fun getRPITriangular() = viewModelScope.launch {
+//    TODO: query all data -> Sleep RPI
+    val sleepLatency = 0.0f
+
+    _uiState.update {
+      it.copy(sleepLatency = sleepLatency)
+    }
+  }
+
+  fun getLowFrequence() = viewModelScope.launch {
+//    TODO: query all data -> Sleep RPI
+    val sleepLatency = 0.0f
+
+    _uiState.update {
+      it.copy(sleepLatency = sleepLatency)
+    }
+  }
+
+  fun getHighFrequence() = viewModelScope.launch {
+//    TODO: query all data -> Sleep RPI
+    val sleepLatency = 0.0f
+
+    _uiState.update {
+      it.copy(sleepLatency = sleepLatency)
+    }
+  }
+
+  fun getLFRatio() = viewModelScope.launch {
+//    TODO: query all data -> Sleep RPI
+    val sleepLatency = 0.0f
+
+    _uiState.update {
+      it.copy(sleepLatency = sleepLatency)
+    }
+  }
 
 }

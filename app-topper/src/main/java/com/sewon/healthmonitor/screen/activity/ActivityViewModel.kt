@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.api.HttpService
 import com.sewon.healthmonitor.api.ServerService
-import com.sewon.healthmonitor.data.model.Session
 import com.sewon.healthmonitor.data.repository.repointerface.ISensorRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
@@ -13,11 +12,9 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.time.LocalTime
 import javax.inject.Inject
 
 
@@ -55,10 +52,10 @@ class ActivityViewModel @Inject constructor(
 
   fun getToppers() = viewModelScope.launch {
 
-    var aaa = sensorRepository.getTopper()
+    var aaa = sensorRepository.getDataFromSession(1)
 
     _uiState.update {
-      it.copy(status2 = aaa.first().get(0).br.toString())
+      it.copy(status2 = aaa[0].br.toString())
     }
   }
 
@@ -67,7 +64,7 @@ class ActivityViewModel @Inject constructor(
     var bbb = sensorRepository.getCountTopper()
 
     _uiState.update {
-      it.copy(status3 = bbb.first().toString())
+      it.copy(status3 = bbb.toString())
     }
   }
 

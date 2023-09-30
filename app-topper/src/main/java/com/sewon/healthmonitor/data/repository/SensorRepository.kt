@@ -7,7 +7,6 @@ import com.sewon.healthmonitor.data.source.local.entity.LocalSensor
 import com.sewon.healthmonitor.data.repository.repointerface.ISensorRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SensorRepository @Inject constructor(
@@ -17,13 +16,13 @@ class SensorRepository @Inject constructor(
 ) : ISensorRepository {
 
 
-  override fun getTopper(): Flow<List<LocalSensor>> {
-    return LocalSensorDao.getAllTopper()
+  override fun getDataFromSession(sessionId: Int): List<LocalSensor> {
+    return LocalSensorDao.queryDataFromSession(sessionId)
   }
 
 
-  override fun getCountTopper(): Flow<Int> {
-    return LocalSensorDao.countTopper()
+  override fun getCountTopper(): Int {
+    return LocalSensorDao.queryCountData()
   }
 //     Count number record
 

@@ -63,7 +63,7 @@ class SleepSummaryViewModel @Inject constructor(
   fun getSleepStage() = viewModelScope.launch {
     //    TODO: query all data -> Sleep Stage
     val session: LocalSession = sessionRepository.getSessionById(1)
-    AlgorithmReport.processReport(session.meanHRV, session.meanHR, session.meanBR)
+    AlgorithmReport.processReport(session.refHRV, session.refHR, session.refBR)
     val sleepEfficiency = session.rating.toFloat()
     _uiState.update {
       it.copy(sleepEfficiency = sleepEfficiency)

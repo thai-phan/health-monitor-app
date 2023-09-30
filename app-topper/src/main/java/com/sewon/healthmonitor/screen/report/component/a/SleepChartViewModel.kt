@@ -36,7 +36,12 @@ class SleepChartViewModel @Inject constructor(
     viewModelScope.launch {
       if (sessionRepository.countSession().first() == 0) {
         val curTime = LocalTime.now()
-        val session = Session(50, 10, curTime, curTime, curTime.plusHours(3))
+        val session = Session(
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+          50, 10,
+          curTime, curTime, curTime.plusHours(3)
+        )
         sessionRepository.addSession(session)
       }
     }

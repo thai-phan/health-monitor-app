@@ -6,9 +6,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface ISensorRepository {
 
-  fun getTopper(): Flow<List<LocalSensor>>
 
-  fun getCountTopper(): Flow<Int>
+  fun getDataFromSession(sessionId: Int): List<LocalSensor>
+
+  fun getCountTopper(): Int
 
   suspend fun createTopper(localSensor: LocalSensor): String
 }

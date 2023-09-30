@@ -6,15 +6,15 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Upsert
 import com.sewon.healthmonitor.data.source.local.entity.LocalSensor
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LocalSensorDao {
-  @Query("SELECT * FROM sensor")
-  fun getAllTopper(): Flow<List<LocalSensor>>
+
+  @Query("SELECT * FROM sensor where session_id = :sessionId")
+  fun queryDataFromSession(sessionId: Int): List<LocalSensor>
 
   @Query("SELECT count(br) FROM sensor")
-  fun countTopper(): Flow<Int>
+  fun queryCountData(): Int
 
 
   @Insert
