@@ -18,11 +18,16 @@ import javax.inject.Inject
 
 
 data class UiState(
-  val sleepTime: Float = 0.0f,
-  val sleepEfficiency: Float = 0.0f,
-  val sleepLatency: Float = 0.0f,
-  val wakeupOnSleep: Float = 0.0f,
-)
+  val meanHR: Float = 0.0f,
+  val meanBR: Float = 0.0f,
+  val SDRP: Float = 0.0f,
+  val RMSSD: Float = 0.0f,
+  val RPITriangular: Float = 0.0f,
+  val lowFreq: Float = 0.0f,
+  val highFreq: Float = 0.0f,
+  val LfHfRatio: Float = 0.0f,
+
+  )
 
 @HiltViewModel
 class SleepDetailViewModel @Inject constructor(
@@ -58,18 +63,15 @@ class SleepDetailViewModel @Inject constructor(
 
   fun getMeanHR() = viewModelScope.launch {
 //    TODO: Get sleep score by 5 day
-
-    var aaa = sensorRepository.getDataFromSession(1)
-
-
     val session: LocalSession = sessionRepository.getSessionById(1)
-    val startTime: LocalTime = session.startTime
-    val endTime: LocalTime = session.endTime
+    if (session.meanHR == 0.0) {
 
-    val sleepTime = startTime.until(endTime, ChronoUnit.HOURS).toFloat()
-    _uiState.update {
-      it.copy(sleepTime = sleepTime)
     }
+
+//    val sleepTime = startTime.until(endTime, ChronoUnit.HOURS).toFloat()
+//    _uiState.update {
+//      it.copy(meanHR = sleepTime)
+//    }
   }
 
   fun getMeanBR() = viewModelScope.launch {
@@ -78,7 +80,7 @@ class SleepDetailViewModel @Inject constructor(
     AlgorithmReport.processReport(session.refHRV, session.refHR, session.refBR)
     val sleepEfficiency = session.rating.toFloat()
     _uiState.update {
-      it.copy(sleepEfficiency = sleepEfficiency)
+      it.copy(meanBR = sleepEfficiency)
     }
   }
 
@@ -87,7 +89,7 @@ class SleepDetailViewModel @Inject constructor(
     val sleepLatency = 0.0f
 
     _uiState.update {
-      it.copy(sleepLatency = sleepLatency)
+      it.copy(SDRP = sleepLatency)
     }
   }
 
@@ -96,7 +98,7 @@ class SleepDetailViewModel @Inject constructor(
     val sleepLatency = 0.0f
 
     _uiState.update {
-      it.copy(sleepLatency = sleepLatency)
+      it.copy(RMSSD = sleepLatency)
     }
   }
 
@@ -105,7 +107,7 @@ class SleepDetailViewModel @Inject constructor(
     val sleepLatency = 0.0f
 
     _uiState.update {
-      it.copy(sleepLatency = sleepLatency)
+      it.copy(RPITriangular = sleepLatency)
     }
   }
 
@@ -114,7 +116,7 @@ class SleepDetailViewModel @Inject constructor(
     val sleepLatency = 0.0f
 
     _uiState.update {
-      it.copy(sleepLatency = sleepLatency)
+      it.copy(lowFreq = sleepLatency)
     }
   }
 
@@ -123,7 +125,7 @@ class SleepDetailViewModel @Inject constructor(
     val sleepLatency = 0.0f
 
     _uiState.update {
-      it.copy(sleepLatency = sleepLatency)
+      it.copy(highFreq = sleepLatency)
     }
   }
 
@@ -132,7 +134,7 @@ class SleepDetailViewModel @Inject constructor(
     val sleepLatency = 0.0f
 
     _uiState.update {
-      it.copy(sleepLatency = sleepLatency)
+      it.copy(LfHfRatio = sleepLatency)
     }
   }
 

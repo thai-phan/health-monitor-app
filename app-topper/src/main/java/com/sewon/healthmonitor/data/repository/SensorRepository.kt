@@ -16,18 +16,18 @@ class SensorRepository @Inject constructor(
 ) : ISensorRepository {
 
 
-  override fun getDataFromSession(sessionId: Int): List<LocalSensor> {
-    return LocalSensorDao.queryDataFromSession(sessionId)
+  override fun getAllDataFromSession(sessionId: Int): List<LocalSensor> {
+    return LocalSensorDao.queryAllDataFromSession(sessionId)
   }
 
 
-  override fun getCountTopper(): Int {
+  override fun getDataCount(): Int {
     return LocalSensorDao.queryCountData()
   }
 //     Count number record
 
 
-  override suspend fun createTopper(localSensor: LocalSensor): String {
+  override suspend fun addSensorData(localSensor: LocalSensor): String {
     var aaa = LocalSensorDao.insert(localSensor)
     return "true"
   }

@@ -11,7 +11,7 @@ import com.sewon.healthmonitor.data.source.local.entity.LocalSensor
 interface LocalSensorDao {
 
   @Query("SELECT * FROM sensor where session_id = :sessionId")
-  fun queryDataFromSession(sessionId: Int): List<LocalSensor>
+  fun queryAllDataFromSession(sessionId: Int): List<LocalSensor>
 
   @Query("SELECT count(br) FROM sensor")
   fun queryCountData(): Int

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sewon.healthmonitor.MainActivity
 import com.sewon.healthmonitor.screen.report.component.a.SleepChart
 import com.sewon.healthmonitor.screen.report.component.b.SleepScore
 
@@ -39,6 +41,10 @@ fun Report(
     listOf(Color(0xFF03DAC5), Color(0xFF3E4F9D))
   )
 
+
+  fun buttonTest() {
+    MainActivity.bleHandleService.loadData()
+  }
   Column(
     modifier = modifier
       .fillMaxSize()
@@ -49,6 +55,9 @@ fun Report(
 //    verticalArrangement = Arrangement.spacedBy(20.dp)
   ) {
     Text("수면 리포트", fontSize = 24.sp)
+    Button(onClick = { buttonTest() }) {
+      Text("Test")
+    }
     SleepChart()
     SleepScore()
 

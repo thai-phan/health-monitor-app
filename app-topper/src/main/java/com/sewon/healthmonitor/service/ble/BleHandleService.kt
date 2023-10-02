@@ -24,6 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.IOException
 import java.util.ArrayDeque
 import javax.inject.Inject
@@ -41,7 +42,7 @@ class BleHandleService : Service(), SerialListener {
 
 
   @Inject
-  lateinit var radarRepository: ISensorRepository
+  lateinit var sensorRepository: ISensorRepository
 
 
   inner class SerialBinder : Binder() {
@@ -177,7 +178,15 @@ class BleHandleService : Service(), SerialListener {
   fun updateDatabase(sensorData: SensorData) {
     scope.launch {
       val localSensor = sensorData.toSensorModel().toLocal()
-      radarRepository.createTopper(localSensor)
+      sensorRepository.addSensorData(localSensor)
+    }
+  }
+
+
+  fun loadData() {
+    scope.launch {
+      var allData = sensorRepository.getAllDataFromSession(1)
+      Timber.d(allData.size.toString())
     }
   }
 

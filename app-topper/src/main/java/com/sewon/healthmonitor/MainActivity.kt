@@ -8,11 +8,15 @@ import android.content.ServiceConnection
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.os.StrictMode.VmPolicy
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
 import com.sewon.healthmonitor.common.RootCompose
+import com.sewon.healthmonitor.service.algorithm.DataService
 import com.sewon.healthmonitor.service.ble.BleDataListener
 import com.sewon.healthmonitor.service.ble.BleHandleService
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +30,7 @@ class MainActivity : ComponentActivity() {
     lateinit var bleHandleService: BleHandleService
     lateinit var alarmManager: AlarmManager
     lateinit var alarmPendingIntent: PendingIntent
-
+    lateinit var dataService: DataService
 //    lateinit var mSensorManager: SensorManager
 //    lateinit var mLightSensor: Sensor
 //    lateinit var sensorListener: LightSensorListener
@@ -37,9 +41,25 @@ class MainActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
-    actionBar?.hide();
+    StrictMode.setThreadPolicy(
+      ThreadPolicy.Builder()
+        .detectDiskReads()
+        .detectDiskWrites()
+        .detectNetwork() // or .detectAll() for all detectable problems
+        .penaltyLog()
+        .build()
+    )
+    StrictMode.setVmPolicy(
+      VmPolicy.Builder()
+        .detectLeakedSqlLiteObjects()
+        .detectLeakedClosableObjects()
+        .penaltyLog()
+        .penaltyDeath()
+        .build()
+    )
     super.onCreate(savedInstanceState)
 
+    actionBar?.hide()
 
 //    mSensorManager = getSystemService(SENSOR_SERVICE) as SensorManager;
 //    mLightSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)!!;
@@ -88,14 +108,11 @@ class MainActivity : ComponentActivity() {
       Timber.tag("Timber").d("onServiceConnected")
       bleHandleService = (service as BleHandleService.SerialBinder).service
       bleHandleService.attach(bleDataListener)
-//      val myBinder = service
-//      TODO mServiceBound = true
     }
   }
 
   override fun onPause() {
 //    mSensorManager.unregisterListener(sensorListener)
-
     super.onPause()
   }
 

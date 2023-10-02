@@ -149,7 +149,7 @@ dependencies {
   //
   implementation(libs.timber)
 
-  implementation(libs.leakcanary.android)
+//  implementation(libs.leakcanary.android)
 
   // Test
   //

@@ -49,6 +49,7 @@
 
     <service android:name=".service.ble.BleHandleService" />
     <service android:name=".service.alarm.AlarmService" />
+    <!--    <service android:name=".service.algorithm.DataService" />-->
 
   </application>
 </manifest>

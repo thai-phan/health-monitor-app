@@ -27,28 +27,24 @@ fun SleepDetail(viewModel: SleepDetailViewModel = hiltViewModel()) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   Row() {
-//    C1MeanHR.kt
-    CircularChart(angle = uiState.sleepTime, modifier = Modifier.weight(1f), brush = yellowBrush)
-//    C2MeanBR.kt
+    CircularChart(angle = uiState.meanHR, modifier = Modifier.weight(1f), brush = yellowBrush)
     CircularChart(
-      angle = uiState.sleepEfficiency, modifier = Modifier.weight(1f), brush = blueBrush
+      angle = uiState.meanBR, modifier = Modifier.weight(1f), brush = blueBrush
     )
-//    C3SDRP.kt
-    CircularChart(angle = uiState.sleepLatency, modifier = Modifier.weight(1f), brush = yellowBrush)
-//    C4RMSSD.kt
-    CircularChart(angle = uiState.wakeupOnSleep, modifier = Modifier.weight(1f), brush = blueBrush)
+    CircularChart(angle = uiState.SDRP, modifier = Modifier.weight(1f), brush = yellowBrush)
+    CircularChart(angle = uiState.RMSSD, modifier = Modifier.weight(1f), brush = blueBrush)
   }
   Row() {
-//    C5RPITriangular.kt
-    CircularChart(angle = uiState.sleepTime, modifier = Modifier.weight(1f), brush = yellowBrush)
-//    C6LowFreq.kt
     CircularChart(
-      angle = uiState.sleepEfficiency, modifier = Modifier.weight(1f), brush = blueBrush
+      angle = uiState.RPITriangular,
+      modifier = Modifier.weight(1f),
+      brush = yellowBrush
     )
-//    C7HighFreq.kt
-    CircularChart(angle = uiState.sleepLatency, modifier = Modifier.weight(1f), brush = yellowBrush)
-//    C8LFRatio.kt
-    CircularChart(angle = uiState.wakeupOnSleep, modifier = Modifier.weight(1f), brush = blueBrush)
+    CircularChart(
+      angle = uiState.lowFreq, modifier = Modifier.weight(1f), brush = blueBrush
+    )
+    CircularChart(angle = uiState.highFreq, modifier = Modifier.weight(1f), brush = yellowBrush)
+    CircularChart(angle = uiState.LfHfRatio, modifier = Modifier.weight(1f), brush = blueBrush)
   }
   Button(onClick = {
     viewModel.loadData()

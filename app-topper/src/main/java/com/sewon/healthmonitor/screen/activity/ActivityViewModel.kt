@@ -52,16 +52,16 @@ class ActivityViewModel @Inject constructor(
 
   fun getToppers() = viewModelScope.launch {
 
-    var aaa = sensorRepository.getDataFromSession(1)
-
-    _uiState.update {
-      it.copy(status2 = aaa[0].br.toString())
-    }
+//    var aaa = sensorRepository.getAllDataFromSession(1)
+//
+//    _uiState.update {
+//      it.copy(status2 = aaa[0].br.toString())
+//    }
   }
 
   fun getCount() = viewModelScope.launch {
 
-    var bbb = sensorRepository.getCountTopper()
+    var bbb = sensorRepository.getDataCount()
 
     _uiState.update {
       it.copy(status3 = bbb.toString())
