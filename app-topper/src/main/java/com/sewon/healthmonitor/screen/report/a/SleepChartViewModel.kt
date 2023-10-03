@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.report.component.a
+package com.sewon.healthmonitor.screen.report.a
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +17,7 @@ import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
 
-data class UiState(
+data class UiStateA(
   val sleepTime: Float = 0.0f,
   val sleepEfficiency: Float = 0.0f,
   val sleepLatency: Float = 0.0f,
@@ -29,8 +29,8 @@ class SleepChartViewModel @Inject constructor(
   private val sessionRepository: ISessionRepository,
 ) : ViewModel() {
 
-  private val _uiState = MutableStateFlow(UiState())
-  val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+  private val _uiStateA = MutableStateFlow(UiStateA())
+  val uiStateA: StateFlow<UiStateA> = _uiStateA.asStateFlow()
 
   private fun initFirstSession() {
     viewModelScope.launch {
@@ -64,7 +64,7 @@ class SleepChartViewModel @Inject constructor(
     val wakeUpTime: LocalTime = session.endTime
 
     val sleepTime = startTime.until(wakeUpTime, ChronoUnit.HOURS).toFloat()
-    _uiState.update {
+    _uiStateA.update {
       it.copy(sleepTime = sleepTime)
     }
   }
@@ -73,7 +73,7 @@ class SleepChartViewModel @Inject constructor(
     val session: LocalSession = sessionRepository.getSessionById(1)
     val sleepEfficiency = session.rating.toFloat()
 
-    _uiState.update {
+    _uiStateA.update {
       it.copy(sleepEfficiency = sleepEfficiency)
     }
   }
@@ -85,7 +85,7 @@ class SleepChartViewModel @Inject constructor(
     val sleepTime: LocalTime = session.sleepTime
     val sleepLatency = startTime.until(sleepTime, ChronoUnit.MINUTES).toFloat()
 
-    _uiState.update {
+    _uiStateA.update {
       it.copy(sleepLatency = sleepLatency)
     }
   }
@@ -93,7 +93,7 @@ class SleepChartViewModel @Inject constructor(
   fun getWakeOnSleep() = viewModelScope.launch {
     val session: LocalSession = sessionRepository.getSessionById(1)
     val wakeupOnSleep = session.wakeUpCount.toFloat()
-    _uiState.update {
+    _uiStateA.update {
       it.copy(wakeupOnSleep = wakeupOnSleep)
     }
   }

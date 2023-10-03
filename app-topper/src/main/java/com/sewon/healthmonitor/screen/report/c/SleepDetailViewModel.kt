@@ -1,23 +1,21 @@
-package com.sewon.healthmonitor.screen.report.component.c
+package com.sewon.healthmonitor.screen.report.c
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.data.repository.repointerface.ISensorRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
 import com.sewon.healthmonitor.data.source.local.entity.LocalSession
-import com.sewon.healthmonitor.service.algorithm.sleep.AlgorithmReport
+import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportAlgorithm
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalTime
-import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
 
-data class UiState(
+data class UiStateC(
   val meanHR: Float = 0.0f,
   val meanBR: Float = 0.0f,
   val SDRP: Float = 0.0f,
@@ -36,8 +34,8 @@ class SleepDetailViewModel @Inject constructor(
 
   ) : ViewModel() {
 
-  private val _uiState = MutableStateFlow(UiState())
-  val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+  private val _uiStateC = MutableStateFlow(UiStateC())
+  val uiStateC: StateFlow<UiStateC> = _uiStateC.asStateFlow()
 
   private fun initFirstSession() {
     viewModelScope.launch {
@@ -77,9 +75,9 @@ class SleepDetailViewModel @Inject constructor(
   fun getMeanBR() = viewModelScope.launch {
     //    TODO: query all data -> Sleep Stage
     val session: LocalSession = sessionRepository.getSessionById(1)
-    AlgorithmReport.processReport(session.refHRV, session.refHR, session.refBR)
+//    ReportAlgorithm.processReport(session.refHRV, session.refHR, session.refBR)
     val sleepEfficiency = session.rating.toFloat()
-    _uiState.update {
+    _uiStateC.update {
       it.copy(meanBR = sleepEfficiency)
     }
   }
@@ -88,7 +86,7 @@ class SleepDetailViewModel @Inject constructor(
 //    TODO: query all data -> Sleep RPI
     val sleepLatency = 0.0f
 
-    _uiState.update {
+    _uiStateC.update {
       it.copy(SDRP = sleepLatency)
     }
   }
@@ -97,7 +95,7 @@ class SleepDetailViewModel @Inject constructor(
 //    TODO: query all data -> Sleep RPI
     val sleepLatency = 0.0f
 
-    _uiState.update {
+    _uiStateC.update {
       it.copy(RMSSD = sleepLatency)
     }
   }
@@ -106,7 +104,7 @@ class SleepDetailViewModel @Inject constructor(
 //    TODO: query all data -> Sleep RPI
     val sleepLatency = 0.0f
 
-    _uiState.update {
+    _uiStateC.update {
       it.copy(RPITriangular = sleepLatency)
     }
   }
@@ -115,7 +113,7 @@ class SleepDetailViewModel @Inject constructor(
 //    TODO: query all data -> Sleep RPI
     val sleepLatency = 0.0f
 
-    _uiState.update {
+    _uiStateC.update {
       it.copy(lowFreq = sleepLatency)
     }
   }
@@ -124,7 +122,7 @@ class SleepDetailViewModel @Inject constructor(
 //    TODO: query all data -> Sleep RPI
     val sleepLatency = 0.0f
 
-    _uiState.update {
+    _uiStateC.update {
       it.copy(highFreq = sleepLatency)
     }
   }
@@ -133,7 +131,7 @@ class SleepDetailViewModel @Inject constructor(
 //    TODO: query all data -> Sleep RPI
     val sleepLatency = 0.0f
 
-    _uiState.update {
+    _uiStateC.update {
       it.copy(LfHfRatio = sleepLatency)
     }
   }

@@ -1,26 +1,24 @@
-package com.sewon.healthmonitor.screen.report.component.b
+package com.sewon.healthmonitor.screen.report.b
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
 import com.sewon.healthmonitor.data.source.local.entity.LocalSession
-import com.sewon.healthmonitor.service.algorithm.sleep.AlgorithmReport
+import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportData
+import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportAlgorithm
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalTime
-import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
 
-data class UiState(
-  val sleepTime: Float = 0.0f,
-  val sleepEfficiency: Float = 0.0f,
-  val sleepLatency: Float = 0.0f,
-  val wakeupOnSleep: Float = 0.0f,
+data class UiStateB(
+  val sleepRating: Float = 0.0f,
+  val sleepStage: List<Float> = listOf(),
+  val sleepRPI: List<Float> = listOf(),
 )
 
 @HiltViewModel
@@ -28,8 +26,8 @@ class SleepScoreViewModel @Inject constructor(
   private val sessionRepository: ISessionRepository,
 ) : ViewModel() {
 
-  private val _uiState = MutableStateFlow(UiState())
-  val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+  private val _uiStateB = MutableStateFlow(UiStateB())
+  val uiStateB: StateFlow<UiStateB> = _uiStateB.asStateFlow()
 
   private fun initFirstSession() {
     viewModelScope.launch {
@@ -49,34 +47,33 @@ class SleepScoreViewModel @Inject constructor(
 
 
   fun getSleepScore() = viewModelScope.launch {
-//    TODO: Get sleep score by 5 day
     val session: LocalSession = sessionRepository.getSessionById(1)
-    val startTime: LocalTime = session.startTime
-    val endTime: LocalTime = session.endTime
-
-    val sleepTime = startTime.until(endTime, ChronoUnit.HOURS).toFloat()
-    _uiState.update {
-      it.copy(sleepTime = sleepTime)
+    _uiStateB.update {
+      it.copy(sleepRating = session.rating.toFloat())
     }
   }
 
   fun getSleepStage() = viewModelScope.launch {
     //    TODO: query all data -> Sleep Stage
     val session: LocalSession = sessionRepository.getSessionById(1)
-    AlgorithmReport.processReport(session.refHRV, session.refHR, session.refBR)
-    val sleepEfficiency = session.rating.toFloat()
-    _uiState.update {
-      it.copy(sleepEfficiency = sleepEfficiency)
+
+    ReportAlgorithm.refHRV = session.refHRV
+    ReportAlgorithm.refHR = session.refHR
+    ReportAlgorithm.refBR = session.refBR
+
+    val sleepStage = ReportAlgorithm.processByTime()
+    _uiStateB.update {
+      it.copy(sleepStage = sleepStage)
     }
   }
 
 
   fun getSleepRPI() = viewModelScope.launch {
 //    TODO: query all data -> Sleep RPI
-    val sleepLatency = 0.0f
+    val sleepRPI = listOf<Float>()
 
-    _uiState.update {
-      it.copy(sleepLatency = sleepLatency)
+    _uiStateB.update {
+      it.copy(sleepRPI = sleepRPI)
     }
   }
 

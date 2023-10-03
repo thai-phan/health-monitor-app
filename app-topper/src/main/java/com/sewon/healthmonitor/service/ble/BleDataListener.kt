@@ -5,7 +5,7 @@ import android.text.SpannableStringBuilder
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import com.sewon.healthmonitor.MainActivity
-import com.sewon.healthmonitor.service.algorithm.sleep.DataProcessing
+import com.sewon.healthmonitor.service.algorithm.sleep.sensor.DataProcessing
 
 
 import timber.log.Timber

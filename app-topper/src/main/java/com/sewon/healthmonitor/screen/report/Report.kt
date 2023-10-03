@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.healthmonitor.MainActivity
-import com.sewon.healthmonitor.screen.report.component.a.SleepChart
-import com.sewon.healthmonitor.screen.report.component.b.SleepScore
+import com.sewon.healthmonitor.screen.report.a.SleepChart
+import com.sewon.healthmonitor.screen.report.b.SleepScore
 
 @Composable
 fun Report(
@@ -45,6 +45,8 @@ fun Report(
   fun buttonTest() {
     MainActivity.bleHandleService.loadData()
   }
+
+
   Column(
     modifier = modifier
       .fillMaxSize()
@@ -56,7 +58,7 @@ fun Report(
   ) {
     Text("수면 리포트", fontSize = 24.sp)
     Button(onClick = { buttonTest() }) {
-      Text("Test")
+      Text("Load data")
     }
     SleepChart()
     SleepScore()

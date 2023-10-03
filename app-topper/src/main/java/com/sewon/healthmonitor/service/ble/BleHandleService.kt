@@ -19,6 +19,7 @@ import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.service.algorithm.sleep.SensorData
 import com.sewon.healthmonitor.data.model.toLocal
 import com.sewon.healthmonitor.data.repository.repointerface.ISensorRepository
+import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -185,7 +186,10 @@ class BleHandleService : Service(), SerialListener {
 
   fun loadData() {
     scope.launch {
-      var allData = sensorRepository.getAllDataFromSession(1)
+      val allData = sensorRepository.getAllDataFromSession(1)
+
+      ReportData.importData(allData)
+
       Timber.d(allData.size.toString())
     }
   }

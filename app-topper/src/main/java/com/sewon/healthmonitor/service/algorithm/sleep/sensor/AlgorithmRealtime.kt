@@ -1,4 +1,7 @@
-package com.sewon.healthmonitor.service.algorithm.sleep
+package com.sewon.healthmonitor.service.algorithm.sleep.sensor
+
+import com.sewon.healthmonitor.service.algorithm.sleep.AlgorithmConstants
+import com.sewon.healthmonitor.service.algorithm.sleep.SensorData
 
 
 class AlgorithmRealtime {
@@ -34,9 +37,9 @@ class AlgorithmRealtime {
       }
 
       if (curlux < lux) {
-        if (sensorData.HRV > firstMeanHRV * Constants.REALTIME_HRV_THRESHOLD) {
-          if (sensorData.HR < firstMeanHR * Constants.REALTIME_HR_THRESHOLD) {
-            if (sensorData.BR < firstMeanBR * Constants.REALTIME_BR_THRESHOLD) {
+        if (sensorData.HRV > firstMeanHRV * AlgorithmConstants.REALTIME_HRV_THRESHOLD) {
+          if (sensorData.HR < firstMeanHR * AlgorithmConstants.REALTIME_HR_THRESHOLD) {
+            if (sensorData.BR < firstMeanBR * AlgorithmConstants.REALTIME_BR_THRESHOLD) {
               sleepStart(sensorData)
             }
           }

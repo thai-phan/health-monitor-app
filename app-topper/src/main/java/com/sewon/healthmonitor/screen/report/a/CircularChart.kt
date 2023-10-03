@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.report.component.a
+package com.sewon.healthmonitor.screen.report.a
 
 
 import androidx.compose.foundation.Canvas
@@ -71,6 +71,7 @@ fun CircularChart(
       blendMode = BlendMode.SrcOver
     )
   }
-  Text("aaaa")
+//  TODO:
+//  Text("aaaa")
 
 }

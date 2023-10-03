@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.report.component.a
+package com.sewon.healthmonitor.screen.report.a
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
@@ -21,7 +21,7 @@ fun SleepChart(viewModel: SleepChartViewModel = hiltViewModel()) {
     listOf(Color(0xFF03DAC5), Color(0xFF3E4F9D))
   )
 
-  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val uiState by viewModel.uiStateA.collectAsStateWithLifecycle()
 
   Row() {
     CircularChart(angle = uiState.sleepTime, modifier = Modifier.weight(1f), brush = yellowBrush)
@@ -34,7 +34,7 @@ fun SleepChart(viewModel: SleepChartViewModel = hiltViewModel()) {
   Button(onClick = {
     viewModel.loadData()
   }) {
-    Text("Load data")
+    Text("Load A")
   }
 
 }

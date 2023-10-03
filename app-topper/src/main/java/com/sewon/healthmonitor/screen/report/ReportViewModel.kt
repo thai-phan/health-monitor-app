@@ -36,8 +36,6 @@ class ReportViewModel @Inject constructor(
   val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
 
-
-
 }
 
 

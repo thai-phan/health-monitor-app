@@ -91,7 +91,7 @@ internal fun FindDevicesScreen(
     )
     // Stop scanning after a while
     LaunchedEffect(true) {
-      delay(15000)
+      delay(3000)
       scanning = false
     }
   }

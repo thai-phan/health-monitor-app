@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.report.component.c
+package com.sewon.healthmonitor.screen.report.c
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sewon.healthmonitor.screen.report.component.a.CircularChart
+import com.sewon.healthmonitor.screen.report.a.CircularChart
 
 
 @Composable
@@ -24,7 +24,7 @@ fun SleepDetail(viewModel: SleepDetailViewModel = hiltViewModel()) {
     listOf(Color(0xFF03DAC5), Color(0xFF3E4F9D))
   )
 
-  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val uiState by viewModel.uiStateC.collectAsStateWithLifecycle()
 
   Row() {
     CircularChart(angle = uiState.meanHR, modifier = Modifier.weight(1f), brush = yellowBrush)

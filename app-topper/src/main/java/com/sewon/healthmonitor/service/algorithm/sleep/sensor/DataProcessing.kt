@@ -1,12 +1,13 @@
-package com.sewon.healthmonitor.service.algorithm.sleep
+package com.sewon.healthmonitor.service.algorithm.sleep.sensor
 
 import androidx.compose.runtime.mutableStateOf
 import com.sewon.healthmonitor.MainActivity
+import com.sewon.healthmonitor.service.algorithm.sleep.SensorData
 
 class DataProcessing {
 
   companion object {
-    val isWrongDeviceType = mutableStateOf(false)
+    private val isWrongDeviceType = mutableStateOf(false)
 
     private val regex = Regex("[01234]")
 
@@ -27,7 +28,7 @@ class DataProcessing {
 
 //      AlgorithmRealtime.inputData(sensorData)
 
-      if (deplayCount == 5) {
+      if (deplayCount == 1) {
         MainActivity.bleHandleService.updateDatabase(sensorData)
         deplayCount = 0
       }
