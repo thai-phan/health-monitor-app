@@ -8,24 +8,20 @@ class ReportAlgorithm {
     var refHRV = 0.0
     var refHR = 0.0
     var refBR = 0.0
-    
-    var countTime = 0
-    var countMax = 100
 
     fun processByTime(): List<Float> {
-      var meanHRV: Double
-      var meanHR: Double
-      var meanBR: Double
       var sumHRV = 0.0
       var sumHR = 0.0
       var sumBR = 0.0
       val stageList = mutableListOf<Float>()
+      var countTime = 0
+      val countMax = AlgorithmConstants.SLEEP_STAGE_NUMBER
 
       for (data in ReportData.allData) {
         if (countTime == countMax) {
-          meanHRV = sumHRV / countTime
-          meanHR = sumHR / countTime
-          meanBR = sumBR / countTime
+          val meanHRV = sumHRV / countTime
+          val meanHR = sumHR / countTime
+          val meanBR = sumBR / countTime
           val stage = processReport(meanHRV, meanHR, meanBR)
           stageList.add(stage.toFloat())
 

@@ -2,10 +2,9 @@ package com.sewon.healthmonitor.screen.report.d
 
 import androidx.compose.runtime.Composable
 
+
 @Composable
-fun SleepSummary() {
+fun Chart1NervousSystem() {
 
-  Chart1NervousSystem()
 
-  Chart2StressScore()
 }

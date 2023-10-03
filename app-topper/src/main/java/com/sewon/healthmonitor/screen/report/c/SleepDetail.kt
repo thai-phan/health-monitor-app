@@ -44,7 +44,7 @@ fun SleepDetail(viewModel: SleepDetailViewModel = hiltViewModel()) {
       angle = uiState.lowFreq, modifier = Modifier.weight(1f), brush = blueBrush
     )
     CircularChart(angle = uiState.highFreq, modifier = Modifier.weight(1f), brush = yellowBrush)
-    CircularChart(angle = uiState.LfHfRatio, modifier = Modifier.weight(1f), brush = blueBrush)
+    CircularChart(angle = uiState.lfHfRatio, modifier = Modifier.weight(1f), brush = blueBrush)
   }
   Button(onClick = {
     viewModel.loadData()

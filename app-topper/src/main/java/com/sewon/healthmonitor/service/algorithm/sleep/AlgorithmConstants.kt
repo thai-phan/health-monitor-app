@@ -15,4 +15,6 @@ object AlgorithmConstants {
   const val REPORT_HR_THRESHOLD = 0.9
   const val REPORT_HRUP_BR_THRESHOLD = 0.9
   const val REPORT_HRDOWN_BR_THRESHOLD = 1.2
+
+  const val SLEEP_STAGE_NUMBER = 100
 }
