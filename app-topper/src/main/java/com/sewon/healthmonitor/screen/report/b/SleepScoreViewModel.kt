@@ -45,7 +45,6 @@ class SleepScoreViewModel @Inject constructor(
     getSleepRPI()
   }
 
-
   fun getSleepScore() = viewModelScope.launch {
     val session: LocalSession = sessionRepository.getSessionById(1)
     _uiStateB.update {
@@ -67,7 +66,6 @@ class SleepScoreViewModel @Inject constructor(
     }
   }
 
-
   fun getSleepRPI() = viewModelScope.launch {
 //    TODO: (Done) query all data -> Sleep RPI
     val sleepRPI: List<Float> = ReportData.getBSleepRPI()
@@ -76,6 +74,4 @@ class SleepScoreViewModel @Inject constructor(
       it.copy(sleepRPI = sleepRPI)
     }
   }
-
-
 }

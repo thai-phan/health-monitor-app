@@ -16,7 +16,7 @@ class AlgorithmRealtime {
     var firstMeanBR = 0.0
     var countReferenceData = 0
 
-    var lux = 10
+    var lux = 1
     var curlux = 10
 
 
@@ -72,7 +72,6 @@ class AlgorithmRealtime {
     }
 
     fun callInsomnia(sensorData: SensorData) {
-
       if (sensorData.HR != 0 && sensorData.BR != 0) {
         if (sensorData.HR - firstMeanHR > 5 || firstMeanHR - sensorData.HR > 5) {
           saveDatabase(sensorData)
