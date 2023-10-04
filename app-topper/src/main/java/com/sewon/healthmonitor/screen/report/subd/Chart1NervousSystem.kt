@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.report.d
+package com.sewon.healthmonitor.screen.report.subd
 
 import androidx.compose.runtime.Composable
 

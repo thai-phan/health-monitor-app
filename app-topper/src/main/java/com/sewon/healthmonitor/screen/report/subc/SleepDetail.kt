@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.report.c
+package com.sewon.healthmonitor.screen.report.subc
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
@@ -10,12 +10,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sewon.healthmonitor.screen.report.a.CircularChart
+import com.sewon.healthmonitor.screen.report.UiState
+import com.sewon.healthmonitor.screen.report.suba.CircularChart
 
 
 @Composable
-fun SleepDetail(viewModel: SleepDetailViewModel = hiltViewModel()) {
-
+fun SleepDetail(uiState: UiState) {
 
   val yellowBrush = Brush.verticalGradient(
     listOf(Color(0xFFFAFF00), Color(0xFFFF8A00))
@@ -24,8 +24,8 @@ fun SleepDetail(viewModel: SleepDetailViewModel = hiltViewModel()) {
     listOf(Color(0xFF03DAC5), Color(0xFF3E4F9D))
   )
 
-  val uiState by viewModel.uiStateC.collectAsStateWithLifecycle()
 
+  Text("RPI Index")
   Row() {
     CircularChart(angle = uiState.meanHR, modifier = Modifier.weight(1f), brush = yellowBrush)
     CircularChart(
@@ -45,10 +45,5 @@ fun SleepDetail(viewModel: SleepDetailViewModel = hiltViewModel()) {
     )
     CircularChart(angle = uiState.highFreq, modifier = Modifier.weight(1f), brush = yellowBrush)
     CircularChart(angle = uiState.lfHfRatio, modifier = Modifier.weight(1f), brush = blueBrush)
-  }
-  Button(onClick = {
-    viewModel.loadData()
-  }) {
-    Text("Load data")
   }
 }

@@ -19,12 +19,11 @@ import androidx.navigation.navArgument
 import com.sewon.healthmonitor.common.AppDestinations
 import com.sewon.healthmonitor.common.MainDestinations
 import com.sewon.healthmonitor.common.MainTabs
-import com.sewon.healthmonitor.common.mainNavGraph
 import com.sewon.healthmonitor.data.HealthDataStore
 import com.sewon.healthmonitor.screen.activity.SleepActivity
 import com.sewon.healthmonitor.screen.device.DeviceScreen
-import com.sewon.healthmonitor.screen.report.Report
-import com.sewon.healthmonitor.screen.setting.UserSetting
+import com.sewon.healthmonitor.screen.report.ReportScreen
+import com.sewon.healthmonitor.screen.setting.SettingScreen
 import com.sewon.healthmonitor.screen.singleview.TermAgreement
 import com.sewon.healthmonitor.screen.singleview.SplashScreen
 
@@ -123,11 +122,11 @@ fun NavigationGraph(
       }
 
       composable(MainTabs.REPORT.route) { from ->
-        Report(modifier)
+        ReportScreen(modifier)
       }
 
       composable(MainTabs.USER.route) {
-        UserSetting(modifier)
+        SettingScreen(modifier)
       }
     }
 //        composable(

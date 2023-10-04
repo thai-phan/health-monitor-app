@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.report.a
+package com.sewon.healthmonitor.screen.report.suba
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
@@ -10,9 +10,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sewon.healthmonitor.screen.report.UiState
 
 @Composable
-fun SleepChart(viewModel: SleepChartViewModel = hiltViewModel()) {
+fun SleepChart(uiState: UiState) {
 
   val yellowBrush = Brush.verticalGradient(
     listOf(Color(0xFFFAFF00), Color(0xFFFF8A00))
@@ -21,7 +22,7 @@ fun SleepChart(viewModel: SleepChartViewModel = hiltViewModel()) {
     listOf(Color(0xFF03DAC5), Color(0xFF3E4F9D))
   )
 
-  val uiState by viewModel.uiStateA.collectAsStateWithLifecycle()
+
 
   Row() {
     CircularChart(angle = uiState.sleepTime, modifier = Modifier.weight(1f), brush = yellowBrush)
@@ -31,10 +32,6 @@ fun SleepChart(viewModel: SleepChartViewModel = hiltViewModel()) {
     CircularChart(angle = uiState.sleepLatency, modifier = Modifier.weight(1f), brush = yellowBrush)
     CircularChart(angle = uiState.wakeupOnSleep, modifier = Modifier.weight(1f), brush = blueBrush)
   }
-  Button(onClick = {
-    viewModel.loadData()
-  }) {
-    Text("Load A")
-  }
+
 
 }

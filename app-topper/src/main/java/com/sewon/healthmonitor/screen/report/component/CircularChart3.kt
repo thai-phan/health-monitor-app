@@ -96,8 +96,8 @@ fun DisplayLegend(color: Color, legend: String) {
   ) {
     Box(
       modifier = Modifier
-          .size(10.dp)
-          .background(color = color, shape = CircleShape)
+        .size(10.dp)
+        .background(color = color, shape = CircleShape)
     )
 
     Spacer(modifier = Modifier.width(4.dp))

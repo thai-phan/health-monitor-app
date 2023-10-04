@@ -64,6 +64,7 @@ fun SleepActivity(
   val context = LocalContext.current
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+  val log by MainActivity.bleDataListener.log
   val start = TimeRangePicker.Time(0, 0)
   val end = TimeRangePicker.Time(5, 30)
 
@@ -132,7 +133,7 @@ fun SleepActivity(
 //      }
 //    }
 
-
+    Text(log)
     Spacer(modifier = Modifier.height(10.dp))
     CircularTimePicker(startTimeState = startTime, endTimeState = endTime)
     Spacer(modifier = Modifier.height(10.dp))

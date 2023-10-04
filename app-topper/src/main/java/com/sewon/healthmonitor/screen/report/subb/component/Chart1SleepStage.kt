@@ -1,12 +1,10 @@
-package com.sewon.healthmonitor.screen.report.b
+package com.sewon.healthmonitor.screen.report.subb.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
-import com.patrykandpatrick.vico.compose.axis.vertical.startAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.line.lineChart
 import com.patrykandpatrick.vico.compose.style.ProvideChartStyle
@@ -15,10 +13,10 @@ import com.patrykandpatrick.vico.core.chart.DefaultPointConnector
 import com.patrykandpatrick.vico.core.chart.copy
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 
-@Composable
-fun Chart2SleepRPI(data: List<Float>) {
 
-  val lineChartColors = listOf(Color(0xFF00FD55))
+@Composable
+fun Chart1SleepStage(data: List<Float>) {
+  val lineChartColors = listOf(Color(0xFF287EFF))
   ProvideChartStyle(rememberChartStyle(lineChartColors)) {
     val chartEntryModel = entryModelOf(*data.map { it }.toTypedArray())
     val defaultLines = currentChartStyle.lineChart.lines
@@ -35,5 +33,4 @@ fun Chart2SleepRPI(data: List<Float>) {
       bottomAxis = rememberBottomAxis(),
     )
   }
-
 }
