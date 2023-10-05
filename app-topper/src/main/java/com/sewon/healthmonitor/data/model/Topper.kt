@@ -1,10 +1,10 @@
 package com.sewon.healthmonitor.data.model
 
-import com.sewon.healthmonitor.data.source.local.entity.LocalSensor
+import com.sewon.healthmonitor.data.source.local.entity.LocalTopper
 import java.time.LocalTime
 
 
-data class Sensor(
+data class Topper(
   val stable: Int,
   val hr: Int,
   var br: Int,
@@ -19,7 +19,7 @@ data class Sensor(
 
 // Model mapping
 // extension function
-fun Sensor.toLocal() = LocalSensor(
+fun Topper.toLocal() = LocalTopper(
   stable = stable,
   hr = hr,
   br = br,
@@ -31,9 +31,9 @@ fun Sensor.toLocal() = LocalSensor(
   sessionId = sessionId
 )
 
-fun List<Sensor>.toLocal() = map(Sensor::toLocal)
+fun List<Topper>.toLocal() = map(Topper::toLocal)
 
-fun LocalSensor.toExternal() = Sensor(
+fun LocalTopper.toExternal() = Topper(
   stable = stable,
   hr = hr,
   br = br,
@@ -45,6 +45,6 @@ fun LocalSensor.toExternal() = Sensor(
   createdAt = createdAt
 )
 
-fun List<LocalSensor>.toExternal() = map(LocalSensor::toExternal)
+fun List<LocalTopper>.toExternal() = map(LocalTopper::toExternal)
 
 

@@ -16,10 +16,11 @@ import android.os.Looper
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.service.algorithm.sleep.SensorData
+import com.sewon.healthmonitor.service.algorithm.sleep.TopperData
 import com.sewon.healthmonitor.data.model.toLocal
-import com.sewon.healthmonitor.data.repository.repointerface.ISensorRepository
-import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportData
+import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
+import com.sewon.healthmonitor.data.repository.repointerface.ITopperRepository
+import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportDataProcessing
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,8 +44,10 @@ class BleHandleService : Service(), SerialListener {
 
 
   @Inject
-  lateinit var sensorRepository: ISensorRepository
+  lateinit var topperRepository: ITopperRepository
 
+  @Inject
+  lateinit var sessionRepository: ISessionRepository
 
   inner class SerialBinder : Binder() {
     val service: BleHandleService
@@ -176,19 +179,29 @@ class BleHandleService : Service(), SerialListener {
     bleDataListener = null
   }
 
-  fun updateDatabase(sensorData: SensorData) {
+  var sessionId = 0
+
+
+  fun updateCurrentSessionRefValue(refHRV: Double, refHR: Double, refBR: Double) {
     scope.launch {
-      val localSensor = sensorData.toSensorModel().toLocal()
-      sensorRepository.addSensorData(localSensor)
+      sessionRepository.updateSessionRefValue(refHRV, refHR, refBR, sessionId)
+      Timber.tag("Timber").d("updateSessionRefValue")
+    }
+  }
+
+  fun insertNewTopperToDatabase(topperData: TopperData) {
+    scope.launch {
+      val localSensor = topperData.toTopperModel().toLocal()
+      topperRepository.insertNewTopperData(localSensor)
     }
   }
 
 
   fun loadData() {
     scope.launch {
-      val allData = sensorRepository.getAllDataFromSession(1)
+      val allData = topperRepository.getAllDataFromSession(1)
 
-      ReportData.importData(allData)
+      ReportDataProcessing.importData(allData)
 
       Timber.d(allData.size.toString())
     }

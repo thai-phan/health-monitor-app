@@ -13,7 +13,7 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
 import com.sewon.healthmonitor.common.RootCompose
-import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportData
+import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportDataProcessing
 import com.sewon.healthmonitor.service.ble.BleDataListener
 import com.sewon.healthmonitor.service.ble.BleHandleService
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
     lateinit var bleHandleService: BleHandleService
     lateinit var alarmManager: AlarmManager
     lateinit var alarmPendingIntent: PendingIntent
-    lateinit var reportData: ReportData
+    lateinit var reportDataProcessing: ReportDataProcessing
 //    lateinit var mSensorManager: SensorManager
 //    lateinit var mLightSensor: Sensor
 //    lateinit var sensorListener: LightSensorListener

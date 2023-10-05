@@ -4,17 +4,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalTime
+import java.util.Date
 
 
 //INSERT INTO session (`created_at`,`finished_at`,`session_id`) VALUES ("20:21:46.571240","20:21:46.571240", 1)
-@Entity(tableName = "session")
-data class LocalSession(
-  // TODO: Implement
+@Entity(tableName = "sleep_session")
+data class LocalSleepSession(
   @ColumnInfo(name = "ref_hrv") val refHRV: Double,
-  // TODO: Implement
   @ColumnInfo(name = "ref_hr") val refHR: Double,
-  // TODO: Implement
   @ColumnInfo(name = "ref_br") val refBR: Double,
+  @ColumnInfo(name = "is_generated_report") val isGeneratedReport: Boolean,
 
   // TODO: Implement
   @ColumnInfo(name = "mean_hr") val meanHR: Double,
@@ -35,14 +34,16 @@ data class LocalSession(
 
   // TODO: Implement
   @ColumnInfo(name = "rating") val rating: Int,
-  // TODO
+  // TODO: Implement
   @ColumnInfo(name = "wake_up_count") val wakeUpCount: Int,
   // TODO: Implement
-  @ColumnInfo(name = "start_time") val startTime: LocalTime,
+  @ColumnInfo(name = "selected_start_time") val selectedStartTime: Date,
   // TODO: Implement
-  @ColumnInfo(name = "sleep_time") val sleepTime: LocalTime,
+  @ColumnInfo(name = "actual_start_time") val actualStartTime: Date,
   // TODO: Implement
-  @ColumnInfo(name = "end_time") val endTime: LocalTime,
+  @ColumnInfo(name = "sleep_time") val sleepTime: Date,
+  // TODO: Implement
+  @ColumnInfo(name = "end_time") val endTime: Date,
 ) {
   @ColumnInfo(name = "session_id")
   @PrimaryKey(autoGenerate = true)

@@ -1,6 +1,5 @@
 package com.sewon.healthmonitor.screen.activity.component
 
-import android.content.res.Resources
 import android.view.LayoutInflater
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -9,13 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
-import timber.log.Timber
 
 
 @Composable
 fun CircularTimePicker(
   startTimeState: MutableState<TimeRangePicker.Time>,
-  endTimeState: MutableState<TimeRangePicker.Time>
+  endTimeState: MutableState<TimeRangePicker.Time>,
+  durationState: MutableState<TimeRangePicker.TimeDuration>
 ) {
   AndroidView(
     modifier = Modifier
@@ -36,7 +35,7 @@ fun CircularTimePicker(
         }
 
         override fun onDurationChange(duration: TimeRangePicker.TimeDuration) {
-          Timber.d("Duration: %s", duration.hour)
+          durationState.value = duration
         }
       })
       timePicker

@@ -43,12 +43,14 @@ fun ReportScreen(
     listOf(Color(0xFF03DAC5), Color(0xFF3E4F9D))
   )
 
-
   fun buttonTest() {
     MainActivity.bleHandleService.loadData()
 
   }
 
+  fun showData() {
+    viewModel.showData(1)
+  }
 
   Column(
     modifier = modifier
@@ -62,7 +64,7 @@ fun ReportScreen(
     Button(onClick = { buttonTest() }) {
       Text("Query data")
     }
-    Button(onClick = { viewModel.loadData() }) {
+    Button(onClick = { showData() }) {
       Text("Show Data")
     }
     Text("수면 리포트", fontSize = 24.sp)

@@ -47,11 +47,12 @@ class SettingViewModel @Inject constructor(
 
       if (settingRepository.countSetting() == 0) {
         val curDate = Calendar.getInstance().time
-        val aaa = LocalTime.now()
+        Timber.tag("Timber").d(curDate.toString())
+        val time = LocalTime.now()
         val setting = Setting(
           userId = 0,
-          alarmTime = aaa,
-          bedTime = aaa,
+          alarmTime = time,
+          bedTime = time,
           alarmOn = false,
           alarmSetting = "123",
           bedOn = false,
@@ -84,7 +85,7 @@ class SettingViewModel @Inject constructor(
   }
 
   override fun onCleared() {
-    Timber.d("onCleared")
+    Timber.tag("Timber").d("onCleared")
 //        coroutineScope.cancel()
   }
 

@@ -1,13 +1,14 @@
 package com.sewon.healthmonitor.data.model
 
-import androidx.room.ColumnInfo
-import com.sewon.healthmonitor.data.source.local.entity.LocalSession
+import com.sewon.healthmonitor.data.source.local.entity.LocalSleepSession
 import java.time.LocalTime
+import java.util.Date
 
-data class Session(
+data class SleepSession(
   val refHRV: Double,
   val refHR: Double,
   val refBR: Double,
+  val isGeneratedReport: Boolean,
 
   val meanHR: Double,
   val meanBR: Double,
@@ -18,19 +19,19 @@ data class Session(
   val highFreq: Double,
   val LfHfRatio: Double,
 
-
   val rating: Int,
   val wakeUpCount: Int,
-  val startTime: LocalTime,
-  val sleepTime: LocalTime,
-  val endTime: LocalTime,
+  val selectedStartTime: Date,
+  val actualStartTime: Date,
+  val sleepTime: Date,
+  val endTime: Date,
 )
 
-fun Session.toLocal() = LocalSession(
+fun SleepSession.toLocal() = LocalSleepSession(
   refHRV = refHRV,
   refHR = refHR,
   refBR = refBR,
-
+  isGeneratedReport = isGeneratedReport,
 
   meanHR = meanHR,
   meanBR = meanBR,
@@ -43,21 +44,20 @@ fun Session.toLocal() = LocalSession(
 
   rating = rating,
   wakeUpCount = wakeUpCount,
-  startTime = startTime,
+  selectedStartTime = selectedStartTime,
+  actualStartTime = actualStartTime,
   sleepTime = sleepTime,
   endTime = endTime,
+)
+
+fun List<SleepSession>.toLocal() = map(SleepSession::toLocal)
 
 
-  )
-
-fun List<Session>.toLocal() = map(Session::toLocal)
-
-
-fun LocalSession.toExternal() = Session(
+fun LocalSleepSession.toExternal() = SleepSession(
   refHRV = refHRV,
   refHR = refHR,
   refBR = refBR,
-
+  isGeneratedReport = isGeneratedReport,
 
   meanHR = meanHR,
   meanBR = meanBR,
@@ -70,10 +70,10 @@ fun LocalSession.toExternal() = Session(
 
   rating = rating,
   wakeUpCount = wakeUpCount,
-  startTime = startTime,
+  selectedStartTime = selectedStartTime,
+  actualStartTime = actualStartTime,
   sleepTime = sleepTime,
-  endTime = endTime,
+  endTime = endTime
+)
 
-  )
-
-fun List<LocalSession>.toExternal() = map(LocalSession::toExternal)
+fun List<LocalSleepSession>.toExternal() = map(LocalSleepSession::toExternal)

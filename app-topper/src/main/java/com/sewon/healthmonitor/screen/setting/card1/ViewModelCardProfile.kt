@@ -80,7 +80,7 @@ class ViewModelCardProfile @Inject constructor(
   init {
 //        https://stackoverflow.com/questions/73839026/jetpack-compose-displaying-data-in-compose-using-mvvm
     CoroutineScope(Dispatchers.IO).launch {
-      Timber.tag("asdfasdf").d("CoroutineScope IO")
+      Timber.tag("Timber").d("CoroutineScope IO")
 //            userSetting = userSettingRepository.loadUserSetting()
 //            print(userSetting.first().get(0).gender)
     }
@@ -99,7 +99,7 @@ class ViewModelCardProfile @Inject constructor(
   }
 
   fun changeBirthday(year: Int, month: Int, day: Int) = viewModelScope.launch {
-    Timber.d("changeBirthday")
+    Timber.tag("Timber").d("changeBirthday")
     val date = Calendar.getInstance().apply {
       set(year, month, day)
     }.time
@@ -107,7 +107,7 @@ class ViewModelCardProfile @Inject constructor(
   }
 
   override fun onCleared() {
-    Timber.d("onCleared")
+    Timber.tag("Timber").d("onCleared")
   }
 
   private fun handleUser(user: User?): Async<User?> {

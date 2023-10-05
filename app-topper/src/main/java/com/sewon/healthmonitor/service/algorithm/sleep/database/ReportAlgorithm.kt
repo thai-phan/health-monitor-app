@@ -17,7 +17,7 @@ class ReportAlgorithm {
       var countTime = 0
       val countMax = AlgorithmConstants.SLEEP_STAGE_NUMBER
 
-      for (data in ReportData.allData) {
+      for (data in ReportDataProcessing.allData) {
         if (countTime == countMax) {
           val meanHRV = sumHRV / countTime
           val meanHR = sumHR / countTime

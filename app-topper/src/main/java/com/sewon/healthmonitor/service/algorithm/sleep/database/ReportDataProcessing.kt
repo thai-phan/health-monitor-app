@@ -1,17 +1,17 @@
 package com.sewon.healthmonitor.service.algorithm.sleep.database
 
-import com.sewon.healthmonitor.data.source.local.entity.LocalSensor
+import com.sewon.healthmonitor.data.source.local.entity.LocalTopper
 import com.sewon.healthmonitor.service.algorithm.ecg.ECGAnalysisProc
 import com.sewon.healthmonitor.service.algorithm.ecg.ECGTopper
 
 
-class ReportData {
+class ReportDataProcessing {
 
   companion object {
 
-    lateinit var allData: List<LocalSensor>
+    lateinit var allData: List<LocalTopper>
 
-    fun importData(data: List<LocalSensor>) {
+    fun importData(data: List<LocalTopper>) {
       allData = data
     }
 

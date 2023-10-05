@@ -18,6 +18,4 @@ interface ISettingRepository {
   suspend fun updateBedTimeSetting(userId: Int, bedTime: LocalTime): String
 
   suspend fun updateAlarmTypeSetting(userId: Int, alarmSetting: String): String
-
-
 }

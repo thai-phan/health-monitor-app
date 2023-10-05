@@ -1,9 +1,9 @@
 package com.sewon.healthmonitor.service.algorithm.sleep
 
-import com.sewon.healthmonitor.data.model.Sensor
+import com.sewon.healthmonitor.data.model.Topper
 import java.time.LocalTime
 
-class SensorData(stringList: List<String>) {
+class TopperData(stringList: List<String>) {
   var stable: Int
   var HR: Int
   var BR: Int
@@ -26,8 +26,8 @@ class SensorData(stringList: List<String>) {
     createdAt = LocalTime.now()
   }
 
-  fun toSensorModel(): Sensor {
-    return Sensor(
+  fun toTopperModel(): Topper {
+    return Topper(
       stable = stable,
       hr = HR,
       br = BR,

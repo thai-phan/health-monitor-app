@@ -1,10 +1,10 @@
-package com.sewon.healthmonitor.service.algorithm.sleep.sensor
+package com.sewon.healthmonitor.service.algorithm.sleep.realtime
 
 import androidx.compose.runtime.mutableStateOf
 import com.sewon.healthmonitor.MainActivity
-import com.sewon.healthmonitor.service.algorithm.sleep.SensorData
+import com.sewon.healthmonitor.service.algorithm.sleep.TopperData
 
-class DataProcessing {
+class RealtimeDataProcessing {
 
   companion object {
     private val isWrongDeviceType = mutableStateOf(false)
@@ -24,12 +24,12 @@ class DataProcessing {
     private var deplayCount = 0
 
     fun processData(messageList: List<String>) {
-      val sensorData = SensorData(messageList)
+      val topperData = TopperData(messageList)
 
-//      AlgorithmRealtime.inputData(sensorData)
+      RealtimeAlgorithm.inputData(topperData)
 
       if (deplayCount == 1) {
-        MainActivity.bleHandleService.updateDatabase(sensorData)
+        MainActivity.bleHandleService.insertNewTopperToDatabase(topperData)
         deplayCount = 0
       }
       deplayCount += 1

@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 import java.time.LocalTime
 
 
-@Entity(tableName = "sensor")
-data class LocalSensor(
+@Entity(tableName = "topper")
+data class LocalTopper(
   @ColumnInfo(name = "stable") val stable: Int,
   @ColumnInfo(name = "hr") val hr: Int,
   @ColumnInfo(name = "br") val br: Int,

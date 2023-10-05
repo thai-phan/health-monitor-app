@@ -19,14 +19,14 @@ package com.example.android.architecture.blueprints.todoapp.di
 import android.content.Context
 import androidx.room.Room
 import com.sewon.healthmonitor.data.HealthDatabase
-import com.sewon.healthmonitor.data.source.local.dao.LocalSensorDao
+import com.sewon.healthmonitor.data.source.local.dao.LocalTopperDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalUserDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalSettingDao
-import com.sewon.healthmonitor.data.repository.SensorRepository
+import com.sewon.healthmonitor.data.repository.TopperRepository
 import com.sewon.healthmonitor.data.repository.SessionRepository
 import com.sewon.healthmonitor.data.repository.SettingRepository
 import com.sewon.healthmonitor.data.repository.UserRepository
-import com.sewon.healthmonitor.data.repository.repointerface.ISensorRepository
+import com.sewon.healthmonitor.data.repository.repointerface.ITopperRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
 import com.sewon.healthmonitor.data.repository.repointerface.IUserRepository
@@ -55,7 +55,7 @@ object DatabaseModule {
   }
 
   @Provides
-  fun provideSensorDao(database: HealthDatabase): LocalSensorDao = database.sensorDao()
+  fun provideSensorDao(database: HealthDatabase): LocalTopperDao = database.sensorDao()
 
   @Provides
   fun provideUserSettingDao(database: HealthDatabase): LocalSettingDao = database.settingDao()
@@ -74,7 +74,7 @@ abstract class RepositoryModule {
 
   @Singleton
   @Binds
-  abstract fun bindRadarRepository(radarRepository: SensorRepository): ISensorRepository
+  abstract fun bindTopperRepository(topperRepository: TopperRepository): ITopperRepository
 
 
   @Singleton

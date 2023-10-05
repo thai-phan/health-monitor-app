@@ -1,19 +1,16 @@
 package com.sewon.healthmonitor.data.repository.repointerface
 
-import com.sewon.healthmonitor.data.model.Session
-import com.sewon.healthmonitor.data.source.local.entity.LocalSession
-import kotlinx.coroutines.flow.Flow
+import com.sewon.healthmonitor.data.model.SleepSession
+import com.sewon.healthmonitor.data.source.local.entity.LocalSleepSession
 
 
 interface ISessionRepository {
 
-  suspend fun getSessionById(id: Int): LocalSession
+  suspend fun getSessionById(id: Int): LocalSleepSession?
 
-  fun getCountTopper(): Flow<Int>
+  suspend fun addSession(sleepSession: SleepSession): Long
 
-  suspend fun addSession(session: Session)
+  suspend fun countSession(): Int
 
-  suspend fun countSession(): Flow<Int>
-
-  suspend fun createTopper(localSensor: LocalSession): String
+  fun updateSessionRefValue(refHRV: Double, refHR: Double, refBR: Double, sessionId: Int)
 }

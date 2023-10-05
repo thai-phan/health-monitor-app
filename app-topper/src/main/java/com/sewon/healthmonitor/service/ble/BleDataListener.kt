@@ -5,7 +5,7 @@ import android.text.SpannableStringBuilder
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import com.sewon.healthmonitor.MainActivity
-import com.sewon.healthmonitor.service.algorithm.sleep.sensor.DataProcessing
+import com.sewon.healthmonitor.service.algorithm.sleep.realtime.RealtimeDataProcessing
 
 
 import timber.log.Timber
@@ -95,7 +95,7 @@ class BleDataListener : SerialListener {
         stringBuilder.append(TextUtil.toHexString(data)).append('\n')
       } else {
         val dataStr = String(data)
-        DataProcessing.validateDataFormatAndProcess(dataStr)
+        RealtimeDataProcessing.validateDataFormatAndProcess(dataStr)
         val text = TextUtil.toCaretString(dataStr, true)
         stringBuilder.append(text)
       }
