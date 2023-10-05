@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 
 
 @Composable
-fun Chart2StressScore() {
+fun Chart2StressScore(stressScore: Float) {
 
 
 }

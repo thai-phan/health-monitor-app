@@ -32,7 +32,7 @@ import com.sewon.healthmonitor.R
 
 @Composable
 fun ButtonAction(
-  isStarted: MutableState<Boolean>,
+  isStarted: Boolean,
   startSleep: () -> Unit,
   cancelSleep: () -> Unit
 ) {
@@ -83,7 +83,7 @@ fun ButtonAction(
         Text("건강이상감지", style = textStyle)
       }
     }
-    if (!isStarted.value) {
+    if (!isStarted) {
       Button(colors = ButtonDefaults.buttonColors(Color(0xFF03DAC5)),
         shape = RoundedCornerShape(size = 100.dp),
         modifier = Modifier
@@ -106,7 +106,5 @@ fun ButtonAction(
         )
       }
     }
-
-
   }
 }

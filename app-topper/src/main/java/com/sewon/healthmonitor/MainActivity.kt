@@ -28,6 +28,8 @@ class MainActivity : ComponentActivity() {
     lateinit var alarmManager: AlarmManager
     lateinit var alarmPendingIntent: PendingIntent
     lateinit var reportDataProcessing: ReportDataProcessing
+
+
 //    lateinit var mSensorManager: SensorManager
 //    lateinit var mLightSensor: Sensor
 //    lateinit var sensorListener: LightSensorListener

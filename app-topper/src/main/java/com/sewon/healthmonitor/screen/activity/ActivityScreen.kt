@@ -1,7 +1,11 @@
 package com.sewon.healthmonitor.screen.activity
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -31,11 +36,13 @@ import com.sewon.healthmonitor.common.MainDestinations
 import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
 import com.sewon.healthmonitor.screen.activity.component.CircularTimePicker
 import com.sewon.healthmonitor.screen.activity.sub.ButtonAction
-
 import com.sewon.healthmonitor.screen.activity.sub.SwitchAction
 import com.sewon.healthmonitor.screen.activity.sub.TimeSelection
+import com.sewon.healthmonitor.service.alarm.AlarmReceiver
 import com.sewon.healthmonitor.service.ble.SerialSocket
 import timber.log.Timber
+import java.util.Calendar
+
 
 @SuppressLint("RememberReturnType")
 @Composable
@@ -73,37 +80,51 @@ fun SleepActivity(
     }
   }
 
-  val isStarted = remember { mutableStateOf(false) }
+  var isStarted by remember {
+    mutableStateOf(false)
+  }
 
   fun startSleep() {
-    isStarted.value = true
-    viewModel.createSession(startTime.value, endTime.value, durationState.value)
-    connectToSensor()
+    isStarted = true
+//    viewModel.createSession(startTime.value, endTime.value, durationState.value)
+//    connectToSensor()
+
+    Toast.makeText(context, "ALARM ON", Toast.LENGTH_SHORT).show()
+
+    val alarmIntent = Intent(context, AlarmReceiver::class.java)
+    MainActivity.alarmPendingIntent =
+      PendingIntent.getBroadcast(context, 1234, alarmIntent, PendingIntent.FLAG_MUTABLE)
+    val calendar = Calendar.getInstance()
+    calendar[Calendar.SECOND] = calendar[Calendar.SECOND] + 5
+    //          ((AlarmManager) context.getSystemService(Context.ALARM_SERVICE)).setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), DAY, pendingIntent);
+    MainActivity.alarmManager.set(
+      AlarmManager.RTC_WAKEUP,
+      calendar.timeInMillis,
+      MainActivity.alarmPendingIntent
+    )
+
 //    navController.navigate(MainDestinations.REPORT_ROUTE)
 //    MainActivity.serialService.
   }
 
   fun cancelSleep() {
-    isStarted.value = false
+    isStarted = false
     MainActivity.bleHandleService.disconnect()
 
-//      AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//      Intent myIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
-//      PendingIntent pendingIntent = PendingIntent.getBroadcast(
-//          getApplicationContext(), 1, myIntent, PendingIntent.FLAG_IMMUTABLE);
+//    val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager?
+//    val myIntent = Intent(context, AlarmReceiver::class.java)
+//    val pendingIntent = PendingIntent.getBroadcast(
+//      context, 1, myIntent, PendingIntent.FLAG_IMMUTABLE
+//    )
   }
 
   fun createSleepSession() {
+
   }
 
 
   fun redirectReportPage() {
     navController.navigate(MainDestinations.REPORT_ROUTE)
-//    val a = AlarmManager()
-//    val list = listOf("1", "2", "3", "4.0", "5.0", "6.0")
-//    MainActivity.bleHandleService.updateDatabase(list)
-//    MainActivity.bleHandleService.disconnect()
-
   }
 
   Column(
@@ -112,8 +133,6 @@ fun SleepActivity(
       .padding(horizontal = 30.dp, vertical = 20.dp)
   ) {
     Text("수면시간 체크", fontWeight = FontWeight.Bold, fontSize = 24.sp)
-
-    Text(log)
 
     Spacer(modifier = Modifier.height(10.dp))
 
@@ -127,6 +146,7 @@ fun SleepActivity(
 
     ButtonAction(isStarted, startSleep = { startSleep() }, cancelSleep = { cancelSleep() })
 
+    Text(log)
     Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
       onClick = { redirectReportPage() }) {
       Text(

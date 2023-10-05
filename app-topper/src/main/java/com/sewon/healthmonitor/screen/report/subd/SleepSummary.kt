@@ -15,5 +15,5 @@ fun SleepSummary(uiState: UiState) {
   Chart1NervousSystem(uiState.nervousScore)
 
   Text("스트레스 점수")
-  Chart2StressScore()
+  Chart2StressScore(uiState.stressScore)
 }
