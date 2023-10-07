@@ -72,8 +72,6 @@ class ReportViewModel @Inject constructor(
   fun showSessionReport(sessionId: Int) = viewModelScope.launch {
     val allData = topperRepository.getAllDataFromSession(sessionId)
     val session = sessionRepository.getSessionById(sessionId)
-    Timber.tag("ReportViewModel").d(session.toString())
-    Timber.tag("ReportViewModel").d(allData.size.toString())
     if (session != null && allData.isNotEmpty()) {
       ReportDataProcessing.importData(allData)
       ReportAlgorithm.refHRV = session.refHRV

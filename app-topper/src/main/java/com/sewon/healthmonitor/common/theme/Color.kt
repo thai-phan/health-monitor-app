@@ -29,7 +29,7 @@ val DarkSecondaryContainer = Color(0xFF071224)
 val DarkOnSecondaryContainer = Color(0xFF03dac5)
 
 val DarkTertiary = Color(0xFF78FF00)
-val DarkOnTertiary = Color(0xFF0037FF)
+val DarkOnTertiary = Color(0xFF22FF00)
 val DarkTertiaryContainer = Color(0xFFB1FF63)
 val DarkOnTertiaryContainer = Color(0xFFE600FF)
 
@@ -43,7 +43,7 @@ val DarkOnBackground = Color(0xFFFFFFFF)
 val DarkSurface = Color(0xFF071224)
 
 val DarkOnSurface = Color(0xFF03dac5)
-val DarkSurfaceVariant = Color(0xFF032EFF)
+val DarkSurfaceVariant = Color(0xAEC8FF)
 val DarkOnSurfaceVariant = Color(0xFFFFFFFF)
 val DarkOutline = Color(0xFF01B8A7)
 val DarkInverseOnSurface = Color(0xFFFABBBB)

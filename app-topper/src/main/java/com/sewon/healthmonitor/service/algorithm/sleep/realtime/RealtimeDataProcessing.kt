@@ -26,13 +26,13 @@ class RealtimeDataProcessing {
     fun processData(messageList: List<String>) {
       val topperData = TopperData(MainActivity.bleHandleService.sessionId, messageList)
 
-//      RealtimeAlgorithm.inputData(topperData)
+      RealtimeAlgorithm.processData(topperData)
 
-      if (deplayCount == 1) {
-        MainActivity.bleHandleService.insertNewTopperToDatabase(topperData)
-        deplayCount = 0
-      }
-      deplayCount += 1
+//      if (deplayCount == 1) {
+//        MainActivity.bleHandleService.insertNewTopperToDatabase(topperData)
+//        deplayCount = 0
+//      }
+//      deplayCount += 1
     }
   }
 }

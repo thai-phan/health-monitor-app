@@ -1,5 +1,6 @@
 package com.sewon.healthmonitor.screen.setting.card4
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -61,18 +62,19 @@ fun GeneralSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+          .fillMaxWidth()
+          .clickable(onClick = { openDeviceAccessModal = !openDeviceAccessModal })
       ) {
 //                Cell phone cache access rights
         Text("핸드폰 캐시 접근 권한")
 
-        var checked by remember { mutableStateOf(true) }
 
         Switch(
           colors = switchColors,
           modifier = Modifier.semantics { contentDescription = "Demo" },
-          checked = checked,
-          onCheckedChange = { checked = it })
+          checked = openDeviceAccessModal,
+          onCheckedChange = { openDeviceAccessModal = it })
       }
       Spacer(modifier = Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
@@ -80,18 +82,18 @@ fun GeneralSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+          .fillMaxWidth()
+          .clickable(onClick = { openClearHistoryModal = !openClearHistoryModal })
       ) {
 //                Clear all sleep history
         Text("수면 기록 모두 지우기")
 
-        var checked by remember { mutableStateOf(true) }
-
         Switch(
           colors = switchColors,
           modifier = Modifier.semantics { contentDescription = "Demo" },
-          checked = checked,
-          onCheckedChange = { checked = it })
+          checked = openClearHistoryModal,
+          onCheckedChange = { openClearHistoryModal = it })
       }
       Spacer(modifier = Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
@@ -99,19 +101,18 @@ fun GeneralSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+          .fillMaxWidth()
+          .clickable(onClick = { openSOSRecipientModal = !openSOSRecipientModal })
       ) {
-
 //                Emergency SOS Recipient Settings
         Text("위급 SOS 수신자 설정")
-
-        var checked by remember { mutableStateOf(true) }
 
         Switch(
           colors = switchColors,
           modifier = Modifier.semantics { contentDescription = "Demo" },
-          checked = checked,
-          onCheckedChange = { checked = it })
+          checked = openSOSRecipientModal,
+          onCheckedChange = { openSOSRecipientModal = it })
       }
     }
   }

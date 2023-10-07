@@ -47,8 +47,6 @@ fun Modal1DeviceAccess(
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
       Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
-
-
       Text("핸드폰 캐시 접근 권한 설정")
 
       Text("핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?")

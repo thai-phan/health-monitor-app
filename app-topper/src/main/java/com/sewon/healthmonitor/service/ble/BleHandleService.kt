@@ -6,21 +6,19 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.icu.util.Calendar
 import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.service.algorithm.sleep.TopperData
 import com.sewon.healthmonitor.data.model.toLocal
 import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ITopperRepository
-import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportDataProcessing
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +27,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
 import java.util.ArrayDeque
+import java.util.Date
 import javax.inject.Inject
 
 
@@ -95,9 +94,6 @@ class BleHandleService : Service(), SerialListener {
   private var socket: SerialSocket? = null
   var bleDataListener: BleDataListener? = null
   private var connected = false
-
-  val isPlaySoundStretch = mutableStateOf(false)
-  val isPlaySoundStress = mutableStateOf(false)
 
 
   init {
@@ -169,16 +165,8 @@ class BleHandleService : Service(), SerialListener {
     queue2.clear()
   }
 
-  fun detach() {
-    if (connected) createNotification()
-    // items already in event queue (posted before detach() to mainLooper) will end up in queue1
-    // items occurring later, will be moved directly to queue2
-    // detach() and mainLooper.post run in the main thread, so all items are caught
-    bleDataListener = null
-  }
-
   var sessionId = 0
-
+  var pickerEndTime: Date = Date()
 
   fun updateCurrentSessionRefValue(refHRV: Double, refHR: Double, refBR: Double) {
     scope.launch {
@@ -190,8 +178,8 @@ class BleHandleService : Service(), SerialListener {
 
   fun insertNewTopperToDatabase(topperData: TopperData) {
     scope.launch {
-      val localSensor = topperData.toTopperModel().toLocal()
-      topperRepository.insertNewTopperData(localSensor)
+      val localTopper = topperData.toTopperModel().toLocal()
+      topperRepository.insertNewTopperData(localTopper)
     }
   }
 
@@ -268,31 +256,6 @@ class BleHandleService : Service(), SerialListener {
         }
       }
     }
-  }
-
-  lateinit var playerStretch: MediaPlayer
-  lateinit var playerStress: MediaPlayer
-
-  fun playSoundStretch() {
-    isPlaySoundStretch.value = true
-//    playerStretch = MediaPlayer.create(this, R.raw.concentration)
-    playerStretch.start()
-  }
-
-  fun stopSoundStretch() {
-    isPlaySoundStretch.value = false
-    playerStretch.stop()
-  }
-
-  fun playSoundStress() {
-    isPlaySoundStress.value = true
-//    playerStress = MediaPlayer.create(this, R.raw.stress_release)
-    playerStress.start()
-  }
-
-  fun stopSoundStress() {
-    isPlaySoundStress.value = false
-    playerStress.stop()
   }
 
   override fun onSerialConnectError(e: Exception) {

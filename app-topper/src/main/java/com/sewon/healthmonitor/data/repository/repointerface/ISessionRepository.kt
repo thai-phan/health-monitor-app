@@ -14,9 +14,7 @@ interface ISessionRepository {
 
   suspend fun countSession(): Int
 
-  // TODO:
   suspend fun updateSessionRefValue(sessionId: Int, refHRV: Double, refHR: Double, refBR: Double)
 
-  // TODO:
   suspend fun updateSessionEndTime(sessionId: Int, endTime: Date)
 }

@@ -10,7 +10,7 @@ import com.patrykandpatrick.vico.compose.style.ProvideChartStyle
 import com.patrykandpatrick.vico.compose.style.currentChartStyle
 import com.patrykandpatrick.vico.core.chart.DefaultPointConnector
 import com.patrykandpatrick.vico.core.entry.entryModelOf
-import com.sewon.healthmonitor.screen.report.subc.component.rememberChartStyle
+import com.sewon.healthmonitor.screen.report.component.rememberChartStyle
 
 
 @Composable

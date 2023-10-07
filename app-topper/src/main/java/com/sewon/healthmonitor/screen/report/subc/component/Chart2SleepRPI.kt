@@ -12,6 +12,7 @@ import com.patrykandpatrick.vico.compose.style.currentChartStyle
 import com.patrykandpatrick.vico.core.chart.DefaultPointConnector
 import com.patrykandpatrick.vico.core.chart.copy
 import com.patrykandpatrick.vico.core.entry.entryModelOf
+import com.sewon.healthmonitor.screen.report.component.rememberChartStyle
 
 @Composable
 fun Chart2SleepRPI(data: List<Float>) {

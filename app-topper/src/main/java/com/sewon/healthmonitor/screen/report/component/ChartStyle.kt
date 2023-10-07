@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sewon.healthmonitor.screen.report.subc.component
+package com.sewon.healthmonitor.screen.report.component
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
@@ -41,12 +41,12 @@ internal fun rememberChartStyle(
   return remember(columnChartColors, lineChartColors, isSystemInDarkTheme) {
     val defaultColors = if (isSystemInDarkTheme) DefaultColors.Dark else DefaultColors.Light
     ChartStyle(
-      ChartStyle.Axis(
-        axisLabelColor = Color.Yellow,
+      axis = ChartStyle.Axis(
+        axisLabelColor = Color(0xFF03DAC5),
         axisGuidelineColor = Color(defaultColors.axisGuidelineColor),
-        axisLineColor = Color(defaultColors.axisLineColor),
+        axisLineColor = Color.Cyan,
       ),
-      ChartStyle.ColumnChart(
+      columnChart = ChartStyle.ColumnChart(
         columnChartColors.map { columnChartColor ->
           LineComponent(
             columnChartColor.toArgb(),
@@ -55,7 +55,7 @@ internal fun rememberChartStyle(
           )
         },
       ),
-      ChartStyle.LineChart(
+      lineChart = ChartStyle.LineChart(
         lineChartColors.map { lineChartColor ->
           LineChart.LineSpec(
             lineColor = lineChartColor.toArgb(),
@@ -70,8 +70,8 @@ internal fun rememberChartStyle(
           )
         },
       ),
-      ChartStyle.Marker(),
-      Color(defaultColors.elevationOverlayColor),
+      marker = ChartStyle.Marker(),
+      elevationOverlayColor = Color(defaultColors.elevationOverlayColor),
     )
   }
 }

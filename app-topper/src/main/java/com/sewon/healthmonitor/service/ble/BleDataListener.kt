@@ -27,12 +27,6 @@ class BleDataListener : SerialListener {
 
   val isAlarm = mutableStateOf(false)
 
-  private val dataArrayList = ArrayList<Double>()
-
-
-  private val b = 1000L
-  val timeRemaining = mutableLongStateOf(0)
-
 
   fun startAlarmListener() {
     isAlarm.value = true

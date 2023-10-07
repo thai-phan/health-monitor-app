@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.sewon.healthmonitor.screen.report.UiState
-import com.sewon.healthmonitor.screen.report.subb.CircularChart
+import com.sewon.healthmonitor.screen.report.component.CircularChart
 
 
 @Composable

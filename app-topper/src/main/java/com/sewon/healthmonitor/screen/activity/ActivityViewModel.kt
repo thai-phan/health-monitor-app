@@ -37,7 +37,7 @@ data class UiState(
 
 @HiltViewModel
 class ActivityViewModel @Inject constructor(
-  private val sensorRepository: ITopperRepository,
+  private val topperRepository: ITopperRepository,
   private val sessionRepository: ISessionRepository,
   private val settingRepository: ISettingRepository,
 ) : ViewModel() {
@@ -45,9 +45,9 @@ class ActivityViewModel @Inject constructor(
   private val _uiState = MutableStateFlow(UiState())
   val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-  var thisSessionId = 0
+  private var thisSessionId = 0
 
-  fun createSession(startTime: Calendar, endTime: Calendar) = viewModelScope.launch {
+  fun createSession(pickerStartTime: Calendar, pickerEndTime: Calendar) = viewModelScope.launch {
     val actualStartTime = Date()
     val sleepTime = Date()
 
@@ -55,8 +55,8 @@ class ActivityViewModel @Inject constructor(
       0.0, 0.0, 0.0, false,
       0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
       90, 10,
-      startTime.time,
-      endTime.time,
+      pickerStartTime.time,
+      pickerEndTime.time,
       actualStartTime,
       sleepTime,
       sleepTime,
@@ -64,6 +64,7 @@ class ActivityViewModel @Inject constructor(
     val sessionId: Int = sessionRepository.createNewSession(sleepSession).toInt()
     thisSessionId = sessionId
     MainActivity.bleHandleService.sessionId = sessionId
+    MainActivity.bleHandleService.pickerEndTime = pickerEndTime.time
   }
 
   fun updateCurrentSessionEndTime() = viewModelScope.launch {
@@ -93,7 +94,7 @@ class ActivityViewModel @Inject constructor(
 
   fun getCount() = viewModelScope.launch {
 
-    var bbb = sensorRepository.getDataCount()
+    var bbb = topperRepository.getDataCount()
 
     _uiState.update {
       it.copy(status3 = bbb.toString())

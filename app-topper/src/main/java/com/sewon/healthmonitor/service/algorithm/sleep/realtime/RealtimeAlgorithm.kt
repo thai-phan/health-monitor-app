@@ -4,6 +4,7 @@ import com.sewon.healthmonitor.MainActivity
 import com.sewon.healthmonitor.service.algorithm.sleep.AlgorithmConstants
 import com.sewon.healthmonitor.service.algorithm.sleep.TopperData
 import timber.log.Timber
+import java.util.Date
 
 
 class RealtimeAlgorithm {
@@ -22,7 +23,7 @@ class RealtimeAlgorithm {
     var curlux = 10
 
 
-    fun inputData(topperData: TopperData) {
+    fun processData(topperData: TopperData) {
       countReferenceData += 1
       if (countReferenceData < firstReferenceCount) {
         sumHRV += topperData.HRV
@@ -90,13 +91,11 @@ class RealtimeAlgorithm {
 
     private fun callDeepSleep(topperData: TopperData) {
       Timber.tag("Timber").d("callDeepSleep")
-      var curTime = 0
-      var sleepTime = 1
-      var isWakeup = true
-      if (curTime < sleepTime) {
+      val curTime = Date()
+
+      if (curTime < MainActivity.bleHandleService.pickerEndTime) {
         saveDatabase(topperData)
       } else {
-        callAlarm()
         if (topperData.HR != 0 && topperData.BR != 0) {
           if (topperData.HR - refHR > 5 || refHR - topperData.HR > 5) {
             saveDatabase(topperData)
@@ -106,10 +105,6 @@ class RealtimeAlgorithm {
           saveDatabase(topperData)
         }
       }
-    }
-
-    fun callAlarm() {
-
     }
 
     fun saveDatabase(topperData: TopperData) {
