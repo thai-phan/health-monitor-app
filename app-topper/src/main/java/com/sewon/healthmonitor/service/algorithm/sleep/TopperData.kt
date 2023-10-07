@@ -1,9 +1,10 @@
 package com.sewon.healthmonitor.service.algorithm.sleep
 
 import com.sewon.healthmonitor.data.model.Topper
+import java.lang.NumberFormatException
 import java.time.LocalTime
 
-class TopperData(stringList: List<String>) {
+class TopperData(currentSessionId: Int, stringList: List<String>) {
   var stable: Int
   var HR: Int
   var BR: Int
@@ -11,7 +12,7 @@ class TopperData(stringList: List<String>) {
   var HRWfm: Double
   var BRWfm: Double
   var isSleep: Boolean
-  var sessionId: Int
+  var sessionId: Int = 0
   var createdAt: LocalTime
 
   init {
@@ -19,10 +20,18 @@ class TopperData(stringList: List<String>) {
     HR = stringList[1].toInt()
     BR = stringList[2].toInt()
     HRV = stringList[3].toDouble()
-    HRWfm = stringList[4].toDouble()
-    BRWfm = stringList[5].toDouble()
+    HRWfm = try {
+      stringList[4].toDouble()
+    } catch (error: NumberFormatException) {
+      0.0
+    }
+    BRWfm = try {
+      stringList[5].toDouble()
+    } catch (error: NumberFormatException) {
+      0.0
+    }
     isSleep = true
-    sessionId = 1
+    sessionId = currentSessionId
     createdAt = LocalTime.now()
   }
 

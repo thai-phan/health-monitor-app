@@ -132,7 +132,6 @@ internal fun FindDevicesScreen(
       items(devices) { item ->
         DeviceItem(
           Color(0xFFE3ECA6),
-          navController = navController,
           bluetoothDevice = item,
           onSelectBle = {
             onSelectBle(item)

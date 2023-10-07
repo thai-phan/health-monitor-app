@@ -1,7 +1,6 @@
 package com.sewon.healthmonitor.data.model
 
 import com.sewon.healthmonitor.data.source.local.entity.LocalSleepSession
-import java.time.LocalTime
 import java.util.Date
 
 data class SleepSession(
@@ -17,14 +16,17 @@ data class SleepSession(
   val RPITriangular: Double,
   val lowFreq: Double,
   val highFreq: Double,
-  val LfHfRatio: Double,
+  val lfHfRatio: Double,
 
   val rating: Int,
   val wakeUpCount: Int,
-  val selectedStartTime: Date,
+
+  val pickerStartTime: Date,
+  val pickerEndTime: Date,
   val actualStartTime: Date,
+  val actualEndTime: Date,
   val sleepTime: Date,
-  val endTime: Date,
+  val sessionId: Int = -1,
 )
 
 fun SleepSession.toLocal() = LocalSleepSession(
@@ -40,14 +42,16 @@ fun SleepSession.toLocal() = LocalSleepSession(
   RPITriangular = RPITriangular,
   lowFreq = lowFreq,
   highFreq = highFreq,
-  LfHfRatio = LfHfRatio,
+  lfHfRatio = lfHfRatio,
 
   rating = rating,
   wakeUpCount = wakeUpCount,
-  selectedStartTime = selectedStartTime,
+
+  pickerStartTime = pickerStartTime,
+  pickerEndTime = pickerEndTime,
   actualStartTime = actualStartTime,
+  actualEndTime = actualEndTime,
   sleepTime = sleepTime,
-  endTime = endTime,
 )
 
 fun List<SleepSession>.toLocal() = map(SleepSession::toLocal)
@@ -66,14 +70,17 @@ fun LocalSleepSession.toExternal() = SleepSession(
   RPITriangular = RPITriangular,
   lowFreq = lowFreq,
   highFreq = highFreq,
-  LfHfRatio = LfHfRatio,
+  lfHfRatio = lfHfRatio,
 
   rating = rating,
   wakeUpCount = wakeUpCount,
-  selectedStartTime = selectedStartTime,
+
+  pickerStartTime = pickerStartTime,
+  pickerEndTime = pickerEndTime,
   actualStartTime = actualStartTime,
+  actualEndTime = actualEndTime,
   sleepTime = sleepTime,
-  endTime = endTime
+  sessionId = sessionId,
 )
 
 fun List<LocalSleepSession>.toExternal() = map(LocalSleepSession::toExternal)

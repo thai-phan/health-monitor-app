@@ -5,6 +5,7 @@ import android.text.SpannableStringBuilder
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import com.sewon.healthmonitor.MainActivity
+import com.sewon.healthmonitor.service.alarm.AlarmReceiver
 import com.sewon.healthmonitor.service.algorithm.sleep.realtime.RealtimeDataProcessing
 
 
@@ -21,32 +22,29 @@ class BleDataListener : SerialListener {
 
   private var connected = Connected.False
   private val hexEnabled = false
-  val receiveText: SpannableStringBuilder = SpannableStringBuilder()
 
   val log = mutableStateOf("")
-  val isStretch = mutableStateOf(false)
-  val isStress = mutableStateOf(false)
 
+  val isAlarm = mutableStateOf(false)
 
   private val dataArrayList = ArrayList<Double>()
 
-  private val totalDuration = 50 * 60 * 1000L
-//  private val totalDuration = 10 * 1000L
 
   private val b = 1000L
   val timeRemaining = mutableLongStateOf(0)
 
 
-  val countDownTimer = object : CountDownTimer(totalDuration, b) {
-    override fun onTick(millisUntilFinished: Long) {
-      timeRemaining.longValue = totalDuration - millisUntilFinished
-    }
+  fun startAlarmListener() {
+    isAlarm.value = true
+  }
 
-    override fun onFinish() {
-      stretchDetected()
-      timeRemaining.longValue = 0
+  fun stopAlarmListener() {
+    isAlarm.value = false
+    if (AlarmReceiver.ringtone != null) {
+      AlarmReceiver.ringtone.stop()
     }
   }
+
 
   override fun onSerialConnect() {
     connected = Connected.True
@@ -71,20 +69,6 @@ class BleDataListener : SerialListener {
     Timber.tag("Timber").d("onSerialRead")
   }
 
-  fun resetTimer() {
-    countDownTimer.cancel()
-    countDownTimer.start()
-  }
-
-
-  fun stretchDetected() {
-    MainActivity.bleHandleService.createNotificationHealth()
-    isStretch.value = true
-  }
-
-
-//  var prevValue = Constants.STABLE_MOVING;
-
 
   private var sensorLoopCount = 0
 
@@ -106,9 +90,6 @@ class BleDataListener : SerialListener {
     } else {
       sensorLoopCount = 0
     }
-
     log.value = "$stringBuilder $sensorLoopCount"
   }
-
-
 }

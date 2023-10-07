@@ -24,7 +24,7 @@ import java.util.UUID
  */
 @SuppressLint("MissingPermission") // various BluetoothGatt, BluetoothDevice methods
 
-class SerialSocket(private val context: Context, private var device: BluetoothDevice) :
+class SerialSocketKt(private val context: Context, private var device: BluetoothDevice) :
   BluetoothGattCallback() {
   /**
    * delegate device specific behaviour to inner class
@@ -47,14 +47,16 @@ class SerialSocket(private val context: Context, private var device: BluetoothDe
       g: BluetoothGatt,
       c: BluetoothGattCharacteristic,
       status: Int
-    ) { /*nop*/
+    ) {
+      /*nop*/
     }
 
     open fun canWrite(): Boolean {
       return true
     }
 
-    open fun disconnect() { /*nop*/
+    open fun disconnect() {
+      /*nop*/
     }
   }
 
@@ -93,7 +95,7 @@ class SerialSocket(private val context: Context, private var device: BluetoothDe
   }
 
   val name: String
-    get() = if (device!!.name != null) device!!.name else device!!.address
+    get() = if (device.name != null) device.name else device.address
 
   fun disconnect() {
     Timber.tag(TAG).d("disconnect")

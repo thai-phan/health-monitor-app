@@ -1,11 +1,10 @@
 package com.sewon.healthmonitor.screen.activity
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
 import android.content.Intent
-import android.widget.Toast
+import android.icu.util.GregorianCalendar
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,7 +40,6 @@ import com.sewon.healthmonitor.screen.activity.sub.TimeSelection
 import com.sewon.healthmonitor.service.alarm.AlarmReceiver
 import com.sewon.healthmonitor.service.ble.SerialSocket
 import timber.log.Timber
-import java.util.Calendar
 
 
 @SuppressLint("RememberReturnType")
@@ -65,7 +63,7 @@ fun SleepActivity(
   val endTime = remember { mutableStateOf(end) }
   val durationState = remember { mutableStateOf(duration) }
 
-  fun connectToSensor() {
+  fun composeConnectToSensor() {
     try {
       val adapter = context.getSystemService<BluetoothManager>()?.adapter
       val device = adapter?.getRemoteDevice(deviceAddress)
@@ -80,48 +78,52 @@ fun SleepActivity(
     }
   }
 
-  var isStarted by remember {
-    mutableStateOf(false)
-  }
+  var isStarted by remember { mutableStateOf(false) }
+  var isAlarm by MainActivity.bleDataListener.isAlarm
 
   fun startSleep() {
-    isStarted = true
-//    viewModel.createSession(startTime.value, endTime.value, durationState.value)
-//    connectToSensor()
+//    Toast.makeText(context, "ALARM ON", Toast.LENGTH_SHORT).show()
 
-    Toast.makeText(context, "ALARM ON", Toast.LENGTH_SHORT).show()
+    isStarted = true
+
+    val startTimeCalendar = GregorianCalendar.getInstance()
+    startTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, startTime.value.hour)
+    startTimeCalendar.set(GregorianCalendar.MINUTE, startTime.value.minute)
+    startTimeCalendar.set(GregorianCalendar.SECOND, 0)
+    val endTimeCalendar = startTimeCalendar.clone() as android.icu.util.Calendar?
+    endTimeCalendar!!.add(GregorianCalendar.HOUR_OF_DAY, durationState.value.hour)
+    endTimeCalendar.add(GregorianCalendar.MINUTE, durationState.value.minute)
+
+    viewModel.createSession(startTimeCalendar, endTimeCalendar)
+    composeConnectToSensor()
 
     val alarmIntent = Intent(context, AlarmReceiver::class.java)
     MainActivity.alarmPendingIntent =
       PendingIntent.getBroadcast(context, 1234, alarmIntent, PendingIntent.FLAG_MUTABLE)
-    val calendar = Calendar.getInstance()
-    calendar[Calendar.SECOND] = calendar[Calendar.SECOND] + 5
-    //          ((AlarmManager) context.getSystemService(Context.ALARM_SERVICE)).setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), DAY, pendingIntent);
-    MainActivity.alarmManager.set(
-      AlarmManager.RTC_WAKEUP,
-      calendar.timeInMillis,
-      MainActivity.alarmPendingIntent
-    )
-
-//    navController.navigate(MainDestinations.REPORT_ROUTE)
-//    MainActivity.serialService.
+//    val calendar = GregorianCalendar.getInstance()
+//    calendar[GregorianCalendar.SECOND] = calendar[GregorianCalendar.SECOND] + 30
+//    Timber.tag("Timber").d(endTimeCalendar.time.toString())
+//    Timber.tag("Timber").d(calendar.time.toString())
+//    //          ((AlarmManager) context.getSystemService(Context.ALARM_SERVICE)).setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), DAY, pendingIntent);
+//    MainActivity.alarmManager.set(
+//      AlarmManager.RTC_WAKEUP,
+//      calendar.timeInMillis,
+//      MainActivity.alarmPendingIntent
+//    )
   }
 
   fun cancelSleep() {
     isStarted = false
-    MainActivity.bleHandleService.disconnect()
 
-//    val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager?
-//    val myIntent = Intent(context, AlarmReceiver::class.java)
-//    val pendingIntent = PendingIntent.getBroadcast(
-//      context, 1, myIntent, PendingIntent.FLAG_IMMUTABLE
-//    )
+    MainActivity.alarmManager.cancel(MainActivity.alarmPendingIntent)
+
+    viewModel.updateCurrentSessionEndTime()
+    MainActivity.bleHandleService.disconnectBluetoothSocket()
   }
 
-  fun createSleepSession() {
-
+  fun stopAlarm() {
+    MainActivity.bleDataListener.stopAlarmListener()
   }
-
 
   fun redirectReportPage() {
     navController.navigate(MainDestinations.REPORT_ROUTE)
@@ -144,13 +146,17 @@ fun SleepActivity(
 
     SwitchAction()
 
-    ButtonAction(isStarted, startSleep = { startSleep() }, cancelSleep = { cancelSleep() })
-
+    ButtonAction(
+      isStarted, isAlarm,
+      startSleep = { startSleep() },
+      cancelSleep = { cancelSleep() },
+      stopAlarm = { stopAlarm() }
+    )
     Text(log)
     Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
       onClick = { redirectReportPage() }) {
       Text(
-        text = "연결됨"
+        text = "Report Page"
       )
     }
   }

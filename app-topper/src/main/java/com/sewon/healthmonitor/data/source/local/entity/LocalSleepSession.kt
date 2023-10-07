@@ -3,7 +3,6 @@ package com.sewon.healthmonitor.data.source.local.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalTime
 import java.util.Date
 
 
@@ -30,20 +29,18 @@ data class LocalSleepSession(
   // TODO: Implement
   @ColumnInfo(name = "high_freq") val highFreq: Double,
   // TODO: Implement
-  @ColumnInfo(name = "lf_hf_ratio") val LfHfRatio: Double,
+  @ColumnInfo(name = "lf_hf_ratio") val lfHfRatio: Double,
 
   // TODO: Implement
   @ColumnInfo(name = "rating") val rating: Int,
   // TODO: Implement
   @ColumnInfo(name = "wake_up_count") val wakeUpCount: Int,
-  // TODO: Implement
-  @ColumnInfo(name = "selected_start_time") val selectedStartTime: Date,
-  // TODO: Implement
+
+  @ColumnInfo(name = "picker_start_time") val pickerStartTime: Date,
+  @ColumnInfo(name = "picker_end_time") val pickerEndTime: Date,
   @ColumnInfo(name = "actual_start_time") val actualStartTime: Date,
-  // TODO: Implement
+  @ColumnInfo(name = "actual_end_time") val actualEndTime: Date,
   @ColumnInfo(name = "sleep_time") val sleepTime: Date,
-  // TODO: Implement
-  @ColumnInfo(name = "end_time") val endTime: Date,
 ) {
   @ColumnInfo(name = "session_id")
   @PrimaryKey(autoGenerate = true)

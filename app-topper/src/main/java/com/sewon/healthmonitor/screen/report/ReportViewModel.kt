@@ -3,9 +3,9 @@ package com.sewon.healthmonitor.screen.report
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sewon.healthmonitor.data.model.SleepSession
 import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
-import com.sewon.healthmonitor.data.repository.repointerface.IUserRepository
-import com.sewon.healthmonitor.data.source.local.entity.LocalSleepSession
+import com.sewon.healthmonitor.data.repository.repointerface.ITopperRepository
 import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportAlgorithm
 import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportDataProcessing
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +20,8 @@ import javax.inject.Inject
 
 
 data class UiState(
+  val sessionList: List<SleepSession> = listOf(),
+
   val sleepTime: Float = 0.0f,
   val sleepEfficiency: Float = 0.0f,
   val sleepLatency: Float = 0.0f,
@@ -31,9 +33,9 @@ data class UiState(
 
   val meanHR: Float = 0.0f,
   val meanBR: Float = 0.0f,
-  val SDRP: Float = 0.0f,
-  val RMSSD: Float = 0.0f,
-  val RPITriangular: Float = 0.0f,
+  val sDRP: Float = 0.0f,
+  val rMSSD: Float = 0.0f,
+  val rPITriangular: Float = 0.0f,
   val lowFreq: Float = 0.0f,
   val highFreq: Float = 0.0f,
   val lfHfRatio: Float = 0.0f,
@@ -44,7 +46,7 @@ data class UiState(
 
 @HiltViewModel
 class ReportViewModel @Inject constructor(
-  private val userRepository: IUserRepository,
+  private val topperRepository: ITopperRepository,
   private val sessionRepository: ISessionRepository,
 ) : ViewModel() {
 
@@ -54,16 +56,11 @@ class ReportViewModel @Inject constructor(
 
   private fun initFirstSession() {
     viewModelScope.launch {
-//      if (sessionRepository.countSession().first() == 0) {
-//        val curTime = LocalTime.now()
-//        val session = Session(
-//          0.0, 0.0, 0.0,
-//          0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-//          50, 10,
-//          curTime, curTime, curTime.plusHours(3)
-//        )
-//        sessionRepository.addSession(session)
-//      }
+      val sessionList = sessionRepository.getSleepSessionList()
+
+      _uiState.update {
+        it.copy(sessionList = sessionList)
+      }
     }
   }
 
@@ -71,139 +68,89 @@ class ReportViewModel @Inject constructor(
     initFirstSession()
   }
 
-  var session: LocalSleepSession? = null
 
-  fun showData(sessionId: Int) = viewModelScope.launch {
-    session = sessionRepository.getSessionById(sessionId)
+  fun showSessionReport(sessionId: Int) = viewModelScope.launch {
+    val allData = topperRepository.getAllDataFromSession(sessionId)
+    val session = sessionRepository.getSessionById(sessionId)
+    Timber.tag("ReportViewModel").d(session.toString())
+    Timber.tag("ReportViewModel").d(allData.size.toString())
+    if (session != null && allData.isNotEmpty()) {
+      ReportDataProcessing.importData(allData)
+      ReportAlgorithm.refHRV = session.refHRV
+      ReportAlgorithm.refHR = session.refHR
+      ReportAlgorithm.refBR = session.refBR
 
-    if (session != null) {
-      ReportAlgorithm.refHRV = session!!.refHRV
-      ReportAlgorithm.refHR = session!!.refHR
-      ReportAlgorithm.refBR = session!!.refBR
-
-      getTotalSleepTime()
-      getSleepEfficiency()
-      getSleepLatency()
-      getWakeOnSleep()
-
-      getSleepScore()
-      getSleepStage()
+      getSleepSummary(session)
       getSleepRPI()
-
-      getMeanHR()
-      getMeanBR()
       getECG()
       getRPITriangular()
-
-      getNervousScore()
-      getSummarySleep()
-    }
-
-  }
-
-  fun getTotalSleepTime() {
-    val startTime: Date = session!!.actualStartTime
-    val wakeUpTime: Date = session!!.endTime
-    val sleepTime = Date(wakeUpTime.getTime() - startTime.getTime()).time.toFloat()
-    Timber.tag("Timber").d(sleepTime.toString())
-//    val sleepTime = startTime.until(wakeUpTime, ChronoUnit.HOURS).toFloat()
-    _uiState.update {
-      it.copy(sleepTime = sleepTime)
+    } else {
+      Timber.tag("ReportViewModel").d("showSessionReport error")
     }
   }
 
-  fun getSleepEfficiency() {
-    val sleepEfficiency = session!!.rating.toFloat()
-    _uiState.update {
-      it.copy(sleepEfficiency = sleepEfficiency)
-    }
-  }
+  private fun getSleepSummary(session: SleepSession) {
+    val sleepEfficiency = session.rating.toFloat()
 
-  fun getSleepLatency() {
-    val startTime: Date = session!!.actualStartTime
-    val sleepTime: Date = session!!.sleepTime
-    val sleepLatency = Date(sleepTime.getTime() - startTime.getTime()).time.toFloat()
+    val startTime: Date = session.actualStartTime
+    val wakeUpTime: Date = session.actualEndTime
+    val totalSleepTime = Date(wakeUpTime.time - startTime.time).time.toFloat()
+
+    val sleepTime: Date = session.sleepTime
+    val sleepLatency = Date(sleepTime.time - startTime.time).time.toFloat()
+
+    val wakeupOnSleep = session.wakeUpCount.toFloat()
 //    val sleepLatency = startTime.until(sleepTime, ChronoUnit.MINUTES).toFloat()
     _uiState.update {
-      it.copy(sleepLatency = sleepLatency)
+      it.copy(
+        sleepTime = totalSleepTime / 12,
+        sleepEfficiency = sleepEfficiency / 100,
+        sleepLatency = sleepLatency / 60,
+        wakeupOnSleep = wakeupOnSleep / 60,
+        sleepRating = session.rating.toFloat()
+      )
     }
   }
 
-  fun getWakeOnSleep() {
-    val wakeupOnSleep = session!!.wakeUpCount.toFloat()
-    _uiState.update {
-      it.copy(wakeupOnSleep = wakeupOnSleep)
-    }
-  }
-
-  fun getSleepScore() {
-    _uiState.update {
-      it.copy(sleepRating = session!!.rating.toFloat())
-    }
-  }
-
-  fun getSleepStage() {
+  private fun getSleepRPI() {
     val sleepStage = ReportAlgorithm.processByTime()
-    _uiState.update {
-      it.copy(sleepStage = sleepStage)
-    }
-  }
 
-  fun getSleepRPI() {
     val sleepRPI: List<Float> = ReportDataProcessing.getBSleepRPI()
-    _uiState.update {
-      it.copy(sleepRPI = sleepRPI)
-    }
-  }
-
-  fun getMeanHR() {
     val meanHR = ReportDataProcessing.getCMeanHR()
-    _uiState.update {
-      it.copy(meanHR = meanHR)
-    }
-  }
-
-  fun getMeanBR() {
     val meanBR = ReportDataProcessing.getCMeanBR()
     _uiState.update {
-      it.copy(meanBR = meanBR)
+      it.copy(
+        sleepStage = sleepStage,
+        sleepRPI = sleepRPI,
+        meanHR = meanHR,
+        meanBR = meanBR
+      )
     }
   }
 
-  fun getECG() {
+  private fun getECG() {
     val topper = ReportDataProcessing.getECGAlgorithmResult()
-    if (topper != null) {
-      _uiState.update {
-        it.copy(
-          SDRP = topper.SDRP.toFloat(),
-          RMSSD = topper.RMSSD.toFloat(),
-          lowFreq = topper.LF.toFloat(),
-          highFreq = topper.HF.toFloat(),
-          lfHfRatio = topper.LF_HF_Ratio.toFloat()
-        )
-      }
+    val nervousScore = listOf(topper.LF.toFloat(), topper.HF.toFloat())
+    _uiState.update {
+      it.copy()
+    }
+    _uiState.update {
+      it.copy(
+        sDRP = topper.SDRP.toFloat(),
+        rMSSD = topper.RMSSD.toFloat(),
+        lowFreq = topper.LF.toFloat(),
+        highFreq = topper.HF.toFloat(),
+        lfHfRatio = topper.LF_HF_Ratio.toFloat(),
+        nervousScore = nervousScore,
+        stressScore = topper.StressScore.toFloat()
+      )
     }
   }
 
-  fun getRPITriangular() {
-    val RPITriangular = ReportDataProcessing.getRPITriangular()
+  private fun getRPITriangular() {
+    val rPITriangular = ReportDataProcessing.getRPITriangular()
     _uiState.update {
-      it.copy(RPITriangular = RPITriangular)
-    }
-  }
-
-  fun getNervousScore() {
-    //    TODO: query all data -> Sleep Stage
-    val nervousScore = listOf(session!!.lowFreq.toFloat(), session!!.highFreq.toFloat())
-    _uiState.update {
-      it.copy(nervousScore = nervousScore)
-    }
-  }
-
-  fun getSummarySleep() {
-    val stressScore = 0.0f
-    _uiState.update {
-      it.copy(stressScore = stressScore)
+      it.copy(rPITriangular = rPITriangular)
     }
   }
 }

@@ -11,10 +11,10 @@ import com.sewon.healthmonitor.data.source.local.entity.LocalTopper
 interface LocalTopperDao {
 
   @Query("SELECT * FROM topper where session_id = :sessionId")
-  fun queryAllDataFromSession(sessionId: Int): List<LocalTopper>
+  suspend fun queryAllDataFromSession(sessionId: Int): List<LocalTopper>
 
   @Query("SELECT count(br) FROM topper")
-  fun queryCountData(): Int
+  suspend fun queryCountData(): Int
 
 
   @Insert

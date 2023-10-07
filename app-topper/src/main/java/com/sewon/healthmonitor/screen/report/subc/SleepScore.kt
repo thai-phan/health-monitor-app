@@ -1,20 +1,16 @@
-package com.sewon.healthmonitor.screen.report.subb
+package com.sewon.healthmonitor.screen.report.subc
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.healthmonitor.screen.report.UiState
-import com.sewon.healthmonitor.screen.report.subb.component.Chart1SleepStage
-import com.sewon.healthmonitor.screen.report.subb.component.Chart2SleepRPI
-import com.sewon.healthmonitor.screen.report.subb.component.ProgressBar
+import com.sewon.healthmonitor.screen.report.subc.component.Chart1SleepStage
+import com.sewon.healthmonitor.screen.report.subc.component.Chart2SleepRPI
+import com.sewon.healthmonitor.screen.report.subc.component.ProgressBar
 
 
 @Composable

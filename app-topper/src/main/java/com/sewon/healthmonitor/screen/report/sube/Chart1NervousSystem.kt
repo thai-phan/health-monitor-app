@@ -1,19 +1,16 @@
-package com.sewon.healthmonitor.screen.report.subd
+package com.sewon.healthmonitor.screen.report.sube
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.column.columnChart
-import com.patrykandpatrick.vico.compose.chart.line.lineChart
 import com.patrykandpatrick.vico.compose.style.ProvideChartStyle
 import com.patrykandpatrick.vico.compose.style.currentChartStyle
 import com.patrykandpatrick.vico.core.chart.DefaultPointConnector
-import com.patrykandpatrick.vico.core.chart.copy
 import com.patrykandpatrick.vico.core.entry.entryModelOf
-import com.sewon.healthmonitor.screen.report.subb.component.rememberChartStyle
+import com.sewon.healthmonitor.screen.report.subc.component.rememberChartStyle
 
 
 @Composable

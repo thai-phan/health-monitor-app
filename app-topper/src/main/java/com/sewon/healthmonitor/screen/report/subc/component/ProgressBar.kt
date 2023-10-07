@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.report.subb.component
+package com.sewon.healthmonitor.screen.report.subc.component
 
 
 import androidx.compose.foundation.Canvas

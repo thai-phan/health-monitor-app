@@ -7,15 +7,15 @@ import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Upsert
 import com.sewon.healthmonitor.data.source.local.entity.LocalSleepSession
-import kotlinx.coroutines.flow.Flow
+import java.util.Date
 
 @Dao
 interface LocalSessionDao {
   @Query("SELECT * FROM sleep_session")
-  fun getAllSession(): Flow<List<LocalSleepSession>>
+  suspend fun getAllSession(): List<LocalSleepSession>
 
   @Query("SELECT count(session_id) FROM sleep_session")
-  fun countSession(): Int
+  suspend fun countSession(): Int
 
   @Query(
     "UPDATE sleep_session SET " +
@@ -24,7 +24,20 @@ interface LocalSessionDao {
         "ref_br = :refBR  " +
         "WHERE session_id = :sessionId"
   )
-  fun queryUpdateSessionRefValue(refHRV: Double, refHR: Double, refBR: Double, sessionId: Int)
+  suspend fun queryUpdateSessionRefValue(
+    sessionId: Int,
+    refHRV: Double,
+    refHR: Double,
+    refBR: Double
+  )
+
+  @Query(
+    "UPDATE sleep_session SET " +
+        "actual_end_time = :endTime " +
+        "WHERE session_id = :sessionId"
+  )
+  suspend fun queryUpdateSessionEndTime(sessionId: Int, endTime: Date)
+
 
   @Query("SELECT * FROM sleep_session WHERE session_id = :sessionId")
   suspend fun loadById(sessionId: Int): LocalSleepSession?

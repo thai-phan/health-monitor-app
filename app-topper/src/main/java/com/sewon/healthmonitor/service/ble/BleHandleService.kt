@@ -111,7 +111,7 @@ class BleHandleService : Service(), SerialListener {
 
   override fun onDestroy() {
     cancelNotification()
-    disconnect()
+    disconnectBluetoothSocket()
     super.onDestroy()
   }
 
@@ -121,14 +121,12 @@ class BleHandleService : Service(), SerialListener {
 
   @Throws(IOException::class)
   fun connect(socket: SerialSocket) {
-    bleDataListener?.countDownTimer?.start()
     socket.connect(this)
     this.socket = socket
     connected = true
   }
 
-  fun disconnect() {
-    bleDataListener?.countDownTimer?.cancel()
+  fun disconnectBluetoothSocket() {
     connected = false // ignore data,errors while disconnecting
     cancelNotification()
     if (socket != null) {
@@ -184,10 +182,11 @@ class BleHandleService : Service(), SerialListener {
 
   fun updateCurrentSessionRefValue(refHRV: Double, refHR: Double, refBR: Double) {
     scope.launch {
-      sessionRepository.updateSessionRefValue(refHRV, refHR, refBR, sessionId)
+      sessionRepository.updateSessionRefValue(sessionId, refHRV, refHR, refBR)
       Timber.tag("Timber").d("updateSessionRefValue")
     }
   }
+
 
   fun insertNewTopperToDatabase(topperData: TopperData) {
     scope.launch {
@@ -197,13 +196,10 @@ class BleHandleService : Service(), SerialListener {
   }
 
 
-  fun loadData() {
+  fun loadAllDataFromSession() {
     scope.launch {
-      val allData = topperRepository.getAllDataFromSession(1)
 
-      ReportDataProcessing.importData(allData)
-
-      Timber.d(allData.size.toString())
+//      Timber.d(allData.size.toString())
     }
   }
 
@@ -308,12 +304,12 @@ class BleHandleService : Service(), SerialListener {
               bleDataListener!!.onSerialConnectError(e)
             } else {
               queue1.add(QueueItem(QueueType.ConnectError, e))
-              disconnect()
+              disconnectBluetoothSocket()
             }
           }
         } else {
           queue2.add(QueueItem(QueueType.ConnectError, e))
-          disconnect()
+          disconnectBluetoothSocket()
         }
       }
     }
@@ -373,12 +369,12 @@ class BleHandleService : Service(), SerialListener {
               bleDataListener!!.onSerialIoError(e)
             } else {
               queue1.add(QueueItem(QueueType.IoError, e))
-              disconnect()
+              disconnectBluetoothSocket()
             }
           }
         } else {
           queue2.add(QueueItem(QueueType.IoError, e))
-          disconnect()
+          disconnectBluetoothSocket()
         }
       }
     }

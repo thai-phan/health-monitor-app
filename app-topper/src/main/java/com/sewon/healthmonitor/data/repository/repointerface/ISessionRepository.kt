@@ -1,16 +1,22 @@
 package com.sewon.healthmonitor.data.repository.repointerface
 
 import com.sewon.healthmonitor.data.model.SleepSession
-import com.sewon.healthmonitor.data.source.local.entity.LocalSleepSession
+import java.util.Date
 
 
 interface ISessionRepository {
 
-  suspend fun getSessionById(id: Int): LocalSleepSession?
+  suspend fun getSleepSessionList(): List<SleepSession>
 
-  suspend fun addSession(sleepSession: SleepSession): Long
+  suspend fun getSessionById(id: Int): SleepSession?
+
+  suspend fun createNewSession(sleepSession: SleepSession): Long
 
   suspend fun countSession(): Int
 
-  fun updateSessionRefValue(refHRV: Double, refHR: Double, refBR: Double, sessionId: Int)
+  // TODO:
+  suspend fun updateSessionRefValue(sessionId: Int, refHRV: Double, refHR: Double, refBR: Double)
+
+  // TODO:
+  suspend fun updateSessionEndTime(sessionId: Int, endTime: Date)
 }

@@ -33,8 +33,10 @@ import com.sewon.healthmonitor.R
 @Composable
 fun ButtonAction(
   isStarted: Boolean,
+  isAlarm: Boolean,
   startSleep: () -> Unit,
-  cancelSleep: () -> Unit
+  cancelSleep: () -> Unit,
+  stopAlarm: () -> Unit
 ) {
   val textStyle = TextStyle(
     fontSize = 24.sp,
@@ -103,6 +105,18 @@ fun ButtonAction(
         onClick = { cancelSleep() }) {
         Text(
           "기상", style = textStyle
+        )
+      }
+    }
+    if (isAlarm) {
+      Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
+        shape = RoundedCornerShape(size = 100.dp),
+        modifier = Modifier
+          .width(200.dp)
+          .height(56.dp),
+        onClick = { stopAlarm() }) {
+        Text(
+          "Stop Alarm", style = textStyle
         )
       }
     }

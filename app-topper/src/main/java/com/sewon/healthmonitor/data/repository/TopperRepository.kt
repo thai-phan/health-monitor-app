@@ -16,12 +16,12 @@ class TopperRepository @Inject constructor(
 ) : ITopperRepository {
 
 
-  override fun getAllDataFromSession(sessionId: Int): List<LocalTopper> {
+  override suspend fun getAllDataFromSession(sessionId: Int): List<LocalTopper> {
     return LocalTopperDao.queryAllDataFromSession(sessionId)
   }
 
 
-  override fun getDataCount(): Int {
+  override suspend fun getDataCount(): Int {
     return LocalTopperDao.queryCountData()
   }
 //     Count number record

@@ -1,17 +1,13 @@
-package com.sewon.healthmonitor.screen.report.subc
+package com.sewon.healthmonitor.screen.report.subd
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.healthmonitor.screen.report.UiState
-import com.sewon.healthmonitor.screen.report.suba.CircularChart
+import com.sewon.healthmonitor.screen.report.subb.CircularChart
 
 
 @Composable
@@ -31,12 +27,12 @@ fun SleepDetail(uiState: UiState) {
     CircularChart(
       angle = uiState.meanBR, modifier = Modifier.weight(1f), brush = blueBrush
     )
-    CircularChart(angle = uiState.SDRP, modifier = Modifier.weight(1f), brush = yellowBrush)
-    CircularChart(angle = uiState.RMSSD, modifier = Modifier.weight(1f), brush = blueBrush)
+    CircularChart(angle = uiState.sDRP, modifier = Modifier.weight(1f), brush = yellowBrush)
+    CircularChart(angle = uiState.rMSSD, modifier = Modifier.weight(1f), brush = blueBrush)
   }
   Row() {
     CircularChart(
-      angle = uiState.RPITriangular,
+      angle = uiState.rPITriangular,
       modifier = Modifier.weight(1f),
       brush = yellowBrush
     )

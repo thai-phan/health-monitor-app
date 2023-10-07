@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sewon.healthmonitor.screen.report.subb.component
+package com.sewon.healthmonitor.screen.report.subc.component
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
@@ -42,7 +42,7 @@ internal fun rememberChartStyle(
     val defaultColors = if (isSystemInDarkTheme) DefaultColors.Dark else DefaultColors.Light
     ChartStyle(
       ChartStyle.Axis(
-        axisLabelColor = Color(defaultColors.axisLabelColor),
+        axisLabelColor = Color.Yellow,
         axisGuidelineColor = Color(defaultColors.axisGuidelineColor),
         axisLineColor = Color(defaultColors.axisLineColor),
       ),

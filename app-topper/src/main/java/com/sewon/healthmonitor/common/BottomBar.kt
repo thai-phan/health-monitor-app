@@ -29,7 +29,7 @@ fun BottomBar(
 
   val navBackStackEntry by navController.currentBackStackEntryAsState()
   val currentRoute = navBackStackEntry?.destination?.route
-    ?: MainTabs.ACTIVITY.route
+    ?: MainTabs.REPORT.route
 
   val routes = remember {
     MainTabs.values().map { it.route }
@@ -44,23 +44,25 @@ fun BottomBar(
           containerColor = Color(0xFF000103),
         ) {
           tabs.forEach { tab ->
-            NavigationBarItem(
-              icon = { Icon(painterResource(tab.icon), contentDescription = null) },
-              label = { Text(stringResource(tab.title).uppercase(Locale.getDefault())) },
-              selected = currentRoute == tab.route,
-              onClick = {
-                if (tab.route != currentRoute) {
-                  navController.navigate(tab.route) {
-                    popUpTo(navController.graph.startDestinationId) {
-                      saveState = true
+            if (tab.route != MainTabs.ACTIVITY.route) {
+              NavigationBarItem(
+                icon = { Icon(painterResource(tab.icon), contentDescription = null) },
+                label = { Text(stringResource(tab.title).uppercase(Locale.getDefault())) },
+                selected = currentRoute == tab.route,
+                onClick = {
+                  if (tab.route != currentRoute) {
+                    navController.navigate(tab.route) {
+                      popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                      }
+                      launchSingleTop = true
+                      restoreState = true
                     }
-                    launchSingleTop = true
-                    restoreState = true
                   }
-                }
-              },
-              modifier = Modifier.navigationBarsPadding()
-            )
+                },
+                modifier = Modifier.navigationBarsPadding()
+              )
+            }
           }
         }
       }

@@ -33,7 +33,6 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun DeviceItem(
   color: Color,
-  navController: NavHostController = rememberNavController(),
   bluetoothDevice: BluetoothDevice,
   onSelectBle: () -> Unit
 ) {

@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.screen.report.subb.component
+package com.sewon.healthmonitor.screen.report.subc.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -13,10 +13,10 @@ import com.patrykandpatrick.vico.core.chart.DefaultPointConnector
 import com.patrykandpatrick.vico.core.chart.copy
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 
-
 @Composable
-fun Chart1SleepStage(data: List<Float>) {
-  val lineChartColors = listOf(Color(0xFF287EFF))
+fun Chart2SleepRPI(data: List<Float>) {
+
+  val lineChartColors = listOf(Color(0xFF00FD55))
   ProvideChartStyle(rememberChartStyle(lineChartColors)) {
     val chartEntryModel = entryModelOf(*data.map { it }.toTypedArray())
     val defaultLines = currentChartStyle.lineChart.lines
@@ -33,4 +33,5 @@ fun Chart1SleepStage(data: List<Float>) {
       bottomAxis = rememberBottomAxis(),
     )
   }
+
 }

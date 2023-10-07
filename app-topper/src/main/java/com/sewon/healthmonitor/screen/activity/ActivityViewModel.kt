@@ -1,15 +1,11 @@
 package com.sewon.healthmonitor.screen.activity
 
-import android.icu.text.DateFormat
-import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
-import android.icu.util.GregorianCalendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.MainActivity
 import com.sewon.healthmonitor.api.HttpService
 import com.sewon.healthmonitor.api.ServerService
-import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
 import com.sewon.healthmonitor.data.model.SleepSession
 import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
 import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
@@ -22,13 +18,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.time.LocalTime
 import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 
 data class UiState(
+  val sessionId: Int = 0,
   val status1: String = "",
   val status2: String = "",
   val status3: String = "",
@@ -50,19 +45,9 @@ class ActivityViewModel @Inject constructor(
   private val _uiState = MutableStateFlow(UiState())
   val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-  fun createSession(
-    startTime: TimeRangePicker.Time,
-    endTime: TimeRangePicker.Time,
-    duration: TimeRangePicker.TimeDuration
-  ) = viewModelScope.launch {
-    val startTimeCalendar = GregorianCalendar.getInstance()
-    startTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, startTime.hour)
-    startTimeCalendar.set(GregorianCalendar.MINUTE, startTime.minute)
+  var thisSessionId = 0
 
-    val endTimeCalendar = startTimeCalendar.clone() as Calendar?
-    endTimeCalendar!!.add(GregorianCalendar.HOUR_OF_DAY, duration.hour)
-    endTimeCalendar.add(GregorianCalendar.MINUTE, duration.minute)
-
+  fun createSession(startTime: Calendar, endTime: Calendar) = viewModelScope.launch {
     val actualStartTime = Date()
     val sleepTime = Date()
 
@@ -70,14 +55,21 @@ class ActivityViewModel @Inject constructor(
       0.0, 0.0, 0.0, false,
       0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
       90, 10,
-      startTimeCalendar.time,
+      startTime.time,
+      endTime.time,
       actualStartTime,
       sleepTime,
-      endTimeCalendar.time,
+      sleepTime,
     )
-    val sessionId: Int = sessionRepository.addSession(sleepSession).toInt()
-
+    val sessionId: Int = sessionRepository.createNewSession(sleepSession).toInt()
+    thisSessionId = sessionId
     MainActivity.bleHandleService.sessionId = sessionId
+  }
+
+  fun updateCurrentSessionEndTime() = viewModelScope.launch {
+    val actualEndTime = Date()
+    sessionRepository.updateSessionEndTime(thisSessionId, actualEndTime)
+    Timber.tag("Timber").d("updateSessionRefValue")
   }
 
 
@@ -128,9 +120,7 @@ class ActivityViewModel @Inject constructor(
         it.copy(status3 = "Disconnect")
       }
     }
-    // launching a new coroutine
 
-    println("asdas")
   }
 
   fun queryFromServerHttp() = viewModelScope.launch {

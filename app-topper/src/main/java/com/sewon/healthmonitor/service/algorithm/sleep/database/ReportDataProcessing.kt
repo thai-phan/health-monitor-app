@@ -28,7 +28,7 @@ class ReportDataProcessing {
     }
 
 
-    fun getECGAlgorithmResult(): ECGTopper? {
+    fun getECGAlgorithmResult(): ECGTopper {
       val HRVArray: DoubleArray = allData.map { it.hrv }.toDoubleArray()
       return ECGAnalysisProc.ECG_PPG_AnalysisData(HRVArray)
     }
@@ -51,6 +51,4 @@ class ReportDataProcessing {
       return max!!.key
     }
   }
-
-
 }
