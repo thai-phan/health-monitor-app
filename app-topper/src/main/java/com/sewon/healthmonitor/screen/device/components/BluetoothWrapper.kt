@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
-import com.sewon.healthmonitor.permission.PermissionScreen
 
 
 /**
@@ -73,7 +72,7 @@ fun BluetoothWrapper(
 
   val permissionFinal = (bluetoothPermissionSet + locationPermission + extraPermissions).toList()
 
-  PermissionScreen(
+  PermissionWrapper(
     permissions = permissionFinal,
     contentAlignment = Alignment.Center,
   ) {

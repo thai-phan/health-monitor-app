@@ -21,46 +21,44 @@ import com.sewon.healthmonitor.data.model.SleepSession
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SessionSelection(data: List<SleepSession>, selectReportSession: (id: Int) -> Unit) {
+fun SessionSelection(sessionList: List<SleepSession>, selectReportSession: (id: Int) -> Unit) {
   var expanded by remember { mutableStateOf(false) }
 
-  if (data.isNotEmpty()) {
-    var selectedText by remember { mutableStateOf(data[0]) }
+  var selectedText by remember { mutableStateOf(sessionList[0]) }
 
-    Box(
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(32.dp)
+  Box(
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(32.dp)
+  ) {
+    ExposedDropdownMenuBox(
+      expanded = expanded,
+      onExpandedChange = {
+        expanded = !expanded
+      }
     ) {
-      ExposedDropdownMenuBox(
+      TextField(
+        value = "${selectedText.sessionId} : ${selectedText.actualEndTime}",
+        onValueChange = {},
+        readOnly = true,
+        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+        modifier = Modifier.menuAnchor()
+      )
+
+      ExposedDropdownMenu(
         expanded = expanded,
-        onExpandedChange = {
-          expanded = !expanded
-        }
+        onDismissRequest = { expanded = false }
       ) {
-        TextField(
-          value = "${selectedText.sessionId} : ${selectedText.actualEndTime}",
-          onValueChange = {},
-          readOnly = true,
-          trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-          modifier = Modifier.menuAnchor()
-        )
 
-        ExposedDropdownMenu(
-          expanded = expanded,
-          onDismissRequest = { expanded = false }
-        ) {
-
-          data.forEach { item ->
-            DropdownMenuItem(
-              text = { Text("${item.sessionId} : ${item.actualEndTime}")  },
-              onClick = {
-                selectReportSession(item.sessionId)
-                selectedText = item
-                expanded = false
-              }
-            )
-          }
+        sessionList.forEach { item ->
+          DropdownMenuItem(
+            text = { Text("${item.sessionId} : ${item.actualEndTime}") },
+            onClick = {
+              selectReportSession(item.sessionId)
+              selectedText = item
+              expanded = false
+            }
+          )
         }
       }
     }

@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.permission
+package com.sewon.healthmonitor.screen.device.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
@@ -46,7 +46,7 @@ fun PermissionRequestView(
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
     Text(
-      text = "Sample requires permission/s:",
+      text = "Requires permissions:",
       style = MaterialTheme.typography.titleLarge,
       modifier = Modifier.padding(16.dp),
     )

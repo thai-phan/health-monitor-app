@@ -54,14 +54,21 @@ fun ReportScreen(
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
       Text("수면 리포트", fontSize = 24.sp)
     }
-    SessionSelection(uiState.sessionList, selectReportSession = {
-      selectSessionReport(it)
-    })
+    if (uiState.sessionList.isNotEmpty()) {
+      SessionSelection(uiState.sessionList, selectReportSession = {
+        selectSessionReport(it)
+      })
 
-    SleepChart(uiState)
-    SleepScore(uiState)
-    SleepDetail(uiState)
-    SleepSummary(uiState)
+      SleepChart(uiState)
+
+      SleepScore(uiState)
+
+      SleepDetail(uiState)
+
+      SleepSummary(uiState)
+    } else {
+      Text("Sleep Session Empty")
+    }
   }
 }
 
