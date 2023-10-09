@@ -23,23 +23,47 @@ fun SleepDetail(uiState: UiState) {
 
   Text("RPI Index")
   Row() {
-    CircularChart(angle = uiState.meanHR, modifier = Modifier.weight(1f), brush = yellowBrush)
     CircularChart(
-      angle = uiState.meanBR, modifier = Modifier.weight(1f), brush = blueBrush
+      modifier = Modifier.weight(1f),
+      label = "Mean HR",
+      angle = uiState.meanHR, brush = yellowBrush
     )
-    CircularChart(angle = uiState.sDRP, modifier = Modifier.weight(1f), brush = yellowBrush)
-    CircularChart(angle = uiState.rMSSD, modifier = Modifier.weight(1f), brush = blueBrush)
+    CircularChart(
+      modifier = Modifier.weight(1f),
+      label = "Mean BR",
+      angle = uiState.meanBR, brush = blueBrush
+    )
+    CircularChart(
+      modifier = Modifier.weight(1f),
+      label = "SDRP",
+      angle = uiState.sDRP, brush = yellowBrush
+    )
+    CircularChart(
+      modifier = Modifier.weight(1f),
+      label = "RMSSD",
+      angle = uiState.rMSSD, brush = blueBrush
+    )
   }
   Row() {
     CircularChart(
-      angle = uiState.rPITriangular,
       modifier = Modifier.weight(1f),
-      brush = yellowBrush
+      label = "RPI Triangular index",
+      angle = uiState.rPITriangular, brush = yellowBrush
     )
     CircularChart(
-      angle = uiState.lowFreq, modifier = Modifier.weight(1f), brush = blueBrush
+      modifier = Modifier.weight(1f),
+      label = "Low Freq.",
+      angle = uiState.lowFreq, brush = blueBrush
     )
-    CircularChart(angle = uiState.highFreq, modifier = Modifier.weight(1f), brush = yellowBrush)
-    CircularChart(angle = uiState.lfHfRatio, modifier = Modifier.weight(1f), brush = blueBrush)
+    CircularChart(
+      modifier = Modifier.weight(1f),
+      label = "High Freq.",
+      angle = uiState.highFreq, brush = yellowBrush
+    )
+    CircularChart(
+      modifier = Modifier.weight(1f),
+      label = "L/F Ratio",
+      angle = uiState.lfHfRatio, brush = blueBrush
+    )
   }
 }

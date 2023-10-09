@@ -1,6 +1,8 @@
 package com.sewon.healthmonitor.screen.report.subb
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -18,11 +20,31 @@ fun SleepChart(uiState: UiState) {
   )
 
   Row() {
-    CircularChart(angle = uiState.sleepTime, modifier = Modifier.weight(1f), brush = yellowBrush)
     CircularChart(
-      angle = uiState.sleepEfficiency, modifier = Modifier.weight(1f), brush = blueBrush
+      modifier = Modifier.weight(1f),
+      label = "총수면 시간",
+      angle = uiState.sleepTime,
+      brush = yellowBrush
     )
-    CircularChart(angle = uiState.sleepLatency, modifier = Modifier.weight(1f), brush = yellowBrush)
-    CircularChart(angle = uiState.wakeupOnSleep, modifier = Modifier.weight(1f), brush = blueBrush)
+
+    CircularChart(
+      modifier = Modifier.weight(1f),
+      label = "수면효율",
+      angle = uiState.sleepEfficiency, brush = blueBrush
+    )
+
+    CircularChart(
+      modifier = Modifier.weight(1f),
+      label = "수면지연 시간",
+      angle = uiState.sleepLatency,
+      brush = yellowBrush
+    )
+
+    CircularChart(
+      modifier = Modifier.weight(1f),
+      label = "수면각성 시간",
+      angle = uiState.wakeupOnSleep,
+      brush = blueBrush
+    )
   }
 }

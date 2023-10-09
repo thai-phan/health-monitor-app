@@ -7,5 +7,5 @@ import com.sewon.healthmonitor.screen.report.component.CircularChart
 
 @Composable
 fun Chart2StressScore(stressScore: Float) {
-  CircularChart(angle = stressScore)
+  CircularChart(label = "스트레스 점수", angle = stressScore)
 }
