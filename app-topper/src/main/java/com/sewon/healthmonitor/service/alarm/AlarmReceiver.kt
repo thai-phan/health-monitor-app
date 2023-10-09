@@ -11,19 +11,21 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import com.sewon.healthmonitor.MainActivity
 
 
 class AlarmReceiver : BroadcastReceiver() {
   companion object {
+    lateinit var vibrator: Vibrator
     lateinit var ringtone: Ringtone
+
   }
+
 
   override fun onReceive(context: Context, intent: Intent) {
     MainActivity.bleDataListener.startAlarmListener()
-    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+
+    vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
       val vibratorManager =
         context.getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager
       vibratorManager.defaultVibrator
@@ -32,14 +34,26 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
 //    val vibrator = context.getSystemService(VIBRATOR_SERVICE) as Vibrator
-    vibrator.vibrate(4000)
-    Toast.makeText(context, "Alarm! Wake up! Wake up!", Toast.LENGTH_LONG).show()
+    vibrator.vibrate(
+      VibrationEffect.createWaveform(
+        longArrayOf(1500, 800, 800, 800), 0
+      )
+    )
+
     var alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
     if (alarmUri == null) {
       alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
     }
     // setting default ringtone
     ringtone = RingtoneManager.getRingtone(context, alarmUri)
+
+    if (MainActivity.bleHandleService.toggleAlarmSound.value) {
+      playAlarmSound()
+    }
+
+  }
+
+  fun playAlarmSound() {
     // play ringtone
     ringtone.play()
   }

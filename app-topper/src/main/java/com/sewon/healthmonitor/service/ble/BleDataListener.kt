@@ -32,10 +32,14 @@ class BleDataListener : SerialListener {
     isAlarm.value = true
   }
 
+  // TODO:
   fun stopAlarmListener() {
     isAlarm.value = false
     if (AlarmReceiver.ringtone != null) {
       AlarmReceiver.ringtone.stop()
+    }
+    if (AlarmReceiver.vibrator != null) {
+      AlarmReceiver.vibrator.cancel()
     }
   }
 
