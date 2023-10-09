@@ -44,17 +44,18 @@ fun Modal1InduceEnergy(
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
-
+      Text("수면유도 에너지", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Spacer(modifier = Modifier.height(20.dp))
       Text(
         "미주신경 자극으로 심신을 안정화시켜 잠에 빨리 들 수 있도록 도와줍니다. " +
             "소리에 민감한 사용자에게 추천합니다."
       )
+      Spacer(modifier = Modifier.height(20.dp))
 
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
+          .fillMaxWidth()
+          .height(100.dp),
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {

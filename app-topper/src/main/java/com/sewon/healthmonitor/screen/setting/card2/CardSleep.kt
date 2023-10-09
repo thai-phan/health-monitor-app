@@ -34,120 +34,105 @@ import com.sewon.healthmonitor.screen.setting.card2.component.Modal1WakeUpTime
 
 @Composable
 fun SleepSetting(
-    switchColors: SwitchColors = SwitchDefaults.colors(),
-    viewModel: ViewModelCardSleep = hiltViewModel(),
+  switchColors: SwitchColors = SwitchDefaults.colors(),
+  viewModel: ViewModelCardSleep = hiltViewModel(),
 ) {
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var openWakeupModal by rememberSaveable { mutableStateOf(false) }
-    var openSleepTimeModal by rememberSaveable { mutableStateOf(false) }
-    var openAlarmTypeModal by rememberSaveable { mutableStateOf(false) }
+  var openWakeupModal by rememberSaveable { mutableStateOf(false) }
+  var openSleepTimeModal by rememberSaveable { mutableStateOf(false) }
+  var openAlarmTypeModal by rememberSaveable { mutableStateOf(false) }
 
 
-    Card(
-        shape = RoundedCornerShape(size = 10.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+  val height = 45.dp
+  Card(
+    shape = RoundedCornerShape(size = 10.dp),
+    colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+  ) {
+    Column(
+      verticalArrangement = Arrangement.SpaceAround,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(20.dp)
+
     ) {
-        Column(
-            verticalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
+      Text(
+        "수면설정", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
+      )
 
-        ) {
-            Text(
-                "수면설정", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
-            )
-            Column(
-                modifier = Modifier
-                    .clickable(onClick = { openWakeupModal = !openWakeupModal })
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+      Row(
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(height)
+          .clickable(onClick = { openWakeupModal = !openWakeupModal }),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
 //                기상알람시간 Wake Up alarm time
-                    Text("기상알람시간")
-                    Switch(colors = switchColors,
-                        checked = uiState.alarmOn,
-                        onCheckedChange = {
-                            viewModel.toggleAlarmOn(it)
-                        })
-                }
-                Text(uiState.alarmTime.toString())
-            }
+        Text("기상알람시간")
+        Text(uiState.alarmTime.toString())
+      }
 
-            Spacer(modifier = Modifier.height(5.dp))
-            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-            Spacer(modifier = Modifier.height(5.dp))
-            Column(
-                modifier = Modifier
-                    .clickable(onClick = { openSleepTimeModal = !openSleepTimeModal }),
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+      Spacer(modifier = Modifier.height(5.dp))
+      Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+      Spacer(modifier = Modifier.height(5.dp))
+      Row(
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(height)
+          .clickable(onClick = { openSleepTimeModal = !openSleepTimeModal }),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
 //                취침시간 Bedtime
-                    Text("취침시간")
-                    Switch(colors = switchColors,
-                        checked = uiState.bedOn,
-                        onCheckedChange = {
-                            viewModel.toggleBedOn(it)
-                        })
-                }
-                Text(uiState.bedTime.toString())
-            }
+        Text("취침시간")
 
-            Spacer(modifier = Modifier.height(5.dp))
-            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-            Spacer(modifier = Modifier.height(5.dp))
-            Column(modifier = Modifier
-                .clickable(onClick = { openAlarmTypeModal = !openAlarmTypeModal }),) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+        Text(uiState.bedTime.toString())
+
+      }
+
+      Spacer(modifier = Modifier.height(5.dp))
+      Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+      Spacer(modifier = Modifier.height(5.dp))
+      Row(
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(height)
+          .clickable(onClick = {
+            openAlarmTypeModal = !openAlarmTypeModal
+          }),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
 //                알람설정 Alarm settings
-                    Text("알람설정")
-                    Switch(colors = switchColors,
-                        checked = openAlarmTypeModal,
-                        onCheckedChange = {
-                            openAlarmTypeModal = !openAlarmTypeModal
-                        })
-                }
-                Text(uiState.alarmType)
-            }
-        }
+        Text("알람설정")
+        Text(uiState.alarmType)
+      }
+
     }
+  }
 
 
-    if (openWakeupModal) {
-        Modal1WakeUpTime(
-            uiState,
-            onChangeAlarmTime = viewModel::changeAlarmTime,
-            onToggleModal = { openWakeupModal = !openWakeupModal })
-    }
+  if (openWakeupModal) {
+    Modal1WakeUpTime(
+      uiState,
+      onChangeAlarmTime = viewModel::changeAlarmTime,
+      onToggleModal = { openWakeupModal = !openWakeupModal })
+  }
 
-    if (openSleepTimeModal) {
-        Modal2SleepTime(
-            uiState,
-            onChangeBedTime = viewModel::changeBedTime,
-            onToggleModal = { openSleepTimeModal = !openSleepTimeModal })
-    }
+  if (openSleepTimeModal) {
+    Modal2SleepTime(
+      uiState,
+      onChangeBedTime = viewModel::changeBedTime,
+      onToggleModal = { openSleepTimeModal = !openSleepTimeModal })
+  }
 
 
-    if (openAlarmTypeModal) {
-        Modal3AlarmSetting(
-            uiState,
-            onChangeAlarmType = viewModel::changeAlarmTypeSetting,
-            onToggleModal = { openAlarmTypeModal = !openAlarmTypeModal })
-    }
+  if (openAlarmTypeModal) {
+    Modal3AlarmSetting(
+      uiState,
+      onChangeAlarmType = viewModel::changeAlarmTypeSetting,
+      onToggleModal = { openAlarmTypeModal = !openAlarmTypeModal })
+  }
 }

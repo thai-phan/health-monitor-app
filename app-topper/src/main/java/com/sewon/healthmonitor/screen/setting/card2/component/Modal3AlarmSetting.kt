@@ -38,97 +38,95 @@ import com.sewon.healthmonitor.screen.setting.card2.SleepUiState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Modal3AlarmSetting(
-    uiState: SleepUiState, onChangeAlarmType: (String) -> Unit, onToggleModal: () -> Unit
+  uiState: SleepUiState, onChangeAlarmType: (String) -> Unit, onToggleModal: () -> Unit
 ) {
 
-    var skipPartiallyExpanded by remember { mutableStateOf(false) }
-    var edgeToEdgeEnabled by remember { mutableStateOf(false) }
+  var skipPartiallyExpanded by remember { mutableStateOf(false) }
+  var edgeToEdgeEnabled by remember { mutableStateOf(false) }
 
-    val scope = rememberCoroutineScope()
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = skipPartiallyExpanded
+  val scope = rememberCoroutineScope()
+  val bottomSheetState = rememberModalBottomSheetState(
+    skipPartiallyExpanded = skipPartiallyExpanded
+  )
+  var state by remember { mutableStateOf(true) }
+
+  ModalBottomSheet(
+    onDismissRequest = onToggleModal,
+    sheetState = bottomSheetState,
+  ) {
+
+
+    val iconOptions = listOf(
+      R.drawable.ic_bell_on,
+      R.drawable.ic_speaker_phone,
+      R.drawable.ic_volume_off
     )
-    var state by remember { mutableStateOf(true) }
 
-    ModalBottomSheet(
-        onDismissRequest = onToggleModal,
-        sheetState = bottomSheetState,
-    ) {
+    val radioOptions = listOf("벨소리", "진동", "무음")
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(uiState.alarmType) }
 
+    // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
+    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
+      Text("알람설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
-        val iconOptions = listOf(
-            R.drawable.ic_bell_on,
-            R.drawable.ic_speaker_phone,
-            R.drawable.ic_volume_off
-        )
-
-        val radioOptions = listOf("벨소리", "진동", "무음")
-        val (selectedOption, onOptionSelected) = remember { mutableStateOf(uiState.alarmType) }
-
-        // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
-        Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-            Text("알람설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
-
-            Column(
-                modifier = Modifier
-                    .selectableGroup()
-                    .fillMaxWidth()
-                    ,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+      Column(
+        modifier = Modifier
+            .selectableGroup()
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+      ) {
 
 
-
-                radioOptions.zip(iconOptions).forEach { pair ->
-                    Row(
-                        modifier = Modifier
-                            .height(56.dp)
-                            .selectable(
-                                selected = (pair.first == selectedOption),
-                                onClick = { onOptionSelected(pair.first) },
-                                role = Role.RadioButton
-                            )
-                            .padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        RadioButton(
-                            selected = (pair.first == selectedOption),
-                            onClick = null // null recommended for accessibility with screenreaders
-                        )
-                        Text(
-                            text = pair.first,
-                            modifier = Modifier
-                                .padding(start = 16.dp)
-                                .width(50.dp),
-                            color = Color.White
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Image(
-                            painter = painterResource(id = pair.second),
-                            contentDescription = "Logo",
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(onClick = onToggleModal) {
-                    Text("취소")
-                }
-                Spacer(modifier = Modifier.width(20.dp))
-                Button(onClick = {
-                    onChangeAlarmType(selectedOption)
-                    onToggleModal()
-                }) {
-                    Text("저장")
-                }
-            }
+        radioOptions.zip(iconOptions).forEach { pair ->
+          Row(
+            modifier = Modifier
+                .height(56.dp)
+                .selectable(
+                    selected = (pair.first == selectedOption),
+                    onClick = { onOptionSelected(pair.first) },
+                    role = Role.RadioButton
+                )
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+          ) {
+            RadioButton(
+              selected = (pair.first == selectedOption),
+              onClick = null // null recommended for accessibility with screenreaders
+            )
+            Text(
+              text = pair.first,
+              modifier = Modifier
+                  .padding(start = 16.dp)
+                  .width(50.dp),
+              color = Color.White
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Image(
+              painter = painterResource(id = pair.second),
+              contentDescription = "Logo",
+            )
+          }
         }
-
-
+      }
+      Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp),
+        horizontalArrangement = Arrangement.Center
+      ) {
+        Button(onClick = onToggleModal) {
+          Text("취소")
+        }
+        Spacer(modifier = Modifier.width(20.dp))
+        Button(onClick = {
+          onChangeAlarmType(selectedOption)
+          onToggleModal()
+        }) {
+          Text("저장")
+        }
+      }
     }
+
+
+  }
 }

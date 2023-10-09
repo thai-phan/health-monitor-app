@@ -46,22 +46,30 @@ fun Modal3SOSRecipient(
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("알람 수신자 설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
+      Spacer(modifier = Modifier.height(20.dp))
 
-      Text("알람 수신자 설정")
+      Row {
+        TextField(value = "관계", onValueChange = {})
+        TextField(value = "연락처", onValueChange = {})
+      }
 
-      TextField(value = "관계", onValueChange = {})
+      Row {
+        TextField(value = "관계", onValueChange = {})
+        TextField(value = "연락처", onValueChange = {})
+      }
 
-      TextField(value = "연락처", onValueChange = {})
-
-      TextField(value = "aassas", onValueChange = {})
-
+      Row {
+        TextField(value = "관계", onValueChange = {})
+        TextField(value = "연락처", onValueChange = {})
+      }
+      Spacer(modifier = Modifier.height(20.dp))
 
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
+          .fillMaxWidth()
+          .height(100.dp),
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {

@@ -44,14 +44,14 @@ fun Modal2ClearHistory(
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("수면기록 모두 지우기", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
+      Spacer(modifier = Modifier.height(20.dp))
 
-
-      Text("수면기록 모두 지우기")
 
       Text("실행으로 모든 수면 기록과 분석결과가 삭제되어 과거 레포트를 확인하실 수 없습니다.\n" +
           "실행 하시겠습니까?")
+      Spacer(modifier = Modifier.height(20.dp))
 
       Row(
         modifier = Modifier

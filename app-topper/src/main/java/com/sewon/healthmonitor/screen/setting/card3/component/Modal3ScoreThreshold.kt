@@ -52,13 +52,11 @@ fun Modal3ScoreThreshold(
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
-
-
+      Text("수면점수 임계값 설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp),
+          .fillMaxWidth()
+          .height(200.dp),
         horizontalArrangement = Arrangement.Center
       ) {
         AndroidView(
@@ -81,8 +79,8 @@ fun Modal3ScoreThreshold(
 
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
+          .fillMaxWidth()
+          .height(100.dp),
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {

@@ -32,74 +32,73 @@ import java.time.LocalTime
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Modal2SleepTime(
-    uiState: SleepUiState,
-    onChangeBedTime: (LocalTime) -> Unit,
-    onToggleModal: () -> Unit
+  uiState: SleepUiState,
+  onChangeBedTime: (LocalTime) -> Unit,
+  onToggleModal: () -> Unit
 ) {
 
-    val (time, setTime) = remember { mutableStateOf(uiState.alarmTime) }
+  val (time, setTime) = remember { mutableStateOf(uiState.alarmTime) }
 
-    val skipPartiallyExpanded by remember { mutableStateOf(false) }
+  val skipPartiallyExpanded by remember { mutableStateOf(false) }
 
-    val bottomSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = skipPartiallyExpanded
-    )
+  val bottomSheetState = rememberModalBottomSheetState(
+    skipPartiallyExpanded = skipPartiallyExpanded
+  )
 
 
-    ModalBottomSheet(
-        onDismissRequest = onToggleModal,
-        sheetState = bottomSheetState,
-    ) {
-        Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-            Text("취침시간", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+  ModalBottomSheet(
+    onDismissRequest = onToggleModal,
+    sheetState = bottomSheetState,
+  ) {
+    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
+      Text("취침시간", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                AndroidView(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
-                    factory = { context ->
-                        val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
-                        val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
+      Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp),
+        horizontalArrangement = Arrangement.Center
+      ) {
+        AndroidView(
+          modifier = Modifier
+              .fillMaxWidth()
+              .height(200.dp),
+          factory = { context ->
+            val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
+            val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
 
-                        timePicker.hour = time.hour
-                        timePicker.minute = time.minute
-                        timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-                            setTime(LocalTime.of(hourOfDay, minute))
-                        }
-                        timePicker
-                    }
-                )
-
+            timePicker.hour = time.hour
+            timePicker.minute = time.minute
+            timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
+              setTime(LocalTime.of(hourOfDay, minute))
             }
+            timePicker
+          }
+        )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(onClick = onToggleModal) {
-                    Text("취소")
-                }
-                Spacer(modifier = Modifier.width(20.dp))
-                Button(onClick = {
-                    onChangeBedTime(time)
-                    onToggleModal()
-                }) {
-                    Text("저장")
-                }
-            }
+      }
 
-
+      Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp),
+        horizontalArrangement = Arrangement.Center
+      ) {
+        Button(onClick = onToggleModal) {
+          Text("취소")
         }
-
+        Spacer(modifier = Modifier.width(20.dp))
+        Button(onClick = {
+          onChangeBedTime(time)
+          onToggleModal()
+        }) {
+          Text("저장")
+        }
+      }
 
 
     }
+
+
+  }
 }

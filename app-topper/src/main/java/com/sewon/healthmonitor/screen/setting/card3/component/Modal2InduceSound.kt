@@ -48,16 +48,17 @@ fun Modal2InduceSound(
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("header", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
-
+      Text("수면유도 사운드", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Spacer(modifier = Modifier.height(20.dp))
       Text(
         "특허받은 엠씨스퀘어 브레인동조화 사운드를 이용해 알파파를 유도하여 잠에 빨리 들 수 있도록 도와줍니다. 백색소음에 익숙한 사용자에게 추천합니다"
       )
+      Spacer(modifier = Modifier.height(20.dp))
 
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
+          .fillMaxWidth()
+          .height(100.dp),
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
