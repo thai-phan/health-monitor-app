@@ -22,14 +22,14 @@ import com.sewon.healthmonitor.data.HealthDatabase
 import com.sewon.healthmonitor.data.source.local.dao.LocalTopperDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalUserDao
 import com.sewon.healthmonitor.data.source.local.dao.LocalSettingDao
-import com.sewon.healthmonitor.data.repository.TopperRepository
-import com.sewon.healthmonitor.data.repository.SessionRepository
-import com.sewon.healthmonitor.data.repository.SettingRepository
-import com.sewon.healthmonitor.data.repository.UserRepository
-import com.sewon.healthmonitor.data.repository.repointerface.ITopperRepository
-import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
-import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
-import com.sewon.healthmonitor.data.repository.repointerface.IUserRepository
+import com.sewon.healthmonitor.data.source.local.repository.TopperRepository
+import com.sewon.healthmonitor.data.source.local.repository.SessionRepository
+import com.sewon.healthmonitor.data.source.local.repository.SettingRepository
+import com.sewon.healthmonitor.data.source.local.repository.UserRepository
+import com.sewon.healthmonitor.data.irepository.ITopperRepository
+import com.sewon.healthmonitor.data.irepository.ISessionRepository
+import com.sewon.healthmonitor.data.irepository.ISettingRepository
+import com.sewon.healthmonitor.data.irepository.IUserRepository
 import com.sewon.healthmonitor.data.source.local.dao.LocalSessionDao
 
 import dagger.Binds

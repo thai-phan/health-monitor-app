@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.data.model.Setting
 import com.sewon.healthmonitor.data.model.User
-import com.sewon.healthmonitor.data.repository.UserRepository
-import com.sewon.healthmonitor.data.repository.SettingRepository
+import com.sewon.healthmonitor.data.source.local.repository.UserRepository
+import com.sewon.healthmonitor.data.source.local.repository.SettingRepository
 import com.sewon.healthmonitor.util.Async
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

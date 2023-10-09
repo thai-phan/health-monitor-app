@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.data.repository.repointerface
+package com.sewon.healthmonitor.data.irepository
 
 import com.sewon.healthmonitor.data.model.SleepSession
 import java.util.Date

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.data.model.Setting
-import com.sewon.healthmonitor.data.repository.UserRepository
-import com.sewon.healthmonitor.data.repository.SettingRepository
+import com.sewon.healthmonitor.data.source.local.repository.UserRepository
+import com.sewon.healthmonitor.data.source.local.repository.SettingRepository
 import com.sewon.healthmonitor.screen.setting.card5.SleepUiState
 import com.sewon.healthmonitor.util.Async
 import com.sewon.healthmonitor.util.WhileUiSubscribed
@@ -35,7 +35,7 @@ class ViewModelCardSleep @Inject constructor(
   var userId = 0
   private val _isLoading = MutableStateFlow(false)
   private val _message: MutableStateFlow<Int?> = MutableStateFlow(null)
-  private var _settingAsync = settingRepository.loadUserSetting(userId).map {
+  private var _settingAsync = settingRepository.loadUserSettingFlow(userId).map {
     handleSetting(it)
   }
     .catch { emit(Async.Error(R.string.setting_not_found)) }

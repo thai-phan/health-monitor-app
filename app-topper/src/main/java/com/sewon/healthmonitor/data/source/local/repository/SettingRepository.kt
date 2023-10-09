@@ -1,18 +1,17 @@
-package com.sewon.healthmonitor.data.repository
+package com.sewon.healthmonitor.data.source.local.repository
 
 import com.example.android.architecture.blueprints.todoapp.di.ApplicationScope
 import com.example.android.architecture.blueprints.todoapp.di.DefaultDispatcher
 import com.sewon.healthmonitor.data.model.Setting
 import com.sewon.healthmonitor.data.model.toExternal
 import com.sewon.healthmonitor.data.source.local.dao.LocalSettingDao
-import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
+import com.sewon.healthmonitor.data.irepository.ISettingRepository
 import com.sewon.healthmonitor.data.model.toLocal
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalTime
-import java.util.Date
 import javax.inject.Inject
 
 class SettingRepository @Inject constructor(
@@ -25,8 +24,12 @@ class SettingRepository @Inject constructor(
     return localSettingDao.upsert(setting.toLocal())
   }
 
-  override fun loadUserSetting(userId: Int): Flow<Setting> {
-    return localSettingDao.querySettingByUserId(userId).map { it.toExternal() }
+  override fun loadUserSettingFlow(userId: Int): Flow<Setting> {
+    return localSettingDao.querySettingByUserIdFlow(userId).map { it.toExternal() }
+  }
+
+  override suspend fun loadUserSetting(userId: Int): Setting {
+    return localSettingDao.querySettingByUserId(userId).toExternal()
   }
 
   override suspend fun updateAlarmOnSetting(userId: Int, alarmOn: Boolean): String {

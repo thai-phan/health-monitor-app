@@ -3,8 +3,8 @@ package com.sewon.healthmonitor.screen.setting.card2
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
-import com.sewon.healthmonitor.data.repository.SettingRepository
-import com.sewon.healthmonitor.data.repository.UserRepository
+import com.sewon.healthmonitor.data.source.local.repository.SettingRepository
+import com.sewon.healthmonitor.data.source.local.repository.UserRepository
 import com.sewon.healthmonitor.data.model.Setting
 import com.sewon.healthmonitor.util.Async
 import com.sewon.healthmonitor.util.WhileUiSubscribed
@@ -22,88 +22,88 @@ import javax.inject.Inject
 
 
 data class SleepUiState(
-    val alarmTime: LocalTime = LocalTime.now(),
-    val alarmOn: Boolean = false,
-    val alarmType: String = "",
-    val bedTime: LocalTime = LocalTime.now(),
-    val bedOn: Boolean = false,
+  val alarmTime: LocalTime = LocalTime.now(),
+  val alarmOn: Boolean = false,
+  val alarmType: String = "",
+  val bedTime: LocalTime = LocalTime.now(),
+  val bedOn: Boolean = false,
 
-    val isLoading: Boolean = false,
-    val message: Int? = null
+  val isLoading: Boolean = false,
+  val message: Int? = null
 )
 
 @HiltViewModel
 class ViewModelCardSleep @Inject constructor(
-    private val userRepository: UserRepository,
-    private val settingRepository: SettingRepository
+  private val userRepository: UserRepository,
+  private val settingRepository: SettingRepository
 ) : ViewModel() {
 
-    var userId = 0
-    private val _isLoading = MutableStateFlow(false)
-    private val _message: MutableStateFlow<Int?> = MutableStateFlow(null)
-    private var _settingAsync = settingRepository.loadUserSetting(userId).map {
-        handleSetting(it)
-    }
-        .catch { emit(Async.Error(R.string.setting_not_found)) }
+  var userId = 0
+  private val _isLoading = MutableStateFlow(false)
+  private val _message: MutableStateFlow<Int?> = MutableStateFlow(null)
+  private var _settingAsync = settingRepository.loadUserSettingFlow(userId).map {
+    handleSetting(it)
+  }
+    .catch { emit(Async.Error(R.string.setting_not_found)) }
 
-    val uiState: StateFlow<SleepUiState> = combine(_settingAsync, _message, _isLoading) {
-        settingAsync, message, isLoading ->
-        when (settingAsync) {
-            Async.Loading -> {
-                SleepUiState(isLoading = true)
-            }
-
-            is Async.Error -> {
-                SleepUiState(message = settingAsync.errorMessage)
-            }
-
-            is Async.Success -> {
-
-                val dtf = DateTimeFormatter.ofPattern("HH:mm")
-
-                SleepUiState(
-                    alarmOn = settingAsync.data!!.alarmOn,
-                    alarmTime = settingAsync.data.alarmTime,
-                    alarmType = settingAsync.data.alarmSetting,
-                    bedOn = settingAsync.data.bedOn,
-                    bedTime = settingAsync.data.bedTime,
-                    message= message,
-                    isLoading = isLoading
-                )
-            }
+  val uiState: StateFlow<SleepUiState> =
+    combine(_settingAsync, _message, _isLoading) { settingAsync, message, isLoading ->
+      when (settingAsync) {
+        Async.Loading -> {
+          SleepUiState(isLoading = true)
         }
+
+        is Async.Error -> {
+          SleepUiState(message = settingAsync.errorMessage)
+        }
+
+        is Async.Success -> {
+
+          val dtf = DateTimeFormatter.ofPattern("HH:mm")
+
+          SleepUiState(
+            alarmOn = settingAsync.data!!.alarmOn,
+            alarmTime = settingAsync.data.alarmTime,
+            alarmType = settingAsync.data.alarmSetting,
+            bedOn = settingAsync.data.bedOn,
+            bedTime = settingAsync.data.bedTime,
+            message = message,
+            isLoading = isLoading
+          )
+        }
+      }
     }.stateIn(
-        scope = viewModelScope,
-        started = WhileUiSubscribed,
-        initialValue = SleepUiState(isLoading = true)
+      scope = viewModelScope,
+      started = WhileUiSubscribed,
+      initialValue = SleepUiState(isLoading = true)
     )
 
-    fun toggleAlarmOn(alarmOn: Boolean) = viewModelScope.launch {
-        settingRepository.updateAlarmOnSetting(userId, alarmOn)
-    }
+  fun toggleAlarmOn(alarmOn: Boolean) = viewModelScope.launch {
+    settingRepository.updateAlarmOnSetting(userId, alarmOn)
+  }
 
-    fun changeAlarmTime(alarmTime: LocalTime) = viewModelScope.launch {
-        settingRepository.updateAlarmTimeSetting(userId, alarmTime)
-    }
+  fun changeAlarmTime(alarmTime: LocalTime) = viewModelScope.launch {
+    settingRepository.updateAlarmTimeSetting(userId, alarmTime)
+  }
 
-    fun toggleBedOn(bedOn: Boolean) = viewModelScope.launch {
-        settingRepository.updateBedSetting(userId, bedOn)
-    }
+  fun toggleBedOn(bedOn: Boolean) = viewModelScope.launch {
+    settingRepository.updateBedSetting(userId, bedOn)
+  }
 
-    fun changeBedTime(bedTime: LocalTime) = viewModelScope.launch {
-        settingRepository.updateBedTimeSetting(userId, bedTime)
-    }
+  fun changeBedTime(bedTime: LocalTime) = viewModelScope.launch {
+    settingRepository.updateBedTimeSetting(userId, bedTime)
+  }
 
-    fun changeAlarmTypeSetting(alarmType: String) = viewModelScope.launch {
-        settingRepository.updateAlarmTypeSetting(userId, alarmType)
-    }
+  fun changeAlarmTypeSetting(alarmType: String) = viewModelScope.launch {
+    settingRepository.updateAlarmTypeSetting(userId, alarmType)
+  }
 
-    private fun handleSetting(setting: Setting?): Async<Setting?> {
-        if (setting == null) {
-            return Async.Error(R.string.setting_not_found)
-        }
-        return Async.Success(setting)
+  private fun handleSetting(setting: Setting?): Async<Setting?> {
+    if (setting == null) {
+      return Async.Error(R.string.setting_not_found)
     }
+    return Async.Success(setting)
+  }
 
 
 }

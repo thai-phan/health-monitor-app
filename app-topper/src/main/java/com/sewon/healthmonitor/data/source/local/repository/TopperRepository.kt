@@ -1,10 +1,10 @@
-package com.sewon.healthmonitor.data.repository
+package com.sewon.healthmonitor.data.source.local.repository
 
 import com.example.android.architecture.blueprints.todoapp.di.ApplicationScope
 import com.example.android.architecture.blueprints.todoapp.di.DefaultDispatcher
 import com.sewon.healthmonitor.data.source.local.dao.LocalTopperDao
 import com.sewon.healthmonitor.data.source.local.entity.LocalTopper
-import com.sewon.healthmonitor.data.repository.repointerface.ITopperRepository
+import com.sewon.healthmonitor.data.irepository.ITopperRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject

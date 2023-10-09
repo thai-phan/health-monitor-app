@@ -4,8 +4,8 @@ package com.sewon.healthmonitor.screen.report
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.data.model.SleepSession
-import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
-import com.sewon.healthmonitor.data.repository.repointerface.ITopperRepository
+import com.sewon.healthmonitor.data.irepository.ISessionRepository
+import com.sewon.healthmonitor.data.irepository.ITopperRepository
 import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportAlgorithm
 import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportDataProcessing
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
+import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.icu.util.GregorianCalendar
 import androidx.compose.foundation.layout.Arrangement
@@ -61,11 +62,6 @@ fun SleepActivity(
 
   val log by MainActivity.bleDataListener.log
 
-  val start = TimeRangePicker.Time(0, 0)
-  val end = TimeRangePicker.Time(5, 30)
-  val duration = TimeRangePicker.TimeDuration(start, end)
-
-  val durationState = remember { mutableStateOf(duration) }
 
   val toggleConnectDevice by MainActivity.bleHandleService.toggleConnectDevice
   val toggleAlarmSound by MainActivity.bleHandleService.toggleAlarmSound
@@ -90,22 +86,19 @@ fun SleepActivity(
   var isAlarm by MainActivity.bleDataListener.isAlarm
 
 
-  val startTime = remember { mutableStateOf(start) }
-  val endTime = remember { mutableStateOf(end) }
-
   fun startSleep() {
 //    Toast.makeText(context, "ALARM ON", Toast.LENGTH_SHORT).show()
 
     isStarted = true
 
     val startTimeCalendar = GregorianCalendar.getInstance()
-    startTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, startTime.value.hour)
-    startTimeCalendar.set(GregorianCalendar.MINUTE, startTime.value.minute)
+    startTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, uiState.startTime.hour)
+    startTimeCalendar.set(GregorianCalendar.MINUTE, uiState.startTime.minute)
     startTimeCalendar.set(GregorianCalendar.SECOND, 0)
 
     val endTimeCalendar = GregorianCalendar.getInstance()
-    endTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, endTime.value.hour)
-    endTimeCalendar.set(GregorianCalendar.MINUTE, endTime.value.minute)
+    endTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, uiState.endTime.hour)
+    endTimeCalendar.set(GregorianCalendar.MINUTE, uiState.endTime.minute)
     startTimeCalendar.set(GregorianCalendar.SECOND, 0)
 
     if (endTimeCalendar < GregorianCalendar.getInstance()) {
@@ -118,9 +111,12 @@ fun SleepActivity(
     val alarmIntent = Intent(context, AlarmReceiver::class.java)
     MainActivity.alarmPendingIntent =
       PendingIntent.getBroadcast(context, 1234, alarmIntent, PendingIntent.FLAG_MUTABLE)
+
 //    val calendar = GregorianCalendar.getInstance()
 //    calendar[GregorianCalendar.SECOND] = calendar[GregorianCalendar.SECOND] + 5
-//    //          ((AlarmManager) context.getSystemService(Context.ALARM_SERVICE)).setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), DAY, pendingIntent);
+
+//    MainActivity.alarmManager
+//      .setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), DAY, MainActivity.alarmPendingIntent)
     MainActivity.alarmManager.set(
       AlarmManager.RTC_WAKEUP,
       endTimeCalendar.timeInMillis,
@@ -167,11 +163,16 @@ fun SleepActivity(
 
     Spacer(modifier = Modifier.height(10.dp))
 
-    CircularTimePicker(startTime, endTime, durationState)
+    CircularTimePicker(uiState.startTime, uiState.endTime,
+      updateStartTime = {
+        viewModel.updateStartTime(it)
+      }, updateEndTime = {
+        viewModel.updateEndTime(it)
+      })
 
     Spacer(modifier = Modifier.height(10.dp))
 
-    TimeSelection(startTime.value, endTime.value)
+    TimeSelection(uiState.startTime, uiState.endTime)
 
     SwitchAction(
       toggleConnectDevice = toggleConnectDevice,

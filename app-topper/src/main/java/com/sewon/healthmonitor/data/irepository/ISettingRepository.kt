@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.data.repository.repointerface
+package com.sewon.healthmonitor.data.irepository
 
 import com.sewon.healthmonitor.data.model.Setting
 import kotlinx.coroutines.flow.Flow
@@ -7,7 +7,9 @@ import java.time.LocalTime
 
 interface ISettingRepository {
 
-  fun loadUserSetting(userId: Int): Flow<Setting>
+  fun loadUserSettingFlow(userId: Int): Flow<Setting>
+
+  suspend fun loadUserSetting(userId: Int): Setting
 
   suspend fun updateAlarmOnSetting(userId: Int, alarmOn: Boolean): String
 

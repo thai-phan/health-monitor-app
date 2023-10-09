@@ -6,18 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.R
 import com.sewon.healthmonitor.data.model.User
-import com.sewon.healthmonitor.data.repository.UserRepository
+import com.sewon.healthmonitor.data.source.local.repository.UserRepository
 import com.sewon.healthmonitor.util.Async
-import com.sewon.healthmonitor.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Locale
@@ -40,44 +37,31 @@ class ViewModelCardProfile @Inject constructor(
   var curUsername = "admin_id"
   private val _isLoading = MutableStateFlow(false)
   private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
-  private var _userAsync = userRepository.getUserByUsername(curUsername).map { handleUser(it) }
-    .catch { emit(Async.Error(R.string.loading_user_error)) }
+
+  private val _uiState = MutableStateFlow(ProfileUiState())
+  val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
 
 
-  val uiState: StateFlow<ProfileUiState> =
-    combine(_userAsync, _userMessage, _isLoading) { userAsync, userMessage, isLoading ->
-      when (userAsync) {
-        Async.Loading -> {
-          ProfileUiState(isLoading = true)
-        }
+  fun loadData() = viewModelScope.launch {
+    val user = userRepository.getUserByUsername(curUsername)
+    val calendar = Calendar.getInstance()
+    calendar.time = user.birthday
+    val dateformat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+    val birthdayString = dateformat.format(calendar.time)
 
-        is Async.Error -> {
-          ProfileUiState(userMessage = userAsync.errorMessage)
-        }
+    _uiState.update {
+      it.copy(
+        calendar = calendar,
+        gender = user.gender,
+        birthday = birthdayString,
+      )
+    }
+  }
 
-        is Async.Success -> {
-          val calendar = Calendar.getInstance()
-          if (userAsync.data !== null) {
-            calendar.time = userAsync.data.birthday
-          }
-          val dateformat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
-          val birthdayString = dateformat.format(calendar.time)
-          ProfileUiState(
-            calendar = calendar,
-            gender = userAsync.data!!.gender,
-            birthday = birthdayString,
-            isLoading = isLoading,
-            userMessage = userMessage
-          )
-        }
-      }
-    }.stateIn(
-      scope = viewModelScope,
-      started = WhileUiSubscribed,
-      initialValue = ProfileUiState(isLoading = true)
-    )
 
   init {
+    loadData()
+
 //        https://stackoverflow.com/questions/73839026/jetpack-compose-displaying-data-in-compose-using-mvvm
     CoroutineScope(Dispatchers.IO).launch {
       Timber.tag("Timber").d("CoroutineScope IO")
@@ -96,6 +80,7 @@ class ViewModelCardProfile @Inject constructor(
 
   fun changeGender(gender: String) = viewModelScope.launch {
     userRepository.updateUserGender(curUsername, gender)
+    loadData()
   }
 
   fun changeBirthday(year: Int, month: Int, day: Int) = viewModelScope.launch {
@@ -104,6 +89,7 @@ class ViewModelCardProfile @Inject constructor(
       set(year, month, day)
     }.time
     userRepository.updateUserBirthday(curUsername, date)
+    loadData()
   }
 
   override fun onCleared() {

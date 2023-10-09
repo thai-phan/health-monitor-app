@@ -1,11 +1,11 @@
-package com.sewon.healthmonitor.data.repository
+package com.sewon.healthmonitor.data.source.local.repository
 
 import com.example.android.architecture.blueprints.todoapp.di.ApplicationScope
 import com.example.android.architecture.blueprints.todoapp.di.DefaultDispatcher
 import com.sewon.healthmonitor.data.model.SleepSession
 import com.sewon.healthmonitor.data.model.toExternal
 import com.sewon.healthmonitor.data.model.toLocal
-import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
+import com.sewon.healthmonitor.data.irepository.ISessionRepository
 import com.sewon.healthmonitor.data.source.local.dao.LocalSessionDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

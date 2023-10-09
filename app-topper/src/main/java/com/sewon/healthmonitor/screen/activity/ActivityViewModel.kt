@@ -6,10 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.MainActivity
 import com.sewon.healthmonitor.api.HttpService
 import com.sewon.healthmonitor.api.ServerService
+import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
+import com.sewon.healthmonitor.data.irepository.ISessionRepository
+import com.sewon.healthmonitor.data.irepository.ISettingRepository
+import com.sewon.healthmonitor.data.irepository.ITopperRepository
+import com.sewon.healthmonitor.data.irepository.IUserRepository
 import com.sewon.healthmonitor.data.model.SleepSession
-import com.sewon.healthmonitor.data.repository.repointerface.ISessionRepository
-import com.sewon.healthmonitor.data.repository.repointerface.ISettingRepository
-import com.sewon.healthmonitor.data.repository.repointerface.ITopperRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +26,8 @@ import javax.inject.Inject
 
 data class UiState(
   val sessionId: Int = 0,
+  val startTime: TimeRangePicker.Time = TimeRangePicker.Time(1, 0),
+  val endTime: TimeRangePicker.Time = TimeRangePicker.Time(2, 0),
   val status1: String = "",
   val status2: String = "",
   val status3: String = "",
@@ -31,8 +35,9 @@ data class UiState(
   val isTaskCompleted: Boolean = false,
   val isLoading: Boolean = false,
   val userMessage: Int? = null,
-  val isTaskSaved: Boolean = false
-)
+  val isTaskSaved: Boolean = false,
+
+  )
 
 
 @HiltViewModel
@@ -40,12 +45,45 @@ class ActivityViewModel @Inject constructor(
   private val topperRepository: ITopperRepository,
   private val sessionRepository: ISessionRepository,
   private val settingRepository: ISettingRepository,
+  private val userRepository: IUserRepository
 ) : ViewModel() {
 
   private val _uiState = MutableStateFlow(UiState())
   val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
   private var thisSessionId = 0
+
+  fun loadData() = viewModelScope.launch {
+    val user = settingRepository.loadUserSetting(0)
+    val startTime = TimeRangePicker.Time(user.bedTime.hour, user.bedTime.minute)
+    val endTime = TimeRangePicker.Time(user.alarmTime.hour, user.alarmTime.minute)
+    _uiState.update {
+      it.copy(
+        startTime = startTime,
+        endTime = endTime,
+      )
+    }
+  }
+
+  fun updateStartTime(startTime: TimeRangePicker.Time) {
+    _uiState.update {
+      it.copy(
+        startTime = startTime,
+      )
+    }
+  }
+
+  fun updateEndTime(endTime: TimeRangePicker.Time) {
+    _uiState.update {
+      it.copy(
+        endTime = endTime,
+      )
+    }
+  }
+
+  init {
+    loadData()
+  }
 
   fun createSession(pickerStartTime: Calendar, pickerEndTime: Calendar) = viewModelScope.launch {
     val actualStartTime = Date()
