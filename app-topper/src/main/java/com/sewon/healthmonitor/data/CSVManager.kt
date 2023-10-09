@@ -12,7 +12,7 @@ import com.sewon.healthmonitor.R
 class CSVManager(private val context: Context) {
 
   suspend fun findResource() {
-    val inputStreammm = context.resources.openRawResource(R.raw.sewon_data_1)
+    val inputStreammm = context.resources.openRawResource(R.raw.sewon_data)
     print("asdf")
     val reader = BufferedReader(
       InputStreamReader(inputStreammm, Charset.forName("UTF-8"))

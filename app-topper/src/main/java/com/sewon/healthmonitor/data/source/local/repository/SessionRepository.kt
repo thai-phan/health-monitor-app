@@ -26,6 +26,10 @@ class SessionRepository @Inject constructor(
     return localSessionDao.loadById(id)?.toExternal()
   }
 
+  override suspend fun createNewSession(sleepSession: SleepSession): Long {
+    return localSessionDao.insert(sleepSession.toLocal())
+  }
+
   override suspend fun countSession(): Int {
     return localSessionDao.countSession()
   }
@@ -44,7 +48,12 @@ class SessionRepository @Inject constructor(
     return localSessionDao.queryUpdateSessionEndTime(sessionId, endTime)
   }
 
-  override suspend fun createNewSession(sleepSession: SleepSession): Long {
-    return localSessionDao.insert(sleepSession.toLocal())
+  override suspend fun updateSessionAssessment(sessionId: Int, assessment: String) {
+    return localSessionDao.queryUpdateSessionAssessment(sessionId, assessment)
   }
+
+  override suspend fun updateSessionQualityMemo(sessionId: Int, rating: Int, memo: String) {
+    return localSessionDao.queryUpdateSessionQualityMemo(sessionId, rating, memo)
+  }
+
 }

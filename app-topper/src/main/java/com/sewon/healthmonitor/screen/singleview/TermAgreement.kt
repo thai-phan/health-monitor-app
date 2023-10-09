@@ -40,7 +40,7 @@ import com.sewon.healthmonitor.R
 
 
 @Composable
-fun TermAgreement(navController: NavController, redirectRoute: String) {
+fun TermAgreement(onRedirectRoute: () -> Unit) {
   val context = LocalContext.current
   val assetFiles: AssetManager = context.assets
   val termFile = "term_of_use.txt"
@@ -50,13 +50,12 @@ fun TermAgreement(navController: NavController, redirectRoute: String) {
 
   val scroll = rememberScrollState(0)
 
-
   Column(
     modifier = Modifier
-        .fillMaxSize()
-        .statusBarsPadding()
-        .systemBarsPadding()
-        .padding(horizontal = 20.dp, vertical = 20.dp)
+      .fillMaxSize()
+      .statusBarsPadding()
+      .systemBarsPadding()
+      .padding(horizontal = 20.dp, vertical = 20.dp)
   ) {
     Text("건강모니터링 토퍼", fontWeight = FontWeight.Bold, fontSize = 24.sp)
     Spacer(modifier = Modifier.height(20.dp))
@@ -68,13 +67,13 @@ fun TermAgreement(navController: NavController, redirectRoute: String) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround,
         modifier = Modifier
-            .fillMaxSize()
-            .shadow(
-                elevation = 24.dp,
-                spotColor = Color(0x40000000),
-                ambientColor = Color(0x40000000)
-            )
-            .padding(20.dp),
+          .fillMaxSize()
+          .shadow(
+            elevation = 24.dp,
+            spotColor = Color(0x40000000),
+            ambientColor = Color(0x40000000)
+          )
+          .padding(20.dp),
       ) {
         Text(
           "생체신호 모니터링 매트리스 앱 서비스 이용동의서",
@@ -86,42 +85,33 @@ fun TermAgreement(navController: NavController, redirectRoute: String) {
           text = text,
           textAlign = TextAlign.Justify,
           modifier = Modifier
-              .fillMaxHeight(0.8f)
-              .verticalScroll(scroll),
+            .fillMaxHeight(0.8f)
+            .verticalScroll(scroll),
         )
 
-
-        val checkedState = remember { mutableStateOf(true) }
+        val checkedState = remember { mutableStateOf(false) }
         Row(
           verticalAlignment = Alignment.CenterVertically,
           horizontalArrangement = Arrangement.Center
         ) {
           Checkbox(
-            checked = false,
+            checked = checkedState.value,
             onCheckedChange = {
               checkedState.value = it
-              navController.navigate(redirectRoute)
             },
           )
           Text(text = "동의", modifier = Modifier.padding(16.dp))
         }
+
         Button(
           onClick = {
-            navController.navigate(redirectRoute)
-
-          }
+            onRedirectRoute()
+          },
+          enabled = checkedState.value
         ) {
           Text(text = "Agree")
         }
       }
-
     }
-
   }
-}
-
-@Preview
-@Composable
-fun TermAgreementPreview() {
-  TermAgreement(rememberNavController(), "String")
 }

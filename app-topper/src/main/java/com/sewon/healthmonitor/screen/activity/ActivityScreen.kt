@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
-import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.icu.util.GregorianCalendar
 import androidx.compose.foundation.layout.Arrangement
@@ -15,8 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,8 +41,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sewon.healthmonitor.MainActivity
 import com.sewon.healthmonitor.common.MainDestinations
-import com.sewon.healthmonitor.common.timepicker.TimeRangePicker
 import com.sewon.healthmonitor.screen.activity.component.CircularTimePicker
+import com.sewon.healthmonitor.screen.activity.component.ModalAssessment
+import com.sewon.healthmonitor.screen.activity.component.ModalQuality
 import com.sewon.healthmonitor.screen.activity.sub.ButtonAction
 import com.sewon.healthmonitor.screen.activity.sub.SwitchAction
 import com.sewon.healthmonitor.screen.activity.sub.TimeSelection
@@ -49,7 +52,6 @@ import com.sewon.healthmonitor.service.ble.SerialSocket
 import timber.log.Timber
 
 
-@SuppressLint("RememberReturnType")
 @Composable
 fun SleepActivity(
   modifier: Modifier = Modifier,
@@ -87,7 +89,7 @@ fun SleepActivity(
 
 
   fun startSleep() {
-//    Toast.makeText(context, "ALARM ON", Toast.LENGTH_SHORT).show()
+    MainActivity.bleHandleService.playSound()
 
     isStarted = true
 
@@ -99,7 +101,7 @@ fun SleepActivity(
     val endTimeCalendar = GregorianCalendar.getInstance()
     endTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, uiState.endTime.hour)
     endTimeCalendar.set(GregorianCalendar.MINUTE, uiState.endTime.minute)
-    startTimeCalendar.set(GregorianCalendar.SECOND, 0)
+    endTimeCalendar.set(GregorianCalendar.SECOND, 0)
 
     if (endTimeCalendar < GregorianCalendar.getInstance()) {
       endTimeCalendar.add(GregorianCalendar.DAY_OF_MONTH, 1)
@@ -126,7 +128,7 @@ fun SleepActivity(
 
   fun cancelSleep() {
     isStarted = false
-
+    MainActivity.bleHandleService.stopSound()
     MainActivity.alarmManager.cancel(MainActivity.alarmPendingIntent)
 
     viewModel.updateCurrentSessionEndTime()
@@ -140,6 +142,14 @@ fun SleepActivity(
   fun redirectReportPage() {
     navController.navigate(MainDestinations.REPORT_ROUTE)
   }
+
+
+  val isPlaySoundSleepInduceUI by MainActivity.bleHandleService.isPlaySoundSleepInduce
+
+  var openAssessmentModal by rememberSaveable { mutableStateOf(false) }
+  var openQualityModal by rememberSaveable { mutableStateOf(false) }
+
+
 
   Column(
     modifier = modifier
@@ -172,26 +182,58 @@ fun SleepActivity(
 
     Spacer(modifier = Modifier.height(10.dp))
 
-    TimeSelection(uiState.startTime, uiState.endTime)
+    Column(Modifier.verticalScroll(rememberScrollState())) {
+      TimeSelection(uiState.startTime, uiState.endTime)
 
-    SwitchAction(
-      toggleConnectDevice = toggleConnectDevice,
-      onToggleConnectToDevice = {
-        MainActivity.bleHandleService.toggleConnectDevice()
+      SwitchAction(
+        toggleConnectDevice = toggleConnectDevice,
+        onToggleConnectToDevice = {
+          MainActivity.bleHandleService.toggleConnectDevice()
+        },
+        toggleAlarmSound = isPlaySoundSleepInduceUI,
+        onToggleAlarmSound = {
+          MainActivity.bleHandleService.toggleSoundStretch()
+        }
+      )
+
+      Spacer(modifier = Modifier.height(10.dp))
+
+      ButtonAction(
+        isStarted, isAlarm,
+        startSleep = { startSleep() },
+        cancelSleep = {
+          cancelSleep()
+          openAssessmentModal = !openAssessmentModal
+        },
+        stopAlarm = { stopAlarm() }
+      )
+      Text(log)
+
+
+    }
+
+    if (openAssessmentModal) {
+      ModalAssessment(onToggleModal = {
+        openAssessmentModal = !openAssessmentModal
       },
-      toggleAlarmSound = toggleAlarmSound,
-      onToggleAlarmSound = {
-        MainActivity.bleHandleService.toggleAlarmSound()
-      })
+        onSaveAssessment = {
+          viewModel.saveAssessment(it)
+          openAssessmentModal = !openAssessmentModal
+          openQualityModal = true
+        }
+      )
+    }
 
-    ButtonAction(
-      isStarted, isAlarm,
-      startSleep = { startSleep() },
-      cancelSleep = { cancelSleep() },
-      stopAlarm = { stopAlarm() }
-    )
-    Text(log)
-
+    if (openQualityModal) {
+      ModalQuality(onToggleModal = {
+        openQualityModal = !openQualityModal
+      },
+        onSaveQuality = { rating, memo ->
+          openQualityModal = !openQualityModal
+          viewModel.saveQuality(rating, memo)
+        }
+      )
+    }
   }
 }
 

@@ -28,8 +28,8 @@ class SettingRepository @Inject constructor(
     return localSettingDao.querySettingByUserIdFlow(userId).map { it.toExternal() }
   }
 
-  override suspend fun loadUserSetting(userId: Int): Setting {
-    return localSettingDao.querySettingByUserId(userId).toExternal()
+  override suspend fun loadUserSetting(userId: Int): Setting? {
+    return localSettingDao.querySettingByUserId(userId)?.toExternal()
   }
 
   override suspend fun updateAlarmOnSetting(userId: Int, alarmOn: Boolean): String {

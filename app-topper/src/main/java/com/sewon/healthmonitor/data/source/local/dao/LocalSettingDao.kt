@@ -17,7 +17,7 @@ interface LocalSettingDao {
   fun querySettingByUserIdFlow(userid: Int): Flow<LocalSetting>
 
   @Query("SELECT * FROM setting WHERE user_id = :userid")
-  suspend fun querySettingByUserId(userid: Int): LocalSetting
+  suspend fun querySettingByUserId(userid: Int): LocalSetting?
 
   @Query("SELECT count(user_id) FROM setting")
   suspend fun countSetting(): Int

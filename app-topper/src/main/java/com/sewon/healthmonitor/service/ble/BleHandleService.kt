@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.os.Binder
 import android.os.Handler
@@ -163,6 +164,27 @@ class BleHandleService : Service(), SerialListener {
     }
     queue1.clear()
     queue2.clear()
+  }
+
+
+  lateinit var playerSleepInduce: MediaPlayer
+  val isPlaySoundSleepInduce = mutableStateOf(true)
+
+  fun toggleSoundStretch() {
+    isPlaySoundSleepInduce.value = !isPlaySoundSleepInduce.value
+  }
+
+  fun playSound() {
+    if (isPlaySoundSleepInduce.value) {
+      playerSleepInduce = MediaPlayer.create(this, R.raw.sleep_induce_sound)
+      playerSleepInduce.start()
+    }
+  }
+
+  fun stopSound() {
+    if (isPlaySoundSleepInduce.value) {
+      playerSleepInduce.stop()
+    }
   }
 
   var sessionId = 0

@@ -41,7 +41,11 @@ data class LocalSleepSession(
   @ColumnInfo(name = "actual_start_time") val actualStartTime: Date,
   @ColumnInfo(name = "actual_end_time") val actualEndTime: Date,
   @ColumnInfo(name = "sleep_time") val sleepTime: Date,
-) {
+
+  @ColumnInfo(name = "assessment") val assessment: String,
+  @ColumnInfo(name = "memo") val memo: String,
+
+  ) {
   @ColumnInfo(name = "session_id")
   @PrimaryKey(autoGenerate = true)
   var sessionId: Int = 0

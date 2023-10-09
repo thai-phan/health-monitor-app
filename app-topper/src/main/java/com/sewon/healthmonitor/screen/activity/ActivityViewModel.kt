@@ -26,8 +26,8 @@ import javax.inject.Inject
 
 data class UiState(
   val sessionId: Int = 0,
-  val startTime: TimeRangePicker.Time = TimeRangePicker.Time(1, 0),
-  val endTime: TimeRangePicker.Time = TimeRangePicker.Time(2, 0),
+  val startTime: TimeRangePicker.Time = TimeRangePicker.Time(22, 0),
+  val endTime: TimeRangePicker.Time = TimeRangePicker.Time(7, 0),
   val status1: String = "",
   val status2: String = "",
   val status3: String = "",
@@ -36,7 +36,6 @@ data class UiState(
   val isLoading: Boolean = false,
   val userMessage: Int? = null,
   val isTaskSaved: Boolean = false,
-
   )
 
 
@@ -53,15 +52,17 @@ class ActivityViewModel @Inject constructor(
 
   private var thisSessionId = 0
 
-  fun loadData() = viewModelScope.launch {
+  private fun loadData() = viewModelScope.launch {
     val user = settingRepository.loadUserSetting(0)
-    val startTime = TimeRangePicker.Time(user.bedTime.hour, user.bedTime.minute)
-    val endTime = TimeRangePicker.Time(user.alarmTime.hour, user.alarmTime.minute)
-    _uiState.update {
-      it.copy(
-        startTime = startTime,
-        endTime = endTime,
-      )
+    if (user != null) {
+      val startTime = TimeRangePicker.Time(user.bedTime.hour, user.bedTime.minute)
+      val endTime = TimeRangePicker.Time(user.alarmTime.hour, user.alarmTime.minute)
+      _uiState.update {
+        it.copy(
+          startTime = startTime,
+          endTime = endTime,
+        )
+      }
     }
   }
 
@@ -85,6 +86,7 @@ class ActivityViewModel @Inject constructor(
     loadData()
   }
 
+
   fun createSession(pickerStartTime: Calendar, pickerEndTime: Calendar) = viewModelScope.launch {
     val actualStartTime = Date()
     val sleepTime = Date()
@@ -98,6 +100,7 @@ class ActivityViewModel @Inject constructor(
       actualStartTime,
       sleepTime,
       sleepTime,
+      "", ""
     )
     val sessionId: Int = sessionRepository.createNewSession(sleepSession).toInt()
     thisSessionId = sessionId
@@ -111,32 +114,12 @@ class ActivityViewModel @Inject constructor(
     Timber.tag("Timber").d("updateSessionRefValue")
   }
 
-
-  fun createNewTask() = viewModelScope.launch {
-//    val localRadar = LocalRadar(0.1f, 0.1f, 0.1f, "X", "X", "X", "X")
-//
-//    radarRepository.createTopper(localRadar)
-    _uiState.update {
-      it.copy(status1 = "Ahahahah")
-    }
+  fun saveAssessment(assessment: String) = viewModelScope.launch {
+    sessionRepository.updateSessionAssessment(thisSessionId, assessment)
   }
 
-  fun getToppers() = viewModelScope.launch {
-
-//    var aaa = sensorRepository.getAllDataFromSession(1)
-//
-//    _uiState.update {
-//      it.copy(status2 = aaa[0].br.toString())
-//    }
-  }
-
-  fun getCount() = viewModelScope.launch {
-
-    var bbb = topperRepository.getDataCount()
-
-    _uiState.update {
-      it.copy(status3 = bbb.toString())
-    }
+  fun saveQuality(rating: Int, memo: String) = viewModelScope.launch {
+    sessionRepository.updateSessionQualityMemo(thisSessionId, rating, memo)
   }
 
 
@@ -178,8 +161,6 @@ class ActivityViewModel @Inject constructor(
         it.copy(status3 = "Disconnect")
       }
     }
-
-
     println("asdas")
   }
 

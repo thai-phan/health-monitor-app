@@ -52,8 +52,7 @@ fun ButtonAction(
 
   Column(
     modifier = Modifier
-      .fillMaxWidth()
-      .verticalScroll(rememberScrollState()),
+      .fillMaxWidth(),
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center
   ) {

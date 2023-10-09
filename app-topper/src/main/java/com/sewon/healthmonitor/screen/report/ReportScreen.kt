@@ -62,13 +62,13 @@ fun ReportScreen(
       })
 
       SleepChart(uiState)
-      Spacer(modifier = Modifier.height(10.dp))
+      Spacer(modifier = Modifier.height(20.dp))
 
       SleepScore(uiState)
-      Spacer(modifier = Modifier.height(10.dp))
+      Spacer(modifier = Modifier.height(20.dp))
 
       SleepDetail(uiState)
-      Spacer(modifier = Modifier.height(10.dp))
+      Spacer(modifier = Modifier.height(20.dp))
 
       SleepSummary(uiState)
     } else {

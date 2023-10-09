@@ -26,6 +26,10 @@ data class SleepSession(
   val actualStartTime: Date,
   val actualEndTime: Date,
   val sleepTime: Date,
+
+  val assessment: String,
+  val memo: String,
+
   val sessionId: Int = -1,
 )
 
@@ -52,6 +56,9 @@ fun SleepSession.toLocal() = LocalSleepSession(
   actualStartTime = actualStartTime,
   actualEndTime = actualEndTime,
   sleepTime = sleepTime,
+
+  assessment = assessment,
+  memo = memo
 )
 
 fun List<SleepSession>.toLocal() = map(SleepSession::toLocal)
@@ -81,6 +88,9 @@ fun LocalSleepSession.toExternal() = SleepSession(
   actualEndTime = actualEndTime,
   sleepTime = sleepTime,
   sessionId = sessionId,
+
+  assessment = assessment,
+  memo = memo
 )
 
 fun List<LocalSleepSession>.toExternal() = map(LocalSleepSession::toExternal)

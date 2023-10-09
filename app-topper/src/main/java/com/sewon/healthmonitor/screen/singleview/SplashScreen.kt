@@ -25,13 +25,12 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.sewon.healthmonitor.R
 import kotlinx.coroutines.delay
 
 
 @Composable
-fun SplashScreen(navController: NavController, redirectRoute: String) {
+fun SplashScreen(onRedirectRoute: () -> Unit) {
   val scale = remember {
     androidx.compose.animation.core.Animatable(0f)
   }
@@ -49,7 +48,7 @@ fun SplashScreen(navController: NavController, redirectRoute: String) {
     )
     // Customize the delay time
     delay(1000L)
-    navController.navigate(redirectRoute)
+    onRedirectRoute()
   }
 
 
@@ -57,16 +56,16 @@ fun SplashScreen(navController: NavController, redirectRoute: String) {
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally,
     modifier = Modifier
-        .statusBarsPadding()
-        .systemBarsPadding()
-        .fillMaxSize(),
+      .statusBarsPadding()
+      .systemBarsPadding()
+      .fillMaxSize(),
   ) {
     Image(
       painter = painterResource(id = R.drawable.ic_splash_icon),
       contentDescription = "Logo",
       modifier = Modifier
-          .size(100.dp)
-          .scale(scale.value)
+        .size(100.dp)
+        .scale(scale.value)
     )
     Spacer(modifier = Modifier.height(1.dp))
     Text(
@@ -81,6 +80,4 @@ fun SplashScreen(navController: NavController, redirectRoute: String) {
       fontSize = 26.sp,
     )
   }
-
-
 }

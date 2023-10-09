@@ -36,7 +36,7 @@ fun NavigationGraph(
   showOnboardingInitially: Boolean = false
 ) {
 
-  val startDestination: String = AppDestinations.DEVICE_ROUTE
+  val startDestination: String = AppDestinations.SPLASH_ROUTE
 
   val mainStartDestination = MainDestinations.REPORT_ROUTE
 
@@ -54,7 +54,8 @@ fun NavigationGraph(
   ) {
     var redirectRoute = AppDestinations.TERM_AGREEMENT_ROUTE
     if (isAccepted.value) {
-      redirectRoute = MainDestinations.ACTIVITY_ROUTE
+//      redirectRoute = MainDestinations.ACTIVITY_ROUTE
+      redirectRoute = AppDestinations.TERM_AGREEMENT_ROUTE
     }
 
     composable(AppDestinations.SPLASH_ROUTE) {
@@ -63,16 +64,18 @@ fun NavigationGraph(
         finishActivity()
       }
       SplashScreen(
-        navController = navController, redirectRoute = redirectRoute
+        onRedirectRoute = {
+          navController.navigate(redirectRoute)
+        }
       )
     }
 
     composable(AppDestinations.TERM_AGREEMENT_ROUTE) {
       TermAgreement(
-        navController = navController,
-        redirectRoute = MainDestinations.ACTIVITY_ROUTE,
-
-        )
+        onRedirectRoute = {
+          navController.navigate(AppDestinations.DEVICE_ROUTE)
+        }
+      )
     }
 
     composable(AppDestinations.DEVICE_ROUTE) {

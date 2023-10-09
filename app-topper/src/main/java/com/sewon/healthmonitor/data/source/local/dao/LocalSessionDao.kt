@@ -38,6 +38,20 @@ interface LocalSessionDao {
   )
   suspend fun queryUpdateSessionEndTime(sessionId: Int, endTime: Date)
 
+  @Query(
+    "UPDATE sleep_session SET " +
+        "assessment = :assessment " +
+        "WHERE session_id = :sessionId"
+  )
+  suspend fun queryUpdateSessionAssessment(sessionId: Int, assessment: String)
+
+  @Query(
+    "UPDATE sleep_session SET " +
+        "rating = :rating, " +
+        "memo = :memo " +
+        "WHERE session_id = :sessionId"
+  )
+  suspend fun queryUpdateSessionQualityMemo(sessionId: Int, rating: Int, memo: String)
 
   @Query("SELECT * FROM sleep_session WHERE session_id = :sessionId")
   suspend fun loadById(sessionId: Int): LocalSleepSession?

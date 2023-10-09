@@ -9,7 +9,7 @@ interface ISettingRepository {
 
   fun loadUserSettingFlow(userId: Int): Flow<Setting>
 
-  suspend fun loadUserSetting(userId: Int): Setting
+  suspend fun loadUserSetting(userId: Int): Setting?
 
   suspend fun updateAlarmOnSetting(userId: Int, alarmOn: Boolean): String
 
