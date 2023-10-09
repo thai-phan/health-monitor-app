@@ -11,7 +11,7 @@ class RealtimeDataProcessing {
 
     private val regex = Regex("[01234]")
 
-    fun validateDataFormatAndProcess(dataStr: String) {
+    fun validateDataFormat(dataStr: String) {
       val messageList = dataStr.split(" ").filter { it != "" }
       if (messageList.size == 6 && messageList[0].matches(regex)) {
         processData(messageList)
@@ -26,10 +26,11 @@ class RealtimeDataProcessing {
     fun processData(messageList: List<String>) {
       val topperData = TopperData(MainActivity.bleHandleService.sessionId, messageList)
 
-      RealtimeAlgorithm.processData(topperData)
+//      RealtimeAlgorithm.processData(topperData)
+
+      MainActivity.bleHandleService.insertNewTopperToDatabase(topperData)
 
 //      if (deplayCount == 1) {
-//        MainActivity.bleHandleService.insertNewTopperToDatabase(topperData)
 //        deplayCount = 0
 //      }
 //      deplayCount += 1

@@ -1,7 +1,6 @@
 package com.sewon.healthmonitor.screen.report.sube
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import com.sewon.healthmonitor.screen.report.component.CircularChart
 
 

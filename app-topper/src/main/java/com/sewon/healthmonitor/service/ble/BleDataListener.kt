@@ -1,10 +1,7 @@
 package com.sewon.healthmonitor.service.ble
 
-import android.os.CountDownTimer
 import android.text.SpannableStringBuilder
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
-import com.sewon.healthmonitor.MainActivity
 import com.sewon.healthmonitor.service.alarm.AlarmReceiver
 import com.sewon.healthmonitor.service.algorithm.sleep.realtime.RealtimeDataProcessing
 
@@ -77,7 +74,7 @@ class BleDataListener : SerialListener {
         stringBuilder.append(TextUtil.toHexString(data)).append('\n')
       } else {
         val dataStr = String(data)
-        RealtimeDataProcessing.validateDataFormatAndProcess(dataStr)
+        RealtimeDataProcessing.validateDataFormat(dataStr)
         val text = TextUtil.toCaretString(dataStr, true)
         stringBuilder.append(text)
       }

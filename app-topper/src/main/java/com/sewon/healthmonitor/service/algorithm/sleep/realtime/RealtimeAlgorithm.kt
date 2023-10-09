@@ -19,10 +19,6 @@ class RealtimeAlgorithm {
     var refBR = 0.0
     var countReferenceData = 0
 
-    var lux = 1
-    var curlux = 10
-
-
     fun processData(topperData: TopperData) {
       countReferenceData += 1
       if (countReferenceData < firstReferenceCount) {
@@ -39,7 +35,6 @@ class RealtimeAlgorithm {
         MainActivity.bleHandleService.updateCurrentSessionRefValue(refHRV, refHR, refBR)
       }
 
-//      if (curlux < lux) {
       if (topperData.HRV > refHRV * AlgorithmConstants.REALTIME_HRV_THRESHOLD) {
         if (topperData.HR < refHR * AlgorithmConstants.REALTIME_HR_THRESHOLD) {
           if (topperData.BR < refBR * AlgorithmConstants.REALTIME_BR_THRESHOLD) {
@@ -47,7 +42,6 @@ class RealtimeAlgorithm {
           }
         }
       }
-//      }
     }
 
 
