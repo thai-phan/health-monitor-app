@@ -27,7 +27,7 @@ interface LocalUserDao {
   suspend fun updateUserGender(username: String, gender: String)
 
   @Query("SELECT * FROM user where username = :username")
-  suspend fun getUserByUsername(username: String): LocalUser
+  suspend fun getUserByUsername(username: String): LocalUser?
 
   @Update
   suspend fun updateUser(localUser: LocalUser)

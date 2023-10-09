@@ -48,11 +48,12 @@ class SettingViewModel @Inject constructor(
       if (settingRepository.countSetting() == 0) {
         val curDate = Calendar.getInstance().time
         Timber.tag("Timber").d(curDate.toString())
-        val time = LocalTime.now()
+        val bedTime = LocalTime.of(22, 0)
+        val alarmTime = LocalTime.of(7, 0)
         val setting = Setting(
           userId = 0,
-          alarmTime = time,
-          bedTime = time,
+          bedTime = bedTime,
+          alarmTime = alarmTime,
           alarmOn = false,
           alarmSetting = "123",
           bedOn = false,

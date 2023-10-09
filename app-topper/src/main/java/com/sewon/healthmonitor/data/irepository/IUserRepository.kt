@@ -6,7 +6,7 @@ import java.util.Date
 interface IUserRepository {
   suspend fun addUser(user: User)
 
-  suspend fun getUserByUsername(username: String): User
+  suspend fun getUserByUsername(username: String): User?
 
   suspend fun updateUserBirthday(username: String, birthday: Date)
 

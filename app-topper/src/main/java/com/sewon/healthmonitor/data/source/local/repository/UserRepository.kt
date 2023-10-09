@@ -22,8 +22,8 @@ class UserRepository @Inject constructor(
     return localUserDao.upsert(user.toLocal())
   }
 
-  override suspend fun getUserByUsername(username: String): User {
-    return localUserDao.getUserByUsername(username).toExternal()
+  override suspend fun getUserByUsername(username: String): User? {
+    return localUserDao.getUserByUsername(username)?.toExternal()
   }
 
   override suspend fun updateUserBirthday(username: String, birthday: Date) {

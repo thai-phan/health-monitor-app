@@ -1,11 +1,15 @@
 package com.sewon.healthmonitor.screen.report.subd
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.sewon.healthmonitor.screen.report.UiState
 import com.sewon.healthmonitor.screen.report.component.CircularChart
 
@@ -44,6 +48,7 @@ fun SleepDetail(uiState: UiState) {
       angle = uiState.rMSSD, brush = blueBrush
     )
   }
+  Spacer(modifier = Modifier.height(10.dp))
   Row() {
     CircularChart(
       modifier = Modifier.weight(1f),

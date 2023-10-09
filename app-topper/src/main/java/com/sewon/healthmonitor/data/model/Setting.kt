@@ -6,8 +6,8 @@ import java.util.Date
 
 data class Setting(
   val userId: Int,
-  val alarmTime: LocalTime,
   val bedTime: LocalTime,
+  val alarmTime: LocalTime,
   val alarmOn: Boolean,
   val alarmSetting: String,
   val bedOn: Boolean,
@@ -27,8 +27,8 @@ data class Setting(
 // extension function
 fun Setting.toLocal() = LocalSetting(
   userId = userId,
-  alarmTime = alarmTime,
   bedTime = bedTime,
+  alarmTime = alarmTime,
   alarmOn = alarmOn,
   alarmSetting = alarmSetting,
   bedOn = bedOn,
@@ -48,8 +48,8 @@ fun List<Setting>.toLocal() = map(Setting::toLocal)
 
 fun LocalSetting.toExternal() = Setting(
   userId = userId,
-  alarmTime = alarmTime,
   bedTime = bedTime,
+  alarmTime = alarmTime,
   alarmOn = alarmOn,
   alarmSetting = alarmSetting,
   bedOn = bedOn,

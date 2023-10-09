@@ -44,17 +44,19 @@ class ViewModelCardProfile @Inject constructor(
 
   fun loadData() = viewModelScope.launch {
     val user = userRepository.getUserByUsername(curUsername)
-    val calendar = Calendar.getInstance()
-    calendar.time = user.birthday
-    val dateformat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
-    val birthdayString = dateformat.format(calendar.time)
+    if (user != null) {
+      val calendar = Calendar.getInstance()
+      calendar.time = user.birthday
+      val dateformat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+      val birthdayString = dateformat.format(calendar.time)
 
-    _uiState.update {
-      it.copy(
-        calendar = calendar,
-        gender = user.gender,
-        birthday = birthdayString,
-      )
+      _uiState.update {
+        it.copy(
+          calendar = calendar,
+          gender = user.gender,
+          birthday = birthdayString,
+        )
+      }
     }
   }
 

@@ -10,8 +10,8 @@ import java.util.Date
 @Entity(tableName = "setting")
 data class LocalSetting(
   @ColumnInfo(name = "user_id") val userId: Int,
-  @ColumnInfo(name = "alarm_time") val alarmTime: LocalTime,
   @ColumnInfo(name = "bed_time") val bedTime: LocalTime,
+  @ColumnInfo(name = "alarm_time") val alarmTime: LocalTime,
   @ColumnInfo(name = "alarm_on") val alarmOn: Boolean,
   @ColumnInfo(name = "alarm_setting") val alarmSetting: String,
   @ColumnInfo(name = "bed_on") val bedOn: Boolean,
