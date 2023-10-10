@@ -38,7 +38,7 @@ fun Modal3ScoreThreshold(
 ) {
 
   var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-  var skipPartiallyExpanded by remember { mutableStateOf(false) }
+  var skipPartiallyExpanded by remember { mutableStateOf(true) }
 
   val scope = rememberCoroutineScope()
   val bottomSheetState = rememberModalBottomSheetState(

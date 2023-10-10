@@ -69,9 +69,6 @@ fun Modal2InduceSound(
           Text("저장")
         }
       }
-
     }
-
-
   }
 }

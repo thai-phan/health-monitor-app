@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.magnifier
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -42,6 +44,7 @@ fun Modal3SOSRecipient(
   )
 
   ModalBottomSheet(
+    modifier = Modifier.fillMaxHeight(),
     onDismissRequest = onToggleModal,
     sheetState = bottomSheetState,
   ) {
@@ -55,7 +58,7 @@ fun Modal3SOSRecipient(
         TextField(value = "연락처", onValueChange = {})
       }
 
-      Row {
+      Row() {
         TextField(value = "관계", onValueChange = {})
         TextField(value = "연락처", onValueChange = {})
       }

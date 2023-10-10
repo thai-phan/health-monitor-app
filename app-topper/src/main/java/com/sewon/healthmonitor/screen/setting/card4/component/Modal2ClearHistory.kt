@@ -68,6 +68,5 @@ fun Modal2ClearHistory(
         }
       }
     }
-
   }
 }

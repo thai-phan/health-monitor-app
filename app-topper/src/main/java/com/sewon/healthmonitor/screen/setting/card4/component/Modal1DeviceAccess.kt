@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.sp
 fun Modal1DeviceAccess(
   onToggleModal: () -> Unit
 ) {
-
   var skipPartiallyExpanded by remember { mutableStateOf(false) }
   var edgeToEdgeEnabled by remember { mutableStateOf(false) }
 
