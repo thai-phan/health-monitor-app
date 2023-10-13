@@ -1,6 +1,5 @@
 package com.sewon.healthmonitor.screen.activity
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
@@ -18,7 +17,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -62,11 +60,11 @@ fun SleepActivity(
   val context = LocalContext.current
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-  val log by MainActivity.bleDataListener.log
+  val log by MainActivity.listenerBleStream.log
 
 
-  val toggleConnectDevice by MainActivity.bleHandleService.toggleConnectDevice
-  val toggleAlarmSound by MainActivity.bleHandleService.toggleAlarmSound
+  val toggleConnectDevice by MainActivity.serviceBleHandler.toggleConnectDevice
+  val toggleAlarmSound by MainActivity.serviceBleHandler.toggleAlarmSound
 
 
   fun composeConnectToSensor() {
@@ -77,7 +75,7 @@ fun SleepActivity(
         SerialSocket(context, it)
       }
       if (socket != null) {
-        MainActivity.bleHandleService.connect(socket)
+        MainActivity.serviceBleHandler.connect(socket)
       }
     } catch (exception: IllegalArgumentException) {
       Timber.tag("Timber").w(exception)
@@ -85,11 +83,11 @@ fun SleepActivity(
   }
 
   var isStarted by remember { mutableStateOf(false) }
-  var isAlarm by MainActivity.bleDataListener.isAlarm
+  var isAlarm by MainActivity.listenerBleStream.isAlarm
 
 
   fun startSleep() {
-    MainActivity.bleHandleService.playSound()
+    MainActivity.serviceBleHandler.playSound()
 
     isStarted = true
 
@@ -128,15 +126,15 @@ fun SleepActivity(
 
   fun cancelSleep() {
     isStarted = false
-    MainActivity.bleHandleService.stopSound()
+    MainActivity.serviceBleHandler.stopSound()
     MainActivity.alarmManager.cancel(MainActivity.alarmPendingIntent)
 
     viewModel.updateCurrentSessionEndTime()
-    MainActivity.bleHandleService.disconnectBluetoothSocket()
+    MainActivity.serviceBleHandler.disconnectBluetoothSocket()
   }
 
   fun stopAlarm() {
-    MainActivity.bleDataListener.stopAlarmListener()
+    MainActivity.listenerBleStream.stopAlarmListener()
   }
 
   fun redirectReportPage() {
@@ -144,7 +142,7 @@ fun SleepActivity(
   }
 
 
-  val isPlaySoundSleepInduceUI by MainActivity.bleHandleService.isPlaySoundSleepInduce
+  val isPlaySoundSleepInduceUI by MainActivity.serviceBleHandler.isPlaySoundSleepInduce
 
   var openAssessmentModal by rememberSaveable { mutableStateOf(false) }
   var openQualityModal by rememberSaveable { mutableStateOf(false) }
@@ -188,11 +186,11 @@ fun SleepActivity(
       SwitchAction(
         toggleConnectDevice = toggleConnectDevice,
         onToggleConnectToDevice = {
-          MainActivity.bleHandleService.toggleConnectDevice()
+          MainActivity.serviceBleHandler.toggleConnectDevice()
         },
         toggleAlarmSound = isPlaySoundSleepInduceUI,
         onToggleAlarmSound = {
-          MainActivity.bleHandleService.toggleSoundStretch()
+          MainActivity.serviceBleHandler.toggleSoundStretch()
         }
       )
 

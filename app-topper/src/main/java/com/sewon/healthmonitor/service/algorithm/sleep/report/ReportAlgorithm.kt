@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.service.algorithm.sleep.database
+package com.sewon.healthmonitor.service.algorithm.sleep.report
 
 import com.sewon.healthmonitor.service.algorithm.sleep.AlgorithmConstants
 
@@ -15,10 +15,9 @@ class ReportAlgorithm {
       var sumBR = 0.0
       val stageList = mutableListOf<Float>()
       var countTime = 0
-      val countMax = AlgorithmConstants.SLEEP_STAGE_NUMBER
 
       for (data in ReportDataProcessing.allData) {
-        if (countTime == countMax) {
+        if (countTime == AlgorithmConstants.SLEEP_STAGE_NUMBER) {
           val meanHRV = sumHRV / countTime
           val meanHR = sumHR / countTime
           val meanBR = sumBR / countTime

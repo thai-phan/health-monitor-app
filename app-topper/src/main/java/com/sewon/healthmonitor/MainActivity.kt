@@ -13,9 +13,9 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
 import com.sewon.healthmonitor.common.RootCompose
-import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportDataProcessing
-import com.sewon.healthmonitor.service.ble.BleDataListener
-import com.sewon.healthmonitor.service.ble.BleHandleService
+import com.sewon.healthmonitor.service.algorithm.sleep.report.ReportDataProcessing
+import com.sewon.healthmonitor.service.ble.ListenerBleStream
+import com.sewon.healthmonitor.service.ble.ServiceBleHandler
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -24,7 +24,7 @@ import timber.log.Timber
 class MainActivity : ComponentActivity() {
 
   companion object {
-    lateinit var bleHandleService: BleHandleService
+    lateinit var serviceBleHandler: ServiceBleHandler
     lateinit var alarmManager: AlarmManager
     lateinit var alarmPendingIntent: PendingIntent
     lateinit var reportDataProcessing: ReportDataProcessing
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
 //    lateinit var mLightSensor: Sensor
 //    lateinit var sensorListener: LightSensorListener
 
-    var bleDataListener = BleDataListener()
+    var listenerBleStream = ListenerBleStream()
 
   }
 
@@ -87,7 +87,7 @@ class MainActivity : ComponentActivity() {
 
     alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
-    val intent = Intent(this, BleHandleService::class.java)
+    val intent = Intent(this, ServiceBleHandler::class.java)
     startService(intent)
     bindService(intent, mServiceConnection, BIND_AUTO_CREATE)
   }
@@ -105,8 +105,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
       Timber.tag("Timber").d("onServiceConnected")
-      bleHandleService = (service as BleHandleService.SerialBinder).service
-      bleHandleService.attach(bleDataListener)
+      serviceBleHandler = (service as ServiceBleHandler.SerialBinder).service
+      serviceBleHandler.attach(listenerBleStream)
     }
   }
 

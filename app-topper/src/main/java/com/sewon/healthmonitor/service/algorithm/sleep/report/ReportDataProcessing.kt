@@ -1,4 +1,4 @@
-package com.sewon.healthmonitor.service.algorithm.sleep.database
+package com.sewon.healthmonitor.service.algorithm.sleep.report
 
 import com.sewon.healthmonitor.data.source.local.entity.LocalTopper
 import com.sewon.healthmonitor.service.algorithm.ecg.ECGAnalysisProc

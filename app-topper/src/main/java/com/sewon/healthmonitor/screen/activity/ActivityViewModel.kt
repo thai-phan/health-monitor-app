@@ -36,7 +36,7 @@ data class UiState(
   val isLoading: Boolean = false,
   val userMessage: Int? = null,
   val isTaskSaved: Boolean = false,
-  )
+)
 
 
 @HiltViewModel
@@ -104,8 +104,8 @@ class ActivityViewModel @Inject constructor(
     )
     val sessionId: Int = sessionRepository.createNewSession(sleepSession).toInt()
     thisSessionId = sessionId
-    MainActivity.bleHandleService.sessionId = sessionId
-    MainActivity.bleHandleService.pickerEndTime = pickerEndTime.time
+    MainActivity.serviceBleHandler.sessionId = sessionId
+    MainActivity.serviceBleHandler.pickerEndTime = pickerEndTime.time
   }
 
   fun updateCurrentSessionEndTime() = viewModelScope.launch {

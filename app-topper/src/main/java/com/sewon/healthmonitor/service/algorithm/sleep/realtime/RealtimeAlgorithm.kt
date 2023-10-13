@@ -10,29 +10,32 @@ import java.util.Date
 class RealtimeAlgorithm {
 
   companion object {
-    var firstReferenceCount = 3 * 60 * 20
+    var referenceCount = 3 * 60 * 20
+
     var sumHRV = 0.0
     var sumHR = 0.0
     var sumBR = 0.0
+
     var refHRV = 0.0
     var refHR = 0.0
     var refBR = 0.0
+
     var countReferenceData = 0
 
     fun processData(topperData: TopperData) {
       countReferenceData += 1
-      if (countReferenceData < firstReferenceCount) {
+      if (countReferenceData < referenceCount) {
         sumHRV += topperData.HRV
         sumHR += topperData.HR
         sumBR += topperData.BR
       }
 
-      if (countReferenceData == firstReferenceCount) {
-        refHRV = sumHRV / firstReferenceCount
-        refHR = sumHR / firstReferenceCount
-        refBR = sumBR / firstReferenceCount
+      if (countReferenceData == referenceCount) {
+        refHRV = sumHRV / referenceCount
+        refHR = sumHR / referenceCount
+        refBR = sumBR / referenceCount
 
-        MainActivity.bleHandleService.updateCurrentSessionRefValue(refHRV, refHR, refBR)
+        MainActivity.serviceBleHandler.updateCurrentSessionRefValue(refHRV, refHR, refBR)
       }
 
       if (topperData.HRV > refHRV * AlgorithmConstants.REALTIME_HRV_THRESHOLD) {
@@ -87,7 +90,7 @@ class RealtimeAlgorithm {
       Timber.tag("Timber").d("callDeepSleep")
       val curTime = Date()
 
-      if (curTime < MainActivity.bleHandleService.pickerEndTime) {
+      if (curTime < MainActivity.serviceBleHandler.pickerEndTime) {
         saveDatabase(topperData)
       } else {
         if (topperData.HR != 0 && topperData.BR != 0) {
@@ -102,7 +105,7 @@ class RealtimeAlgorithm {
     }
 
     fun saveDatabase(topperData: TopperData) {
-      MainActivity.bleHandleService.insertNewTopperToDatabase(topperData)
+      MainActivity.serviceBleHandler.insertNewTopperToDatabase(topperData)
     }
   }
 }

@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.sewon.healthmonitor.data.model.SleepSession
 import com.sewon.healthmonitor.data.irepository.ISessionRepository
 import com.sewon.healthmonitor.data.irepository.ITopperRepository
-import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportAlgorithm
-import com.sewon.healthmonitor.service.algorithm.sleep.database.ReportDataProcessing
+import com.sewon.healthmonitor.service.algorithm.sleep.report.ReportAlgorithm
+import com.sewon.healthmonitor.service.algorithm.sleep.report.ReportDataProcessing
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
