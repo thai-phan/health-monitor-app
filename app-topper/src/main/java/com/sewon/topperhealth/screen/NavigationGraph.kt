@@ -24,8 +24,8 @@ import com.sewon.topperhealth.screen.activity.SleepActivity
 import com.sewon.topperhealth.screen.device.DeviceScreen
 import com.sewon.topperhealth.screen.report.ReportScreen
 import com.sewon.topperhealth.screen.setting.SettingScreen
-import com.sewon.topperhealth.screen.singleview.TermAgreement
-import com.sewon.topperhealth.screen.singleview.SplashScreen
+import com.sewon.topperhealth.screen.term.TermAgreement
+import com.sewon.topperhealth.screen.splash.SplashScreen
 
 
 @Composable
@@ -63,11 +63,12 @@ fun NavigationGraph(
       BackHandler {
         finishActivity()
       }
+
       SplashScreen(
-        onRedirectRoute = {
-          navController.navigate(redirectRoute)
-        }
-      )
+        delayTime = 1000L
+      ) {
+        navController.navigate(redirectRoute)
+      }
     }
 
     composable(AppDestinations.TERM_AGREEMENT_ROUTE) {

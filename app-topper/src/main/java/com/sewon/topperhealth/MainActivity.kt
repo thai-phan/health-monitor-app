@@ -29,11 +29,6 @@ class MainActivity : ComponentActivity() {
     lateinit var alarmPendingIntent: PendingIntent
     lateinit var reportDataProcessing: ReportDataProcessing
 
-
-//    lateinit var mSensorManager: SensorManager
-//    lateinit var mLightSensor: Sensor
-//    lateinit var sensorListener: LightSensorListener
-
     var listenerBleStream = ListenerBleStream()
 
   }
@@ -59,10 +54,6 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
 
     actionBar?.hide()
-
-//    mSensorManager = getSystemService(SENSOR_SERVICE) as SensorManager;
-//    mLightSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)!!;
-
     WindowCompat.setDecorFitsSystemWindows(window, false)
 
     setContent {
@@ -75,9 +66,6 @@ class MainActivity : ComponentActivity() {
   @RequiresApi(Build.VERSION_CODES.S)
   override fun onResume() {
     super.onResume()
-
-//    mSensorManager.registerListener(sensorListener, mLightSensor, SENSOR_DELAY_NORMAL)
-
 
   }
 
@@ -92,12 +80,29 @@ class MainActivity : ComponentActivity() {
     bindService(intent, mServiceConnection, BIND_AUTO_CREATE)
   }
 
+  override fun onPause() {
+//    mSensorManager.unregisterListener(sensorListener)
+    super.onPause()
+  }
+
   override fun onStop() {
     super.onStop()
-//    if (mServiceBound) {
     unbindService(mServiceConnection)
   }
 
+  override fun onRestart() {
+    super.onRestart()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+  }
+
+
+  /**
+   * Interface for monitoring the state of an application service. See Service and Context.bindService() for more information.
+   * Like many callbacks from the system, the methods on this class are called from the main thread of your process.
+   **/
   private val mServiceConnection: ServiceConnection = object : ServiceConnection {
     override fun onServiceDisconnected(name: ComponentName) {
 //      TODO mServiceBound = false
@@ -110,17 +115,5 @@ class MainActivity : ComponentActivity() {
     }
   }
 
-  override fun onPause() {
-//    mSensorManager.unregisterListener(sensorListener)
-    super.onPause()
-  }
-
-  override fun onRestart() {
-    super.onRestart()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-  }
 
 }
