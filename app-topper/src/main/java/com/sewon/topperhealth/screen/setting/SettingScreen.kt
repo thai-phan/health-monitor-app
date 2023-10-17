@@ -19,17 +19,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.screen.setting.card1.ProfileSetting
-import com.sewon.topperhealth.screen.setting.card2.SleepSetting
-import com.sewon.topperhealth.screen.setting.card3.InductionSolutionSetting
-import com.sewon.topperhealth.screen.setting.card4.GeneralSetting
+import com.sewon.topperhealth.screen.setting.suba.ProfileSetting
+import com.sewon.topperhealth.screen.setting.subb.SleepSetting
+import com.sewon.topperhealth.screen.setting.subc.InductionSolutionSetting
+import com.sewon.topperhealth.screen.setting.subd.GeneralSetting
 import com.sewon.topperhealth.common.theme.checkedBorderColor
 import com.sewon.topperhealth.common.theme.checkedThumbColor
 import com.sewon.topperhealth.common.theme.checkedTrackColor
 import com.sewon.topperhealth.common.theme.uncheckedBorderColor
 import com.sewon.topperhealth.common.theme.uncheckedThumbColor
 import com.sewon.topperhealth.common.theme.uncheckedTrackColor
-import com.sewon.topperhealth.screen.setting.card5.DeviceConnectionSetting
+import com.sewon.topperhealth.screen.setting.sube.DeviceConnectionSetting
 
 @Composable
 fun SettingScreen(

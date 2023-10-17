@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.setting.card3.component
+package com.sewon.topperhealth.screen.setting.subd.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,11 +25,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Modal1InduceEnergy(
-  onToggleModal: () -> Unit
-) {
+fun Modal2ClearHistory(
+  onToggleModal: () -> Unit) {
 
   var skipPartiallyExpanded by remember { mutableStateOf(false) }
   var edgeToEdgeEnabled by remember { mutableStateOf(false) }
@@ -44,12 +44,13 @@ fun Modal1InduceEnergy(
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("수면유도 에너지", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("수면기록 모두 지우기", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+
       Spacer(modifier = Modifier.height(20.dp))
-      Text(
-        "미주신경 자극으로 심신을 안정화시켜 잠에 빨리 들 수 있도록 도와줍니다. " +
-            "소리에 민감한 사용자에게 추천합니다."
-      )
+
+
+      Text("실행으로 모든 수면 기록과 분석결과가 삭제되어 과거 레포트를 확인하실 수 없습니다.\n" +
+          "실행 하시겠습니까?")
       Spacer(modifier = Modifier.height(20.dp))
 
       Row(
@@ -67,7 +68,5 @@ fun Modal1InduceEnergy(
         }
       }
     }
-
-
   }
 }

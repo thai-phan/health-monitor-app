@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.setting.card2
+package com.sewon.topperhealth.screen.setting.subb
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,17 +17,17 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 
-data class SleepUiState(
-  val alarmTime: LocalTime = LocalTime.now(),
+data class UiStateB(
+  val sleepTimeStr: String = "Please select",
+  val sleepTime: LocalTime = LocalTime.of(22, 0),
+  val wakeupTimeStr: String = "Please select",
+  val wakeupTime: LocalTime = LocalTime.of(7, 0),
   val alarmOn: Boolean = false,
   val alarmType: String = "",
-  val bedTime: LocalTime = LocalTime.now(),
   val bedOn: Boolean = false,
-
   val isLoading: Boolean = false,
   val message: Int? = null
 )
@@ -41,32 +41,30 @@ class ViewModelCardSleep @Inject constructor(
   var userId = 0
   private val _isLoading = MutableStateFlow(false)
   private val _message: MutableStateFlow<Int?> = MutableStateFlow(null)
-  private var _settingAsync = settingRepository.loadUserSettingFlow(userId).map {
+  private var _settingAsync = settingRepository.flowLoadUserSetting(userId).map {
     handleSetting(it)
-  }
-    .catch { emit(Async.Error(R.string.setting_not_found)) }
+  }.catch { emit(Async.Error(R.string.setting_not_found)) }
 
-  val uiState: StateFlow<SleepUiState> =
+  val uiState: StateFlow<UiStateB> =
     combine(_settingAsync, _message, _isLoading) { settingAsync, message, isLoading ->
       when (settingAsync) {
         Async.Loading -> {
-          SleepUiState(isLoading = true)
+          UiStateB(isLoading = true)
         }
 
         is Async.Error -> {
-          SleepUiState(message = settingAsync.errorMessage)
+          UiStateB(message = settingAsync.errorMessage)
         }
 
         is Async.Success -> {
-
-          val dtf = DateTimeFormatter.ofPattern("HH:mm")
-
-          SleepUiState(
+          UiStateB(
             alarmOn = settingAsync.data!!.alarmOn,
-            alarmTime = settingAsync.data.alarmTime,
+            sleepTimeStr = settingAsync.data.sleepTime.toString(),
+            sleepTime = settingAsync.data.sleepTime,
+            wakeupTimeStr = settingAsync.data.wakeupTime.toString(),
+            wakeupTime = settingAsync.data.wakeupTime,
             alarmType = settingAsync.data.alarmSetting,
             bedOn = settingAsync.data.bedOn,
-            bedTime = settingAsync.data.bedTime,
             message = message,
             isLoading = isLoading
           )
@@ -75,7 +73,7 @@ class ViewModelCardSleep @Inject constructor(
     }.stateIn(
       scope = viewModelScope,
       started = WhileUiSubscribed,
-      initialValue = SleepUiState(isLoading = true)
+      initialValue = UiStateB(isLoading = true)
     )
 
   fun toggleAlarmOn(alarmOn: Boolean) = viewModelScope.launch {

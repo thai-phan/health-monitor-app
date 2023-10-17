@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.setting.card2
+package com.sewon.topperhealth.screen.setting.subb
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -8,13 +8,19 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
@@ -27,9 +33,9 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sewon.topperhealth.screen.setting.card2.component.Modal3AlarmSetting
-import com.sewon.topperhealth.screen.setting.card2.component.Modal2SleepTime
-import com.sewon.topperhealth.screen.setting.card2.component.Modal1WakeUpTime
+import com.sewon.topperhealth.screen.setting.subb.component.Modal3AlarmSetting
+import com.sewon.topperhealth.screen.setting.subb.component.Modal2SleepTime
+import com.sewon.topperhealth.screen.setting.subb.component.Modal1WakeUpTime
 
 @Composable
 fun SleepSetting(
@@ -68,9 +74,17 @@ fun SleepSetting(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {
-//                기상알람시간 Wake Up alarm time
         Text("기상알람시간")
-        Text(uiState.alarmTime.toString())
+        Row {
+          Text(uiState.wakeupTimeStr)
+          Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+          Icon(
+            Icons.Filled.ChevronRight,
+            tint = Color.White,
+            contentDescription = "contentDescription",
+            modifier = Modifier.size(ButtonDefaults.IconSize)
+          )
+        }
       }
 
       Spacer(modifier = Modifier.height(5.dp))
@@ -84,11 +98,17 @@ fun SleepSetting(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {
-//                취침시간 Bedtime
         Text("취침시간")
-
-        Text(uiState.bedTime.toString())
-
+        Row {
+          Text(uiState.sleepTimeStr)
+          Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+          Icon(
+            Icons.Filled.ChevronRight,
+            tint = Color.White,
+            contentDescription = "contentDescription",
+            modifier = Modifier.size(ButtonDefaults.IconSize)
+          )
+        }
       }
 
       Spacer(modifier = Modifier.height(5.dp))
@@ -104,11 +124,18 @@ fun SleepSetting(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {
-//                알람설정 Alarm settings
         Text("알람설정")
-        Text(uiState.alarmType)
+        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+        Row {
+          Text(uiState.alarmType)
+          Icon(
+            Icons.Filled.ChevronRight,
+            tint = Color.White,
+            contentDescription = "contentDescription",
+            modifier = Modifier.size(ButtonDefaults.IconSize)
+          )
+        }
       }
-
     }
   }
 

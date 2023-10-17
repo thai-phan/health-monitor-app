@@ -20,11 +20,11 @@ class SettingRepository @Inject constructor(
   @ApplicationScope private val scope: CoroutineScope,
 ) : ISettingRepository {
 
-  suspend fun addSetting(setting: Setting) {
-    return localSettingDao.upsert(setting.toLocal())
+  override suspend fun addSetting(setting: Setting): Long {
+    return localSettingDao.insert(setting.toLocal())
   }
 
-  override fun loadUserSettingFlow(userId: Int): Flow<Setting> {
+  override fun flowLoadUserSetting(userId: Int): Flow<Setting> {
     return localSettingDao.querySettingByUserIdFlow(userId).map { it.toExternal() }
   }
 
@@ -32,34 +32,27 @@ class SettingRepository @Inject constructor(
     return localSettingDao.querySettingByUserId(userId)?.toExternal()
   }
 
-  override suspend fun updateAlarmOnSetting(userId: Int, alarmOn: Boolean): String {
-    var aaa = localSettingDao.updateAlarmOnQuery(userId, alarmOn)
-    return "Done"
+  override suspend fun updateAlarmOnSetting(userId: Int, alarmOn: Boolean): Int {
+    return localSettingDao.updateAlarmOnQuery(userId, alarmOn)
   }
 
-  override suspend fun updateAlarmTimeSetting(userId: Int, alarmTime: LocalTime): String {
-    var aaa = localSettingDao.updateAlarmTimeQuery(userId, alarmTime)
-    return "Done"
+  override suspend fun updateAlarmTimeSetting(userId: Int, alarmTime: LocalTime): Int {
+    return localSettingDao.updateAlarmTimeQuery(userId, alarmTime)
   }
 
-  override suspend fun updateBedSetting(userId: Int, bedOn: Boolean): String {
-    var aaa = localSettingDao.updateBedSettingQuery(userId, bedOn)
-    return "Done"
+  override suspend fun updateBedSetting(userId: Int, bedOn: Boolean): Int {
+    return localSettingDao.updateBedSettingQuery(userId, bedOn)
   }
 
-  override suspend fun updateBedTimeSetting(userId: Int, bedTime: LocalTime): String {
-    var aaa = localSettingDao.updateBedTimeQuery(userId, bedTime)
-    return "Done"
+  override suspend fun updateBedTimeSetting(userId: Int, bedTime: LocalTime): Int {
+    return localSettingDao.updateBedTimeQuery(userId, bedTime)
   }
 
-  override suspend fun updateAlarmTypeSetting(userId: Int, alarmSetting: String): String {
-    var aaa = localSettingDao.updateAlarmTypeSettingQuery(userId, alarmSetting)
-    return "Done"
+  override suspend fun updateAlarmTypeSetting(userId: Int, alarmSetting: String): Int {
+    return localSettingDao.updateAlarmTypeSettingQuery(userId, alarmSetting)
   }
 
   suspend fun countSetting(): Int {
     return localSettingDao.countSetting()
   }
-
-
 }

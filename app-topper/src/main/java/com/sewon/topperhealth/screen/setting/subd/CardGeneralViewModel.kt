@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.setting.card5
+package com.sewon.topperhealth.screen.setting.subd
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class SleepUiState(
+data class UiStateD(
   val alarmTime: String = "",
   val alarmOn: Boolean = false,
   val isLoading: Boolean = false,
@@ -34,25 +34,25 @@ class ViewModelCardSleep @Inject constructor(
   var userId = 0
   private val _isLoading = MutableStateFlow(false)
   private val _message: MutableStateFlow<Int?> = MutableStateFlow(null)
-  private var _settingAsync = settingRepository.loadUserSettingFlow(userId).map {
+  private var _settingAsync = settingRepository.flowLoadUserSetting(userId).map {
     handleSetting(it)
   }
     .catch { emit(Async.Error(R.string.setting_not_found)) }
 
-  val uiState: StateFlow<SleepUiState> =
+  val uiState: StateFlow<UiStateD> =
     combine(_settingAsync, _message, _isLoading) { settingAsync, message, isLoading ->
       when (settingAsync) {
         Async.Loading -> {
-          SleepUiState(isLoading = true)
+          UiStateD(isLoading = true)
         }
 
         is Async.Error -> {
-          SleepUiState(message = settingAsync.errorMessage)
+          UiStateD(message = settingAsync.errorMessage)
         }
 
         is Async.Success -> {
-          SleepUiState(
-            alarmTime = settingAsync.data!!.alarmTime.toString(),
+          UiStateD(
+            alarmTime = settingAsync.data!!.wakeupTime.toString(),
             alarmOn = settingAsync.data.alarmOn,
             message = message,
             isLoading = isLoading
@@ -62,11 +62,11 @@ class ViewModelCardSleep @Inject constructor(
     }.stateIn(
       scope = viewModelScope,
       started = WhileUiSubscribed,
-      initialValue = SleepUiState(isLoading = true)
+      initialValue = UiStateD(isLoading = true)
     )
 
   fun toggleAlarmSetting(alarmOn: Boolean) = viewModelScope.launch {
-//        settingRepository.updateUserAlarm(userId, alarmOn)
+//        settingRepository.updateAlarmSetting(userId, alarmOn)
   }
 
   private fun handleSetting(setting: Setting?): Async<Setting?> {

@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.setting.card1
+package com.sewon.topperhealth.screen.setting.suba
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,8 +34,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.screen.setting.card1.component.ModalDate
-import com.sewon.topperhealth.screen.setting.card1.component.ModalGender
+import com.sewon.topperhealth.screen.setting.suba.component.ModalDate
+import com.sewon.topperhealth.screen.setting.suba.component.ModalGender
 
 
 @Composable
@@ -47,6 +48,7 @@ fun ProfileSetting(
   var openGenderModal by rememberSaveable { mutableStateOf(false) }
   var openDateModal by rememberSaveable { mutableStateOf(false) }
 
+  val height = 45.dp
   Card(
     shape = RoundedCornerShape(size = 10.dp),
     colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
@@ -54,8 +56,8 @@ fun ProfileSetting(
     Column(
       verticalArrangement = Arrangement.SpaceAround,
       modifier = Modifier
-          .fillMaxWidth()
-          .padding(vertical = 10.dp, horizontal = 20.dp)
+        .fillMaxWidth()
+        .padding(vertical = 10.dp, horizontal = 20.dp)
 
     ) {
       Text(
@@ -69,15 +71,12 @@ fun ProfileSetting(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = { openGenderModal = !openGenderModal }),
+          .fillMaxWidth()
+          .height(height)
+          .clickable(onClick = { openGenderModal = !openGenderModal }),
       ) {
         Text("성별")
-        TextButton(
-          onClick = {
-            openGenderModal = !openGenderModal
-          },
-        ) {
+        Row() {
           Text(uiState.gender, color = Color.White)
           Spacer(Modifier.size(ButtonDefaults.IconSpacing))
           Icon(
@@ -94,15 +93,12 @@ fun ProfileSetting(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = { openDateModal = !openDateModal }),
+          .fillMaxWidth()
+          .height(height)
+          .clickable(onClick = { openDateModal = !openDateModal }),
       ) {
         Text("연령")
-        TextButton(
-          onClick = {
-            openDateModal = !openDateModal
-          },
-        ) {
+        Row() {
           Text(uiState.birthday, color = Color.White)
           Spacer(Modifier.size(ButtonDefaults.IconSpacing))
           Icon(

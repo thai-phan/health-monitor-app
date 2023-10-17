@@ -1,5 +1,7 @@
-package com.sewon.topperhealth.screen.setting.card4.component
+package com.sewon.topperhealth.screen.setting.suba.component
 
+import android.view.LayoutInflater
+import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,39 +19,57 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import com.sewon.topperhealth.R
+import com.sewon.topperhealth.screen.setting.suba.UiStateA
+import java.util.Calendar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Modal1DeviceAccess(
-  onToggleModal: () -> Unit
+fun ModalDate(
+  uiState: UiStateA,
+  onSubmitBirthday: (Int, Int, Int) -> Unit,
+  onToggleModal: () -> Unit,
 ) {
-  var skipPartiallyExpanded by remember { mutableStateOf(false) }
-  var edgeToEdgeEnabled by remember { mutableStateOf(false) }
+  val (year, setYear) = remember { mutableStateOf(uiState.calendar.get(Calendar.YEAR)) }
+  val (month, setMonth) = remember { mutableStateOf(uiState.calendar.get(Calendar.MONTH)) }
+  val (day, setDay) = remember { mutableStateOf(uiState.calendar.get(Calendar.DAY_OF_MONTH)) }
 
-  val scope = rememberCoroutineScope()
+  val skipPartiallyExpanded by remember { mutableStateOf(false) }
+
   val bottomSheetState = rememberModalBottomSheetState(
     skipPartiallyExpanded = skipPartiallyExpanded
   )
+
 
   ModalBottomSheet(
     onDismissRequest = onToggleModal,
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("핸드폰 캐시 접근 권한 설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
-      Spacer(modifier = Modifier.height(20.dp))
+      Text("성별", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      AndroidView(modifier = Modifier
+        .fillMaxWidth()
+        .height(200.dp), factory = { context ->
+        val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
+        val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
 
-      Text("핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?")
+        datePicker.init(
+          year, month, day
+        ) { _, year, monthOfYear, dayOfMonth ->
+          setYear(year)
+          setMonth(monthOfYear)
+          setDay(dayOfMonth)
+        }
+        datePicker
+      })
 
-      Spacer(modifier = Modifier.height(20.dp))
       Row(
         modifier = Modifier
           .fillMaxWidth()
@@ -60,7 +80,10 @@ fun Modal1DeviceAccess(
           Text("취소")
         }
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = {}) {
+        Button(onClick = {
+          onSubmitBirthday(year, month, day)
+          onToggleModal()
+        }) {
           Text("저장")
         }
       }

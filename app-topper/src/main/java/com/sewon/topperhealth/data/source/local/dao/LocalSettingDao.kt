@@ -1,6 +1,7 @@
 package com.sewon.topperhealth.data.source.local.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Upsert
 import com.sewon.topperhealth.data.source.local.entity.LocalSetting
@@ -23,23 +24,20 @@ interface LocalSettingDao {
   suspend fun countSetting(): Int
 
   @Query("UPDATE setting SET alarm_on = :alarmOn WHERE user_id = :userid")
-  suspend fun updateAlarmOnQuery(userid: Int, alarmOn: Boolean)
+  suspend fun updateAlarmOnQuery(userid: Int, alarmOn: Boolean): Int
 
   @Query("UPDATE setting SET alarm_time = :alarmTime WHERE user_id = :userid")
-  suspend fun updateAlarmTimeQuery(userid: Int, alarmTime: LocalTime)
+  suspend fun updateAlarmTimeQuery(userid: Int, alarmTime: LocalTime): Int
 
   @Query("UPDATE setting SET bed_on = :bedOn WHERE user_id = :userid")
-  suspend fun updateBedSettingQuery(userid: Int, bedOn: Boolean)
+  suspend fun updateBedSettingQuery(userid: Int, bedOn: Boolean): Int
 
   @Query("UPDATE setting SET bed_time = :bedTime WHERE user_id = :userid")
-  suspend fun updateBedTimeQuery(userid: Int, bedTime: LocalTime)
+  suspend fun updateBedTimeQuery(userid: Int, bedTime: LocalTime): Int
 
   @Query("UPDATE setting SET alarm_setting = :alarmSetting WHERE user_id = :userid")
-  suspend fun updateAlarmTypeSettingQuery(userid: Int, alarmSetting: String)
+  suspend fun updateAlarmTypeSettingQuery(userid: Int, alarmSetting: String): Int
 
-
-  @Upsert
-  suspend fun upsert(localSetting: LocalSetting)
-
-
+  @Insert
+  suspend fun insert(localSetting: LocalSetting): Long
 }

@@ -55,8 +55,8 @@ class ActivityViewModel @Inject constructor(
   private fun loadData() = viewModelScope.launch {
     val user = settingRepository.loadUserSetting(0)
     if (user != null) {
-      val startTime = TimeRangePicker.Time(user.bedTime.hour, user.bedTime.minute)
-      val endTime = TimeRangePicker.Time(user.alarmTime.hour, user.alarmTime.minute)
+      val startTime = TimeRangePicker.Time(user.sleepTime.hour, user.sleepTime.minute)
+      val endTime = TimeRangePicker.Time(user.wakeupTime.hour, user.wakeupTime.minute)
       _uiState.update {
         it.copy(
           startTime = startTime,

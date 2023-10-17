@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.setting.card3
+package com.sewon.topperhealth.screen.setting.sube
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class SleepUiState(
+data class UiStateE(
   val alarmTime: String = "",
   val alarmOn: Boolean = false,
   val isLoading: Boolean = false,
@@ -26,7 +26,7 @@ data class SleepUiState(
 )
 
 @HiltViewModel
-class ViewModelCardSolution @Inject constructor(
+class ViewModelCardSleep @Inject constructor(
   private val userRepository: UserRepository,
   private val settingRepository: SettingRepository
 ) : ViewModel() {
@@ -34,25 +34,25 @@ class ViewModelCardSolution @Inject constructor(
   var userId = 0
   private val _isLoading = MutableStateFlow(false)
   private val _message: MutableStateFlow<Int?> = MutableStateFlow(null)
-  private var _settingAsync = settingRepository.loadUserSettingFlow(userId).map {
+  private var _settingAsync = settingRepository.flowLoadUserSetting(userId).map {
     handleSetting(it)
   }
     .catch { emit(Async.Error(R.string.setting_not_found)) }
 
-  val uiState: StateFlow<SleepUiState> =
+  val uiState: StateFlow<UiStateE> =
     combine(_settingAsync, _message, _isLoading) { settingAsync, message, isLoading ->
       when (settingAsync) {
         Async.Loading -> {
-          SleepUiState(isLoading = true)
+          UiStateE(isLoading = true)
         }
 
         is Async.Error -> {
-          SleepUiState(message = settingAsync.errorMessage)
+          UiStateE(message = settingAsync.errorMessage)
         }
 
         is Async.Success -> {
-          SleepUiState(
-            alarmTime = settingAsync.data!!.alarmTime.toString(),
+          UiStateE(
+            alarmTime = settingAsync.data!!.wakeupTime.toString(),
             alarmOn = settingAsync.data.alarmOn,
             message = message,
             isLoading = isLoading
@@ -62,11 +62,11 @@ class ViewModelCardSolution @Inject constructor(
     }.stateIn(
       scope = viewModelScope,
       started = WhileUiSubscribed,
-      initialValue = SleepUiState(isLoading = true)
+      initialValue = UiStateE(isLoading = true)
     )
 
   fun toggleAlarmSetting(alarmOn: Boolean) = viewModelScope.launch {
-//        settingRepository.updateAlarmSetting(userId, alarmOn)
+//        settingRepository.updateUserAlarm(userId, alarmOn)
   }
 
   private fun handleSetting(setting: Setting?): Async<Setting?> {

@@ -18,7 +18,6 @@ class AlarmReceiver : BroadcastReceiver() {
   companion object {
     lateinit var vibrator: Vibrator
     lateinit var ringtone: Ringtone
-
   }
 
 
@@ -30,6 +29,7 @@ class AlarmReceiver : BroadcastReceiver() {
         context.getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager
       vibratorManager.defaultVibrator
     } else {
+      @Suppress("DEPRECATION")
       context.getSystemService(VIBRATOR_SERVICE) as Vibrator
     }
 

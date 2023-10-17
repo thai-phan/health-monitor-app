@@ -1,7 +1,7 @@
-package com.sewon.topperhealth.screen.setting.card3.component
+package com.sewon.topperhealth.screen.setting.subb.component
 
 import android.view.LayoutInflater
-import android.widget.NumberPicker
+import android.widget.TimePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,9 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -29,22 +26,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.screen.setting.subb.UiStateB
+import java.time.LocalTime
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Modal3ScoreThreshold(
+fun Modal1WakeUpTime(
+  uiState: UiStateB,
+  onChangeAlarmTime: (LocalTime) -> Unit,
   onToggleModal: () -> Unit
 ) {
 
-  var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-  var skipPartiallyExpanded by remember { mutableStateOf(true) }
+  val (time, setTime) = remember { mutableStateOf(uiState.wakeupTime) }
 
-  val scope = rememberCoroutineScope()
+  val skipPartiallyExpanded by remember { mutableStateOf(false) }
+
   val bottomSheetState = rememberModalBottomSheetState(
     skipPartiallyExpanded = skipPartiallyExpanded
   )
-  var test = "aaaa"
 
 
   ModalBottomSheet(
@@ -52,29 +52,34 @@ fun Modal3ScoreThreshold(
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("수면점수 임계값 설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("기상알람시간설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+
       Row(
         modifier = Modifier
           .fillMaxWidth()
           .height(200.dp),
         horizontalArrangement = Arrangement.Center
       ) {
+
+
         AndroidView(
+          modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp),
           factory = { context ->
-            val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
-            val picker = view.findViewById<NumberPicker>(R.id.number_picker)
-            val data = arrayOf("80", "81")
+            val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
+            val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
 
-            picker.minValue = 0
-            picker.maxValue = data.size - 1
-            picker.displayedValues = data
-            picker.setOnValueChangedListener { picker, oldVal, newVal ->
-              test = data.get(newVal)
+            timePicker.hour = time.hour
+            timePicker.minute = time.minute
+            timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
+              setTime(LocalTime.of(hourOfDay, minute))
             }
-            picker
 
+            timePicker
           }
         )
+
       }
 
       Row(
@@ -87,7 +92,10 @@ fun Modal3ScoreThreshold(
           Text("취소")
         }
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = {}) {
+        Button(onClick = {
+          onChangeAlarmTime(time)
+          onToggleModal()
+        }) {
           Text("저장")
         }
       }

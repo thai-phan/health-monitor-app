@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.setting.card2.component
+package com.sewon.topperhealth.screen.setting.subb.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -32,13 +32,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.screen.setting.card2.SleepUiState
+import com.sewon.topperhealth.screen.setting.subb.UiStateB
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Modal3AlarmSetting(
-  uiState: SleepUiState, onChangeAlarmType: (String) -> Unit, onToggleModal: () -> Unit
+  uiState: UiStateB, onChangeAlarmType: (String) -> Unit, onToggleModal: () -> Unit
 ) {
 
   var skipPartiallyExpanded by remember { mutableStateOf(false) }
@@ -71,8 +71,8 @@ fun Modal3AlarmSetting(
 
       Column(
         modifier = Modifier
-            .selectableGroup()
-            .fillMaxWidth(),
+          .selectableGroup()
+          .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
 
@@ -80,13 +80,13 @@ fun Modal3AlarmSetting(
         radioOptions.zip(iconOptions).forEach { pair ->
           Row(
             modifier = Modifier
-                .height(56.dp)
-                .selectable(
-                    selected = (pair.first == selectedOption),
-                    onClick = { onOptionSelected(pair.first) },
-                    role = Role.RadioButton
-                )
-                .padding(horizontal = 16.dp),
+              .height(56.dp)
+              .selectable(
+                selected = (pair.first == selectedOption),
+                onClick = { onOptionSelected(pair.first) },
+                role = Role.RadioButton
+              )
+              .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
           ) {
             RadioButton(
@@ -96,8 +96,8 @@ fun Modal3AlarmSetting(
             Text(
               text = pair.first,
               modifier = Modifier
-                  .padding(start = 16.dp)
-                  .width(50.dp),
+                .padding(start = 16.dp)
+                .width(50.dp),
               color = Color.White
             )
             Spacer(modifier = Modifier.width(10.dp))
@@ -110,8 +110,8 @@ fun Modal3AlarmSetting(
       }
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
+          .fillMaxWidth()
+          .height(100.dp),
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {

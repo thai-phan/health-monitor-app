@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.setting.card5
+package com.sewon.topperhealth.screen.setting.sube
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

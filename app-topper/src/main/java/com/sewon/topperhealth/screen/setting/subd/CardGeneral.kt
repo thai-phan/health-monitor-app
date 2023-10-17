@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.setting.card3
+package com.sewon.topperhealth.screen.setting.subd
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -30,21 +29,19 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sewon.topperhealth.screen.setting.card3.component.Modal1InduceEnergy
-import com.sewon.topperhealth.screen.setting.card3.component.Modal2InduceSound
-import com.sewon.topperhealth.screen.setting.card3.component.Modal3ScoreThreshold
+import com.sewon.topperhealth.screen.setting.subd.component.Modal2ClearHistory
+import com.sewon.topperhealth.screen.setting.subd.component.Modal1DeviceAccess
+import com.sewon.topperhealth.screen.setting.subd.component.Modal3SOSRecipient
 
 
-// Card 3
+// Card 4
 @Composable
-fun InductionSolutionSetting(
-  switchColors: SwitchColors = SwitchDefaults.colors()
+fun GeneralSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
 
-) {
+  var openDeviceAccessModal by rememberSaveable { mutableStateOf(false) }
+  var openClearHistoryModal by rememberSaveable { mutableStateOf(false) }
+  var openSOSRecipientModal by rememberSaveable { mutableStateOf(false) }
 
-  var openInduceEnergyModal by rememberSaveable { mutableStateOf(false) }
-  var openInduceSoundModal by rememberSaveable { mutableStateOf(false) }
-  var openScoreThresholdModal by rememberSaveable { mutableStateOf(false) }
 
   Card(
     shape = RoundedCornerShape(size = 10.dp),
@@ -53,86 +50,84 @@ fun InductionSolutionSetting(
     Column(
       verticalArrangement = Arrangement.SpaceAround,
       modifier = Modifier
-          .fillMaxWidth()
-          .padding(20.dp)
+        .fillMaxWidth()
+        .padding(20.dp)
 
     ) {
       Text(
-        "수면유도 솔루션", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
+        "일반설정", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
       )
 
       Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = { openInduceEnergyModal = !openInduceEnergyModal }),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+          .fillMaxWidth()
+          .clickable(onClick = { openDeviceAccessModal = !openDeviceAccessModal })
       ) {
-        Text("수면유도 에너지")
+//                Cell phone cache access rights
+        Text("핸드폰 캐시 접근 권한")
 
-        var checked by remember { mutableStateOf(true) }
 
         Switch(
           colors = switchColors,
           modifier = Modifier.semantics { contentDescription = "Demo" },
-          checked = checked,
-          onCheckedChange = { checked = it })
+          checked = openDeviceAccessModal,
+          onCheckedChange = { openDeviceAccessModal = it })
       }
       Spacer(modifier = Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
       Spacer(modifier = Modifier.height(5.dp))
       Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = { openInduceSoundModal = !openInduceSoundModal }),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+          .fillMaxWidth()
+          .clickable(onClick = { openClearHistoryModal = !openClearHistoryModal })
       ) {
-        Text("수면유도 사운드")
-
-        var checked by remember { mutableStateOf(true) }
+//                Clear all sleep history
+        Text("수면 기록 모두 지우기")
 
         Switch(
           colors = switchColors,
           modifier = Modifier.semantics { contentDescription = "Demo" },
-          checked = checked,
-          onCheckedChange = { checked = it })
+          checked = openClearHistoryModal,
+          onCheckedChange = { openClearHistoryModal = it })
       }
       Spacer(modifier = Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
       Spacer(modifier = Modifier.height(5.dp))
       Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = { openScoreThresholdModal = !openScoreThresholdModal }),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+          .fillMaxWidth()
+          .clickable(onClick = { openSOSRecipientModal = !openSOSRecipientModal })
       ) {
-        Text("수면점수 임계값 설정")
-
-        var checked by remember { mutableStateOf(true) }
+//                Emergency SOS Recipient Settings
+        Text("위급 SOS 수신자 설정")
 
         Switch(
           colors = switchColors,
           modifier = Modifier.semantics { contentDescription = "Demo" },
-          checked = checked,
-          onCheckedChange = { checked = it })
+          checked = openSOSRecipientModal,
+          onCheckedChange = { openSOSRecipientModal = it })
       }
     }
   }
 
-  if (openInduceEnergyModal) {
-    Modal1InduceEnergy(
-      onToggleModal = { openInduceEnergyModal = !openInduceEnergyModal })
+  if (openDeviceAccessModal) {
+    Modal1DeviceAccess(
+      onToggleModal = { openDeviceAccessModal = !openDeviceAccessModal })
   }
 
-  if (openInduceSoundModal) {
-    Modal2InduceSound(
-      onToggleModal = { openInduceSoundModal = !openInduceSoundModal })
+  if (openClearHistoryModal) {
+    Modal2ClearHistory(
+      onToggleModal = { openClearHistoryModal = !openClearHistoryModal })
   }
 
-  if (openScoreThresholdModal) {
-    Modal3ScoreThreshold(
-      onToggleModal = { openScoreThresholdModal = !openScoreThresholdModal })
+  if (openSOSRecipientModal) {
+    Modal3SOSRecipient(
+      onToggleModal = { openSOSRecipientModal = !openSOSRecipientModal })
   }
 }

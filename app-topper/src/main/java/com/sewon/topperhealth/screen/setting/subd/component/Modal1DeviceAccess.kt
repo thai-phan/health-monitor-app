@@ -1,7 +1,5 @@
-package com.sewon.topperhealth.screen.setting.card1.component
+package com.sewon.topperhealth.screen.setting.subd.component
 
-import android.view.LayoutInflater
-import android.widget.NumberPicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,79 +17,50 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import com.sewon.topperhealth.R
-import com.sewon.topperhealth.screen.setting.card1.ProfileUiState
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalGender(
-  uiState: ProfileUiState,
-  onChangeGender: (value: String) -> Unit,
-  onToggleModal: () -> Unit,
+fun Modal1DeviceAccess(
+  onToggleModal: () -> Unit
 ) {
+  var skipPartiallyExpanded by remember { mutableStateOf(false) }
+  var edgeToEdgeEnabled by remember { mutableStateOf(false) }
 
-  val (gender, setGender) = remember { mutableStateOf(uiState.gender) }
-
-  val skipPartiallyExpanded by remember { mutableStateOf(false) }
-
+  val scope = rememberCoroutineScope()
   val bottomSheetState = rememberModalBottomSheetState(
     skipPartiallyExpanded = skipPartiallyExpanded
   )
-
 
   ModalBottomSheet(
     onDismissRequest = onToggleModal,
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("연령", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("핸드폰 캐시 접근 권한 설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Spacer(modifier = Modifier.height(20.dp))
 
+      Text("핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?")
+
+      Spacer(modifier = Modifier.height(20.dp))
       Row(
         modifier = Modifier
-          .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-      ) {
-
-        AndroidView(
-          factory = { context ->
-            val view =
-              LayoutInflater.from(context).inflate(R.layout.number_picker, null)
-            val picker = view.findViewById<NumberPicker>(R.id.number_picker)
-            val data = arrayOf("남성", "여성")
-            picker.minValue = 0
-            picker.maxValue = data.size - 1
-            picker.displayedValues = data
-            picker.value = data.indexOf(gender)
-            picker.setOnValueChangedListener { picker, oldVal, newVal ->
-              setGender(data.get(newVal))
-              // do your other stuff depends on the new value
-            }
-            picker
-          }
-        )
-      }
-
-      Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
+          .fillMaxWidth()
+          .height(100.dp),
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
           Text("취소")
         }
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = {
-          onChangeGender(gender)
-          onToggleModal()
-        }) {
+        Button(onClick = {}) {
           Text("저장")
         }
       }

@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.setting.card2.component
+package com.sewon.topperhealth.screen.setting.subb.component
 
 import android.view.LayoutInflater
 import android.widget.TimePicker
@@ -26,19 +26,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.screen.setting.card2.SleepUiState
+import com.sewon.topperhealth.screen.setting.subb.UiStateB
 import java.time.LocalTime
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Modal1WakeUpTime(
-  uiState: SleepUiState,
-  onChangeAlarmTime: (LocalTime) -> Unit,
+fun Modal2SleepTime(
+  uiState: UiStateB,
+  onChangeBedTime: (LocalTime) -> Unit,
   onToggleModal: () -> Unit
 ) {
 
-  val (time, setTime) = remember { mutableStateOf(uiState.alarmTime) }
+  val (time, setTime) = remember { mutableStateOf(uiState.sleepTime) }
 
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
 
@@ -52,20 +51,18 @@ fun Modal1WakeUpTime(
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("기상알람시간설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("취침시간", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp),
+          .fillMaxWidth()
+          .height(200.dp),
         horizontalArrangement = Arrangement.Center
       ) {
-
-
         AndroidView(
           modifier = Modifier
-              .fillMaxWidth()
-              .height(200.dp),
+            .fillMaxWidth()
+            .height(200.dp),
           factory = { context ->
             val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
             val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
@@ -75,7 +72,6 @@ fun Modal1WakeUpTime(
             timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
               setTime(LocalTime.of(hourOfDay, minute))
             }
-
             timePicker
           }
         )
@@ -84,8 +80,8 @@ fun Modal1WakeUpTime(
 
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
+          .fillMaxWidth()
+          .height(100.dp),
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
@@ -93,13 +89,16 @@ fun Modal1WakeUpTime(
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {
-          onChangeAlarmTime(time)
+          onChangeBedTime(time)
           onToggleModal()
         }) {
           Text("저장")
         }
       }
+
+
     }
+
 
   }
 }

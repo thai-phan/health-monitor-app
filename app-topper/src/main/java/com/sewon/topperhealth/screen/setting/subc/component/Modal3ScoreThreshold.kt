@@ -1,7 +1,7 @@
-package com.sewon.topperhealth.screen.setting.card1.component
+package com.sewon.topperhealth.screen.setting.subc.component
 
 import android.view.LayoutInflater
-import android.widget.DatePicker
+import android.widget.NumberPicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -26,26 +29,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.screen.setting.card1.ProfileUiState
-import java.util.Calendar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalDate(
-  uiState: ProfileUiState,
-  onSubmitBirthday: (Int, Int, Int) -> Unit,
-  onToggleModal: () -> Unit,
+fun Modal3ScoreThreshold(
+  onToggleModal: () -> Unit
 ) {
-  val (year, setYear) = remember { mutableStateOf(uiState.calendar.get(Calendar.YEAR)) }
-  val (month, setMonth) = remember { mutableStateOf(uiState.calendar.get(Calendar.MONTH)) }
-  val (day, setDay) = remember { mutableStateOf(uiState.calendar.get(Calendar.DAY_OF_MONTH)) }
 
-  val skipPartiallyExpanded by remember { mutableStateOf(false) }
+  var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+  var skipPartiallyExpanded by remember { mutableStateOf(true) }
 
+  val scope = rememberCoroutineScope()
   val bottomSheetState = rememberModalBottomSheetState(
     skipPartiallyExpanded = skipPartiallyExpanded
   )
+  var test = "aaaa"
 
 
   ModalBottomSheet(
@@ -53,37 +52,42 @@ fun ModalDate(
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("성별", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
-      AndroidView(modifier = Modifier
+      Text("수면점수 임계값 설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Row(
+        modifier = Modifier
           .fillMaxWidth()
-          .height(200.dp), factory = { context ->
-        val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
-        val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
+          .height(200.dp),
+        horizontalArrangement = Arrangement.Center
+      ) {
+        AndroidView(
+          factory = { context ->
+            val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
+            val picker = view.findViewById<NumberPicker>(R.id.number_picker)
+            val data = arrayOf("80", "81")
 
-        datePicker.init(
-          year, month, day
-        ) { _, year, monthOfYear, dayOfMonth ->
-          setYear(year)
-          setMonth(monthOfYear)
-          setDay(dayOfMonth)
-        }
-        datePicker
-      })
+            picker.minValue = 0
+            picker.maxValue = data.size - 1
+            picker.displayedValues = data
+            picker.setOnValueChangedListener { picker, oldVal, newVal ->
+              test = data.get(newVal)
+            }
+            picker
+
+          }
+        )
+      }
 
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
+          .fillMaxWidth()
+          .height(100.dp),
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
           Text("취소")
         }
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = {
-          onSubmitBirthday(year, month, day)
-          onToggleModal()
-        }) {
+        Button(onClick = {}) {
           Text("저장")
         }
       }

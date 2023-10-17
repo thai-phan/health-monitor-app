@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.setting.card1
+package com.sewon.topperhealth.screen.setting.suba
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -21,10 +21,10 @@ import java.util.Locale
 import javax.inject.Inject
 
 
-data class ProfileUiState(
+data class UiStateA(
   val calendar: Calendar = Calendar.getInstance(),
-  val birthday: String = "",
-  val gender: String = "",
+  val birthday: String = "Please select",
+  val gender: String = "Please select",
   val isLoading: Boolean = false,
   val userMessage: Int? = null
 )
@@ -38,11 +38,11 @@ class ViewModelCardProfile @Inject constructor(
   private val _isLoading = MutableStateFlow(false)
   private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
 
-  private val _uiState = MutableStateFlow(ProfileUiState())
-  val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
+  private val _uiState = MutableStateFlow(UiStateA())
+  val uiState: StateFlow<UiStateA> = _uiState.asStateFlow()
 
 
-  fun loadData() = viewModelScope.launch {
+  private fun loadData() = viewModelScope.launch {
     val user = userRepository.getUserByUsername(curUsername)
     if (user != null) {
       val calendar = Calendar.getInstance()

@@ -7,17 +7,19 @@ import java.time.LocalTime
 
 interface ISettingRepository {
 
-  fun loadUserSettingFlow(userId: Int): Flow<Setting>
+  suspend fun addSetting(setting: Setting): Long
+
+  fun flowLoadUserSetting(userId: Int): Flow<Setting>
 
   suspend fun loadUserSetting(userId: Int): Setting?
 
-  suspend fun updateAlarmOnSetting(userId: Int, alarmOn: Boolean): String
+  suspend fun updateAlarmOnSetting(userId: Int, alarmOn: Boolean): Int
 
-  suspend fun updateAlarmTimeSetting(userId: Int, alarmTime: LocalTime): String
+  suspend fun updateAlarmTimeSetting(userId: Int, alarmTime: LocalTime): Int
 
-  suspend fun updateBedSetting(userId: Int, bedOn: Boolean): String
+  suspend fun updateBedSetting(userId: Int, bedOn: Boolean): Int
 
-  suspend fun updateBedTimeSetting(userId: Int, bedTime: LocalTime): String
+  suspend fun updateBedTimeSetting(userId: Int, bedTime: LocalTime): Int
 
-  suspend fun updateAlarmTypeSetting(userId: Int, alarmSetting: String): String
+  suspend fun updateAlarmTypeSetting(userId: Int, alarmSetting: String): Int
 }
