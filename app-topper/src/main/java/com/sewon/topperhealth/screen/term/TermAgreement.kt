@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -98,11 +99,12 @@ fun TermAgreement(onRedirectRoute: () -> Unit) {
         )
         Text(
           termContent,
-          textAlign = TextAlign.Justify,
           modifier = Modifier
-            .fillMaxHeight(0.8f)
+            .weight(1f)
             .verticalScroll(rememberScrollState()),
-        )
+          textAlign = TextAlign.Justify,
+
+          )
         val checkedState = remember { mutableStateOf(false) }
         Row(
           verticalAlignment = Alignment.CenterVertically,
