@@ -176,7 +176,7 @@ class ServiceBleHandler : Service(), SerialListener {
 
   fun playSound() {
     if (isPlaySoundSleepInduce.value) {
-      playerSleepInduce = MediaPlayer.create(this, R.raw.sleep_induce_sound)
+      playerSleepInduce = MediaPlayer.create(this, R.raw.sleep_induce_sound_2)
       playerSleepInduce.start()
     }
   }

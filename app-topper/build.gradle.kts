@@ -7,10 +7,10 @@ plugins {
 }
 
 android {
-  namespace = "com.sewon.healthmonitor"
+  namespace = "com.sewon.topperhealth"
   compileSdk = 34
   defaultConfig {
-    applicationId = "com.sewon.healthmonitor"
+    applicationId = "com.sewon.topperhealth"
     minSdk = 29
     targetSdk = 34
     versionCode = 1

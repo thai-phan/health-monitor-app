@@ -50,7 +50,7 @@ object DatabaseModule {
     return Room.databaseBuilder(
       context.applicationContext,
       HealthDatabase::class.java,
-      "HealthMonitor.db"
+      "TopperHealth.db"
     ).build()
   }
 
