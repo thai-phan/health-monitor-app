@@ -25,5 +25,5 @@ dependencyResolutionManagement {
     maven(url = "https://www.jitpack.io")
   }
 }
-rootProject.name = "health-monitor-app"
+rootProject.name = "topper-health-app"
 include(":app-topper")
