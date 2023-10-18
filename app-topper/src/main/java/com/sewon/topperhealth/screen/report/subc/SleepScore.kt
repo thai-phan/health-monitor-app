@@ -18,7 +18,7 @@ fun SleepScore(
   uiState: UiState,
 ) {
 
-  Text("PQSI 수면평가점수")
+  Text("수면품질지표(SQI)")
   Spacer(modifier = Modifier.height(20.dp))
   Column {
     ProgressBar(uiState.sleepRating)

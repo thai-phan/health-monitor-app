@@ -31,20 +31,15 @@ import com.sewon.topperhealth.screen.setting.suba.UiStateA
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalGender(
+fun ModalAGender(
   uiState: UiStateA,
   onChangeGender: (value: String) -> Unit,
   onToggleModal: () -> Unit,
 ) {
-
-  val (gender, setGender) = remember { mutableStateOf(uiState.gender) }
-
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
-
-  val bottomSheetState = rememberModalBottomSheetState(
-    skipPartiallyExpanded = skipPartiallyExpanded
-  )
-
+  val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
+  
+  val (gender, setGender) = remember { mutableStateOf(uiState.gender) }
 
   ModalBottomSheet(
     onDismissRequest = onToggleModal,
@@ -69,6 +64,7 @@ fun ModalGender(
             picker.maxValue = data.size - 1
             picker.displayedValues = data
             picker.value = data.indexOf(gender)
+            picker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS;
             picker.setOnValueChangedListener { picker, oldVal, newVal ->
               setGender(data.get(newVal))
               // do your other stuff depends on the new value

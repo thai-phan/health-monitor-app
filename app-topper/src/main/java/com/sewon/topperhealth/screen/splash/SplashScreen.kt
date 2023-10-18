@@ -71,30 +71,22 @@ fun SplashScreen(delayTime: Long, onRedirectRoute: () -> Unit) {
       horizontalArrangement = Arrangement.End
     ) {
       Image(
-        painter = painterResource(id = R.mipmap.ic_intellinest_foreground),
+        painter = painterResource(id = R.drawable.ic_intellinest),
         contentDescription = "intellinest",
         modifier = Modifier
           .size(200.dp)
       )
     }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-      Image(
-        painter = painterResource(id = R.drawable.ic_splash_icon),
-        contentDescription = "splash",
-        modifier = Modifier
-          .size(100.dp)
-          .scale(scale.value)
-      )
       Text("인텔리네스트 ", fontSize = 26.sp)
       FlowRow {
         Text("수면건강 ", fontSize = 26.sp)
         Text("모니터링 ", fontSize = 26.sp)
         Text("시스템", fontSize = 26.sp)
       }
-
     }
     Image(
-      painter = painterResource(id = R.mipmap.ic_sewon_foreground),
+      painter = painterResource(id = R.drawable.ic_sewon),
       contentDescription = "sewon",
       modifier = Modifier
         .size(250.dp)

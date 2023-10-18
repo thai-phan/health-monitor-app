@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,24 +37,19 @@ import com.sewon.topperhealth.screen.setting.subb.UiStateB
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Modal3AlarmSetting(
+fun ModalCAlarmSetting(
   uiState: UiStateB, onChangeAlarmType: (String) -> Unit, onToggleModal: () -> Unit
 ) {
 
-  var skipPartiallyExpanded by remember { mutableStateOf(false) }
-  var edgeToEdgeEnabled by remember { mutableStateOf(false) }
+  val skipPartiallyExpanded by remember { mutableStateOf(false) }
+  val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
 
-  val scope = rememberCoroutineScope()
-  val bottomSheetState = rememberModalBottomSheetState(
-    skipPartiallyExpanded = skipPartiallyExpanded
-  )
   var state by remember { mutableStateOf(true) }
 
   ModalBottomSheet(
     onDismissRequest = onToggleModal,
     sheetState = bottomSheetState,
   ) {
-
 
     val iconOptions = listOf(
       R.drawable.ic_bell_on,
@@ -63,10 +58,14 @@ fun Modal3AlarmSetting(
     )
 
     val radioOptions = listOf("벨소리", "진동", "무음")
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf(uiState.alarmType) }
 
-    // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
-    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(uiState.alarmBehavior) }
+
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = 50.dp)
+    ) {
       Text("알람설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
       Column(
@@ -75,26 +74,24 @@ fun Modal3AlarmSetting(
           .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
-
-
-        radioOptions.zip(iconOptions).forEach { pair ->
+        iconOptions.zip(radioOptions).forEach { pair ->
           Row(
             modifier = Modifier
               .height(56.dp)
               .selectable(
-                selected = (pair.first == selectedOption),
-                onClick = { onOptionSelected(pair.first) },
+                selected = (pair.second == selectedOption),
+                onClick = { onOptionSelected(pair.second) },
                 role = Role.RadioButton
               )
               .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
           ) {
             RadioButton(
-              selected = (pair.first == selectedOption),
+              selected = (pair.second == selectedOption),
               onClick = null // null recommended for accessibility with screenreaders
             )
             Text(
-              text = pair.first,
+              text = pair.second,
               modifier = Modifier
                 .padding(start = 16.dp)
                 .width(50.dp),
@@ -102,7 +99,7 @@ fun Modal3AlarmSetting(
             )
             Spacer(modifier = Modifier.width(10.dp))
             Image(
-              painter = painterResource(id = pair.second),
+              painter = painterResource(id = pair.first),
               contentDescription = "Logo",
             )
           }

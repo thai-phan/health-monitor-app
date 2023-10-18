@@ -33,23 +33,23 @@ class SettingRepository @Inject constructor(
   }
 
   override suspend fun updateAlarmOnSetting(userId: Int, alarmOn: Boolean): Int {
-    return localSettingDao.updateAlarmOnQuery(userId, alarmOn)
+    return localSettingDao.queryUpdateAlarmOnQuery(userId, alarmOn)
   }
 
-  override suspend fun updateAlarmTimeSetting(userId: Int, alarmTime: LocalTime): Int {
-    return localSettingDao.updateAlarmTimeQuery(userId, alarmTime)
+  override suspend fun updateWakeupTimeSetting(userId: Int, wakeupTime: LocalTime): Int {
+    return localSettingDao.queryUpdateWakeupTimeQuery(userId, wakeupTime)
   }
 
   override suspend fun updateBedSetting(userId: Int, bedOn: Boolean): Int {
-    return localSettingDao.updateBedSettingQuery(userId, bedOn)
+    return localSettingDao.queryUpdateBedSettingQuery(userId, bedOn)
   }
 
-  override suspend fun updateBedTimeSetting(userId: Int, bedTime: LocalTime): Int {
-    return localSettingDao.updateBedTimeQuery(userId, bedTime)
+  override suspend fun updateSleepTimeSetting(userId: Int, sleepTime: LocalTime): Int {
+    return localSettingDao.queryUpdateSleepTimeQuery(userId, sleepTime)
   }
 
-  override suspend fun updateAlarmTypeSetting(userId: Int, alarmSetting: String): Int {
-    return localSettingDao.updateAlarmTypeSettingQuery(userId, alarmSetting)
+  override suspend fun updateAlarmTypeSetting(userId: Int, alarmBehavior: String): Int {
+    return localSettingDao.queryUpdateAlarmTypeSettingQuery(userId, alarmBehavior)
   }
 
   suspend fun countSetting(): Int {

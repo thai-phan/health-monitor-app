@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,30 +37,30 @@ fun ModalAssessment(
   onToggleModal: () -> Unit,
   onSaveAssessment: (String) -> Unit
 ) {
-  val skipPartiallyExpanded by remember { mutableStateOf(true) }
+  val skipPartiallyExpanded by remember { mutableStateOf(false) }
 
-  val bottomSheetState = rememberModalBottomSheetState(
-    skipPartiallyExpanded = skipPartiallyExpanded
-  )
+  val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded  )
   val radioOptions = listOf("매우 그렇다", "그렇다", "그렇지 않다", "전혀 그렇지 않다")
 
   val (selectedOption, onOptionSelected) = remember { mutableStateOf("매우 그렇다") }
 
 
   ModalBottomSheet(
-    modifier = Modifier.fillMaxHeight(),
     onDismissRequest = onToggleModal,
     sheetState = bottomSheetState,
   ) {
-    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = 50.dp)
+    ) {
       Text("최근 수면의 질 평가", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
       Spacer(modifier = Modifier.height(20.dp))
       Text("질문 : 시간동안 얼마나 자주 피곤하고 무기력감을 느꼈나요?")
 
       Column(
         modifier = Modifier
-          .selectableGroup()
-          .fillMaxWidth(),
+          .selectableGroup(),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
 

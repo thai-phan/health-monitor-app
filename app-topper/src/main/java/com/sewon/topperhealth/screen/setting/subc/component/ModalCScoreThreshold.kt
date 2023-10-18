@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,9 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -33,25 +31,23 @@ import com.sewon.topperhealth.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Modal3ScoreThreshold(
+fun ModalCScoreThreshold(
   onToggleModal: () -> Unit
 ) {
+  val skipPartiallyExpanded by remember { mutableStateOf(false) }
+  val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
 
-  var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-  var skipPartiallyExpanded by remember { mutableStateOf(true) }
-
-  val scope = rememberCoroutineScope()
-  val bottomSheetState = rememberModalBottomSheetState(
-    skipPartiallyExpanded = skipPartiallyExpanded
-  )
-  var test = "aaaa"
-
+  val mutablePicker = remember { mutableStateOf("") }
 
   ModalBottomSheet(
     onDismissRequest = onToggleModal,
     sheetState = bottomSheetState,
   ) {
-    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = 50.dp)
+    ) {
       Text("수면점수 임계값 설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
       Row(
         modifier = Modifier
@@ -62,16 +58,16 @@ fun Modal3ScoreThreshold(
         AndroidView(
           factory = { context ->
             val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
-            val picker = view.findViewById<NumberPicker>(R.id.number_picker)
+            val numberPicker = view.findViewById<NumberPicker>(R.id.number_picker)
             val data = arrayOf("80", "81")
 
-            picker.minValue = 0
-            picker.maxValue = data.size - 1
-            picker.displayedValues = data
-            picker.setOnValueChangedListener { picker, oldVal, newVal ->
-              test = data.get(newVal)
+            numberPicker.minValue = 0
+            numberPicker.maxValue = data.size - 1
+            numberPicker.displayedValues = data
+            numberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+              mutablePicker.value = data.get(newVal)
             }
-            picker
+            numberPicker
 
           }
         )

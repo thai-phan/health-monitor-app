@@ -30,9 +30,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sewon.topperhealth.screen.setting.subc.component.Modal1InduceEnergy
-import com.sewon.topperhealth.screen.setting.subc.component.Modal2InduceSound
-import com.sewon.topperhealth.screen.setting.subc.component.Modal3ScoreThreshold
+import com.sewon.topperhealth.screen.setting.subc.component.ModalAInduceEnergy
+import com.sewon.topperhealth.screen.setting.subc.component.ModalBInduceSound
+import com.sewon.topperhealth.screen.setting.subc.component.ModalCScoreThreshold
 
 
 // Card 3
@@ -120,17 +120,17 @@ fun InductionSolutionSetting(
   }
 
   if (openInduceEnergyModal) {
-    Modal1InduceEnergy(
+    ModalAInduceEnergy(
       onToggleModal = { openInduceEnergyModal = !openInduceEnergyModal })
   }
 
   if (openInduceSoundModal) {
-    Modal2InduceSound(
+    ModalBInduceSound(
       onToggleModal = { openInduceSoundModal = !openInduceSoundModal })
   }
 
   if (openScoreThresholdModal) {
-    Modal3ScoreThreshold(
+    ModalCScoreThreshold(
       onToggleModal = { openScoreThresholdModal = !openScoreThresholdModal })
   }
 }

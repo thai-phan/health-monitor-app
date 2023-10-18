@@ -20,18 +20,18 @@ fun RootCompose(finishActivity: () -> Unit) {
 
   val navController = rememberNavController()
   val navBackStackEntry by navController.currentBackStackEntryAsState()
-  val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
+  val bottomBarState = rememberSaveable { mutableStateOf(true) }
 
   when (navBackStackEntry?.destination?.route) {
-    MainDestinations.ACTIVITY_ROUTE -> {
+    Destinations.ACTIVITY_ROUTE -> {
       bottomBarState.value = false
     }
 
-    MainDestinations.REPORT_ROUTE -> {
+    Destinations.REPORT_ROUTE -> {
       bottomBarState.value = true
     }
 
-    MainDestinations.USER_ROUTE -> {
+    Destinations.SETTING_ROUTE -> {
       bottomBarState.value = true
     }
   }

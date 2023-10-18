@@ -3,7 +3,7 @@
 
   <string name="activity_page">수면시작</string>
   <string name="report_page">리포트</string>
-  <string name="user_page">내정보</string>
+  <string name="setting_page">내정보</string>
 
 
   <string name="setting_title">내 설정</string>

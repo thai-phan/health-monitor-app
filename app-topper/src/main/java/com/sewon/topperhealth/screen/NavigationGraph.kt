@@ -13,11 +13,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.sewon.topperhealth.common.AppDestinations
-import com.sewon.topperhealth.common.MainDestinations
+import com.sewon.topperhealth.common.Destinations
 import com.sewon.topperhealth.common.MainTabs
 import com.sewon.topperhealth.data.HealthDataStore
 import com.sewon.topperhealth.screen.activity.SleepActivity
@@ -36,9 +34,9 @@ fun NavigationGraph(
   showOnboardingInitially: Boolean = false
 ) {
 
-  val startDestination: String = AppDestinations.SPLASH_ROUTE
+  val startDestination: String = Destinations.SPLASH_ROUTE
 
-  val mainStartDestination = MainDestinations.REPORT_ROUTE
+  val mainStartDestination = Destinations.REPORT_ROUTE
 
   val context = LocalContext.current
   val store = HealthDataStore(context)
@@ -52,13 +50,13 @@ fun NavigationGraph(
   NavHost(
     navController = navController, startDestination = startDestination
   ) {
-    var redirectRoute = AppDestinations.TERM_AGREEMENT_ROUTE
+    var redirectRoute = Destinations.TERM_AGREEMENT_ROUTE
     if (isAccepted.value) {
 //      redirectRoute = MainDestinations.ACTIVITY_ROUTE
-      redirectRoute = AppDestinations.TERM_AGREEMENT_ROUTE
+      redirectRoute = Destinations.TERM_AGREEMENT_ROUTE
     }
 
-    composable(AppDestinations.SPLASH_ROUTE) {
+    composable(Destinations.SPLASH_ROUTE) {
       // Intercept back in Onboarding: make it finish the activity
       BackHandler {
         finishActivity()
@@ -71,45 +69,35 @@ fun NavigationGraph(
       }
     }
 
-    composable(AppDestinations.TERM_AGREEMENT_ROUTE) {
+    composable(Destinations.TERM_AGREEMENT_ROUTE) {
       TermAgreement(
         onRedirectRoute = {
-          navController.navigate(AppDestinations.DEVICE_ROUTE)
+          navController.navigate(Destinations.DEVICE_ROUTE)
         }
       )
     }
 
-    composable(AppDestinations.DEVICE_ROUTE) {
+    composable(Destinations.DEVICE_ROUTE) {
       DeviceScreen(
         navController = navController,
 
         )
     }
 
-    navigation(
-      route = AppDestinations.MAIN_ROUTE,
-      startDestination = mainStartDestination
-    ) {
-
-      composable(
-        "${MainTabs.ACTIVITY.route}/{deviceAddress}",
-        arguments = listOf(navArgument("deviceAddress") { type = NavType.StringType })
-
-      ) { backStackEntry ->
-        val arguments = requireNotNull(backStackEntry.arguments)
-        val deviceAddress = arguments.getString("deviceAddress")
-
+    composable(
+      "${MainTabs.ACTIVITY.route}/{deviceAddress}",
+      arguments = listOf(navArgument("deviceAddress") { type = NavType.StringType })
+    ) { backStackEntry ->
+      val arguments = requireNotNull(backStackEntry.arguments)
+      val deviceAddress = arguments.getString("deviceAddress")
 //        val parentEntry = remember(backStackEntry) {
 //            navController.getBackStackEntry("parentNavigationRoute")
 //        }
-
 //        val parentViewModel = hiltViewModel(parentEntry)
-
-
-        if (deviceAddress != null) {
-          SleepActivity(modifier, navController, deviceAddress = deviceAddress)
-        }
-        // Show onboarding instead if not shown yet.
+      if (deviceAddress != null) {
+        SleepActivity(modifier, navController, deviceAddress = deviceAddress)
+      }
+      // Show onboarding instead if not shown yet.
 //        LaunchedEffect(onboardingComplete) {
 //            if (!onboardingComplete.value) {
 //                navController.navigate(AppDestinations.SPLASH_ROUTE)
@@ -123,16 +111,16 @@ fun NavigationGraph(
 //            )
 //        }
 
-      }
-
-      composable(MainTabs.REPORT.route) { from ->
-        ReportScreen(modifier)
-      }
-
-      composable(MainTabs.USER.route) {
-        SettingScreen(modifier)
-      }
     }
+
+    composable(Destinations.REPORT_ROUTE) { from ->
+      ReportScreen(modifier)
+    }
+
+    composable(Destinations.SETTING_ROUTE) {
+      SettingScreen(modifier)
+    }
+
 //        composable(
 //            "${MainDestinations.COURSE_DETAIL_ROUTE}/{$COURSE_DETAIL_ID_KEY}",
 //            arguments = listOf(
@@ -164,7 +152,7 @@ class MainActions(navController: NavHostController) {
   val openCourse = { newCourseId: Long, from: NavBackStackEntry ->
     // In order to discard duplicated navigation events, we check the Lifecycle
     if (from.lifecycleIsResumed()) {
-      navController.navigate("${MainDestinations.USER_ROUTE}/$newCourseId")
+      navController.navigate("${Destinations.SETTING_ROUTE}/$newCourseId")
     }
   }
 
@@ -172,7 +160,7 @@ class MainActions(navController: NavHostController) {
   val relatedCourse = { newCourseId: Long, from: NavBackStackEntry ->
     // In order to discard duplicated navigation events, we check the Lifecycle
     if (from.lifecycleIsResumed()) {
-      navController.navigate("${MainDestinations.REPORT_ROUTE}/$newCourseId")
+      navController.navigate("${Destinations.REPORT_ROUTE}/$newCourseId")
     }
   }
 

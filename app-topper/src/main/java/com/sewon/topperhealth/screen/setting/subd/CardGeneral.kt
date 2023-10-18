@@ -29,9 +29,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sewon.topperhealth.screen.setting.subd.component.Modal2ClearHistory
-import com.sewon.topperhealth.screen.setting.subd.component.Modal1DeviceAccess
-import com.sewon.topperhealth.screen.setting.subd.component.Modal3SOSRecipient
+import com.sewon.topperhealth.screen.setting.subd.component.ModalBClearHistory
+import com.sewon.topperhealth.screen.setting.subd.component.ModalADeviceAccess
+import com.sewon.topperhealth.screen.setting.subd.component.ModalCSOSRecipient
 
 
 // Card 4
@@ -117,17 +117,17 @@ fun GeneralSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
   }
 
   if (openDeviceAccessModal) {
-    Modal1DeviceAccess(
+    ModalADeviceAccess(
       onToggleModal = { openDeviceAccessModal = !openDeviceAccessModal })
   }
 
   if (openClearHistoryModal) {
-    Modal2ClearHistory(
+    ModalBClearHistory(
       onToggleModal = { openClearHistoryModal = !openClearHistoryModal })
   }
 
   if (openSOSRecipientModal) {
-    Modal3SOSRecipient(
+    ModalCSOSRecipient(
       onToggleModal = { openSOSRecipientModal = !openSOSRecipientModal })
   }
 }

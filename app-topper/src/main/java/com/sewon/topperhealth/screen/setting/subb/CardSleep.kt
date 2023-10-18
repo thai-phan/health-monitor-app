@@ -20,7 +20,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
@@ -33,9 +32,9 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sewon.topperhealth.screen.setting.subb.component.Modal3AlarmSetting
-import com.sewon.topperhealth.screen.setting.subb.component.Modal2SleepTime
-import com.sewon.topperhealth.screen.setting.subb.component.Modal1WakeUpTime
+import com.sewon.topperhealth.screen.setting.subb.component.ModalCAlarmSetting
+import com.sewon.topperhealth.screen.setting.subb.component.ModalBSleepTime
+import com.sewon.topperhealth.screen.setting.subb.component.ModalAWakeUpTime
 
 @Composable
 fun SleepSetting(
@@ -125,9 +124,9 @@ fun SleepSetting(
         verticalAlignment = Alignment.CenterVertically,
       ) {
         Text("알람설정")
-        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         Row {
-          Text(uiState.alarmType)
+          Text(uiState.alarmBehavior)
+          Spacer(Modifier.size(ButtonDefaults.IconSpacing))
           Icon(
             Icons.Filled.ChevronRight,
             tint = Color.White,
@@ -141,24 +140,24 @@ fun SleepSetting(
 
 
   if (openWakeupModal) {
-    Modal1WakeUpTime(
+    ModalAWakeUpTime(
       uiState,
-      onChangeAlarmTime = viewModel::changeAlarmTime,
+      onChangeAlarmTime = viewModel::changeSettingAlarmTime,
       onToggleModal = { openWakeupModal = !openWakeupModal })
   }
 
   if (openSleepTimeModal) {
-    Modal2SleepTime(
+    ModalBSleepTime(
       uiState,
-      onChangeBedTime = viewModel::changeBedTime,
+      onChangeBedTime = viewModel::changeSettingBedTime,
       onToggleModal = { openSleepTimeModal = !openSleepTimeModal })
   }
 
 
   if (openAlarmTypeModal) {
-    Modal3AlarmSetting(
+    ModalCAlarmSetting(
       uiState,
-      onChangeAlarmType = viewModel::changeAlarmTypeSetting,
+      onChangeAlarmType = viewModel::changeSettingAlarmBehavior,
       onToggleModal = { openAlarmTypeModal = !openAlarmTypeModal })
   }
 }

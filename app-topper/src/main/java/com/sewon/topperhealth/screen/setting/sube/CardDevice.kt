@@ -32,55 +32,53 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun DeviceConnectionSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
-    Card(
-        shape = RoundedCornerShape(size = 10.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+  Card(
+    shape = RoundedCornerShape(size = 10.dp),
+    colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
+  ) {
+    Column(
+      verticalArrangement = Arrangement.SpaceAround,
+      modifier = Modifier
+          .fillMaxWidth()
+          .padding(20.dp)
+
     ) {
-        Column(
-            verticalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
+      Text(
+        "제품등록 / 연결", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
+      )
+      Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+      ) {
+        Text("제품번호등록 (S/N)")
 
-        ) {
-            Text(
-                "제품등록 / 연결", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
-            )
+        var checked by remember { mutableStateOf(true) }
 
+        Switch(
+          colors = switchColors,
+          modifier = Modifier.semantics { contentDescription = "Demo" },
+          checked = checked,
+          onCheckedChange = { checked = it })
+      }
+      Spacer(modifier = Modifier.height(5.dp))
+      Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
+      Spacer(modifier = Modifier.height(5.dp))
+      Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+      ) {
+        Text("블루투스연결")
 
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("제품번호등록 (S/N)")
+        var checked by remember { mutableStateOf(true) }
 
-                var checked by remember { mutableStateOf(true) }
-
-                Switch(
-                    colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
-            }
-            Spacer(modifier = Modifier.height(5.dp))
-            Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-            Spacer(modifier = Modifier.height(5.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("블루투스연결")
-
-                var checked by remember { mutableStateOf(true) }
-
-                Switch(
-                    colors = switchColors,
-                    modifier = Modifier.semantics { contentDescription = "Demo" },
-                    checked = checked,
-                    onCheckedChange = { checked = it })
-            }
-        }
+        Switch(
+          colors = switchColors,
+          modifier = Modifier.semantics { contentDescription = "Demo" },
+          checked = checked,
+          onCheckedChange = { checked = it })
+      }
     }
+  }
 }

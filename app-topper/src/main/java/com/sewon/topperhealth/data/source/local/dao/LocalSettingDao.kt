@@ -3,7 +3,6 @@ package com.sewon.topperhealth.data.source.local.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Upsert
 import com.sewon.topperhealth.data.source.local.entity.LocalSetting
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalTime
@@ -24,19 +23,19 @@ interface LocalSettingDao {
   suspend fun countSetting(): Int
 
   @Query("UPDATE setting SET alarm_on = :alarmOn WHERE user_id = :userid")
-  suspend fun updateAlarmOnQuery(userid: Int, alarmOn: Boolean): Int
+  suspend fun queryUpdateAlarmOnQuery(userid: Int, alarmOn: Boolean): Int
 
-  @Query("UPDATE setting SET alarm_time = :alarmTime WHERE user_id = :userid")
-  suspend fun updateAlarmTimeQuery(userid: Int, alarmTime: LocalTime): Int
+  @Query("UPDATE setting SET wakeup_time = :wakeupTime WHERE user_id = :userid")
+  suspend fun queryUpdateWakeupTimeQuery(userid: Int, wakeupTime: LocalTime): Int
 
   @Query("UPDATE setting SET bed_on = :bedOn WHERE user_id = :userid")
-  suspend fun updateBedSettingQuery(userid: Int, bedOn: Boolean): Int
+  suspend fun queryUpdateBedSettingQuery(userid: Int, bedOn: Boolean): Int
 
-  @Query("UPDATE setting SET bed_time = :bedTime WHERE user_id = :userid")
-  suspend fun updateBedTimeQuery(userid: Int, bedTime: LocalTime): Int
+  @Query("UPDATE setting SET sleep_time = :sleepTime WHERE user_id = :userid")
+  suspend fun queryUpdateSleepTimeQuery(userid: Int, sleepTime: LocalTime): Int
 
-  @Query("UPDATE setting SET alarm_setting = :alarmSetting WHERE user_id = :userid")
-  suspend fun updateAlarmTypeSettingQuery(userid: Int, alarmSetting: String): Int
+  @Query("UPDATE setting SET alarm_behavior = :alarmBehavior WHERE user_id = :userid")
+  suspend fun queryUpdateAlarmTypeSettingQuery(userid: Int, alarmBehavior: String): Int
 
   @Insert
   suspend fun insert(localSetting: LocalSetting): Long

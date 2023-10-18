@@ -21,12 +21,12 @@ import javax.inject.Inject
 
 
 data class UiStateB(
-  val sleepTimeStr: String = "Please select",
+  val sleepTimeStr: String = "22:00",
   val sleepTime: LocalTime = LocalTime.of(22, 0),
-  val wakeupTimeStr: String = "Please select",
+  val wakeupTimeStr: String = "07:00",
   val wakeupTime: LocalTime = LocalTime.of(7, 0),
   val alarmOn: Boolean = false,
-  val alarmType: String = "",
+  val alarmBehavior: String = "벨소리",
   val bedOn: Boolean = false,
   val isLoading: Boolean = false,
   val message: Int? = null
@@ -63,7 +63,7 @@ class ViewModelCardSleep @Inject constructor(
             sleepTime = settingAsync.data.sleepTime,
             wakeupTimeStr = settingAsync.data.wakeupTime.toString(),
             wakeupTime = settingAsync.data.wakeupTime,
-            alarmType = settingAsync.data.alarmSetting,
+            alarmBehavior = settingAsync.data.alarmBehavior,
             bedOn = settingAsync.data.bedOn,
             message = message,
             isLoading = isLoading
@@ -76,24 +76,16 @@ class ViewModelCardSleep @Inject constructor(
       initialValue = UiStateB(isLoading = true)
     )
 
-  fun toggleAlarmOn(alarmOn: Boolean) = viewModelScope.launch {
-    settingRepository.updateAlarmOnSetting(userId, alarmOn)
+  fun changeSettingAlarmTime(alarmTime: LocalTime) = viewModelScope.launch {
+    settingRepository.updateWakeupTimeSetting(userId, alarmTime)
   }
 
-  fun changeAlarmTime(alarmTime: LocalTime) = viewModelScope.launch {
-    settingRepository.updateAlarmTimeSetting(userId, alarmTime)
+  fun changeSettingBedTime(bedTime: LocalTime) = viewModelScope.launch {
+    settingRepository.updateSleepTimeSetting(userId, bedTime)
   }
 
-  fun toggleBedOn(bedOn: Boolean) = viewModelScope.launch {
-    settingRepository.updateBedSetting(userId, bedOn)
-  }
-
-  fun changeBedTime(bedTime: LocalTime) = viewModelScope.launch {
-    settingRepository.updateBedTimeSetting(userId, bedTime)
-  }
-
-  fun changeAlarmTypeSetting(alarmType: String) = viewModelScope.launch {
-    settingRepository.updateAlarmTypeSetting(userId, alarmType)
+  fun changeSettingAlarmBehavior(alarmBehavior: String) = viewModelScope.launch {
+    settingRepository.updateAlarmTypeSetting(userId, alarmBehavior)
   }
 
   private fun handleSetting(setting: Setting?): Async<Setting?> {

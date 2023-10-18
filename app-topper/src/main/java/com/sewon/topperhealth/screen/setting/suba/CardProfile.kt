@@ -18,7 +18,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,7 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.setting.suba.component.ModalDate
-import com.sewon.topperhealth.screen.setting.suba.component.ModalGender
+import com.sewon.topperhealth.screen.setting.suba.component.ModalAGender
 
 
 @Composable
@@ -113,7 +112,7 @@ fun ProfileSetting(
   }
 
   if (openGenderModal) {
-    ModalGender(uiState,
+    ModalAGender(uiState,
       onChangeGender = viewModel::changeGender,
       onToggleModal = { openGenderModal = !openGenderModal })
   }

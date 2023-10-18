@@ -1,11 +1,10 @@
-package com.sewon.topperhealth.screen.setting.suba.component
+package com.sewon.topperhealth.screen.setting.subc.component
 
-import android.view.LayoutInflater
-import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,51 +23,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import com.sewon.topperhealth.R
-import com.sewon.topperhealth.screen.setting.suba.UiStateA
-import java.util.Calendar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalDate(
-  uiState: UiStateA,
-  onSubmitBirthday: (Int, Int, Int) -> Unit,
-  onToggleModal: () -> Unit,
+fun ModalBInduceSound(
+  onToggleModal: () -> Unit
 ) {
-  val (year, setYear) = remember { mutableStateOf(uiState.calendar.get(Calendar.YEAR)) }
-  val (month, setMonth) = remember { mutableStateOf(uiState.calendar.get(Calendar.MONTH)) }
-  val (day, setDay) = remember { mutableStateOf(uiState.calendar.get(Calendar.DAY_OF_MONTH)) }
 
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
-
-  val bottomSheetState = rememberModalBottomSheetState(
-    skipPartiallyExpanded = skipPartiallyExpanded
-  )
-
+  val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
 
   ModalBottomSheet(
     onDismissRequest = onToggleModal,
     sheetState = bottomSheetState,
   ) {
-    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("성별", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
-      AndroidView(modifier = Modifier
-        .fillMaxWidth()
-        .height(200.dp), factory = { context ->
-        val view = LayoutInflater.from(context).inflate(R.layout.date_picker, null)
-        val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
-
-        datePicker.init(
-          year, month, day
-        ) { _, year, monthOfYear, dayOfMonth ->
-          setYear(year)
-          setMonth(monthOfYear)
-          setDay(dayOfMonth)
-        }
-        datePicker
-      })
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = 50.dp)
+    ) {
+      Text("수면유도 사운드", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Spacer(modifier = Modifier.height(20.dp))
+      Text(
+        "특허받은 엠씨스퀘어 브레인동조화 사운드를 이용해 알파파를 유도하여 잠에 빨리 들 수 있도록 도와줍니다. 백색소음에 익숙한 사용자에게 추천합니다"
+      )
+      Spacer(modifier = Modifier.height(20.dp))
 
       Row(
         modifier = Modifier
@@ -80,14 +60,10 @@ fun ModalDate(
           Text("취소")
         }
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = {
-          onSubmitBirthday(year, month, day)
-          onToggleModal()
-        }) {
+        Button(onClick = {}) {
           Text("저장")
         }
       }
     }
-
   }
 }

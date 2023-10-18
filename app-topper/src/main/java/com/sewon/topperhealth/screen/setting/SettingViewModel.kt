@@ -36,15 +36,17 @@ class SettingViewModel @Inject constructor(
 
   private fun loadUser() {
     viewModelScope.launch {
+      // init first User
       if (userRepository.countUser() == 0) {
-        val str = "1955-04-16"
+        val str = "1980-01-01"
         val df = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
         val date: Date = df.parse(str)
         val curDate = Calendar.getInstance().time
-        val user = User("admin_id", "admin", "남성", date, "cc", curDate, curDate)
+        val user = User("admin_id", "admin", "", date, "cc", curDate, curDate)
         userRepository.addUser(user)
       }
 
+      // init first Setting
       if (settingRepository.countSetting() == 0) {
         val curDate = Calendar.getInstance().time
         val bedTime = LocalTime.of(22, 0)
@@ -54,7 +56,7 @@ class SettingViewModel @Inject constructor(
           sleepTime = bedTime,
           wakeupTime = alarmTime,
           alarmOn = false,
-          alarmSetting = "123",
+          alarmBehavior = "벨소리",
           bedOn = false,
           energyOn = false,
           soundOn = false,

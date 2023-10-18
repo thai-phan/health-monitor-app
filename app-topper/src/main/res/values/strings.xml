@@ -3,7 +3,7 @@
 
   <string name="activity_page">Activity</string>
   <string name="report_page">리포트</string>
-  <string name="user_page">내정보</string>
+  <string name="setting_page">내정보</string>
 
   <!--  User page -->
   <string name="setting_title">My Setting</string>

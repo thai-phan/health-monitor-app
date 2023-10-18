@@ -68,7 +68,7 @@ fun TermAgreement(onRedirectRoute: () -> Unit) {
     ) {
       Text("인텔리네스트", fontWeight = FontWeight.Bold, fontSize = 24.sp)
       Image(
-        painter = painterResource(id = R.mipmap.ic_intellinest_foreground),
+        painter = painterResource(id = R.drawable.ic_intellinest),
         contentDescription = "intellinest",
         modifier = Modifier
           .size(120.dp)

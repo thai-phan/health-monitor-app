@@ -1,11 +1,10 @@
-package com.sewon.topperhealth.screen.setting.subb.component
+package com.sewon.topperhealth.screen.setting.subd.component
 
-import android.view.LayoutInflater
-import android.widget.TimePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,59 +23,35 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import com.sewon.topperhealth.R
-import com.sewon.topperhealth.screen.setting.subb.UiStateB
-import java.time.LocalTime
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Modal2SleepTime(
-  uiState: UiStateB,
-  onChangeBedTime: (LocalTime) -> Unit,
+fun ModalBClearHistory(
   onToggleModal: () -> Unit
 ) {
-
-  val (time, setTime) = remember { mutableStateOf(uiState.sleepTime) }
-
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
-
-  val bottomSheetState = rememberModalBottomSheetState(
-    skipPartiallyExpanded = skipPartiallyExpanded
-  )
-
+  val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
 
   ModalBottomSheet(
     onDismissRequest = onToggleModal,
     sheetState = bottomSheetState,
   ) {
-    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("취침시간", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = 50.dp)
+    ) {
+      Text("수면기록 모두 지우기", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
 
-      Row(
-        modifier = Modifier
-          .fillMaxWidth()
-          .height(200.dp),
-        horizontalArrangement = Arrangement.Center
-      ) {
-        AndroidView(
-          modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp),
-          factory = { context ->
-            val view = LayoutInflater.from(context).inflate(R.layout.time_picker, null)
-            val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
+      Spacer(modifier = Modifier.height(20.dp))
 
-            timePicker.hour = time.hour
-            timePicker.minute = time.minute
-            timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-              setTime(LocalTime.of(hourOfDay, minute))
-            }
-            timePicker
-          }
-        )
 
-      }
+      Text(
+        "실행으로 모든 수면 기록과 분석결과가 삭제되어 과거 레포트를 확인하실 수 없습니다.\n" +
+            "실행 하시겠습니까?"
+      )
+      Spacer(modifier = Modifier.height(20.dp))
 
       Row(
         modifier = Modifier
@@ -88,17 +63,10 @@ fun Modal2SleepTime(
           Text("취소")
         }
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = {
-          onChangeBedTime(time)
-          onToggleModal()
-        }) {
+        Button(onClick = {}) {
           Text("저장")
         }
       }
-
-
     }
-
-
   }
 }

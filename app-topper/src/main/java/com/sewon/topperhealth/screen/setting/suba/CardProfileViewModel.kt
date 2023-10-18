@@ -24,7 +24,7 @@ import javax.inject.Inject
 data class UiStateA(
   val calendar: Calendar = Calendar.getInstance(),
   val birthday: String = "Please select",
-  val gender: String = "Please select",
+  val gender: String = "1980-01-01",
   val isLoading: Boolean = false,
   val userMessage: Int? = null
 )
@@ -34,7 +34,7 @@ data class UiStateA(
 class ViewModelCardProfile @Inject constructor(
   private val userRepository: UserRepository,
 ) : ViewModel() {
-  var curUsername = "admin_id"
+  private var curUsername = "admin_id"
   private val _isLoading = MutableStateFlow(false)
   private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
 
@@ -47,8 +47,8 @@ class ViewModelCardProfile @Inject constructor(
     if (user != null) {
       val calendar = Calendar.getInstance()
       calendar.time = user.birthday
-      val dateformat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
-      val birthdayString = dateformat.format(calendar.time)
+      val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+      val birthdayString = dateFormat.format(calendar.time)
 
       _uiState.update {
         it.copy(

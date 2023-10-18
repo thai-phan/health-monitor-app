@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,13 +13,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -28,28 +28,43 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Modal1DeviceAccess(
+fun ModalCSOSRecipient(
   onToggleModal: () -> Unit
 ) {
-  var skipPartiallyExpanded by remember { mutableStateOf(false) }
-  var edgeToEdgeEnabled by remember { mutableStateOf(false) }
+  val skipPartiallyExpanded by remember { mutableStateOf(false) }
 
-  val scope = rememberCoroutineScope()
-  val bottomSheetState = rememberModalBottomSheetState(
-    skipPartiallyExpanded = skipPartiallyExpanded
-  )
+  val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
 
   ModalBottomSheet(
+//    modifier = Modifier.fillMaxHeight(),
     onDismissRequest = onToggleModal,
     sheetState = bottomSheetState,
   ) {
-    Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("핸드폰 캐시 접근 권한 설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = 50.dp)
+    ) {
+      Text("알람 수신자 설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+
       Spacer(modifier = Modifier.height(20.dp))
 
-      Text("핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?")
+      Row {
+        TextField(modifier = Modifier.weight(1f), value = "관계", onValueChange = {})
+        TextField(modifier = Modifier.weight(1f), value = "연락처", onValueChange = {})
+      }
 
+      Row() {
+        TextField(modifier = Modifier.weight(1f), value = "관계", onValueChange = {})
+        TextField(modifier = Modifier.weight(1f), value = "연락처", onValueChange = {})
+      }
+
+      Row {
+        TextField(modifier = Modifier.weight(1f), value = "관계", onValueChange = {})
+        TextField(modifier = Modifier.weight(1f), value = "연락처", onValueChange = {})
+      }
       Spacer(modifier = Modifier.height(20.dp))
+
       Row(
         modifier = Modifier
           .fillMaxWidth()
@@ -65,6 +80,5 @@ fun Modal1DeviceAccess(
         }
       }
     }
-
   }
 }
