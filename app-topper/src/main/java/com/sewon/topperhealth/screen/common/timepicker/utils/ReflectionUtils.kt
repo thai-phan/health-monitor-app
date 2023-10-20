@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.common.timepicker.utils
+package com.sewon.topperhealth.screen.common.timepicker.utils
 
 import com.sewon.topperhealth.common.timepicker.ClockRenderer
 import com.sewon.topperhealth.common.timepicker.TimeRangePicker

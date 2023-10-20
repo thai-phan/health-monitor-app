@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.common.timepicker
+package com.sewon.topperhealth.screen.common.timepicker
 
 import android.annotation.SuppressLint
 import android.content.Context

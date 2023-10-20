@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package com.sewon.topperhealth.common.theme
+package com.sewon.topperhealth.screen.common.theme
 
-import androidx.annotation.DrawableRes
-import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Shapes
+import androidx.compose.ui.unit.dp
 
-/**
- * Images that can vary by theme.
- */
-@Immutable
-data class Images(@DrawableRes val lockupLogo: Int)
-
-internal val LocalImages = staticCompositionLocalOf<Images> {
-    error("No LocalImages specified")
-}
+val shapes = Shapes(
+  extraSmall = RoundedCornerShape(4.dp),
+  small = RoundedCornerShape(8.dp),
+  medium = RoundedCornerShape(16.dp),
+  large = RoundedCornerShape(24.dp),
+  extraLarge = RoundedCornerShape(32.dp)
+)

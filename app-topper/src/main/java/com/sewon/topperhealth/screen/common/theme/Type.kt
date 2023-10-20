@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.common.theme
+package com.sewon.topperhealth.screen.common.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

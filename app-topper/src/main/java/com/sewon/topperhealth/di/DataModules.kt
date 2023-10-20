@@ -18,7 +18,7 @@ package com.example.android.architecture.blueprints.todoapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.sewon.topperhealth.data.HealthDatabase
+import com.sewon.topperhealth.data.TopperDatabase
 import com.sewon.topperhealth.data.source.local.dao.LocalTopperDao
 import com.sewon.topperhealth.data.source.local.dao.LocalUserDao
 import com.sewon.topperhealth.data.source.local.dao.LocalSettingDao
@@ -46,25 +46,25 @@ object DatabaseModule {
 
   @Singleton
   @Provides
-  fun provideDataBase(@ApplicationContext context: Context): HealthDatabase {
+  fun provideDataBase(@ApplicationContext context: Context): TopperDatabase {
     return Room.databaseBuilder(
       context.applicationContext,
-      HealthDatabase::class.java,
+      TopperDatabase::class.java,
       "TopperHealth.db"
     ).build()
   }
 
   @Provides
-  fun provideSensorDao(database: HealthDatabase): LocalTopperDao = database.sensorDao()
+  fun provideSensorDao(database: TopperDatabase): LocalTopperDao = database.sensorDao()
 
   @Provides
-  fun provideUserSettingDao(database: HealthDatabase): LocalSettingDao = database.settingDao()
+  fun provideUserSettingDao(database: TopperDatabase): LocalSettingDao = database.settingDao()
 
   @Provides
-  fun provideUserDao(database: HealthDatabase): LocalUserDao = database.userDao()
+  fun provideUserDao(database: TopperDatabase): LocalUserDao = database.userDao()
 
   @Provides
-  fun provideSessionDao(database: HealthDatabase): LocalSessionDao = database.sessionDao()
+  fun provideSessionDao(database: TopperDatabase): LocalSessionDao = database.sessionDao()
 }
 
 

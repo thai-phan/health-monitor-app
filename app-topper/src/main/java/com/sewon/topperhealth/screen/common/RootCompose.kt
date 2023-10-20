@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.common
+package com.sewon.topperhealth.screen.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

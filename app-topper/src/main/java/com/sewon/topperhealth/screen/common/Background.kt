@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.common
+package com.sewon.topperhealth.screen.common
 
 import android.annotation.SuppressLint
 import androidx.compose.ui.Modifier

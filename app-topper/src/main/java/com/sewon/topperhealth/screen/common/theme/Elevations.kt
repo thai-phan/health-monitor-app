@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sewon.topperhealth.common.theme
+package com.sewon.topperhealth.screen.common.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -28,5 +28,5 @@ import androidx.compose.ui.unit.dp
 data class Elevations(val card: Dp = 0.dp)
 
 internal val LocalElevations = staticCompositionLocalOf {
-    Elevations()
+  Elevations()
 }

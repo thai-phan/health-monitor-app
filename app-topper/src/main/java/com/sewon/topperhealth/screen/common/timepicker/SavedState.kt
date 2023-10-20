@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.common.timepicker
+package com.sewon.topperhealth.screen.common.timepicker
 
 import android.os.Parcel
 import android.os.Parcelable

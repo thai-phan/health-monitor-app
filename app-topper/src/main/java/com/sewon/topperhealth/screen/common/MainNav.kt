@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.common
+package com.sewon.topperhealth.screen.common
 
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier

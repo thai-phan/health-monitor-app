@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.common.timepicker.utils
+package com.sewon.topperhealth.screen.common.timepicker.utils
 
 internal fun String.parsePositiveInt(start: Int, end: Int): Int {
   var result = 0
