@@ -29,7 +29,7 @@ core-i18n = "1.0.0-alpha01"
 okhttp = "4.11.0"
 preference-ktx = "1.2.1"
 retrofit = "2.9.0"
-roomVersion = "2.6.0"
+roomVersion = "2.5.2"
 vicoChartVersion = "1.11.3"
 timber = "5.0.1"
 
