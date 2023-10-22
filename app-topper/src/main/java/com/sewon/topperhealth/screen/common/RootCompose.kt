@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sewon.topperhealth.common.theme.HealthAppTheme
+import com.sewon.topperhealth.screen.common.theme.HealthAppTheme
 import com.sewon.topperhealth.screen.NavigationGraph
 
 @Composable

@@ -10,15 +10,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.sewon.topperhealth.common.theme.checkedBorderColor
-import com.sewon.topperhealth.common.theme.checkedThumbColor
-import com.sewon.topperhealth.common.theme.checkedTrackColor
-import com.sewon.topperhealth.common.theme.uncheckedBorderColor
-import com.sewon.topperhealth.common.theme.uncheckedThumbColor
-import com.sewon.topperhealth.common.theme.uncheckedTrackColor
+import com.sewon.topperhealth.screen.common.theme.checkedBorderColor
+import com.sewon.topperhealth.screen.common.theme.checkedThumbColor
+import com.sewon.topperhealth.screen.common.theme.checkedTrackColor
+import com.sewon.topperhealth.screen.common.theme.uncheckedBorderColor
+import com.sewon.topperhealth.screen.common.theme.uncheckedThumbColor
+import com.sewon.topperhealth.screen.common.theme.uncheckedTrackColor
 
 @Composable
-fun SwitchAction(toggleConnectDevice: Boolean,onToggleAlarmSound: () -> Unit, toggleAlarmSound: Boolean, onToggleConnectToDevice: () -> Unit) {
+fun SwitchAction(
+  toggleConnectDevice: Boolean,
+  onToggleAlarmSound: () -> Unit,
+  toggleAlarmSound: Boolean,
+  onToggleConnectToDevice: () -> Unit
+) {
 
   val switchColors: SwitchColors = SwitchDefaults.colors(
     checkedThumbColor = checkedThumbColor,

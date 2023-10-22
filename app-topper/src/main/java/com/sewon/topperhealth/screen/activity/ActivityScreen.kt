@@ -38,7 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sewon.topperhealth.MainActivity
-import com.sewon.topperhealth.common.Destinations
+import com.sewon.topperhealth.screen.common.Destinations
 import com.sewon.topperhealth.screen.activity.component.CircularTimePicker
 import com.sewon.topperhealth.screen.activity.component.ModalAssessment
 import com.sewon.topperhealth.screen.activity.component.ModalQuality

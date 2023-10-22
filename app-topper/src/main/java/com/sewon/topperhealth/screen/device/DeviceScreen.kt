@@ -27,7 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.common.Destinations
+import com.sewon.topperhealth.screen.common.Destinations
 import com.sewon.topperhealth.screen.device.components.BluetoothWrapper
 import com.sewon.topperhealth.screen.device.components.FindDevicesScreen
 
