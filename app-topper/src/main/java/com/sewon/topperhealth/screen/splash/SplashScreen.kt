@@ -2,16 +2,20 @@ package com.sewon.topperhealth.screen.splash
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -59,37 +63,59 @@ fun SplashScreen(delayTime: Long, onRedirectRoute: () -> Unit) {
 
 
   Column(
-    verticalArrangement = Arrangement.SpaceBetween,
-    horizontalAlignment = Alignment.CenterHorizontally,
     modifier = Modifier
-      .statusBarsPadding()
-      .systemBarsPadding()
-      .fillMaxSize(),
+      .fillMaxSize()
+      .padding(horizontal = 20.dp),
   ) {
-    Row(
-      modifier = Modifier.fillMaxWidth(),
-      horizontalArrangement = Arrangement.End
+    Column(
+      modifier = Modifier
+        .weight(3f),
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.Bottom
     ) {
-      Image(
-        painter = painterResource(id = R.drawable.ic_intellinest),
-        contentDescription = "intellinest",
+      Row(
         modifier = Modifier
-          .size(200.dp)
-      )
-    }
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-      Text("인텔리네스트 ", fontSize = 26.sp)
-      FlowRow {
-        Text("수면건강 ", fontSize = 26.sp)
-        Text("모니터링 ", fontSize = 26.sp)
-        Text("시스템", fontSize = 26.sp)
+          .fillMaxWidth()
+          .weight(2f),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+      ) {
+        Image(
+          modifier = Modifier
+            .fillMaxSize(0.4f),
+          painter = painterResource(id = R.drawable.ic_intellinest_white),
+          contentDescription = "intellinest",
+        )
+      }
+      Column(
+        modifier = Modifier
+          .weight(1f),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+      ) {
+        Text("인텔리네스트 ", fontSize = 26.sp)
+        FlowRow {
+          Text("수면건강 ", fontSize = 26.sp)
+          Text("모니터링 ", fontSize = 26.sp)
+          Text("시스템", fontSize = 26.sp)
+        }
       }
     }
-    Image(
-      painter = painterResource(id = R.drawable.ic_sewon),
-      contentDescription = "sewon",
+
+    Column(
       modifier = Modifier
-        .size(250.dp)
-    )
+        .weight(2f),
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally
+
+    ) {
+      Image(
+        painter = painterResource(id = R.mipmap.mm_sewon_white_foreground),
+        contentDescription = "Logo",
+        modifier = Modifier
+          .fillMaxWidth()
+          .fillMaxHeight(0.5f)
+      )
+    }
   }
 }

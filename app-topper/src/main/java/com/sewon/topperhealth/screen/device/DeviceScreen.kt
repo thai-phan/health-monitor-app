@@ -51,9 +51,9 @@ fun DeviceScreen(
     Image(
       modifier = Modifier
 //        .border(BorderStroke(2.dp, Color.Red))
-        .weight(2f)
+        .weight(1f)
         .fillMaxWidth(),
-      painter = painterResource(id = R.drawable.ic_intellinest),
+      painter = painterResource(id = R.drawable.ic_intellinest_white),
       contentDescription = "intellinest",
     )
     Image(
@@ -64,7 +64,7 @@ fun DeviceScreen(
       painter = painterResource(id = R.drawable.ic_bluetooth_wing),
       contentDescription = "Logo",
     )
-    BluetoothWrapper(modifier = Modifier.weight(7f)) {
+    BluetoothWrapper(modifier = Modifier.weight(6f)) {
       FindDevicesScreen(navController, onSelectBle = {
         selectBleDevice(it)
       })

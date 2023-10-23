@@ -66,7 +66,7 @@ fun SleepDetail(uiState: UiState) {
     )
     CircularChart(
       modifier = Modifier.weight(1f),
-      label = "L/F Ratio",
+      label = "L/H Ratio",
       angle = uiState.lfHfRatio, brush = blueBrush
     )
   }
