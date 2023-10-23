@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sewon.topperhealth.screen.common.theme
+package com.sewon.topperhealth.screen.a0common.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf

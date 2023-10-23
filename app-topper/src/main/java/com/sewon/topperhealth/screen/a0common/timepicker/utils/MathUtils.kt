@@ -1,6 +1,6 @@
-package com.sewon.topperhealth.screen.common.timepicker.utils
+package com.sewon.topperhealth.screen.a0common.timepicker.utils
 
-import com.sewon.topperhealth.screen.common.timepicker.TimeRangePicker
+import com.sewon.topperhealth.screen.a0common.timepicker.TimeRangePicker
 import kotlin.math.*
 
 internal object MathUtils {

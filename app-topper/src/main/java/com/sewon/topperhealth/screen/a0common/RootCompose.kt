@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.common
+package com.sewon.topperhealth.screen.a0common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sewon.topperhealth.screen.common.theme.HealthAppTheme
+import com.sewon.topperhealth.screen.a0common.theme.HealthAppTheme
 import com.sewon.topperhealth.screen.NavigationGraph
 
 @Composable

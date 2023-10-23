@@ -1,7 +1,9 @@
-package com.sewon.topperhealth.screen.common.theme
+package com.sewon.topperhealth.screen.a0common.theme
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 // Material 3 color schemes
@@ -38,10 +40,14 @@ private val DarkColorScheme = darkColorScheme(
 fun HealthAppTheme(
   content: @Composable () -> Unit
 ) {
-  val colorScheme = DarkColorScheme
+  val systemUiController = rememberSystemUiController()
+
+  systemUiController.setStatusBarColor(Color.Transparent)
+
+  systemUiController.setNavigationBarColor(Color.Transparent)
 
   androidx.compose.material3.MaterialTheme(
-    colorScheme = colorScheme,
+    colorScheme = DarkColorScheme,
     typography = typography,
     shapes = shapes,
     content = content

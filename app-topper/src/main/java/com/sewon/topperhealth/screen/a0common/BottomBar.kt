@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.common
+package com.sewon.topperhealth.screen.a0common
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically

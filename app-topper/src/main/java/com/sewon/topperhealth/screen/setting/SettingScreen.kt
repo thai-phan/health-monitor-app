@@ -25,12 +25,12 @@ import com.sewon.topperhealth.screen.setting.suba.ProfileSetting
 import com.sewon.topperhealth.screen.setting.subb.SleepSetting
 import com.sewon.topperhealth.screen.setting.subc.InductionSolutionSetting
 import com.sewon.topperhealth.screen.setting.subd.GeneralSetting
-import com.sewon.topperhealth.screen.common.theme.checkedBorderColor
-import com.sewon.topperhealth.screen.common.theme.checkedThumbColor
-import com.sewon.topperhealth.screen.common.theme.checkedTrackColor
-import com.sewon.topperhealth.screen.common.theme.uncheckedBorderColor
-import com.sewon.topperhealth.screen.common.theme.uncheckedThumbColor
-import com.sewon.topperhealth.screen.common.theme.uncheckedTrackColor
+import com.sewon.topperhealth.screen.a0common.theme.checkedBorderColor
+import com.sewon.topperhealth.screen.a0common.theme.checkedThumbColor
+import com.sewon.topperhealth.screen.a0common.theme.checkedTrackColor
+import com.sewon.topperhealth.screen.a0common.theme.uncheckedBorderColor
+import com.sewon.topperhealth.screen.a0common.theme.uncheckedThumbColor
+import com.sewon.topperhealth.screen.a0common.theme.uncheckedTrackColor
 import com.sewon.topperhealth.screen.setting.sube.DeviceConnectionSetting
 
 @Composable

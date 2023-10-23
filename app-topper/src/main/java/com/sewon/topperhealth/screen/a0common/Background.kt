@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.common
+package com.sewon.topperhealth.screen.a0common
 
 import android.annotation.SuppressLint
 import androidx.compose.ui.Modifier
@@ -6,9 +6,9 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.sewon.topperhealth.screen.common.theme.BackgroundBottom
-import com.sewon.topperhealth.screen.common.theme.BackgroundMiddle
-import com.sewon.topperhealth.screen.common.theme.BackgroundTop
+import com.sewon.topperhealth.screen.a0common.theme.BackgroundBottom
+import com.sewon.topperhealth.screen.a0common.theme.BackgroundMiddle
+import com.sewon.topperhealth.screen.a0common.theme.BackgroundTop
 
 
 @SuppressLint("UnnecessaryComposedModifier")

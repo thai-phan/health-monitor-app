@@ -15,8 +15,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.sewon.topperhealth.screen.common.Destinations
-import com.sewon.topperhealth.screen.common.MainTabs
+import com.sewon.topperhealth.screen.a0common.Destinations
+import com.sewon.topperhealth.screen.a0common.MainTabs
 import com.sewon.topperhealth.data.HealthDataStore
 import com.sewon.topperhealth.screen.activity.SleepActivity
 import com.sewon.topperhealth.screen.device.DeviceScreen

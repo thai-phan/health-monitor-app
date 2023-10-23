@@ -10,12 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.sewon.topperhealth.screen.common.theme.checkedBorderColor
-import com.sewon.topperhealth.screen.common.theme.checkedThumbColor
-import com.sewon.topperhealth.screen.common.theme.checkedTrackColor
-import com.sewon.topperhealth.screen.common.theme.uncheckedBorderColor
-import com.sewon.topperhealth.screen.common.theme.uncheckedThumbColor
-import com.sewon.topperhealth.screen.common.theme.uncheckedTrackColor
+import com.sewon.topperhealth.screen.a0common.theme.checkedBorderColor
+import com.sewon.topperhealth.screen.a0common.theme.checkedThumbColor
+import com.sewon.topperhealth.screen.a0common.theme.checkedTrackColor
+import com.sewon.topperhealth.screen.a0common.theme.uncheckedBorderColor
+import com.sewon.topperhealth.screen.a0common.theme.uncheckedThumbColor
+import com.sewon.topperhealth.screen.a0common.theme.uncheckedTrackColor
 
 @Composable
 fun SwitchAction(

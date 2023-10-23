@@ -1,7 +1,7 @@
-package com.sewon.topperhealth.screen.common.timepicker.utils
+package com.sewon.topperhealth.screen.a0common.timepicker.utils
 
-import com.sewon.topperhealth.screen.common.timepicker.ClockRenderer
-import com.sewon.topperhealth.screen.common.timepicker.TimeRangePicker
+import com.sewon.topperhealth.screen.a0common.timepicker.ClockRenderer
+import com.sewon.topperhealth.screen.a0common.timepicker.TimeRangePicker
 
 internal fun createClockRenderer(name: String, picker: TimeRangePicker): ClockRenderer {
   val c = Class.forName(name, true, TimeRangePicker::class.java.classLoader)

@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.common.theme
+package com.sewon.topperhealth.screen.a0common.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -43,7 +43,7 @@ val DarkOnBackground = Color(0xFFFFFFFF)
 val DarkSurface = Color(0xFF071224)
 
 val DarkOnSurface = Color(0xFF03dac5)
-val DarkSurfaceVariant = Color(0xAEC8FF)
+val DarkSurfaceVariant = Color(0x00AEC8FF)
 val DarkOnSurfaceVariant = Color(0xFFFFFFFF)
 val DarkOutline = Color(0xFF01B8A7)
 val DarkInverseOnSurface = Color(0xFFFABBBB)

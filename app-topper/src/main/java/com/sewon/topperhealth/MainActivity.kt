@@ -12,7 +12,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
-import com.sewon.topperhealth.screen.common.RootCompose
+import com.sewon.topperhealth.screen.a0common.RootCompose
 import com.sewon.topperhealth.service.algorithm.sleep.report.ReportDataProcessing
 import com.sewon.topperhealth.service.ble.ListenerBleStream
 import com.sewon.topperhealth.service.ble.ServiceBleHandler
