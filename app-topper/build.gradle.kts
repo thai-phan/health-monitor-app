@@ -69,6 +69,7 @@ dependencies {
   implementation(libs.androidx.navigation.ui.ktx)
   implementation(libs.androidx.preference.ktx)
   implementation(libs.accompanist.permissions)
+  implementation(libs.accompanist.systemuicontroller)
 
 
   // Http
