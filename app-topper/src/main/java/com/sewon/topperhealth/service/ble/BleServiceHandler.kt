@@ -15,11 +15,13 @@ import android.os.IBinder
 import android.os.Looper
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
+import com.sewon.officehealth.service.ble.BleGattSocket
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.service.algorithm.sleep.TopperData
 import com.sewon.topperhealth.data.model.toLocal
 import com.sewon.topperhealth.data.irepository.ISessionRepository
 import com.sewon.topperhealth.data.irepository.ITopperRepository
+import com.sewon.topperhealth.service.ISerialListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +39,7 @@ import javax.inject.Inject
  * use listener chain: SerialSocket -> SerialService -> UI fragment
  */
 @AndroidEntryPoint
-class ServiceBleHandler : Service(), SerialListener {
+class BleServiceHandler : Service(), ISerialListener {
 
   private val job = SupervisorJob()
   private val scope = CoroutineScope(Dispatchers.IO + job)
@@ -50,8 +52,8 @@ class ServiceBleHandler : Service(), SerialListener {
   lateinit var sessionRepository: ISessionRepository
 
   inner class SerialBinder : Binder() {
-    val service: ServiceBleHandler
-      get() = this@ServiceBleHandler
+    val service: BleServiceHandler
+      get() = this@BleServiceHandler
   }
 
   private enum class QueueType {
@@ -92,8 +94,8 @@ class ServiceBleHandler : Service(), SerialListener {
   private val queue1: ArrayDeque<QueueItem>
   private val queue2: ArrayDeque<QueueItem>
   private val lastRead: QueueItem
-  private var socket: SerialSocket? = null
-  var listenerBleStream: ListenerBleStream? = null
+  private var socket: BleGattSocket? = null
+  var bleServiceListener: BleServiceListener? = null
   private var connected = false
 
 
@@ -117,7 +119,7 @@ class ServiceBleHandler : Service(), SerialListener {
   }
 
   @Throws(IOException::class)
-  fun connect(socket: SerialSocket) {
+  fun connect(socket: BleGattSocket) {
     socket.connect(this)
     this.socket = socket
     connected = true
@@ -140,12 +142,12 @@ class ServiceBleHandler : Service(), SerialListener {
     }
   }
 
-  fun attach(listener: ListenerBleStream) {
+  fun attach(listener: BleServiceListener) {
     require(Looper.getMainLooper().thread === Thread.currentThread()) { "not in main thread" }
     cancelNotification()
     // use synchronized() to prevent new items in queue2
     // new items will not be added to queue1 because mainLooper.post and attach() run in main thread
-    synchronized(this) { this.listenerBleStream = listener }
+    synchronized(this) { this.bleServiceListener = listener }
     for (item in queue1) {
       when (item.type) {
         QueueType.Connect -> listener.onSerialConnect()
@@ -170,7 +172,7 @@ class ServiceBleHandler : Service(), SerialListener {
   lateinit var playerSleepInduce: MediaPlayer
   val isPlaySoundSleepInduce = mutableStateOf(true)
 
-  fun toggleSoundStretch() {
+  fun toggleSoundSleepInduce() {
     isPlaySoundSleepInduce.value = !isPlaySoundSleepInduce.value
   }
 
@@ -205,12 +207,12 @@ class ServiceBleHandler : Service(), SerialListener {
   }
 
 
-  val toggleConnectDevice = mutableStateOf(true)
+  //  val toggleConnectDevice = mutableStateOf(true)
   val toggleAlarmSound = mutableStateOf(true)
 
-  fun toggleConnectDevice() {
-    toggleConnectDevice.value = !toggleConnectDevice.value
-  }
+//  fun toggleConnectDevice() {
+//    toggleConnectDevice.value = !toggleConnectDevice.value
+//  }
 
   fun toggleAlarmSound() {
     toggleAlarmSound.value = !toggleAlarmSound.value
@@ -274,10 +276,10 @@ class ServiceBleHandler : Service(), SerialListener {
   override fun onSerialConnect() {
     if (connected) {
       synchronized(this) {
-        if (listenerBleStream != null) {
+        if (bleServiceListener != null) {
           mainLooper.post {
-            if (listenerBleStream != null) {
-              listenerBleStream!!.onSerialConnect()
+            if (bleServiceListener != null) {
+              bleServiceListener!!.onSerialConnect()
             } else {
               queue1.add(QueueItem(QueueType.Connect))
             }
@@ -292,10 +294,10 @@ class ServiceBleHandler : Service(), SerialListener {
   override fun onSerialConnectError(e: Exception) {
     if (connected) {
       synchronized(this) {
-        if (listenerBleStream != null) {
+        if (bleServiceListener != null) {
           mainLooper.post {
-            if (listenerBleStream != null) {
-              listenerBleStream!!.onSerialConnectError(e)
+            if (bleServiceListener != null) {
+              bleServiceListener!!.onSerialConnectError(e)
             } else {
               queue1.add(QueueItem(QueueType.ConnectError, e))
               disconnectBluetoothSocket()
@@ -325,7 +327,7 @@ class ServiceBleHandler : Service(), SerialListener {
   override fun onSerialRead(data: ByteArray) {
     if (connected) {
       synchronized(this) {
-        if (listenerBleStream != null) {
+        if (bleServiceListener != null) {
           var first: Boolean
           synchronized(lastRead) {
             first = lastRead.datas!!.isEmpty() // (1)
@@ -338,8 +340,8 @@ class ServiceBleHandler : Service(), SerialListener {
                 datas = lastRead.datas!!
                 lastRead.init() // (2)
               }
-              if (listenerBleStream != null) {
-                datas.let { listenerBleStream!!.onSerialRead(it) }
+              if (bleServiceListener != null) {
+                datas.let { bleServiceListener!!.onSerialRead(it) }
               } else {
                 queue1.add(QueueItem(QueueType.Read, datas))
               }
@@ -357,10 +359,10 @@ class ServiceBleHandler : Service(), SerialListener {
   override fun onSerialIoError(e: Exception) {
     if (connected) {
       synchronized(this) {
-        if (listenerBleStream != null) {
+        if (bleServiceListener != null) {
           mainLooper.post {
-            if (listenerBleStream != null) {
-              listenerBleStream!!.onSerialIoError(e)
+            if (bleServiceListener != null) {
+              bleServiceListener!!.onSerialIoError(e)
             } else {
               queue1.add(QueueItem(QueueType.IoError, e))
               disconnectBluetoothSocket()

@@ -14,22 +14,21 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
 import com.sewon.topperhealth.screen.a0common.RootCompose
 import com.sewon.topperhealth.service.algorithm.sleep.report.ReportDataProcessing
-import com.sewon.topperhealth.service.ble.ListenerBleStream
-import com.sewon.topperhealth.service.ble.ServiceBleHandler
+import com.sewon.topperhealth.service.ble.BleServiceListener
+import com.sewon.topperhealth.service.ble.BleServiceHandler
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
   companion object {
-    lateinit var serviceBleHandler: ServiceBleHandler
+    lateinit var bleServiceHandler: BleServiceHandler
     lateinit var alarmManager: AlarmManager
     lateinit var alarmPendingIntent: PendingIntent
     lateinit var reportDataProcessing: ReportDataProcessing
 
-    var listenerBleStream = ListenerBleStream()
+    var listenerBleStream = BleServiceListener()
 
   }
 
@@ -75,9 +74,9 @@ class MainActivity : ComponentActivity() {
 
     alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
-    val intent = Intent(this, ServiceBleHandler::class.java)
+    val intent = Intent(this, BleServiceHandler::class.java)
     startService(intent)
-    bindService(intent, mServiceConnection, BIND_AUTO_CREATE)
+    bindService(intent, bleServiceConnection, BIND_AUTO_CREATE)
   }
 
   override fun onPause() {
@@ -87,7 +86,7 @@ class MainActivity : ComponentActivity() {
 
   override fun onStop() {
     super.onStop()
-    unbindService(mServiceConnection)
+    unbindService(bleServiceConnection)
   }
 
   override fun onRestart() {
@@ -103,17 +102,26 @@ class MainActivity : ComponentActivity() {
    * Interface for monitoring the state of an application service. See Service and Context.bindService() for more information.
    * Like many callbacks from the system, the methods on this class are called from the main thread of your process.
    **/
-  private val mServiceConnection: ServiceConnection = object : ServiceConnection {
+  private val bleServiceConnection: ServiceConnection = object : ServiceConnection {
     override fun onServiceDisconnected(name: ComponentName) {
-//      TODO mServiceBound = false
+//      serviceBleHandler = null
     }
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
-      Timber.tag("Timber").d("onServiceConnected")
-      serviceBleHandler = (service as ServiceBleHandler.SerialBinder).service
-      serviceBleHandler.attach(listenerBleStream)
+      bleServiceHandler = (service as BleServiceHandler.SerialBinder).service
+      bleServiceHandler.attach(listenerBleStream)
     }
   }
 
+  private val blcServiceConnection: ServiceConnection = object : ServiceConnection {
+    override fun onServiceDisconnected(name: ComponentName) {
+//      serviceBleHandler = null
+    }
+
+    override fun onServiceConnected(name: ComponentName, service: IBinder) {
+      bleServiceHandler = (service as BleServiceHandler.SerialBinder).service
+      bleServiceHandler.attach(listenerBleStream)
+    }
+  }
 
 }

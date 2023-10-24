@@ -47,7 +47,7 @@ class AlarmReceiver : BroadcastReceiver() {
     // setting default ringtone
     ringtone = RingtoneManager.getRingtone(context, alarmUri)
 
-    if (MainActivity.serviceBleHandler.toggleAlarmSound.value) {
+    if (MainActivity.bleServiceHandler.toggleAlarmSound.value) {
       playAlarmSound()
     }
 

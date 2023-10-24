@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.service.ble
+package com.sewon.officehealth.service.ble
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
@@ -12,6 +12,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build.VERSION.SDK_INT
+import android.os.Bundle
+import android.os.Parcelable
+import com.sewon.topperhealth.service.ISerialListener
 import timber.log.Timber
 import java.io.IOException
 import java.util.Arrays
@@ -23,9 +27,54 @@ import java.util.UUID
  * - read + status is returned by SerialListener
  */
 @SuppressLint("MissingPermission") // various BluetoothGatt, BluetoothDevice methods
+class BleGattSocket(val context: Context, var device: BluetoothDevice) : BluetoothGattCallback() {
+  companion object {
 
-class SerialSocketKt(private val context: Context, private var device: BluetoothDevice) :
-  BluetoothGattCallback() {
+    private val BLUETOOTH_LE_CCCD = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
+    private val BLUETOOTH_LE_CC254X_SERVICE =
+      UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb")
+    private val BLUETOOTH_LE_CC254X_CHAR_RW =
+      UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb")
+    private val BLUETOOTH_LE_NRF_SERVICE = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e")
+
+    // read on microbit, write on adafruit
+    private val BLUETOOTH_LE_NRF_CHAR_RW2 =
+      UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca9e")
+    private val BLUETOOTH_LE_NRF_CHAR_RW3 = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca9e")
+    private val BLUETOOTH_LE_MICROCHIP_SERVICE =
+      UUID.fromString("49535343-FE7D-4AE5-8FA9-9FAFD205E455")
+    private val BLUETOOTH_LE_MICROCHIP_CHAR_RW =
+      UUID.fromString("49535343-1E4D-4BD9-BA61-23C647249616")
+    private val BLUETOOTH_LE_MICROCHIP_CHAR_W =
+      UUID.fromString("49535343-8841-43F4-A8D4-ECBE34729BB3")
+
+    // https://play.google.com/store/apps/details?id=com.telit.tiosample
+    // https://www.telit.com/wp-content/uploads/2017/09/TIO_Implementation_Guide_r6.pdf
+    private val BLUETOOTH_LE_TIO_SERVICE = UUID.fromString("0000FEFB-0000-1000-8000-00805F9B34FB")
+
+    // WNR
+    private val BLUETOOTH_LE_TIO_CHAR_TX =
+      UUID.fromString("00000001-0000-1000-8000-008025000000")
+
+    // N
+    private val BLUETOOTH_LE_TIO_CHAR_RX =
+      UUID.fromString("00000002-0000-1000-8000-008025000000")
+
+    // W
+    private val BLUETOOTH_LE_TIO_CHAR_TX_CREDITS =
+      UUID.fromString("00000003-0000-1000-8000-008025000000")
+
+    // I
+    private val BLUETOOTH_LE_TIO_CHAR_RX_CREDITS =
+      UUID.fromString("00000004-0000-1000-8000-008025000000")
+
+    // BLE standard does not limit, some BLE 4.2 devices support 251, various source say that Android has max 512
+    private const val MAX_MTU = 512
+    private const val DEFAULT_MTU = 23
+  }
+
+  val TAG: String = this.javaClass.name
+
   /**
    * delegate device specific behaviour to inner class
    */
@@ -60,11 +109,11 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
     }
   }
 
-  private val writeBuffer: ArrayList<ByteArray?>
-  private val pairingIntentFilter: IntentFilter
+  private val writeBuffer: ArrayList<ByteArray?> = ArrayList()
+  private val pairingIntentFilter: IntentFilter = IntentFilter()
   private val pairingBroadcastReceiver: BroadcastReceiver
   private val disconnectBroadcastReceiver: BroadcastReceiver
-  private var listener: SerialListener? = null
+  private var listener: ISerialListener? = null
   private var delegate: DeviceDelegate? = null
   private var gatt: BluetoothGatt? = null
   private var readCharacteristic: BluetoothGattCharacteristic? = null
@@ -77,13 +126,11 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
   init {
 //    if (context instanceof Activity)
 //      throw new InvalidParameterException("expected non UI context");
-    writeBuffer = ArrayList()
-    pairingIntentFilter = IntentFilter()
     pairingIntentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
     pairingIntentFilter.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST)
     pairingBroadcastReceiver = object : BroadcastReceiver() {
       override fun onReceive(context: Context, intent: Intent) {
-        onPairingBroadcastReceive(context, intent)
+        onPairingBroadcastReceive(intent)
       }
     }
     disconnectBroadcastReceiver = object : BroadcastReceiver() {
@@ -115,6 +162,7 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
       try {
         gatt!!.close()
       } catch (ignored: Exception) {
+        Timber.tag(TAG).d(ignored)
       }
       gatt = null
       connected = false
@@ -133,29 +181,30 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
    * connect-success and most connect-errors are returned asynchronously to listener
    */
   @Throws(IOException::class)
-  fun connect(listener: SerialListener) {
+  fun connect(listener: ISerialListener) {
     if (connected || gatt != null) throw IOException("already connected")
     canceled = false
     this.listener = listener
-    context.registerReceiver(
-      disconnectBroadcastReceiver,
-      IntentFilter(Constants.INTENT_ACTION_DISCONNECT)
-    )
-    Timber.tag(TAG).d(
-      "connect %s",
-      device
-    )
-    context.registerReceiver(pairingBroadcastReceiver, pairingIntentFilter)
-    Timber.tag(TAG).d("connectGatt,LE")
-    gatt = device!!.connectGatt(context, false, this, BluetoothDevice.TRANSPORT_LE)
+//    context.registerReceiver(
+//      disconnectBroadcastReceiver,
+//      IntentFilter(Constants.INTENT_ACTION_DISCONNECT)
+//    )
+    Timber.tag(TAG).d("connect %s", device)
+//    context.registerReceiver(pairingBroadcastReceiver, pairingIntentFilter)
+    Timber.tag(TAG).d("connectGatt, LE")
+    gatt = device.connectGatt(context, false, this, BluetoothDevice.TRANSPORT_LE)
     if (gatt == null) throw IOException("connectGatt failed")
     // continues asynchronously in onPairingBroadcastReceive() and onConnectionStateChange()
   }
 
-  private fun onPairingBroadcastReceive(context: Context, intent: Intent) {
+  private fun onPairingBroadcastReceive(intent: Intent) {
     // for ARM Mbed, Microbit, ... use pairing from Android bluetooth settings
     // for HM10-clone, ... pairing is initiated here
-    val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
+//    val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
+
+    val device = intent.parcelable<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
+
+
     if (device == null || device != this.device) return
     when (intent.action) {
       BluetoothDevice.ACTION_PAIRING_REQUEST -> {
@@ -180,11 +229,12 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
       Timber.tag(TAG).d("connect status $status, discoverServices")
       if (!gatt.discoverServices()) onSerialConnectError(IOException("discoverServices failed"))
     } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-      if (connected) onSerialIoError(IOException("gatt status $status")) else onSerialConnectError(
-        IOException(
-          "gatt status $status"
-        )
-      )
+      // TODO: notify disconnected
+      if (connected) {
+        onSerialIoError(IOException("gatt status $status"))
+      } else {
+        onSerialConnectError(IOException("gatt status $status"))
+      }
     } else {
       Timber.tag(TAG).d("unknown connect state $newState $status")
     }
@@ -293,6 +343,22 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
     }
   }
 
+  //  For android < 12
+  @Deprecated("Deprecated in Java")
+  override fun onCharacteristicChanged(
+    gatt: BluetoothGatt,
+    characteristic: BluetoothGattCharacteristic,
+  ) {
+    if (canceled) return
+    delegate!!.onCharacteristicChanged(gatt, characteristic)
+    if (canceled) return
+    if (characteristic === readCharacteristic) { // NOPMD - test object identity
+      val data = readCharacteristic!!.value
+      onSerialRead(data)
+//      Timber.tag(TAG).d("read, len=%s", data.size)
+    }
+  }
+
   override fun onCharacteristicChanged(
     gatt: BluetoothGatt,
     characteristic: BluetoothGattCharacteristic,
@@ -302,13 +368,12 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
     delegate!!.onCharacteristicChanged(gatt, characteristic)
     if (canceled) return
     if (characteristic === readCharacteristic) { // NOPMD - test object identity
-      val data = readCharacteristic!!.value
-      onSerialRead(data)
-      Timber.tag(TAG).d("read, len=%s", data.size)
+      onSerialRead(value)
+//      Timber.tag(TAG).d("read, len=%s", value.size)
     }
   }
 
-  @Throws(IOException::class)
+
   fun write(data: ByteArray) {
     if (canceled || !connected || writeCharacteristic == null) throw IOException("not connected")
     var data0: ByteArray?
@@ -409,20 +474,20 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
    * device delegates
    */
   private inner class Cc245XDelegate : DeviceDelegate() {
-    override fun connectCharacteristics(gattService: BluetoothGattService): Boolean {
+    override fun connectCharacteristics(s: BluetoothGattService): Boolean {
       Timber.tag(TAG).d("service cc254x uart")
-      readCharacteristic = gattService.getCharacteristic(BLUETOOTH_LE_CC254X_CHAR_RW)
-      writeCharacteristic = gattService.getCharacteristic(BLUETOOTH_LE_CC254X_CHAR_RW)
+      readCharacteristic = s.getCharacteristic(BLUETOOTH_LE_CC254X_CHAR_RW)
+      writeCharacteristic = s.getCharacteristic(BLUETOOTH_LE_CC254X_CHAR_RW)
       return true
     }
   }
 
   private inner class MicrochipDelegate : DeviceDelegate() {
-    override fun connectCharacteristics(gattService: BluetoothGattService): Boolean {
+    override fun connectCharacteristics(s: BluetoothGattService): Boolean {
       Timber.tag(TAG).d("service microchip uart")
-      readCharacteristic = gattService.getCharacteristic(BLUETOOTH_LE_MICROCHIP_CHAR_RW)
-      writeCharacteristic = gattService.getCharacteristic(BLUETOOTH_LE_MICROCHIP_CHAR_W)
-      if (writeCharacteristic == null) writeCharacteristic = gattService.getCharacteristic(
+      readCharacteristic = s.getCharacteristic(BLUETOOTH_LE_MICROCHIP_CHAR_RW)
+      writeCharacteristic = s.getCharacteristic(BLUETOOTH_LE_MICROCHIP_CHAR_W)
+      if (writeCharacteristic == null) writeCharacteristic = s.getCharacteristic(
         BLUETOOTH_LE_MICROCHIP_CHAR_RW
       )
       return true
@@ -430,10 +495,10 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
   }
 
   private inner class NrfDelegate : DeviceDelegate() {
-    override fun connectCharacteristics(gattService: BluetoothGattService): Boolean {
+    override fun connectCharacteristics(s: BluetoothGattService): Boolean {
       Timber.tag(TAG).d("service nrf uart")
-      val rw2 = gattService.getCharacteristic(BLUETOOTH_LE_NRF_CHAR_RW2)
-      val rw3 = gattService.getCharacteristic(BLUETOOTH_LE_NRF_CHAR_RW3)
+      val rw2 = s.getCharacteristic(BLUETOOTH_LE_NRF_CHAR_RW2)
+      val rw3 = s.getCharacteristic(BLUETOOTH_LE_NRF_CHAR_RW3)
       if (rw2 != null && rw3 != null) {
         val rw2prop = rw2.properties
         val rw3prop = rw3.properties
@@ -461,16 +526,16 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
     private var writeCreditsCharacteristic: BluetoothGattCharacteristic? = null
     private var readCredits = 0
     private var writeCredits = 0
-    override fun connectCharacteristics(gattService: BluetoothGattService): Boolean {
+    override fun connectCharacteristics(s: BluetoothGattService): Boolean {
       Timber.tag(TAG).d("service telit tio 2.0")
       readCredits = 0
       writeCredits = 0
-      readCharacteristic = gattService.getCharacteristic(BLUETOOTH_LE_TIO_CHAR_RX)
-      writeCharacteristic = gattService.getCharacteristic(BLUETOOTH_LE_TIO_CHAR_TX)
-      readCreditsCharacteristic = gattService.getCharacteristic(
+      readCharacteristic = s.getCharacteristic(BLUETOOTH_LE_TIO_CHAR_RX)
+      writeCharacteristic = s.getCharacteristic(BLUETOOTH_LE_TIO_CHAR_TX)
+      readCreditsCharacteristic = s.getCharacteristic(
         BLUETOOTH_LE_TIO_CHAR_RX_CREDITS
       )
-      writeCreditsCharacteristic = gattService.getCharacteristic(
+      writeCreditsCharacteristic = s.getCharacteristic(
         BLUETOOTH_LE_TIO_CHAR_TX_CREDITS
       )
       if (readCharacteristic == null) {
@@ -510,20 +575,20 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
     }
 
     override fun onDescriptorWrite(
-      gatt: BluetoothGatt,
-      descriptor: BluetoothGattDescriptor,
+      g: BluetoothGatt,
+      d: BluetoothGattDescriptor,
       status: Int
     ) {
-      if (descriptor.characteristic === readCreditsCharacteristic) {
+      if (d.characteristic === readCreditsCharacteristic) {
         Timber.tag(TAG)
           .d("writing read credits characteristic descriptor finished, status=%s", status)
         if (status != BluetoothGatt.GATT_SUCCESS) {
           onSerialConnectError(IOException("write credits descriptor failed"))
         } else {
-          connectCharacteristics2(gatt)
+          connectCharacteristics2(g)
         }
       }
-      if (descriptor.characteristic === readCharacteristic) {
+      if (d.characteristic === readCharacteristic) {
         Timber.tag(TAG).d("writing read characteristic descriptor finished, status=%s", status)
         if (status == BluetoothGatt.GATT_SUCCESS) {
           readCharacteristic!!.writeType = BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE
@@ -536,9 +601,9 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
     }
 
     override fun onCharacteristicChanged(
-      gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic
+      g: BluetoothGatt, c: BluetoothGattCharacteristic
     ) {
-      if (characteristic === readCreditsCharacteristic) { // NOPMD - test object identity
+      if (c === readCreditsCharacteristic) { // NOPMD - test object identity
         val newCredits = readCreditsCharacteristic!!.value[0].toInt()
         synchronized(writeBuffer) { writeCredits += newCredits }
         Timber.tag(TAG).d("got write credits +$newCredits =$writeCredits")
@@ -547,20 +612,20 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
           writeNext()
         }
       }
-      if (characteristic === readCharacteristic) { // NOPMD - test object identity
+      if (c === readCharacteristic) { // NOPMD - test object identity
         grantReadCredits()
         Timber.tag(TAG).d("read, credits=%s", readCredits)
       }
     }
 
     override fun onCharacteristicWrite(
-      gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic, status: Int
+      g: BluetoothGatt, c: BluetoothGattCharacteristic, status: Int
     ) {
-      if (characteristic === writeCharacteristic) { // NOPMD - test object identity
+      if (c === writeCharacteristic) { // NOPMD - test object identity
         synchronized(writeBuffer) { if (writeCredits > 0) writeCredits -= 1 }
         Timber.tag(TAG).d("write finished, credits=%s", writeCredits)
       }
-      if (characteristic === writeCreditsCharacteristic) { // NOPMD - test object identity
+      if (c === writeCreditsCharacteristic) { // NOPMD - test object identity
         Timber.tag(TAG).d("write credits finished, status=%s", status)
       }
     }
@@ -594,38 +659,20 @@ class SerialSocketKt(private val context: Context, private var device: Bluetooth
       }
     }
   }
+}
 
-  companion object {
-    private val BLUETOOTH_LE_CCCD = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
-    private val BLUETOOTH_LE_CC254X_SERVICE =
-      UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb")
-    private val BLUETOOTH_LE_CC254X_CHAR_RW =
-      UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb")
-    private val BLUETOOTH_LE_NRF_SERVICE = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e")
-    private val BLUETOOTH_LE_NRF_CHAR_RW2 =
-      UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca9e") // read on microbit, write on adafruit
-    private val BLUETOOTH_LE_NRF_CHAR_RW3 = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca9e")
-    private val BLUETOOTH_LE_MICROCHIP_SERVICE =
-      UUID.fromString("49535343-FE7D-4AE5-8FA9-9FAFD205E455")
-    private val BLUETOOTH_LE_MICROCHIP_CHAR_RW =
-      UUID.fromString("49535343-1E4D-4BD9-BA61-23C647249616")
-    private val BLUETOOTH_LE_MICROCHIP_CHAR_W =
-      UUID.fromString("49535343-8841-43F4-A8D4-ECBE34729BB3")
+inline fun <reified T : Parcelable> Intent.parcelable(key: String): T? = when {
+  SDK_INT >= 33 ->
+    getParcelableExtra(key, T::class.java)
 
-    // https://play.google.com/store/apps/details?id=com.telit.tiosample
-    // https://www.telit.com/wp-content/uploads/2017/09/TIO_Implementation_Guide_r6.pdf
-    private val BLUETOOTH_LE_TIO_SERVICE = UUID.fromString("0000FEFB-0000-1000-8000-00805F9B34FB")
-    private val BLUETOOTH_LE_TIO_CHAR_TX =
-      UUID.fromString("00000001-0000-1000-8000-008025000000") // WNR
-    private val BLUETOOTH_LE_TIO_CHAR_RX =
-      UUID.fromString("00000002-0000-1000-8000-008025000000") // N
-    private val BLUETOOTH_LE_TIO_CHAR_TX_CREDITS =
-      UUID.fromString("00000003-0000-1000-8000-008025000000") // W
-    private val BLUETOOTH_LE_TIO_CHAR_RX_CREDITS =
-      UUID.fromString("00000004-0000-1000-8000-008025000000") // I
-    private const val MAX_MTU =
-      512 // BLE standard does not limit, some BLE 4.2 devices support 251, various source say that Android has max 512
-    private const val DEFAULT_MTU = 23
-    private const val TAG = "SerialSocket"
-  }
+  else ->
+    getParcelableExtra(key) as? T
+}
+
+inline fun <reified T : Parcelable> Bundle.parcelable(key: String): T? = when {
+  SDK_INT >= 33 ->
+    getParcelable(key, T::class.java)
+
+  else ->
+    getParcelable(key) as? T
 }

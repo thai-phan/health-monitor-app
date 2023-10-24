@@ -45,7 +45,7 @@ fun ButtonAction(
   )
 
 
-  var isEnable = 1
+  val isEnable = 1
 
   Column(
     modifier = Modifier

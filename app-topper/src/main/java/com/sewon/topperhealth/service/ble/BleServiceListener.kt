@@ -2,6 +2,8 @@ package com.sewon.topperhealth.service.ble
 
 import android.text.SpannableStringBuilder
 import androidx.compose.runtime.mutableStateOf
+import com.sewon.topperhealth.service.ISerialListener
+import com.sewon.topperhealth.service.TextUtil
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeDataProcessing
 
@@ -10,7 +12,7 @@ import timber.log.Timber
 import java.util.ArrayDeque
 
 
-class ListenerBleStream : SerialListener {
+class BleServiceListener : ISerialListener {
 
 
   private enum class Connected {

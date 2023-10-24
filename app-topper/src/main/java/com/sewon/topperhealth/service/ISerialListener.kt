@@ -1,8 +1,8 @@
-package com.sewon.topperhealth.service.ble
+package com.sewon.topperhealth.service
 
 import java.util.ArrayDeque
 
-interface SerialListener {
+interface ISerialListener {
   fun onSerialConnect()
   fun onSerialConnectError(e: Exception)
   fun onSerialRead(data: ByteArray) // socket -> service

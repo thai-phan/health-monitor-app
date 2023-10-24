@@ -1,5 +1,6 @@
 package com.sewon.topperhealth.screen.activity
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
@@ -37,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.sewon.officehealth.service.ble.BleGattSocket
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.screen.a0common.Destinations
 import com.sewon.topperhealth.screen.activity.component.CircularTimePicker
@@ -46,10 +48,10 @@ import com.sewon.topperhealth.screen.activity.sub.ButtonAction
 import com.sewon.topperhealth.screen.activity.sub.SwitchAction
 import com.sewon.topperhealth.screen.activity.sub.TimeSelection
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
-import com.sewon.topperhealth.service.ble.SerialSocket
 import timber.log.Timber
 
 
+@SuppressLint("MissingPermission")
 @Composable
 fun SleepActivity(
   modifier: Modifier = Modifier,
@@ -63,8 +65,7 @@ fun SleepActivity(
   val log by MainActivity.listenerBleStream.log
 
 
-  val toggleConnectDevice by MainActivity.serviceBleHandler.toggleConnectDevice
-  val toggleAlarmSound by MainActivity.serviceBleHandler.toggleAlarmSound
+  val toggleAlarmSound by MainActivity.bleServiceHandler.toggleAlarmSound
 
 
   fun composeConnectToSensor() {
@@ -72,24 +73,24 @@ fun SleepActivity(
       val adapter = context.getSystemService<BluetoothManager>()?.adapter
       val device = adapter?.getRemoteDevice(deviceAddress)
       val socket = device?.let {
-        SerialSocket(context, it)
+        BleGattSocket(context, it)
       }
       if (socket != null) {
-        MainActivity.serviceBleHandler.connect(socket)
+        MainActivity.bleServiceHandler.connect(socket)
       }
     } catch (exception: IllegalArgumentException) {
       Timber.tag("Timber").w(exception)
     }
   }
 
-  var isStarted by remember { mutableStateOf(false) }
-  var isAlarm by MainActivity.listenerBleStream.isAlarm
+  var isStarted = remember { mutableStateOf(false) }
+  val isAlarm by MainActivity.listenerBleStream.isAlarm
 
 
   fun startSleep() {
-    MainActivity.serviceBleHandler.playSound()
+    MainActivity.bleServiceHandler.playSound()
 
-    isStarted = true
+    isStarted.value = true
 
     val startTimeCalendar = GregorianCalendar.getInstance()
     startTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, uiState.startTime.hour)
@@ -125,12 +126,12 @@ fun SleepActivity(
   }
 
   fun cancelSleep() {
-    isStarted = false
-    MainActivity.serviceBleHandler.stopSound()
+    isStarted.value = false
+    MainActivity.bleServiceHandler.stopSound()
     MainActivity.alarmManager.cancel(MainActivity.alarmPendingIntent)
 
     viewModel.updateCurrentSessionEndTime()
-    MainActivity.serviceBleHandler.disconnectBluetoothSocket()
+    MainActivity.bleServiceHandler.disconnectBluetoothSocket()
   }
 
   fun stopAlarm() {
@@ -141,8 +142,6 @@ fun SleepActivity(
     navController.navigate(Destinations.REPORT_ROUTE)
   }
 
-
-  val isPlaySoundSleepInduceUI by MainActivity.serviceBleHandler.isPlaySoundSleepInduce
 
   var openAssessmentModal by rememberSaveable { mutableStateOf(false) }
   var openQualityModal by rememberSaveable { mutableStateOf(false) }
@@ -183,21 +182,12 @@ fun SleepActivity(
     Column(Modifier.verticalScroll(rememberScrollState())) {
       TimeSelection(uiState.startTime, uiState.endTime)
 
-      SwitchAction(
-        toggleConnectDevice = toggleConnectDevice,
-        onToggleConnectToDevice = {
-          MainActivity.serviceBleHandler.toggleConnectDevice()
-        },
-        toggleAlarmSound = isPlaySoundSleepInduceUI,
-        onToggleAlarmSound = {
-          MainActivity.serviceBleHandler.toggleSoundStretch()
-        }
-      )
+      SwitchAction()
 
       Spacer(modifier = Modifier.height(10.dp))
 
       ButtonAction(
-        isStarted, isAlarm,
+        isStarted.value, isAlarm,
         startSleep = { startSleep() },
         cancelSleep = {
           cancelSleep()
@@ -232,6 +222,8 @@ fun SleepActivity(
         }
       )
     }
+
+
   }
 }
 

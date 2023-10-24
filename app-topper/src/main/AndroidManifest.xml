@@ -40,7 +40,7 @@
     </activity>
 
     <receiver android:name=".service.alarm.AlarmReceiver" />
-    <service android:name=".service.ble.ServiceBleHandler" />
+    <service android:name=".service.ble.BleServiceHandler" />
 
   </application>
 </manifest>
