@@ -62,11 +62,9 @@ fun SleepActivity(
   val context = LocalContext.current
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-  val log by MainActivity.listenerBleStream.log
+  val log by MainActivity.bleListener.log
 
-
-  val toggleAlarmSound by MainActivity.bleServiceHandler.toggleAlarmSound
-
+  val toggleAlarmSound by MainActivity.bleService.toggleAlarmSound
 
   fun composeConnectToSensor() {
     try {
@@ -76,19 +74,19 @@ fun SleepActivity(
         BleGattSocket(context, it)
       }
       if (socket != null) {
-        MainActivity.bleServiceHandler.connect(socket)
+        MainActivity.bleService.connect(socket)
       }
     } catch (exception: IllegalArgumentException) {
-      Timber.tag("Timber").w(exception)
+      Timber.tag("composeConnectToSensor").w(exception)
     }
   }
 
-  var isStarted = remember { mutableStateOf(false) }
-  val isAlarm by MainActivity.listenerBleStream.isAlarm
+  val isStarted = remember { mutableStateOf(false) }
+  val isAlarm = remember { MainActivity.bleListener.isAlarm }
 
 
   fun startSleep() {
-    MainActivity.bleServiceHandler.playSound()
+    MainActivity.bleService.playSound()
 
     isStarted.value = true
 
@@ -127,15 +125,15 @@ fun SleepActivity(
 
   fun cancelSleep() {
     isStarted.value = false
-    MainActivity.bleServiceHandler.stopSound()
+    MainActivity.bleService.stopSound()
     MainActivity.alarmManager.cancel(MainActivity.alarmPendingIntent)
 
     viewModel.updateCurrentSessionEndTime()
-    MainActivity.bleServiceHandler.disconnectBluetoothSocket()
+    MainActivity.bleService.disconnectBluetoothSocket()
   }
 
   fun stopAlarm() {
-    MainActivity.listenerBleStream.stopAlarmListener()
+    MainActivity.bleListener.stopAlarmListener()
   }
 
   fun redirectReportPage() {
@@ -187,7 +185,7 @@ fun SleepActivity(
       Spacer(modifier = Modifier.height(10.dp))
 
       ButtonAction(
-        isStarted.value, isAlarm,
+        isStarted.value, isAlarm.value,
         startSleep = { startSleep() },
         cancelSleep = {
           cancelSleep()
@@ -196,8 +194,6 @@ fun SleepActivity(
         stopAlarm = { stopAlarm() }
       )
       Text(log)
-
-
     }
 
     if (openAssessmentModal) {
@@ -222,8 +218,6 @@ fun SleepActivity(
         }
       )
     }
-
-
   }
 }
 

@@ -38,7 +38,7 @@ fun SwitchAction(
     uncheckedBorderColor = uncheckedBorderColor,
   )
 
-  val isPlaySoundSleepInduceUI by MainActivity.bleServiceHandler.isPlaySoundSleepInduce
+  val isPlaySoundSleepInduceUI by MainActivity.bleService.isPlaySoundSleepInduce
 
   val isRelayDialog = rememberSaveable { mutableStateOf(false) }
   val isRelayClose = rememberSaveable { mutableStateOf(false) }
@@ -74,7 +74,7 @@ fun SwitchAction(
     Switch(checked = isPlaySoundSleepInduceUI,
       colors = switchColors,
       onCheckedChange = {
-        MainActivity.bleServiceHandler.toggleSoundSleepInduce()
+        MainActivity.bleService.toggleSoundSleepInduce()
       })
   }
 

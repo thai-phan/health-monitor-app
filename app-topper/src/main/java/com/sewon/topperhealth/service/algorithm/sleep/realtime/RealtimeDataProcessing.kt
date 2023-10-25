@@ -17,18 +17,18 @@ class RealtimeDataProcessing {
         processData(messageList)
       } else {
         isWrongDeviceType.value = true
-        MainActivity.bleServiceHandler.disconnectBluetoothSocket()
+        MainActivity.bleService.disconnectBluetoothSocket()
       }
     }
 
     private var deplayCount = 0
 
     fun processData(messageList: List<String>) {
-      val topperData = TopperData(MainActivity.bleServiceHandler.sessionId, messageList)
+      val topperData = TopperData(MainActivity.bleService.sessionId, messageList)
 
 //      RealtimeAlgorithm.processData(topperData)
 
-      MainActivity.bleServiceHandler.insertNewTopperToDatabase(topperData)
+      MainActivity.bleService.insertNewTopperToDatabase(topperData)
 
 //      if (deplayCount == 1) {
 //        deplayCount = 0

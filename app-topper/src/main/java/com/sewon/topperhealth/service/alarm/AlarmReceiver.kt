@@ -22,7 +22,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
 
   override fun onReceive(context: Context, intent: Intent) {
-    MainActivity.listenerBleStream.startAlarmListener()
+    MainActivity.bleListener.startAlarmListener()
 
     vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
       val vibratorManager =
@@ -47,7 +47,7 @@ class AlarmReceiver : BroadcastReceiver() {
     // setting default ringtone
     ringtone = RingtoneManager.getRingtone(context, alarmUri)
 
-    if (MainActivity.bleServiceHandler.toggleAlarmSound.value) {
+    if (MainActivity.bleService.toggleAlarmSound.value) {
       playAlarmSound()
     }
 

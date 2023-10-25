@@ -12,7 +12,7 @@ import timber.log.Timber
 import java.util.ArrayDeque
 
 
-class BleServiceListener : ISerialListener {
+class BleListener : ISerialListener {
 
 
   private enum class Connected {

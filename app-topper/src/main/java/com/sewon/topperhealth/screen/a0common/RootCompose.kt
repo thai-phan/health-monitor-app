@@ -53,9 +53,10 @@ fun RootCompose(finishActivity: () -> Unit) {
       Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
+          .fillMaxSize()
+          .blackGreenBackground()
           .statusBarsPadding()
           .systemBarsPadding()
-          .blackGreenBackground()
       ) {
         NavigationGraph(
           finishActivity = finishActivity,

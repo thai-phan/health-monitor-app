@@ -39,7 +39,7 @@ import javax.inject.Inject
  * use listener chain: SerialSocket -> SerialService -> UI fragment
  */
 @AndroidEntryPoint
-class BleServiceHandler : Service(), ISerialListener {
+class BleService : Service(), ISerialListener {
 
   private val job = SupervisorJob()
   private val scope = CoroutineScope(Dispatchers.IO + job)
@@ -52,8 +52,8 @@ class BleServiceHandler : Service(), ISerialListener {
   lateinit var sessionRepository: ISessionRepository
 
   inner class SerialBinder : Binder() {
-    val service: BleServiceHandler
-      get() = this@BleServiceHandler
+    val service: BleService
+      get() = this@BleService
   }
 
   private enum class QueueType {
@@ -95,7 +95,7 @@ class BleServiceHandler : Service(), ISerialListener {
   private val queue2: ArrayDeque<QueueItem>
   private val lastRead: QueueItem
   private var socket: BleGattSocket? = null
-  var bleServiceListener: BleServiceListener? = null
+  var bleListener: BleListener? = null
   private var connected = false
 
 
@@ -142,12 +142,12 @@ class BleServiceHandler : Service(), ISerialListener {
     }
   }
 
-  fun attach(listener: BleServiceListener) {
+  fun attach(listener: BleListener) {
     require(Looper.getMainLooper().thread === Thread.currentThread()) { "not in main thread" }
     cancelNotification()
     // use synchronized() to prevent new items in queue2
     // new items will not be added to queue1 because mainLooper.post and attach() run in main thread
-    synchronized(this) { this.bleServiceListener = listener }
+    synchronized(this) { this.bleListener = listener }
     for (item in queue1) {
       when (item.type) {
         QueueType.Connect -> listener.onSerialConnect()
@@ -276,10 +276,10 @@ class BleServiceHandler : Service(), ISerialListener {
   override fun onSerialConnect() {
     if (connected) {
       synchronized(this) {
-        if (bleServiceListener != null) {
+        if (bleListener != null) {
           mainLooper.post {
-            if (bleServiceListener != null) {
-              bleServiceListener!!.onSerialConnect()
+            if (bleListener != null) {
+              bleListener!!.onSerialConnect()
             } else {
               queue1.add(QueueItem(QueueType.Connect))
             }
@@ -294,10 +294,10 @@ class BleServiceHandler : Service(), ISerialListener {
   override fun onSerialConnectError(e: Exception) {
     if (connected) {
       synchronized(this) {
-        if (bleServiceListener != null) {
+        if (bleListener != null) {
           mainLooper.post {
-            if (bleServiceListener != null) {
-              bleServiceListener!!.onSerialConnectError(e)
+            if (bleListener != null) {
+              bleListener!!.onSerialConnectError(e)
             } else {
               queue1.add(QueueItem(QueueType.ConnectError, e))
               disconnectBluetoothSocket()
@@ -327,7 +327,7 @@ class BleServiceHandler : Service(), ISerialListener {
   override fun onSerialRead(data: ByteArray) {
     if (connected) {
       synchronized(this) {
-        if (bleServiceListener != null) {
+        if (bleListener != null) {
           var first: Boolean
           synchronized(lastRead) {
             first = lastRead.datas!!.isEmpty() // (1)
@@ -340,8 +340,8 @@ class BleServiceHandler : Service(), ISerialListener {
                 datas = lastRead.datas!!
                 lastRead.init() // (2)
               }
-              if (bleServiceListener != null) {
-                datas.let { bleServiceListener!!.onSerialRead(it) }
+              if (bleListener != null) {
+                datas.let { bleListener!!.onSerialRead(it) }
               } else {
                 queue1.add(QueueItem(QueueType.Read, datas))
               }
@@ -359,10 +359,10 @@ class BleServiceHandler : Service(), ISerialListener {
   override fun onSerialIoError(e: Exception) {
     if (connected) {
       synchronized(this) {
-        if (bleServiceListener != null) {
+        if (bleListener != null) {
           mainLooper.post {
-            if (bleServiceListener != null) {
-              bleServiceListener!!.onSerialIoError(e)
+            if (bleListener != null) {
+              bleListener!!.onSerialIoError(e)
             } else {
               queue1.add(QueueItem(QueueType.IoError, e))
               disconnectBluetoothSocket()

@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import com.sewon.topperhealth.service.ISerialListener
 import com.sewon.topperhealth.service.ble.Constants.INTENT_ACTION_DISCONNECT
 import java.io.IOException
 import java.security.InvalidParameterException
@@ -16,17 +17,16 @@ import java.util.UUID
 import java.util.concurrent.Executors
 
 @SuppressLint("MissingPermission")
-class BlcGattSocket(context: Context, device: BluetoothDevice) :
-  Runnable {
+class BlcGattSocket(context: Context, device: BluetoothDevice) : Runnable {
   private val disconnectBroadcastReceiver: BroadcastReceiver
   private val context: Context
-  private var listener: BlcServiceListener? = null
+  private var listener: ISerialListener? = null
   private val device: BluetoothDevice
   private var socket: BluetoothSocket? = null
   private var connected = false
 
   init {
-    if (context is Activity) throw InvalidParameterException("expected non UI context")
+//    if (context is Activity) throw InvalidParameterException("expected non UI context")
     this.context = context
     this.device = device
     disconnectBroadcastReceiver = object : BroadcastReceiver() {
@@ -45,7 +45,7 @@ class BlcGattSocket(context: Context, device: BluetoothDevice) :
    */
   @SuppressLint("UnspecifiedRegisterReceiverFlag")
   @Throws(IOException::class)
-  fun connect(listener: BlcServiceListener?) {
+  fun connect(listener: ISerialListener) {
     this.listener = listener
     context.registerReceiver(
       disconnectBroadcastReceiver,

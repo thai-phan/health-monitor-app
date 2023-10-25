@@ -14,10 +14,10 @@ import java.util.ArrayDeque
  * create notification and queue serial data while activity is not in the foreground
  * use listener chain: SerialSocket -> SerialService -> UI fragment
  */
-class BlcServiceHandler : Service(), ISerialListener {
+class BlcService : Service(), ISerialListener {
   internal inner class SerialBinder : Binder() {
-    val service: BlcServiceHandler
-      get() = this@BlcServiceHandler
+    val service: BlcService
+      get() = this@BlcService
   }
 
   private enum class QueueType {
@@ -83,8 +83,7 @@ class BlcServiceHandler : Service(), ISerialListener {
 
   @Throws(IOException::class)
   fun connect(socket: BlcGattSocket) {
-//    TODO: aaa
-//    socket.connect()
+    socket.connect(this)
     this.socket = socket
     connected = true
   }

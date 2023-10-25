@@ -32,7 +32,7 @@ import androidx.lifecycle.LifecycleOwner
 fun DeviceItem(
   color: Color,
   bluetoothDevice: BluetoothDevice,
-  onSelectBle: () -> Unit
+  onSelectDevice: () -> Unit
 ) {
 
   val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
@@ -53,7 +53,7 @@ fun DeviceItem(
         .background(color = color, shape = RoundedCornerShape(size = 10.dp))
         .padding(10.dp)
         .clickable {
-          onSelectBle()
+          onSelectDevice()
         },
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically

@@ -2,7 +2,6 @@ package com.sewon.topperhealth.service.blc
 
 import android.text.SpannableStringBuilder
 import androidx.compose.runtime.mutableStateOf
-import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeDataProcessing
 import com.sewon.topperhealth.service.ISerialListener
 import com.sewon.topperhealth.service.TextUtil
@@ -12,7 +11,7 @@ import timber.log.Timber
 import java.util.ArrayDeque
 
 
-class BlcServiceListener : ISerialListener {
+class BlcListener : ISerialListener {
 
 
   private enum class Connected {

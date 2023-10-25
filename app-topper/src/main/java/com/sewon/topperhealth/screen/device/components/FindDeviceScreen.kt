@@ -3,7 +3,6 @@ package com.sewon.topperhealth.screen.device.components
 import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothManager
 import android.bluetooth.le.ScanSettings
 import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.layout.Arrangement
@@ -35,9 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.getSystemService
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
 import timber.log.Timber
 
@@ -124,7 +120,7 @@ internal fun FindDevicesScreen(
         DeviceItem(
           Color(0xFFE3ECA6),
           bluetoothDevice = item,
-          onSelectBle = {
+          onSelectDevice = {
             onSelectBle(item)
           }
         )

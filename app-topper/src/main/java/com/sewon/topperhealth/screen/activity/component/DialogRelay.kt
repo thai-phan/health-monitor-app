@@ -2,11 +2,11 @@ package com.sewon.topperhealth.screen.activity.component
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +23,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.getSystemService
+import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.screen.device.components.DeviceItem
+import com.sewon.topperhealth.service.blc.BlcGattSocket
+import timber.log.Timber
 
 @SuppressLint("InlinedApi", "MissingPermission")
 @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
@@ -37,11 +40,23 @@ fun DialogRelay(onDismissRequest: () -> Unit) {
     mutableStateListOf<BluetoothDevice>(*adapter.bondedDevices.toTypedArray())
   }
 
+  fun composeConnectToRelay(blcDevice: BluetoothDevice) {
+    try {
+      Timber.tag("composeConnectToRelay").w("connecting")
+      val device = adapter.getRemoteDevice(blcDevice.address)
+      val blcSocket = BlcGattSocket(context, device)
+      MainActivity.blcService.connect(blcSocket)
+    } catch (exception: IllegalArgumentException) {
+      Timber.tag("composeConnectToRelay").w(exception)
+    }
+  }
+
   Dialog(onDismissRequest = { onDismissRequest() }) {
     Card(
       modifier = Modifier
-        .fillMaxHeight(0.5f),
-      colors = CardDefaults.cardColors(Color(0xFF4EA162)),
+        .fillMaxHeight(0.5f)
+        .padding(20.dp),
+      colors = CardDefaults.cardColors(Color(0xFF404985)),
       shape = RoundedCornerShape(16.dp),
     ) {
       LazyColumn() {
@@ -52,14 +67,8 @@ fun DialogRelay(onDismissRequest: () -> Unit) {
           DeviceItem(
             Color(0xFFFFFFFF),
             bluetoothDevice = it,
-            onSelectBle = {
-
-//              val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-//              val device: BluetoothDevice = bluetoothAdapter.getRemoteDevice(deviceAddress)
-//              status("connecting...")
-//              connected = de.kai_morich.simple_bluetooth_terminal.TerminalFragment.Connected.Pending
-//              val socket = SerialSocket(requireActivity().getApplicationContext(), device)
-//              service.connect(socket)
+            onSelectDevice = {
+              composeConnectToRelay(it)
             }
           )
         }

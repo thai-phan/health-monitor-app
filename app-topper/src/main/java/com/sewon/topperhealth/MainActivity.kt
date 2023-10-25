@@ -14,8 +14,10 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
 import com.sewon.topperhealth.screen.a0common.RootCompose
 import com.sewon.topperhealth.service.algorithm.sleep.report.ReportDataProcessing
-import com.sewon.topperhealth.service.ble.BleServiceListener
-import com.sewon.topperhealth.service.ble.BleServiceHandler
+import com.sewon.topperhealth.service.blc.BlcService
+import com.sewon.topperhealth.service.blc.BlcListener
+import com.sewon.topperhealth.service.ble.BleListener
+import com.sewon.topperhealth.service.ble.BleService
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -23,33 +25,19 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
   companion object {
-    lateinit var bleServiceHandler: BleServiceHandler
+    lateinit var bleService: BleService
+    lateinit var blcService: BlcService
+
     lateinit var alarmManager: AlarmManager
     lateinit var alarmPendingIntent: PendingIntent
     lateinit var reportDataProcessing: ReportDataProcessing
 
-    var listenerBleStream = BleServiceListener()
+    var bleListener = BleListener()
+    var blcListener = BlcListener()
 
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//    StrictMode.setThreadPolicy(
-//      ThreadPolicy.Builder()
-//        .detectDiskReads()
-//        .detectDiskWrites()
-//        .detectNetwork() // or .detectAll() for all detectable problems
-//        .penaltyLog()
-//        .build()
-//    )
-//    StrictMode.setVmPolicy(
-//      VmPolicy.Builder()
-//        .detectLeakedSqlLiteObjects()
-//        .detectLeakedClosableObjects()
-//        .penaltyLog()
-//        .penaltyDeath()
-//        .build()
-//    )
     super.onCreate(savedInstanceState)
 
     actionBar?.hide()
@@ -74,9 +62,13 @@ class MainActivity : ComponentActivity() {
 
     alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
-    val intent = Intent(this, BleServiceHandler::class.java)
-    startService(intent)
-    bindService(intent, bleServiceConnection, BIND_AUTO_CREATE)
+    val bleIntent = Intent(this, BleService::class.java)
+    startService(bleIntent)
+    bindService(bleIntent, bleServiceConnection, BIND_AUTO_CREATE)
+
+    val blcIntent = Intent(this, BlcService::class.java)
+    startService(blcIntent)
+    bindService(blcIntent, blcServiceConnection, BIND_AUTO_CREATE)
   }
 
   override fun onPause() {
@@ -108,8 +100,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
-      bleServiceHandler = (service as BleServiceHandler.SerialBinder).service
-      bleServiceHandler.attach(listenerBleStream)
+      bleService = (service as BleService.SerialBinder).service
+      bleService.attach(bleListener)
     }
   }
 
@@ -119,8 +111,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
-      bleServiceHandler = (service as BleServiceHandler.SerialBinder).service
-      bleServiceHandler.attach(listenerBleStream)
+      blcService = (service as BlcService.SerialBinder).service
+      blcService.attach(blcListener)
     }
   }
 
