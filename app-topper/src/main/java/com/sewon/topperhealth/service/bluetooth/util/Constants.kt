@@ -2,8 +2,11 @@ package com.sewon.topperhealth.service.bluetooth.util;
 
 import com.sewon.topperhealth.BuildConfig
 
+enum class Connected {
+  False, Pending, True
+}
 
-internal object Constants {
+object Constants {
   // values have to be globally unique
   const val INTENT_ACTION_DISCONNECT = BuildConfig.APPLICATION_ID + ".Disconnect"
   const val NOTIFICATION_CHANNEL = BuildConfig.APPLICATION_ID + ".Channel"

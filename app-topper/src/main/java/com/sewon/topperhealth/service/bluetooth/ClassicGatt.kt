@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import com.sewon.topperhealth.service.bluetooth.util.Constants.INTENT_ACTION_DISCONNECT
-import com.sewon.topperhealth.service.bluetooth.util.ISerialListener
 import timber.log.Timber
 import java.io.IOException
 import java.util.Arrays
@@ -19,7 +18,7 @@ import java.util.concurrent.Executors
 class ClassicGatt(context: Context, device: BluetoothDevice) : Runnable {
   private val disconnectBroadcastReceiver: BroadcastReceiver
   private val context: Context
-  private var listener: ISerialListener? = null
+  private var service: ClassicService? = null
   private val device: BluetoothDevice
   private var bluetoothSocket: BluetoothSocket? = null
   private var connected = false
@@ -30,7 +29,7 @@ class ClassicGatt(context: Context, device: BluetoothDevice) : Runnable {
     this.device = device
     disconnectBroadcastReceiver = object : BroadcastReceiver() {
       override fun onReceive(context: Context, intent: Intent) {
-        listener?.onSerialIoError(IOException("background disconnect"))
+        service?.onServiceIoError(IOException("background disconnect"))
         disconnect() // disconnect now, else would be queued until UI re-attached
       }
     }
@@ -44,8 +43,8 @@ class ClassicGatt(context: Context, device: BluetoothDevice) : Runnable {
    */
   @SuppressLint("UnspecifiedRegisterReceiverFlag")
   @Throws(IOException::class)
-  fun connect(listener: ISerialListener) {
-    this.listener = listener
+  fun connect(service: ClassicService) {
+    this.service = service
     context.registerReceiver(
       disconnectBroadcastReceiver,
       IntentFilter(INTENT_ACTION_DISCONNECT)
@@ -54,7 +53,7 @@ class ClassicGatt(context: Context, device: BluetoothDevice) : Runnable {
   }
 
   fun disconnect() {
-    listener = null // ignore remaining data and errors
+    service = null // ignore remaining data and errors
     // connected = false; // run loop will reset connected
     if (bluetoothSocket != null) {
       try {
@@ -79,10 +78,10 @@ class ClassicGatt(context: Context, device: BluetoothDevice) : Runnable {
     try {
       bluetoothSocket = device.createRfcommSocketToServiceRecord(BLUETOOTH_SPP)
       bluetoothSocket?.connect()
-      listener?.onSerialConnect()
+      service?.onServiceConnect()
     } catch (e: Exception) {
-      Timber.tag("ClassicGatt").d("Exception")
-      listener?.onSerialConnectError(e)
+      Timber.tag("ClassicGatt").d("bluetoothSocket Exception")
+      service?.onServiceConnectError(e)
       try {
         bluetoothSocket!!.close()
       } catch (ignored: Exception) {
@@ -97,11 +96,11 @@ class ClassicGatt(context: Context, device: BluetoothDevice) : Runnable {
       while (true) {
         len = bluetoothSocket!!.getInputStream().read(buffer)
         val data = Arrays.copyOf(buffer, len)
-        listener?.onSerialRead(data)
+        service?.onServiceRead(data)
       }
     } catch (e: Exception) {
       connected = false
-      listener?.onSerialIoError(e)
+      service?.onServiceIoError(e)
       try {
         bluetoothSocket?.close()
       } catch (ignored: Exception) {

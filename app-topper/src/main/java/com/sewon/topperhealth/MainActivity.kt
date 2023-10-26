@@ -16,7 +16,7 @@ import com.sewon.topperhealth.screen.a0common.RootCompose
 import com.sewon.topperhealth.service.algorithm.sleep.report.ReportDataProcessing
 import com.sewon.topperhealth.service.bluetooth.ClassicService
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
-import com.sewon.topperhealth.service.bluetooth.LowEnergyListener
+import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
     lateinit var alarmPendingIntent: PendingIntent
     lateinit var reportDataProcessing: ReportDataProcessing
 
-    var lowEnergyListener = LowEnergyListener()
+    var lowEnergyClient = LowEnergyClient()
     var classicClient = ClassicClient()
 
   }
@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
 
     val blcIntent = Intent(this, ClassicService::class.java)
     startService(blcIntent)
-    bindService(blcIntent, blcServiceConnection, BIND_AUTO_CREATE)
+    bindService(blcIntent, classicServiceConnection, BIND_AUTO_CREATE)
   }
 
   override fun onPause() {
@@ -79,6 +79,7 @@ class MainActivity : ComponentActivity() {
   override fun onStop() {
     super.onStop()
     unbindService(lowEnergyServiceConnection)
+    unbindService(classicServiceConnection)
   }
 
   override fun onRestart() {
@@ -101,11 +102,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
       lowEnergyService = (service as LowEnergyService.SerialBinder).service
-      lowEnergyService.attach(lowEnergyListener)
+      lowEnergyService.attach(lowEnergyClient)
     }
   }
 
-  private val blcServiceConnection: ServiceConnection = object : ServiceConnection {
+  private val classicServiceConnection: ServiceConnection = object : ServiceConnection {
     override fun onServiceDisconnected(name: ComponentName) {
 //      serviceBleHandler = null
     }

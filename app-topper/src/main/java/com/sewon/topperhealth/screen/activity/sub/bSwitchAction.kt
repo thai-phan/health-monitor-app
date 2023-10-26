@@ -25,6 +25,7 @@ import com.sewon.topperhealth.screen.a0common.theme.uncheckedBorderColor
 import com.sewon.topperhealth.screen.a0common.theme.uncheckedThumbColor
 import com.sewon.topperhealth.screen.a0common.theme.uncheckedTrackColor
 import com.sewon.topperhealth.screen.activity.component.DialogRelay
+import com.sewon.topperhealth.service.bluetooth.util.Connected
 import com.sewon.topperhealth.service.bluetooth.util.TextUtil
 
 @SuppressLint("MissingPermission")
@@ -50,7 +51,11 @@ fun SwitchAction(
   val isRelayClose = rememberSaveable { mutableStateOf(false) }
 
   val deviceName by remember {
-    mutableStateOf(MainActivity.classicService.deviceName)
+    mutableStateOf(MainActivity.classicClient.deviceName)
+  }
+
+  val connected by remember {
+    mutableStateOf(MainActivity.classicClient.connected)
   }
 
   fun toggleRelay(value: Boolean) {
@@ -74,17 +79,16 @@ fun SwitchAction(
   ) {
     Text("수면유도에너지")
 
-    if (deviceName !== "") {
-      Text(deviceName)
-    } else {
-      Text("No Connection")
-    }
+    Text(deviceName.value)
 
-    Switch(checked = isRelayClose.value,
+    Switch(
+      checked = isRelayClose.value,
       colors = switchColors,
       onCheckedChange = {
         toggleRelay(it)
-      })
+      },
+      enabled = connected.value == Connected.True
+    )
   }
 
   Row(

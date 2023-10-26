@@ -21,7 +21,8 @@ import com.sewon.topperhealth.data.model.toLocal
 import com.sewon.topperhealth.data.irepository.ISessionRepository
 import com.sewon.topperhealth.data.irepository.ITopperRepository
 import com.sewon.topperhealth.service.bluetooth.util.Constants
-import com.sewon.topperhealth.service.bluetooth.util.ISerialListener
+import com.sewon.topperhealth.service.bluetooth.util.QueueItem
+import com.sewon.topperhealth.service.bluetooth.util.QueueType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,11 +40,11 @@ import javax.inject.Inject
  * use listener chain: SerialSocket -> SerialService -> UI fragment
  */
 @AndroidEntryPoint
-class LowEnergyService : Service(), ISerialListener {
+class LowEnergyService : Service() {
+  val TAG = this.javaClass.name
 
   private val job = SupervisorJob()
   private val scope = CoroutineScope(Dispatchers.IO + job)
-
 
   @Inject
   lateinit var topperRepository: ITopperRepository
@@ -56,46 +57,13 @@ class LowEnergyService : Service(), ISerialListener {
       get() = this@LowEnergyService
   }
 
-  private enum class QueueType {
-    Connect, ConnectError, Read, IoError
-  }
-
-  private class QueueItem {
-    var type: QueueType
-    var datas: ArrayDeque<ByteArray>? = null
-    var e: Exception? = null
-
-    constructor(type: QueueType) {
-      this.type = type
-      if (type == QueueType.Read) init()
-    }
-
-    constructor(type: QueueType, e: Exception?) {
-      this.type = type
-      this.e = e
-    }
-
-    constructor(type: QueueType, datas: ArrayDeque<ByteArray>?) {
-      this.type = type
-      this.datas = datas
-    }
-
-    fun init() {
-      datas = ArrayDeque()
-    }
-
-    fun add(data: ByteArray) {
-      datas!!.add(data)
-    }
-  }
-
   private val mainLooper: Handler = Handler(Looper.getMainLooper())
   private val binder: IBinder = SerialBinder()
   private val queue1: ArrayDeque<QueueItem> = ArrayDeque()
   private val queue2: ArrayDeque<QueueItem> = ArrayDeque()
   private val lastRead: QueueItem = QueueItem(QueueType.Read)
-  private var socket: LowEnergyGatt? = null
-  var lowEnergyListener: LowEnergyListener? = null
+  private var lowEnergyGatt: LowEnergyGatt? = null
+  private var lowEnergyClient: LowEnergyClient? = null
   private var connected = false
 
   val deviceAddress = mutableStateOf("")
@@ -128,7 +96,7 @@ class LowEnergyService : Service(), ISerialListener {
   fun updateCurrentSessionRefValue(refHRV: Double, refHR: Double, refBR: Double) {
     scope.launch {
       sessionRepository.updateSessionRefValue(sessionId, refHRV, refHR, refBR)
-      Timber.tag("Timber").d("updateSessionRefValue")
+      Timber.tag(TAG).d("updateCurrentSessionRefValue")
     }
   }
 
@@ -150,48 +118,48 @@ class LowEnergyService : Service(), ISerialListener {
   }
 
   @Throws(IOException::class)
-  fun connect(socket: LowEnergyGatt) {
-    socket.connect(this)
-    this.socket = socket
+  fun connect(gatt: LowEnergyGatt) {
+    gatt.connect(this)
+    this.lowEnergyGatt = gatt
     connected = true
   }
 
   fun disconnectBluetoothSocket() {
     connected = false // ignore data,errors while disconnecting
     cancelNotification()
-    if (socket != null) {
-      socket!!.disconnect()
-      socket = null
+    if (lowEnergyGatt != null) {
+      lowEnergyGatt!!.disconnect()
+      lowEnergyGatt = null
     }
   }
 
   @Throws(IOException::class)
-  fun write(data: ByteArray?) {
+  fun writeFromService(data: ByteArray?) {
     if (!connected) throw IOException("not connected")
     if (data != null) {
-      socket!!.write(data)
+      lowEnergyGatt!!.write(data)
     }
   }
 
-  fun attach(listener: LowEnergyListener) {
+  fun attach(listener: LowEnergyClient) {
     require(Looper.getMainLooper().thread === Thread.currentThread()) { "not in main thread" }
     cancelNotification()
     // use synchronized() to prevent new items in queue2
     // new items will not be added to queue1 because mainLooper.post and attach() run in main thread
-    synchronized(this) { this.lowEnergyListener = listener }
+    synchronized(this) { this.lowEnergyClient = listener }
     for (item in queue1) {
       when (item.type) {
-        QueueType.Connect -> listener.onSerialConnect()
-        QueueType.ConnectError -> item.e?.let { listener.onSerialConnectError(it) }
-        QueueType.Read -> item.datas?.let { listener.onSerialRead(it) }
+        QueueType.Connect -> listener.onClientConnect()
+        QueueType.ConnectError -> item.e?.let { listener.onClientConnectError(it) }
+        QueueType.Read -> item.datas?.let { listener.onClientRead(it) }
         QueueType.IoError -> item.e?.let { listener.onSerialIoError(it) }
       }
     }
     for (item in queue2) {
       when (item.type) {
-        QueueType.Connect -> listener.onSerialConnect()
-        QueueType.ConnectError -> item.e?.let { listener.onSerialConnectError(it) }
-        QueueType.Read -> item.datas?.let { listener.onSerialRead(it) }
+        QueueType.Connect -> listener.onClientConnect()
+        QueueType.ConnectError -> item.e?.let { listener.onClientConnectError(it) }
+        QueueType.Read -> item.datas?.let { listener.onClientRead(it) }
         QueueType.IoError -> item.e?.let { listener.onSerialIoError(it) }
       }
     }
@@ -200,13 +168,13 @@ class LowEnergyService : Service(), ISerialListener {
   }
 
 
-  override fun onSerialConnect() {
+  fun onServiceConnect() {
     if (connected) {
       synchronized(this) {
-        if (lowEnergyListener != null) {
+        if (lowEnergyClient != null) {
           mainLooper.post {
-            if (lowEnergyListener != null) {
-              lowEnergyListener!!.onSerialConnect()
+            if (lowEnergyClient != null) {
+              lowEnergyClient!!.onClientConnect()
             } else {
               queue1.add(QueueItem(QueueType.Connect))
             }
@@ -218,13 +186,13 @@ class LowEnergyService : Service(), ISerialListener {
     }
   }
 
-  override fun onSerialConnectError(e: Exception) {
+  fun onServiceConnectError(e: Exception) {
     if (connected) {
       synchronized(this) {
-        if (lowEnergyListener != null) {
+        if (lowEnergyClient != null) {
           mainLooper.post {
-            if (lowEnergyListener != null) {
-              lowEnergyListener!!.onSerialConnectError(e)
+            if (lowEnergyClient != null) {
+              lowEnergyClient!!.onClientConnectError(e)
             } else {
               queue1.add(QueueItem(QueueType.ConnectError, e))
               disconnectBluetoothSocket()
@@ -238,7 +206,7 @@ class LowEnergyService : Service(), ISerialListener {
     }
   }
 
-  override fun onSerialRead(datas: ArrayDeque<ByteArray>) {
+  fun onServiceRead(datas: ArrayDeque<ByteArray>) {
     throw UnsupportedOperationException()
   }
 
@@ -251,10 +219,10 @@ class LowEnergyService : Service(), ISerialListener {
    * On new data inform UI thread once (1).
    * While not consumed (2), add more data (3).
    */
-  override fun onSerialRead(data: ByteArray) {
+  fun onServiceRead(data: ByteArray) {
     if (connected) {
       synchronized(this) {
-        if (lowEnergyListener != null) {
+        if (lowEnergyClient != null) {
           var first: Boolean
           synchronized(lastRead) {
             first = lastRead.datas!!.isEmpty() // (1)
@@ -267,8 +235,8 @@ class LowEnergyService : Service(), ISerialListener {
                 datas = lastRead.datas!!
                 lastRead.init() // (2)
               }
-              if (lowEnergyListener != null) {
-                datas.let { lowEnergyListener!!.onSerialRead(it) }
+              if (lowEnergyClient != null) {
+                datas.let { lowEnergyClient!!.onClientRead(it) }
               } else {
                 queue1.add(QueueItem(QueueType.Read, datas))
               }
@@ -283,13 +251,13 @@ class LowEnergyService : Service(), ISerialListener {
     }
   }
 
-  override fun onSerialIoError(e: Exception) {
+  fun onServiceIoError(e: Exception) {
     if (connected) {
       synchronized(this) {
-        if (lowEnergyListener != null) {
+        if (lowEnergyClient != null) {
           mainLooper.post {
-            if (lowEnergyListener != null) {
-              lowEnergyListener!!.onSerialIoError(e)
+            if (lowEnergyClient != null) {
+              lowEnergyClient!!.onSerialIoError(e)
             } else {
               queue1.add(QueueItem(QueueType.IoError, e))
               disconnectBluetoothSocket()
@@ -351,5 +319,4 @@ class LowEnergyService : Service(), ISerialListener {
   private fun cancelNotification() {
     stopForeground(STOP_FOREGROUND_REMOVE)
   }
-
 }

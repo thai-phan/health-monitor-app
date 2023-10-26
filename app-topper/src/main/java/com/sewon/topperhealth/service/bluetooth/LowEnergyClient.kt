@@ -1,63 +1,59 @@
 package com.sewon.topperhealth.service.bluetooth
 
 import android.text.SpannableStringBuilder
+import androidx.compose.runtime.mutableStateOf
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeDataProcessing
-import com.sewon.topperhealth.service.bluetooth.util.ISerialListener
+import com.sewon.topperhealth.service.bluetooth.util.Connected
 import com.sewon.topperhealth.service.bluetooth.util.TextUtil
-
-
 import timber.log.Timber
 import java.util.ArrayDeque
 
 
-class LowEnergyListener : ISerialListener {
-  private enum class Connected {
-    False, Pending, True
-  }
+class LowEnergyClient {
+  val TAG = this.javaClass.name
 
   private var connected = Connected.False
   private val hexEnabled = false
 
-  var log = ""
+  var log = mutableStateOf("")
 
-  var isAlarm = false
+  var isAlarm = mutableStateOf(false)
 
 
   fun startAlarmListener() {
-    isAlarm = true
+    isAlarm.value = true
   }
 
   // TODO:
   fun stopAlarmListener() {
-    isAlarm = false
+    isAlarm.value = false
     AlarmReceiver.ringtone.stop()
     AlarmReceiver.vibrator.cancel()
   }
 
 
-  override fun onSerialConnect() {
+  fun onClientConnect() {
     connected = Connected.True
   }
 
-  override fun onSerialConnectError(e: Exception) {
+  fun onClientConnectError(e: Exception) {
     connected = Connected.False
   }
 
-  override fun onSerialRead(data: ByteArray) {
+  fun onClientRead(data: ByteArray) {
     val datas = ArrayDeque<ByteArray>()
     datas.add(data)
     receive(datas)
   }
 
-  override fun onSerialRead(datas: ArrayDeque<ByteArray>) {
+  fun onClientRead(datas: ArrayDeque<ByteArray>) {
     receive(datas)
   }
 
-  override fun onSerialIoError(e: Exception) {
-    Timber.tag("Timber").d("onSerialRead")
+  fun onSerialIoError(e: Exception) {
+    Timber.tag(TAG).d("onSerialRead")
   }
-
 
   private var sensorLoopCount = 0
 
@@ -79,6 +75,6 @@ class LowEnergyListener : ISerialListener {
     } else {
       sensorLoopCount = 0
     }
-    log = "$stringBuilder $sensorLoopCount"
+    log.value = "$stringBuilder $sensorLoopCount"
   }
 }

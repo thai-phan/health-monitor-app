@@ -3,7 +3,7 @@ package com.sewon.topperhealth.service.bluetooth
 import android.text.SpannableStringBuilder
 import androidx.compose.runtime.mutableStateOf
 import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeDataProcessing
-import com.sewon.topperhealth.service.bluetooth.util.ISerialListener
+import com.sewon.topperhealth.service.bluetooth.util.Connected
 import com.sewon.topperhealth.service.bluetooth.util.TextUtil
 
 
@@ -11,49 +11,54 @@ import timber.log.Timber
 import java.util.ArrayDeque
 
 
-class ClassicClient : ISerialListener {
+class ClassicClient {
 
-  enum class Connected {
-    False, Pending, True
-  }
+  val TAG = this.javaClass.name
 
-  private var connected = Connected.False
+  var connected = mutableStateOf(Connected.False)
+  var deviceAddress = mutableStateOf("")
+  var deviceName = mutableStateOf("")
 
-  val log = mutableStateOf("")
+  var classicLog = ""
 
-  val isAlarm = mutableStateOf(false)
+  var isAlarm = false
 
 
   fun startAlarmListener() {
-    isAlarm.value = true
+    isAlarm = true
   }
 
 
-  override fun onSerialConnect() {
-    connected = Connected.True
+  fun onClientConnect() {
+    Timber.tag("ClassicClient").d("Connected.True")
+    connected.value = Connected.True
   }
 
-  override fun onSerialConnectError(e: Exception) {
+  fun onSerialConnectError(e: Exception) {
     disconnect()
   }
 
   private fun disconnect() {
-    connected = Connected.False
+    connected.value = Connected.False
+    deviceAddress.value = ""
+    deviceName.value = ""
 //    service.disconnect()
   }
 
-  override fun onSerialRead(data: ByteArray) {
+  fun onClientRead(data: ByteArray) {
     val datas = ArrayDeque<ByteArray>()
     datas.add(data)
     receive(datas)
   }
 
-  override fun onSerialRead(datas: ArrayDeque<ByteArray>) {
+  fun onClientRead(datas: ArrayDeque<ByteArray>) {
     receive(datas)
   }
 
-  override fun onSerialIoError(e: Exception) {
-    Timber.tag("Timber").d("onSerialRead")
+  fun onClientIoError(e: Exception) {
+    Timber.tag(TAG).d("onClientIoError")
+    disconnect()
+
   }
 
   private var sensorLoopCount = 0
@@ -72,6 +77,6 @@ class ClassicClient : ISerialListener {
     } else {
       sensorLoopCount = 0
     }
-    log.value = "$stringBuilder $sensorLoopCount"
+    classicLog = "$stringBuilder $sensorLoopCount"
   }
 }

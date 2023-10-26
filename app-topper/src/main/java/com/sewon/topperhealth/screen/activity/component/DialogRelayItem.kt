@@ -7,10 +7,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bluetooth
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
+import com.sewon.topperhealth.service.bluetooth.ClassicClient
+import com.sewon.topperhealth.service.bluetooth.util.Connected
 
 
 @SuppressLint("MissingPermission")
@@ -49,9 +54,9 @@ fun DialogRelayItem(
     }
   }
 
-  val deviceAddress by remember {
-    mutableStateOf(MainActivity.classicService.deviceAddress)
-  }
+  val deviceAddress by remember { mutableStateOf(MainActivity.classicClient.deviceAddress) }
+
+  val connected by remember { mutableStateOf(MainActivity.classicClient.connected) }
 
   Column(
     modifier = Modifier
@@ -75,8 +80,23 @@ fun DialogRelayItem(
     }
 
     Text(text = bluetoothDevice.address, color = Color.Black)
-    if (deviceAddress == bluetoothDevice.address) {
-      Text("Connected", color = Color.Black)
+
+    if (connected.value == Connected.False) {
+      Text("Not Connected", color = Color.Black)
+    }
+    if (deviceAddress.value == bluetoothDevice.address) {
+      if (connected.value == Connected.Pending) {
+        Row {
+          CircularProgressIndicator(
+            modifier = Modifier.width(20.dp),
+          )
+          Spacer(modifier = Modifier.width(10.dp))
+          Text("Pending", color = Color.Black)
+        }
+      }
+      if (connected.value == Connected.True) {
+        Text("Connected", color = Color.Black)
+      }
     }
   }
 }

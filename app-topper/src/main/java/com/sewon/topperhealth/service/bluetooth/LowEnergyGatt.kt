@@ -15,7 +15,6 @@ import android.content.IntentFilter
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
-import com.sewon.topperhealth.service.bluetooth.util.ISerialListener
 import timber.log.Timber
 import java.io.IOException
 import java.util.Arrays
@@ -28,8 +27,6 @@ import java.util.UUID
  */
 @SuppressLint("MissingPermission") // various BluetoothGatt, BluetoothDevice methods
 class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : BluetoothGattCallback() {
-
-
   val TAG: String = this.javaClass.name
 
   /**
@@ -70,7 +67,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
   private val pairingIntentFilter: IntentFilter = IntentFilter()
   private val pairingBroadcastReceiver: BroadcastReceiver
   private val disconnectBroadcastReceiver: BroadcastReceiver
-  private var listener: ISerialListener? = null
+  private var service: LowEnergyService? = null
   private var delegate: DeviceDelegate? = null
   private var gatt: BluetoothGatt? = null
   private var readCharacteristic: BluetoothGattCharacteristic? = null
@@ -92,7 +89,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     }
     disconnectBroadcastReceiver = object : BroadcastReceiver() {
       override fun onReceive(context: Context, intent: Intent) {
-        if (listener != null) listener!!.onSerialIoError(IOException("background disconnect"))
+        if (service != null) service!!.onServiceIoError(IOException("background disconnect"))
         disconnect() // disconnect now, else would be queued until UI re-attached
       }
     }
@@ -103,7 +100,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
 
   fun disconnect() {
     Timber.tag(TAG).d("disconnect")
-    listener = null // ignore remaining data and errors
+    service = null // ignore remaining data and errors
     canceled = true
     synchronized(writeBuffer) {
       writePending = false
@@ -138,10 +135,10 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
    * connect-success and most connect-errors are returned asynchronously to listener
    */
   @Throws(IOException::class)
-  fun connect(listener: ISerialListener) {
+  fun connect(listener: LowEnergyService) {
     if (connected || gatt != null) throw IOException("already connected")
     canceled = false
-    this.listener = listener
+    this.service = listener
 //    context.registerReceiver(
 //      disconnectBroadcastReceiver,
 //      IntentFilter(Constants.INTENT_ACTION_DISCONNECT)
@@ -300,7 +297,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     }
   }
 
-  //  For android < 12
+  //  For Android < 12
   @Deprecated("Deprecated in Java")
   override fun onCharacteristicChanged(
     gatt: BluetoothGatt,
@@ -312,10 +309,11 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     if (characteristic === readCharacteristic) { // NOPMD - test object identity
       val data = readCharacteristic!!.value
       onSerialRead(data)
-//      Timber.tag(TAG).d("read, len=%s", data.size)
+      Timber.tag(TAG).d("read, len=%s", data.size)
     }
   }
 
+  //  For Android >= 13
   override fun onCharacteristicChanged(
     gatt: BluetoothGatt,
     characteristic: BluetoothGattCharacteristic,
@@ -326,7 +324,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     if (canceled) return
     if (characteristic === readCharacteristic) { // NOPMD - test object identity
       onSerialRead(value)
-//      Timber.tag(TAG).d("read, len=%s", value.size)
+      Timber.tag(TAG).d("read, len=%s", value.size)
     }
   }
 
@@ -409,22 +407,22 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
   }
 
   private fun onSerialConnect() {
-    if (listener != null) listener!!.onSerialConnect()
+    service!!.onServiceConnect()
   }
 
   private fun onSerialConnectError(e: Exception) {
     canceled = true
-    if (listener != null) listener!!.onSerialConnectError(e)
+    service!!.onServiceConnectError(e)
   }
 
   private fun onSerialRead(data: ByteArray) {
-    if (listener != null) listener!!.onSerialRead(data)
+    service!!.onServiceRead(data)
   }
 
   private fun onSerialIoError(e: Exception) {
     writePending = false
     canceled = true
-    if (listener != null) listener!!.onSerialIoError(e)
+    service!!.onServiceIoError(e)
   }
 
   companion object {

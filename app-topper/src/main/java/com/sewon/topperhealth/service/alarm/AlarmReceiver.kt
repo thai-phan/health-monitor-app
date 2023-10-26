@@ -22,7 +22,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
 
   override fun onReceive(context: Context, intent: Intent) {
-    MainActivity.lowEnergyListener.startAlarmListener()
+    MainActivity.lowEnergyClient.startAlarmListener()
 
     vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
       val vibratorManager =

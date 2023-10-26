@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.widget.Toast
-import com.sewon.topperhealth.service.bluetooth.util.ISerialListener
 import com.sewon.topperhealth.service.bluetooth.util.QueueItem
 import com.sewon.topperhealth.service.bluetooth.util.QueueType
 import timber.log.Timber
@@ -19,22 +18,23 @@ import java.util.ArrayDeque
  * create notification and queue serial data while activity is not in the foreground
  * use listener chain: SerialSocket -> SerialService -> UI fragment
  */
-class ClassicService : Service(), ISerialListener {
+class ClassicService : Service() {
+  val TAG = this.javaClass.name
+
   internal inner class ClassicBinder : Binder() {
     val service: ClassicService
       get() = this@ClassicService
   }
-
+  
   private val mainLooper: Handler = Handler(Looper.getMainLooper())
   private val lastRead: QueueItem = QueueItem(QueueType.Read)
 
   private val binder: IBinder = ClassicBinder()
   private var socket: ClassicGatt? = null
-  private var listener: ISerialListener? = null
-  var connected = false
+  var client: ClassicClient? = null
+  private var connected = false
 
-  var deviceAddress = ""
-  var deviceName = ""
+
 //  val deviceUUID = mutableStateOf("")
 
 
@@ -73,13 +73,13 @@ class ClassicService : Service(), ISerialListener {
     socket?.writeFromGatt(data)
   }
 
-  fun attach(listener: ISerialListener) {
+  fun attach(listener: ClassicClient) {
     require(Looper.getMainLooper().thread === Thread.currentThread()) { "not in main thread" }
     cancelNotification()
     // use synchronized() to prevent new items in queue2
     // new items will not be added to queue1 because mainLooper.post and attach() run in main thread
     synchronized(this) {
-      this.listener = listener
+      this.client = listener
     }
   }
 
@@ -89,7 +89,7 @@ class ClassicService : Service(), ISerialListener {
     // items already in event queue (posted before detach() to mainLooper) will end up in queue1
     // items occurring later, will be moved directly to queue2
     // detach() and mainLooper.post run in the main thread, so all items are caught
-    listener = null
+    client = null
   }
 
   private fun cancelNotification() {
@@ -99,58 +99,49 @@ class ClassicService : Service(), ISerialListener {
   /**
    * SerialListener
    */
-  override fun onSerialConnect() {
+  fun onServiceConnect() {
     if (connected) {
       synchronized(this) {
         mainLooper.post {
-          listener?.onSerialConnect()
+          client?.onClientConnect()
         }
       }
     }
   }
 
 
-  override fun onSerialConnectError(e: Exception) {
+  fun onServiceConnectError(e: Exception) {
     if (connected) {
       synchronized(this) {
         mainLooper.post {
-          listener!!.onSerialConnectError(e)
+          client!!.onSerialConnectError(e)
         }
       }
     }
   }
 
-  override fun onSerialRead(datas: ArrayDeque<ByteArray>) {
+  fun onServiceRead(datas: ArrayDeque<ByteArray>) {
     throw UnsupportedOperationException()
   }
 
-  /**
-   * reduce number of UI updates by merging data chunks.
-   * Data can arrive at hundred chunks per second, but the UI can only
-   * perform a dozen updates if receiveText already contains much text.
-   *
-   *
-   * On new data inform UI thread once (1).
-   * While not consumed (2), add more data (3).
-   */
-  override fun onSerialRead(data: ByteArray) {
+
+  fun onServiceRead(data: ByteArray) {
     if (connected) {
       synchronized(this) {
-        if (listener != null) {
+        if (client != null) {
           var first: Boolean
           synchronized(lastRead) {
-            first = lastRead.datas!!.isEmpty() // (1)
-            lastRead.add(data) // (3)
+            first = lastRead.datas!!.isEmpty()
+            lastRead.add(data)
           }
           if (first) {
             mainLooper.post {
               var datas: ArrayDeque<ByteArray>?
               synchronized(lastRead) {
                 datas = lastRead.datas
-                lastRead.init() // (2)
+                lastRead.init()
               }
-              datas?.let { listener?.onSerialRead(it) }
-
+              datas?.let { client?.onClientRead(it) }
             }
           }
         }
@@ -158,13 +149,13 @@ class ClassicService : Service(), ISerialListener {
     }
   }
 
-  override fun onSerialIoError(e: Exception) {
+  fun onServiceIoError(e: Exception) {
     if (connected) {
       synchronized(this) {
         mainLooper.post {
-          Timber.tag("onSerialIoError").d("onSerialIoError")
+          Timber.tag(TAG).d("onSerialIoError")
           connected = false
-          listener!!.onSerialIoError(e)
+          client!!.onClientIoError(e)
         }
       }
     }

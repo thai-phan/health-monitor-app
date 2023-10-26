@@ -26,9 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.getSystemService
 import com.sewon.topperhealth.MainActivity
+import com.sewon.topperhealth.screen.a0common.theme.BackgroundTop
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.a0common.theme.typography
+import com.sewon.topperhealth.service.bluetooth.ClassicClient
 import com.sewon.topperhealth.service.bluetooth.ClassicGatt
+import com.sewon.topperhealth.service.bluetooth.util.Connected
 import timber.log.Timber
 
 @SuppressLint("InlinedApi", "MissingPermission")
@@ -49,8 +52,9 @@ fun DialogRelay(onDismissRequest: () -> Unit) {
       val device = adapter.getRemoteDevice(classicDevice.address)
       val classicGatt = ClassicGatt(context, device)
       MainActivity.classicService.connect(classicGatt)
-      MainActivity.classicService.deviceAddress = device.address
-      MainActivity.classicService.deviceName = device.name
+      MainActivity.classicClient.connected.value = Connected.Pending
+      MainActivity.classicClient.deviceAddress.value = device.address
+      MainActivity.classicClient.deviceName.value = device.name
 
     } catch (exception: Exception) {
       Timber.tag("composeConnectToRelay").w(exception)
@@ -59,7 +63,7 @@ fun DialogRelay(onDismissRequest: () -> Unit) {
 
   Dialog(onDismissRequest = { onDismissRequest() }) {
     Card(
-      colors = CardDefaults.cardColors(Color(0xFF404985)),
+      colors = CardDefaults.cardColors(BackgroundTop),
       modifier = Modifier
         .fillMaxHeight(0.5f),
       shape = topperShapes.medium,

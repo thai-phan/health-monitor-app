@@ -62,7 +62,7 @@ fun SleepActivity(
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   val log by remember {
-    mutableStateOf(MainActivity.lowEnergyListener.log)
+    MainActivity.lowEnergyClient.log
   }
 
 
@@ -85,7 +85,7 @@ fun SleepActivity(
   }
 
   val isStarted = remember { mutableStateOf(false) }
-  val isAlarm = remember { mutableStateOf(MainActivity.lowEnergyListener.isAlarm) }
+  val isAlarm = remember { MainActivity.lowEnergyClient.isAlarm }
 
 
   fun startSleep() {
@@ -136,7 +136,7 @@ fun SleepActivity(
   }
 
   fun stopAlarm() {
-    MainActivity.lowEnergyListener.stopAlarmListener()
+    MainActivity.lowEnergyClient.stopAlarmListener()
   }
 
   fun redirectReportPage() {
