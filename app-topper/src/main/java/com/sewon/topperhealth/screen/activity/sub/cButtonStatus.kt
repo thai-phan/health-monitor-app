@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddAlert
 import androidx.compose.material3.Button
@@ -26,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 
 @Composable
 fun ButtonAction(
@@ -83,7 +83,7 @@ fun ButtonAction(
     }
     if (!isStarted) {
       Button(colors = ButtonDefaults.buttonColors(Color(0xFF03DAC5)),
-        shape = RoundedCornerShape(size = 100.dp),
+        shape = topperShapes.extraLarge,
         modifier = Modifier
           .width(280.dp)
           .height(56.dp),
@@ -94,7 +94,7 @@ fun ButtonAction(
       }
     } else {
       Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
-        shape = RoundedCornerShape(size = 100.dp),
+        shape = topperShapes.extraLarge,
         modifier = Modifier
           .width(280.dp)
           .height(56.dp),
@@ -106,7 +106,7 @@ fun ButtonAction(
     }
     if (isAlarm) {
       Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
-        shape = RoundedCornerShape(size = 100.dp),
+        shape = topperShapes.extraLarge,
         modifier = Modifier
           .width(200.dp)
           .height(56.dp),

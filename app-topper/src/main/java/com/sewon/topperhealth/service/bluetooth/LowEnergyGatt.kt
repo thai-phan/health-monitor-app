@@ -1,4 +1,4 @@
-package com.sewon.officehealth.service.ble
+package com.sewon.topperhealth.service.bluetooth
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
@@ -15,7 +15,7 @@ import android.content.IntentFilter
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
-import com.sewon.topperhealth.service.ISerialListener
+import com.sewon.topperhealth.service.bluetooth.util.ISerialListener
 import timber.log.Timber
 import java.io.IOException
 import java.util.Arrays
@@ -27,7 +27,7 @@ import java.util.UUID
  * - read + status is returned by SerialListener
  */
 @SuppressLint("MissingPermission") // various BluetoothGatt, BluetoothDevice methods
-class BleGattSocket(val context: Context, var device: BluetoothDevice) : BluetoothGattCallback() {
+class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : BluetoothGattCallback() {
 
 
   val TAG: String = this.javaClass.name
@@ -452,7 +452,7 @@ class BleGattSocket(val context: Context, var device: BluetoothDevice) : Bluetoo
     private const val MAX_MTU = 512
     private const val DEFAULT_MTU = 23
   }
-  
+
   /**
    * device delegates
    */

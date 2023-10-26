@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -30,6 +29,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.setting.subc.component.ModalAInduceEnergy
 import com.sewon.topperhealth.screen.setting.subc.component.ModalBInduceSound
 import com.sewon.topperhealth.screen.setting.subc.component.ModalCScoreThreshold
@@ -45,14 +45,14 @@ fun InductionSolutionSetting(
   var openScoreThresholdModal by rememberSaveable { mutableStateOf(false) }
 
   Card(
-    shape = RoundedCornerShape(size = 10.dp),
+    shape = topperShapes.small,
     colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
   ) {
     Column(
       verticalArrangement = Arrangement.SpaceAround,
       modifier = Modifier
-          .fillMaxWidth()
-          .padding(20.dp)
+        .fillMaxWidth()
+        .padding(20.dp)
 
     ) {
       Text(
@@ -61,8 +61,8 @@ fun InductionSolutionSetting(
 
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = { openInduceEnergyModal = !openInduceEnergyModal }),
+          .fillMaxWidth()
+          .clickable(onClick = { openInduceEnergyModal = !openInduceEnergyModal }),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {
@@ -81,8 +81,8 @@ fun InductionSolutionSetting(
       Spacer(modifier = Modifier.height(5.dp))
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = { openInduceSoundModal = !openInduceSoundModal }),
+          .fillMaxWidth()
+          .clickable(onClick = { openInduceSoundModal = !openInduceSoundModal }),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {
@@ -101,8 +101,8 @@ fun InductionSolutionSetting(
       Spacer(modifier = Modifier.height(5.dp))
       Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = { openScoreThresholdModal = !openScoreThresholdModal }),
+          .fillMaxWidth()
+          .clickable(onClick = { openScoreThresholdModal = !openScoreThresholdModal }),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {

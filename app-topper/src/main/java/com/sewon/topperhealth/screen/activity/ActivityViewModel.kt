@@ -104,8 +104,8 @@ class ActivityViewModel @Inject constructor(
     )
     val sessionId: Int = sessionRepository.createNewSession(sleepSession).toInt()
     thisSessionId = sessionId
-    MainActivity.bleService.sessionId = sessionId
-    MainActivity.bleService.pickerEndTime = pickerEndTime.time
+    MainActivity.lowEnergyService.sessionId = sessionId
+    MainActivity.lowEnergyService.pickerEndTime = pickerEndTime.time
   }
 
   fun updateCurrentSessionEndTime() = viewModelScope.launch {

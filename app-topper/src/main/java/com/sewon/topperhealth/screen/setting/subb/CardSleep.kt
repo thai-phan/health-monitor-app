@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.ButtonDefaults
@@ -21,20 +20,22 @@ import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sewon.topperhealth.screen.setting.subb.component.ModalCAlarmSetting
-import com.sewon.topperhealth.screen.setting.subb.component.ModalBSleepTime
+import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.setting.subb.component.ModalAWakeUpTime
+import com.sewon.topperhealth.screen.setting.subb.component.ModalBSleepTime
+import com.sewon.topperhealth.screen.setting.subb.component.ModalCAlarmSetting
 
 @Composable
 fun SleepSetting(
@@ -51,7 +52,7 @@ fun SleepSetting(
 
   val height = 45.dp
   Card(
-    shape = RoundedCornerShape(size = 10.dp),
+    shape = topperShapes.small,
     colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
   ) {
     Column(

@@ -35,7 +35,7 @@ class RealtimeAlgorithm {
         refHR = sumHR / referenceCount
         refBR = sumBR / referenceCount
 
-        MainActivity.bleService.updateCurrentSessionRefValue(refHRV, refHR, refBR)
+        MainActivity.lowEnergyService.updateCurrentSessionRefValue(refHRV, refHR, refBR)
       }
 
       if (topperData.HRV > refHRV * AlgorithmConstants.REALTIME_HRV_THRESHOLD) {
@@ -90,7 +90,7 @@ class RealtimeAlgorithm {
       Timber.tag("Timber").d("callDeepSleep")
       val curTime = Date()
 
-      if (curTime < MainActivity.bleService.pickerEndTime) {
+      if (curTime < MainActivity.lowEnergyService.pickerEndTime) {
         saveDatabase(topperData)
       } else {
         if (topperData.HR != 0 && topperData.BR != 0) {
@@ -105,7 +105,7 @@ class RealtimeAlgorithm {
     }
 
     fun saveDatabase(topperData: TopperData) {
-      MainActivity.bleService.insertNewTopperToDatabase(topperData)
+      MainActivity.lowEnergyService.insertNewTopperToDatabase(topperData)
     }
   }
 }

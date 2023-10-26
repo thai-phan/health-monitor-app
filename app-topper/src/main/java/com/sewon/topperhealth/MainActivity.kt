@@ -14,10 +14,10 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
 import com.sewon.topperhealth.screen.a0common.RootCompose
 import com.sewon.topperhealth.service.algorithm.sleep.report.ReportDataProcessing
-import com.sewon.topperhealth.service.blc.BlcService
-import com.sewon.topperhealth.service.blc.BlcListener
-import com.sewon.topperhealth.service.ble.BleListener
-import com.sewon.topperhealth.service.ble.BleService
+import com.sewon.topperhealth.service.bluetooth.ClassicService
+import com.sewon.topperhealth.service.bluetooth.ClassicClient
+import com.sewon.topperhealth.service.bluetooth.LowEnergyListener
+import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -25,15 +25,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
   companion object {
-    lateinit var bleService: BleService
-    lateinit var blcService: BlcService
+    lateinit var lowEnergyService: LowEnergyService
+    lateinit var classicService: ClassicService
 
     lateinit var alarmManager: AlarmManager
     lateinit var alarmPendingIntent: PendingIntent
     lateinit var reportDataProcessing: ReportDataProcessing
 
-    var bleListener = BleListener()
-    var blcListener = BlcListener()
+    var lowEnergyListener = LowEnergyListener()
+    var classicClient = ClassicClient()
 
   }
 
@@ -62,11 +62,11 @@ class MainActivity : ComponentActivity() {
 
     alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
-    val bleIntent = Intent(this, BleService::class.java)
+    val bleIntent = Intent(this, LowEnergyService::class.java)
     startService(bleIntent)
-    bindService(bleIntent, bleServiceConnection, BIND_AUTO_CREATE)
+    bindService(bleIntent, lowEnergyServiceConnection, BIND_AUTO_CREATE)
 
-    val blcIntent = Intent(this, BlcService::class.java)
+    val blcIntent = Intent(this, ClassicService::class.java)
     startService(blcIntent)
     bindService(blcIntent, blcServiceConnection, BIND_AUTO_CREATE)
   }
@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
 
   override fun onStop() {
     super.onStop()
-    unbindService(bleServiceConnection)
+    unbindService(lowEnergyServiceConnection)
   }
 
   override fun onRestart() {
@@ -94,14 +94,14 @@ class MainActivity : ComponentActivity() {
    * Interface for monitoring the state of an application service. See Service and Context.bindService() for more information.
    * Like many callbacks from the system, the methods on this class are called from the main thread of your process.
    **/
-  private val bleServiceConnection: ServiceConnection = object : ServiceConnection {
+  private val lowEnergyServiceConnection: ServiceConnection = object : ServiceConnection {
     override fun onServiceDisconnected(name: ComponentName) {
 //      serviceBleHandler = null
     }
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
-      bleService = (service as BleService.SerialBinder).service
-      bleService.attach(bleListener)
+      lowEnergyService = (service as LowEnergyService.SerialBinder).service
+      lowEnergyService.attach(lowEnergyListener)
     }
   }
 
@@ -111,8 +111,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
-      blcService = (service as BlcService.SerialBinder).service
-      blcService.attach(blcListener)
+      classicService = (service as ClassicService.ClassicBinder).service
+      classicService.attach(classicClient)
     }
   }
 

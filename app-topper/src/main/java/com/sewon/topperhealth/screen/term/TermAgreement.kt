@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -31,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 
 
 @Composable
@@ -69,7 +69,7 @@ fun TermAgreement(onRedirectRoute: () -> Unit) {
       modifier = Modifier
         .fillMaxSize()
         .padding(bottom = 20.dp),
-      shape = RoundedCornerShape(size = 10.dp),
+      shape = topperShapes.small,
       colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
     ) {
       Column(

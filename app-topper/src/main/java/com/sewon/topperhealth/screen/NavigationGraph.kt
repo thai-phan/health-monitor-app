@@ -84,19 +84,12 @@ fun NavigationGraph(
         )
     }
 
-    composable(
-      "${MainTabs.ACTIVITY.route}/{deviceAddress}",
-      arguments = listOf(navArgument("deviceAddress") { type = NavType.StringType })
-    ) { backStackEntry ->
-      val arguments = requireNotNull(backStackEntry.arguments)
-      val deviceAddress = arguments.getString("deviceAddress")
+    composable(MainTabs.ACTIVITY.route) { backStackEntry ->
 //        val parentEntry = remember(backStackEntry) {
 //            navController.getBackStackEntry("parentNavigationRoute")
 //        }
 //        val parentViewModel = hiltViewModel(parentEntry)
-      if (deviceAddress != null) {
-        SleepActivity(modifier, navController, deviceAddress = deviceAddress)
-      }
+      SleepActivity(modifier, navController)
       // Show onboarding instead if not shown yet.
 //        LaunchedEffect(onboardingComplete) {
 //            if (!onboardingComplete.value) {

@@ -1,19 +1,17 @@
-package com.sewon.topperhealth.service.blc
+package com.sewon.topperhealth.service.bluetooth
 
 import android.text.SpannableStringBuilder
-import androidx.compose.runtime.mutableStateOf
+import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeDataProcessing
-import com.sewon.topperhealth.service.ISerialListener
-import com.sewon.topperhealth.service.TextUtil
+import com.sewon.topperhealth.service.bluetooth.util.ISerialListener
+import com.sewon.topperhealth.service.bluetooth.util.TextUtil
 
 
 import timber.log.Timber
 import java.util.ArrayDeque
 
 
-class BlcListener : ISerialListener {
-
-
+class LowEnergyListener : ISerialListener {
   private enum class Connected {
     False, Pending, True
   }
@@ -21,13 +19,20 @@ class BlcListener : ISerialListener {
   private var connected = Connected.False
   private val hexEnabled = false
 
-  val log = mutableStateOf("")
+  var log = ""
 
-  val isAlarm = mutableStateOf(false)
+  var isAlarm = false
 
 
   fun startAlarmListener() {
-    isAlarm.value = true
+    isAlarm = true
+  }
+
+  // TODO:
+  fun stopAlarmListener() {
+    isAlarm = false
+    AlarmReceiver.ringtone.stop()
+    AlarmReceiver.vibrator.cancel()
   }
 
 
@@ -38,7 +43,6 @@ class BlcListener : ISerialListener {
   override fun onSerialConnectError(e: Exception) {
     connected = Connected.False
   }
-
 
   override fun onSerialRead(data: ByteArray) {
     val datas = ArrayDeque<ByteArray>()
@@ -75,6 +79,6 @@ class BlcListener : ISerialListener {
     } else {
       sensorLoopCount = 0
     }
-    log.value = "$stringBuilder $sensorLoopCount"
+    log = "$stringBuilder $sensorLoopCount"
   }
 }

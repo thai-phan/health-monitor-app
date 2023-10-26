@@ -1,26 +1,23 @@
-package com.sewon.topperhealth.service.ble
+package com.sewon.topperhealth.service.bluetooth
 
 import android.text.SpannableStringBuilder
 import androidx.compose.runtime.mutableStateOf
-import com.sewon.topperhealth.service.ISerialListener
-import com.sewon.topperhealth.service.TextUtil
-import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeDataProcessing
+import com.sewon.topperhealth.service.bluetooth.util.ISerialListener
+import com.sewon.topperhealth.service.bluetooth.util.TextUtil
 
 
 import timber.log.Timber
 import java.util.ArrayDeque
 
 
-class BleListener : ISerialListener {
+class ClassicClient : ISerialListener {
 
-
-  private enum class Connected {
+  enum class Connected {
     False, Pending, True
   }
 
   private var connected = Connected.False
-  private val hexEnabled = false
 
   val log = mutableStateOf("")
 
@@ -31,26 +28,19 @@ class BleListener : ISerialListener {
     isAlarm.value = true
   }
 
-  // TODO:
-  fun stopAlarmListener() {
-    isAlarm.value = false
-    if (AlarmReceiver.ringtone != null) {
-      AlarmReceiver.ringtone.stop()
-    }
-    if (AlarmReceiver.vibrator != null) {
-      AlarmReceiver.vibrator.cancel()
-    }
-  }
-
 
   override fun onSerialConnect() {
     connected = Connected.True
   }
 
   override fun onSerialConnectError(e: Exception) {
-    connected = Connected.False
+    disconnect()
   }
 
+  private fun disconnect() {
+    connected = Connected.False
+//    service.disconnect()
+  }
 
   override fun onSerialRead(data: ByteArray) {
     val datas = ArrayDeque<ByteArray>()
@@ -66,20 +56,15 @@ class BleListener : ISerialListener {
     Timber.tag("Timber").d("onSerialRead")
   }
 
-
   private var sensorLoopCount = 0
 
   private fun receive(datas: ArrayDeque<ByteArray>) {
     val stringBuilder = SpannableStringBuilder()
     for (data in datas) {
-      if (hexEnabled) {
-        stringBuilder.append(TextUtil.toHexString(data)).append('\n')
-      } else {
-        val dataStr = String(data)
-        RealtimeDataProcessing.validateDataFormat(dataStr)
-        val text = TextUtil.toCaretString(dataStr, true)
-        stringBuilder.append(text)
-      }
+      val dataStr = String(data)
+      RealtimeDataProcessing.validateDataFormat(dataStr)
+      val text = TextUtil.toCaretString(dataStr, true)
+      stringBuilder.append(text)
     }
 
     if (sensorLoopCount < 2) {

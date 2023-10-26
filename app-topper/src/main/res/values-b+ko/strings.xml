@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Health Monitor Krrr</string>
+  <string name="app_name">IntelliNest</string>
 
   <string name="activity_page">수면시작</string>
   <string name="report_page">리포트</string>

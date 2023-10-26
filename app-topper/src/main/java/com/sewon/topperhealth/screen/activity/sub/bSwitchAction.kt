@@ -12,9 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.screen.a0common.theme.checkedBorderColor
 import com.sewon.topperhealth.screen.a0common.theme.checkedThumbColor
@@ -23,12 +25,16 @@ import com.sewon.topperhealth.screen.a0common.theme.uncheckedBorderColor
 import com.sewon.topperhealth.screen.a0common.theme.uncheckedThumbColor
 import com.sewon.topperhealth.screen.a0common.theme.uncheckedTrackColor
 import com.sewon.topperhealth.screen.activity.component.DialogRelay
+import com.sewon.topperhealth.service.bluetooth.util.TextUtil
 
 @SuppressLint("MissingPermission")
 @Composable
 fun SwitchAction(
 
 ) {
+
+  val context = LocalContext.current
+
   val switchColors: SwitchColors = SwitchDefaults.colors(
     checkedThumbColor = checkedThumbColor,
     checkedTrackColor = checkedTrackColor,
@@ -38,10 +44,26 @@ fun SwitchAction(
     uncheckedBorderColor = uncheckedBorderColor,
   )
 
-  val isPlaySoundSleepInduceUI by MainActivity.bleService.isPlaySoundSleepInduce
+  val isPlaySoundSleepInduceUI by MainActivity.lowEnergyService.isPlaySoundSleepInduce
 
   val isRelayDialog = rememberSaveable { mutableStateOf(false) }
   val isRelayClose = rememberSaveable { mutableStateOf(false) }
+
+  val deviceName by remember {
+    mutableStateOf(MainActivity.classicService.deviceName)
+  }
+
+  fun toggleRelay(value: Boolean) {
+    isRelayClose.value = value
+
+    if (value) {
+      val byteArray = TextUtil.fromHexString("A0 01 01 A2")
+      MainActivity.classicService.writeFromService(context, byteArray)
+    } else {
+      val byteArray = TextUtil.fromHexString("A0 01 00 A1")
+      MainActivity.classicService.writeFromService(context, byteArray)
+    }
+  }
 
   Row(
     modifier = Modifier
@@ -52,8 +74,8 @@ fun SwitchAction(
   ) {
     Text("수면유도에너지")
 
-    if (isRelayClose.value) {
-      Text("Connected")
+    if (deviceName !== "") {
+      Text(deviceName)
     } else {
       Text("No Connection")
     }
@@ -61,7 +83,7 @@ fun SwitchAction(
     Switch(checked = isRelayClose.value,
       colors = switchColors,
       onCheckedChange = {
-        isRelayClose.value = !isRelayClose.value
+        toggleRelay(it)
       })
   }
 
@@ -74,7 +96,7 @@ fun SwitchAction(
     Switch(checked = isPlaySoundSleepInduceUI,
       colors = switchColors,
       onCheckedChange = {
-        MainActivity.bleService.toggleSoundSleepInduce()
+        MainActivity.lowEnergyService.toggleSoundSleepInduce()
       })
   }
 

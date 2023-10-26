@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.Destinations
 import com.sewon.topperhealth.screen.device.components.BluetoothWrapper
@@ -31,7 +32,9 @@ fun DeviceScreen(
   val context = LocalContext.current
 
   fun selectBleDevice(bleDevice: BluetoothDevice) {
-    navController.navigate("${Destinations.ACTIVITY_ROUTE}/${bleDevice.address}")
+    MainActivity.lowEnergyService.deviceAddress.value = bleDevice.address
+    MainActivity.lowEnergyService.deviceName.value = bleDevice.name
+    navController.navigate(Destinations.ACTIVITY_ROUTE)
   }
 
   Column(

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -28,19 +27,20 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 
 
 @Composable
 fun DeviceConnectionSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
   Card(
-    shape = RoundedCornerShape(size = 10.dp),
+    shape = topperShapes.small,
     colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
   ) {
     Column(
       verticalArrangement = Arrangement.SpaceAround,
       modifier = Modifier
-          .fillMaxWidth()
-          .padding(20.dp)
+        .fillMaxWidth()
+        .padding(20.dp)
 
     ) {
       Text(

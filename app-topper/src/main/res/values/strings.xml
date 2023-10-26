@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Health Monitor</string>
+  <string name="app_name">IntelliNest</string>
 
   <string name="activity_page">Activity</string>
   <string name="report_page">리포트</string>

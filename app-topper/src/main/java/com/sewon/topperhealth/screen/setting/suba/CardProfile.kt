@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.ButtonDefaults
@@ -33,8 +32,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.screen.setting.suba.component.ModalDate
+import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.setting.suba.component.ModalAGender
+import com.sewon.topperhealth.screen.setting.suba.component.ModalDate
 
 
 @Composable
@@ -49,7 +49,7 @@ fun ProfileSetting(
 
   val height = 45.dp
   Card(
-    shape = RoundedCornerShape(size = 10.dp),
+    shape = topperShapes.small,
     colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
   ) {
     Column(

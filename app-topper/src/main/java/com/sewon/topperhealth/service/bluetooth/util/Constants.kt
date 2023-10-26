@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.service.ble;
+package com.sewon.topperhealth.service.bluetooth.util;
 
 import com.sewon.topperhealth.BuildConfig
 

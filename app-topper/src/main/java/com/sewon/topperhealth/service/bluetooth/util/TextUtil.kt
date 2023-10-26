@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.service
+package com.sewon.topperhealth.service.bluetooth.util
 
 import android.text.Editable
 import android.text.InputType
@@ -22,7 +22,7 @@ object TextUtil {
     var nibble = 0
     for (element in s) {
       if (nibble == 2) {
-        buf.write(b.toInt())
+        buf.write(b)
         nibble = 0
         b = 0
       }

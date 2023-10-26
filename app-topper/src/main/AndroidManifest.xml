@@ -24,7 +24,7 @@
   <application
       android:name=".Application"
       android:allowBackup="false"
-      android:icon="@drawable/ic_splash_icon"
+      android:icon="@drawable/ic_intellinest"
       android:label="@string/app_name"
       android:supportsRtl="true"
       android:usesCleartextTraffic="true"
@@ -41,8 +41,8 @@
 
     <receiver android:name=".service.alarm.AlarmReceiver" />
 
-    <service android:name=".service.ble.BleService" />
-    <service android:name=".service.blc.BlcService" />
+    <service android:name=".service.bluetooth.LowEnergyService" />
+    <service android:name=".service.bluetooth.ClassicService" />
 
   </application>
 </manifest>

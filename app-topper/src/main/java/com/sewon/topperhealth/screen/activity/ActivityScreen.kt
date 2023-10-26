@@ -38,7 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.sewon.officehealth.service.ble.BleGattSocket
+import com.sewon.topperhealth.service.bluetooth.LowEnergyGatt
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.screen.a0common.Destinations
 import com.sewon.topperhealth.screen.activity.component.CircularTimePicker
@@ -57,24 +57,27 @@ fun SleepActivity(
   modifier: Modifier = Modifier,
   navController: NavHostController = rememberNavController(),
   viewModel: ActivityViewModel = hiltViewModel(),
-  deviceAddress: String = ""
 ) {
   val context = LocalContext.current
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-  val log by MainActivity.bleListener.log
+  val log by remember {
+    mutableStateOf(MainActivity.lowEnergyListener.log)
+  }
 
-  val toggleAlarmSound by MainActivity.bleService.toggleAlarmSound
+
+  val deviceAddress by MainActivity.lowEnergyService.deviceAddress
+
 
   fun composeConnectToSensor() {
     try {
       val adapter = context.getSystemService<BluetoothManager>()?.adapter
       val device = adapter?.getRemoteDevice(deviceAddress)
       val socket = device?.let {
-        BleGattSocket(context, it)
+        LowEnergyGatt(context, it)
       }
       if (socket != null) {
-        MainActivity.bleService.connect(socket)
+        MainActivity.lowEnergyService.connect(socket)
       }
     } catch (exception: IllegalArgumentException) {
       Timber.tag("composeConnectToSensor").w(exception)
@@ -82,11 +85,11 @@ fun SleepActivity(
   }
 
   val isStarted = remember { mutableStateOf(false) }
-  val isAlarm = remember { MainActivity.bleListener.isAlarm }
+  val isAlarm = remember { mutableStateOf(MainActivity.lowEnergyListener.isAlarm) }
 
 
   fun startSleep() {
-    MainActivity.bleService.playSound()
+    MainActivity.lowEnergyService.playSoundSleepInduce()
 
     isStarted.value = true
 
@@ -125,15 +128,15 @@ fun SleepActivity(
 
   fun cancelSleep() {
     isStarted.value = false
-    MainActivity.bleService.stopSound()
+    MainActivity.lowEnergyService.stopSoundSleepInduce()
     MainActivity.alarmManager.cancel(MainActivity.alarmPendingIntent)
 
     viewModel.updateCurrentSessionEndTime()
-    MainActivity.bleService.disconnectBluetoothSocket()
+    MainActivity.lowEnergyService.disconnectBluetoothSocket()
   }
 
   fun stopAlarm() {
-    MainActivity.bleListener.stopAlarmListener()
+    MainActivity.lowEnergyListener.stopAlarmListener()
   }
 
   fun redirectReportPage() {
