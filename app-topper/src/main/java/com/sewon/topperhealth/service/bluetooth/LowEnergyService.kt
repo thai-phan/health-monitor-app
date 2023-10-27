@@ -52,13 +52,13 @@ class LowEnergyService : Service() {
   @Inject
   lateinit var sessionRepository: ISessionRepository
 
-  inner class SerialBinder : Binder() {
+  inner class ServiceBinder : Binder() {
     val service: LowEnergyService
       get() = this@LowEnergyService
   }
 
   private val mainLooper: Handler = Handler(Looper.getMainLooper())
-  private val binder: IBinder = SerialBinder()
+  private val binder: IBinder = ServiceBinder()
   private val queue1: ArrayDeque<QueueItem> = ArrayDeque()
   private val queue2: ArrayDeque<QueueItem> = ArrayDeque()
   private val lastRead: QueueItem = QueueItem(QueueType.Read)
@@ -70,7 +70,7 @@ class LowEnergyService : Service() {
   val deviceName = mutableStateOf("")
 //  val deviceUUID = mutableStateOf("")
 
-  lateinit var playerSleepInduce: MediaPlayer
+  private lateinit var playerSleepInduce: MediaPlayer
   val isPlaySoundSleepInduce = mutableStateOf(true)
 
   fun toggleSoundSleepInduce() {

@@ -21,17 +21,17 @@ import java.util.ArrayDeque
 class ClassicService : Service() {
   val TAG = this.javaClass.name
 
-  internal inner class ClassicBinder : Binder() {
+  internal inner class ServiceBinder : Binder() {
     val service: ClassicService
       get() = this@ClassicService
   }
-  
+
   private val mainLooper: Handler = Handler(Looper.getMainLooper())
   private val lastRead: QueueItem = QueueItem(QueueType.Read)
 
-  private val binder: IBinder = ClassicBinder()
+  private val binder: IBinder = ServiceBinder()
   private var socket: ClassicGatt? = null
-  var client: ClassicClient? = null
+  private var client: ClassicClient? = null
   private var connected = false
 
 

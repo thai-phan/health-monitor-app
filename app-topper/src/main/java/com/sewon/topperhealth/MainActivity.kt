@@ -101,7 +101,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
-      lowEnergyService = (service as LowEnergyService.SerialBinder).service
+      lowEnergyService = (service as LowEnergyService.ServiceBinder).service
       lowEnergyService.attach(lowEnergyClient)
     }
   }
@@ -112,7 +112,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onServiceConnected(name: ComponentName, service: IBinder) {
-      classicService = (service as ClassicService.ClassicBinder).service
+      classicService = (service as ClassicService.ServiceBinder).service
       classicService.attach(classicClient)
     }
   }

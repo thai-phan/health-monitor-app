@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.SwitchDefaults
@@ -79,7 +80,12 @@ fun SwitchAction(
   ) {
     Text("수면유도에너지")
 
-    Text(deviceName.value)
+    Button(onClick = {
+      isRelayDialog.value = !isRelayDialog.value
+    }) {
+      Text(deviceName.value)
+    }
+
 
     Switch(
       checked = isRelayClose.value,

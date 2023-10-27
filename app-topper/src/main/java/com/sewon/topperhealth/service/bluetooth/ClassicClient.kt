@@ -17,7 +17,7 @@ class ClassicClient {
 
   var connected = mutableStateOf(Connected.False)
   var deviceAddress = mutableStateOf("")
-  var deviceName = mutableStateOf("")
+  var deviceName = mutableStateOf("No connection")
 
   var classicLog = ""
 
