@@ -49,7 +49,7 @@ fun TopperAppTheme(
 
   MaterialTheme(
     colorScheme = darkTopperScheme,
-    typography = typography,
+    typography = topperTypography,
     shapes = topperShapes,
     content = content
   )

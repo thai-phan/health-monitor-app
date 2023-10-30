@@ -21,12 +21,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +46,7 @@ fun ModalCScoreThreshold(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("수면점수 임계값 설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("수면점수 임계값 설정", style = topperTypography.titleLarge)
       Row(
         modifier = Modifier
           .fillMaxWidth()

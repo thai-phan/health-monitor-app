@@ -22,12 +22,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.setting.subb.UiStateB
 import java.time.LocalTime
 
@@ -53,7 +51,7 @@ fun ModalAWakeUpTime(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("기상알람시간설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("기상알람시간설정", style = topperTypography.titleLarge)
 
       Row(
         modifier = Modifier

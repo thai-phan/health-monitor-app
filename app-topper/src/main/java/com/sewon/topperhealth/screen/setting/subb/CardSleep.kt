@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.setting.subb.component.ModalAWakeUpTime
 import com.sewon.topperhealth.screen.setting.subb.component.ModalBSleepTime
 import com.sewon.topperhealth.screen.setting.subb.component.ModalCAlarmSetting
@@ -62,9 +63,7 @@ fun SleepSetting(
         .padding(20.dp)
 
     ) {
-      Text(
-        "수면설정", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
-      )
+      Text("수면설정", style = topperTypography.titleMedium)
 
       Row(
         modifier = Modifier

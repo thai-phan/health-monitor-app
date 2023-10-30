@@ -11,9 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchColors
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,10 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.setting.subc.component.ModalAInduceEnergy
 import com.sewon.topperhealth.screen.setting.subc.component.ModalBInduceSound
 import com.sewon.topperhealth.screen.setting.subc.component.ModalCScoreThreshold
@@ -37,9 +34,7 @@ import com.sewon.topperhealth.screen.setting.subc.component.ModalCScoreThreshold
 
 // Card 3
 @Composable
-fun InductionSolutionSetting(
-  switchColors: SwitchColors = SwitchDefaults.colors()
-) {
+fun InductionSolutionSetting() {
   var openInduceEnergyModal by rememberSaveable { mutableStateOf(false) }
   var openInduceSoundModal by rememberSaveable { mutableStateOf(false) }
   var openScoreThresholdModal by rememberSaveable { mutableStateOf(false) }
@@ -55,9 +50,7 @@ fun InductionSolutionSetting(
         .padding(20.dp)
 
     ) {
-      Text(
-        "수면유도 솔루션", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
-      )
+      Text("수면유도 솔루션", style = topperTypography.titleMedium)
 
       Row(
         modifier = Modifier
@@ -70,8 +63,7 @@ fun InductionSolutionSetting(
 
         var checked by remember { mutableStateOf(true) }
 
-        Switch(
-          colors = switchColors,
+        CustomSwitch(
           modifier = Modifier.semantics { contentDescription = "Demo" },
           checked = checked,
           onCheckedChange = { checked = it })
@@ -90,8 +82,7 @@ fun InductionSolutionSetting(
 
         var checked by remember { mutableStateOf(true) }
 
-        Switch(
-          colors = switchColors,
+        CustomSwitch(
           modifier = Modifier.semantics { contentDescription = "Demo" },
           checked = checked,
           onCheckedChange = { checked = it })
@@ -110,8 +101,7 @@ fun InductionSolutionSetting(
 
         var checked by remember { mutableStateOf(true) }
 
-        Switch(
-          colors = switchColors,
+        CustomSwitch(
           modifier = Modifier.semantics { contentDescription = "Demo" },
           checked = checked,
           onCheckedChange = { checked = it })

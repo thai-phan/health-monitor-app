@@ -1,6 +1,7 @@
 package com.sewon.topperhealth.screen.splash
 
 import android.view.animation.OvershootInterpolator
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -27,9 +28,9 @@ import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SplashScreen(delayTime: Long, onRedirectRoute: () -> Unit) {
+fun SplashScreen(modifier: Modifier = Modifier,delayTime: Long, onRedirectRoute: () -> Unit) {
   val scale = remember {
-    androidx.compose.animation.core.Animatable(0f)
+    Animatable(0f)
   }
 
   // Animation
@@ -50,7 +51,7 @@ fun SplashScreen(delayTime: Long, onRedirectRoute: () -> Unit) {
 
 
   Column(
-    modifier = Modifier
+    modifier = modifier
       .fillMaxSize()
       .padding(horizontal = 20.dp),
   ) {

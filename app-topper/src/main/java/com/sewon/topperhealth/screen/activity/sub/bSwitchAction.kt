@@ -19,12 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.sewon.topperhealth.MainActivity
-import com.sewon.topperhealth.screen.a0common.theme.checkedBorderColor
-import com.sewon.topperhealth.screen.a0common.theme.checkedThumbColor
-import com.sewon.topperhealth.screen.a0common.theme.checkedTrackColor
-import com.sewon.topperhealth.screen.a0common.theme.uncheckedBorderColor
-import com.sewon.topperhealth.screen.a0common.theme.uncheckedThumbColor
-import com.sewon.topperhealth.screen.a0common.theme.uncheckedTrackColor
+import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.activity.component.DialogRelay
 import com.sewon.topperhealth.service.bluetooth.util.Connected
 import com.sewon.topperhealth.service.bluetooth.util.TextUtil
@@ -36,15 +31,6 @@ fun SwitchAction(
 ) {
 
   val context = LocalContext.current
-
-  val switchColors: SwitchColors = SwitchDefaults.colors(
-    checkedThumbColor = checkedThumbColor,
-    checkedTrackColor = checkedTrackColor,
-    checkedBorderColor = checkedBorderColor,
-    uncheckedThumbColor = uncheckedThumbColor,
-    uncheckedTrackColor = uncheckedTrackColor,
-    uncheckedBorderColor = uncheckedBorderColor,
-  )
 
   val isPlaySoundSleepInduceUI by MainActivity.lowEnergyService.isPlaySoundSleepInduce
 
@@ -87,9 +73,8 @@ fun SwitchAction(
     }
 
 
-    Switch(
+    CustomSwitch(
       checked = isRelayClose.value,
-      colors = switchColors,
       onCheckedChange = {
         toggleRelay(it)
       },
@@ -103,8 +88,7 @@ fun SwitchAction(
     verticalAlignment = Alignment.CenterVertically
   ) {
     Text("수면유도사운드")
-    Switch(checked = isPlaySoundSleepInduceUI,
-      colors = switchColors,
+    CustomSwitch(checked = isPlaySoundSleepInduceUI,
       onCheckedChange = {
         MainActivity.lowEnergyService.toggleSoundSleepInduce()
       })

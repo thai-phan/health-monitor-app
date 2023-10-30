@@ -19,10 +19,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +40,7 @@ fun ModalADeviceAccess(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("핸드폰 캐시 접근 권한 설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("핸드폰 캐시 접근 권한 설정", style = topperTypography.titleLarge)
       Spacer(modifier = Modifier.height(20.dp))
 
       Text("핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?")

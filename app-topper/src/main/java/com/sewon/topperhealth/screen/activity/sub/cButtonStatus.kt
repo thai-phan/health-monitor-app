@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddAlert
 import androidx.compose.material3.Button
@@ -83,7 +84,7 @@ fun ButtonAction(
     }
     if (!isStarted) {
       Button(colors = ButtonDefaults.buttonColors(Color(0xFF03DAC5)),
-        shape = topperShapes.extraLarge,
+        shape = RoundedCornerShape(100.dp),
         modifier = Modifier
           .width(280.dp)
           .height(56.dp),
@@ -94,7 +95,7 @@ fun ButtonAction(
       }
     } else {
       Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
-        shape = topperShapes.extraLarge,
+        shape = RoundedCornerShape(100.dp),
         modifier = Modifier
           .width(280.dp)
           .height(56.dp),
@@ -106,7 +107,7 @@ fun ButtonAction(
     }
     if (isAlarm) {
       Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
-        shape = topperShapes.extraLarge,
+        shape = RoundedCornerShape(100.dp),
         modifier = Modifier
           .width(200.dp)
           .height(56.dp),

@@ -8,15 +8,6 @@ val BackgroundMiddle = Color(0xff091d3f)
 val BackgroundBottom = Color(0xff071224)
 
 
-// SwitchColors color
-val checkedThumbColor = Color(0xFF09897D)
-val checkedTrackColor = Color(0xFF03DAC5)
-val checkedBorderColor = Color(0xFF03DAC5)
-val uncheckedThumbColor = Color(0xFF938F99)
-val uncheckedTrackColor = Color(0xFF36343B)
-val uncheckedBorderColor = Color(0xFF938F99)
-
-
 // Dark Theme
 val DarkPrimary = Color(0xff03DAC5)
 val DarkOnPrimary = Color(0xFF000000)

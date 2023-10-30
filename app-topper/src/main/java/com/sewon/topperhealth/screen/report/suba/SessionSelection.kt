@@ -63,5 +63,4 @@ fun SessionSelection(sessionList: List<SleepSession>, selectReportSession: (id: 
       }
     }
   }
-
 }

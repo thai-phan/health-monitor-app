@@ -10,20 +10,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import com.sewon.topperhealth.data.HealthDataStore
 import com.sewon.topperhealth.screen.a0common.Destinations
 import com.sewon.topperhealth.screen.a0common.MainTabs
-import com.sewon.topperhealth.data.HealthDataStore
 import com.sewon.topperhealth.screen.activity.SleepActivity
 import com.sewon.topperhealth.screen.device.DeviceScreen
 import com.sewon.topperhealth.screen.report.ReportScreen
 import com.sewon.topperhealth.screen.setting.SettingScreen
-import com.sewon.topperhealth.screen.term.TermAgreement
 import com.sewon.topperhealth.screen.splash.SplashScreen
+import com.sewon.topperhealth.screen.term.TermAgreement
 
 
 @Composable
@@ -63,6 +61,7 @@ fun NavigationGraph(
       }
 
       SplashScreen(
+        modifier,
         delayTime = 1000L
       ) {
         navController.navigate(redirectRoute)
@@ -71,6 +70,7 @@ fun NavigationGraph(
 
     composable(Destinations.TERM_AGREEMENT_ROUTE) {
       TermAgreement(
+        modifier,
         onRedirectRoute = {
           navController.navigate(Destinations.DEVICE_ROUTE)
         }
@@ -79,6 +79,7 @@ fun NavigationGraph(
 
     composable(Destinations.DEVICE_ROUTE) {
       DeviceScreen(
+        modifier,
         navController = navController,
 
         )

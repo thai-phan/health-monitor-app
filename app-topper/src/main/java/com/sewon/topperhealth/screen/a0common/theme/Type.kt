@@ -1,6 +1,7 @@
 package com.sewon.topperhealth.screen.a0common.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -12,62 +13,73 @@ private val fonts = FontFamily(
   Font(R.font.suite_regular),
 )
 
-val typography = typographyFromDefaults(
+val topperTypography = typographyFromDefaults(
+  displayLarge = TextStyle(),
+  displayMedium = TextStyle(),
+  displaySmall = TextStyle(),
   headlineLarge = TextStyle(
     fontFamily = fonts,
     fontWeight = FontWeight.SemiBold,
     fontSize = 32.sp,
     lineHeight = 40.sp,
-    letterSpacing = 0.sp
+    letterSpacing = 0.sp,
+    color = Color.White,
   ),
   headlineMedium = TextStyle(
     fontFamily = fonts,
     fontWeight = FontWeight.SemiBold,
     fontSize = 28.sp,
     lineHeight = 36.sp,
-    letterSpacing = 0.sp
+    letterSpacing = 0.sp,
+    color = Color.White,
   ),
   headlineSmall = TextStyle(
     fontFamily = fonts,
     fontWeight = FontWeight.SemiBold,
     fontSize = 24.sp,
     lineHeight = 32.sp,
-    letterSpacing = 0.sp
+    letterSpacing = 0.sp,
+    color = Color.White,
   ),
   titleLarge = TextStyle(
     fontFamily = fonts,
     fontWeight = FontWeight.SemiBold,
     fontSize = 22.sp,
     lineHeight = 28.sp,
-    letterSpacing = 0.sp
+    letterSpacing = 0.sp,
+    color = Color.White,
   ),
   titleMedium = TextStyle(
     fontFamily = fonts,
     fontWeight = FontWeight.SemiBold,
     fontSize = 16.sp,
     lineHeight = 24.sp,
-    letterSpacing = 0.15.sp
+    letterSpacing = 0.15.sp,
+    color = Color.White,
   ),
   titleSmall = TextStyle(
     fontFamily = fonts,
     fontWeight = FontWeight.Bold,
     fontSize = 14.sp,
     lineHeight = 20.sp,
-    letterSpacing = 0.1.sp
+    letterSpacing = 0.1.sp,
+    color = Color.White,
   ),
   bodyLarge = TextStyle(
     fontFamily = fonts,
     fontWeight = FontWeight.Normal,
     fontSize = 16.sp,
     lineHeight = 24.sp,
-    letterSpacing = 0.15.sp
+    letterSpacing = 0.15.sp,
+    color = Color.White,
   ),
   bodyMedium = TextStyle(
     fontFamily = fonts,
     fontWeight = FontWeight.Medium,
     fontSize = 14.sp,
     lineHeight = 20.sp,
-    letterSpacing = 0.25.sp
+    letterSpacing = 0.25.sp,
+    color = Color.White,
   ),
   bodySmall = TextStyle(
     fontFamily = fonts,
@@ -81,41 +93,49 @@ val typography = typographyFromDefaults(
     fontWeight = FontWeight.SemiBold,
     fontSize = 14.sp,
     lineHeight = 20.sp,
-    letterSpacing = 0.1.sp
+    letterSpacing = 0.1.sp,
+    color = Color.White,
   ),
   labelMedium = TextStyle(
     fontFamily = fonts,
     fontWeight = FontWeight.SemiBold,
     fontSize = 12.sp,
     lineHeight = 16.sp,
-    letterSpacing = 0.5.sp
+    letterSpacing = 0.5.sp,
+    color = Color.White,
   ),
   labelSmall = TextStyle(
     fontFamily = fonts,
     fontWeight = FontWeight.SemiBold,
     fontSize = 11.sp,
     lineHeight = 16.sp,
-    letterSpacing = 0.5.sp
+    letterSpacing = 0.5.sp,
+    color = Color.White,
   )
 )
 
 fun typographyFromDefaults(
-  headlineLarge: TextStyle?,
-  headlineMedium: TextStyle?,
-  headlineSmall: TextStyle?,
-  titleLarge: TextStyle?,
-  titleMedium: TextStyle?,
-  titleSmall: TextStyle?,
-  bodyLarge: TextStyle?,
-  bodyMedium: TextStyle?,
-  bodySmall: TextStyle?,
-  labelLarge: TextStyle?,
-  labelMedium: TextStyle?,
-  labelSmall: TextStyle?,
-
-  ): Typography {
+  displayLarge: TextStyle,
+  displayMedium: TextStyle,
+  displaySmall: TextStyle,
+  headlineLarge: TextStyle,
+  headlineMedium: TextStyle,
+  headlineSmall: TextStyle,
+  titleLarge: TextStyle,
+  titleMedium: TextStyle,
+  titleSmall: TextStyle,
+  bodyLarge: TextStyle,
+  bodyMedium: TextStyle,
+  bodySmall: TextStyle,
+  labelLarge: TextStyle,
+  labelMedium: TextStyle,
+  labelSmall: TextStyle,
+): Typography {
   val defaults = Typography()
   return Typography(
+    displayLarge = defaults.displayLarge.merge(displayLarge),
+    displayMedium = defaults.displayMedium.merge(displayMedium),
+    displaySmall = defaults.displaySmall.merge(displaySmall),
     headlineLarge = defaults.headlineLarge.merge(headlineLarge),
     headlineMedium = defaults.headlineMedium.merge(headlineMedium),
     headlineSmall = defaults.headlineSmall.merge(headlineSmall),

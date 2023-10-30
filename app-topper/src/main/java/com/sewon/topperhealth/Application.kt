@@ -25,5 +25,4 @@ class Application : Application() {
       Timber.plant(Timber.DebugTree())
     }
   }
-//    TODO: connect server`
 }

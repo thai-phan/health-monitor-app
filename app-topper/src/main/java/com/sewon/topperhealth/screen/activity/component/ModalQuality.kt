@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,10 +23,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,7 +50,7 @@ fun ModalQuality(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("최근 수면의 질 평가", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("최근 수면의 질 평가", style = topperTypography.titleLarge)
       Spacer(modifier = Modifier.height(20.dp))
       Text("질문 : 시간동안 얼마나 자주 피곤하고 무기력감을 느꼈나요?")
 

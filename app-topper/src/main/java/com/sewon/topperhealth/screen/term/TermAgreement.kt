@@ -31,10 +31,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 
 @Composable
-fun TermAgreement(onRedirectRoute: () -> Unit) {
+fun TermAgreement(modifier: Modifier = Modifier, onRedirectRoute: () -> Unit) {
   val context = LocalContext.current
 
   val termFile = "term_of_use.txt"
@@ -48,7 +49,7 @@ fun TermAgreement(onRedirectRoute: () -> Unit) {
   }
 
   Column(
-    modifier = Modifier
+    modifier = modifier
       .fillMaxSize()
       .padding(horizontal = 20.dp)
   ) {
@@ -57,7 +58,7 @@ fun TermAgreement(onRedirectRoute: () -> Unit) {
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically
     ) {
-      Text("인텔리네스트", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+      Text("인텔리네스트", style = topperTypography.headlineSmall)
       Image(
         painter = painterResource(id = R.drawable.ic_intellinest_white),
         contentDescription = "intellinest",

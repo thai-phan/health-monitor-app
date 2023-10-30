@@ -22,12 +22,10 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.setting.suba.UiStateA
 import java.util.Calendar
 
@@ -45,13 +43,13 @@ fun ModalDate(
   val (year, setYear) = remember { mutableIntStateOf(uiState.calendar.get(Calendar.YEAR)) }
   val (month, setMonth) = remember { mutableIntStateOf(uiState.calendar.get(Calendar.MONTH)) }
   val (day, setDay) = remember { mutableIntStateOf(uiState.calendar.get(Calendar.DAY_OF_MONTH)) }
-  
+
   ModalBottomSheet(
     onDismissRequest = onToggleModal,
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("성별", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("성별", style = topperTypography.titleLarge)
       AndroidView(modifier = Modifier
         .fillMaxWidth()
         .height(200.dp), factory = { context ->

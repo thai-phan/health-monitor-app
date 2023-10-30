@@ -11,9 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchColors
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,10 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.setting.subd.component.ModalADeviceAccess
 import com.sewon.topperhealth.screen.setting.subd.component.ModalBClearHistory
 import com.sewon.topperhealth.screen.setting.subd.component.ModalCSOSRecipient
@@ -36,7 +33,7 @@ import com.sewon.topperhealth.screen.setting.subd.component.ModalCSOSRecipient
 
 // Card 4
 @Composable
-fun GeneralSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
+fun GeneralSetting() {
 
   var openDeviceAccessModal by rememberSaveable { mutableStateOf(false) }
   var openClearHistoryModal by rememberSaveable { mutableStateOf(false) }
@@ -54,10 +51,7 @@ fun GeneralSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
         .padding(20.dp)
 
     ) {
-      Text(
-        "일반설정", fontSize = 18.sp, fontWeight = FontWeight(900), color = Color(0xFFEDEDED)
-      )
-
+      Text("일반설정", style = topperTypography.titleMedium)
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -69,8 +63,7 @@ fun GeneralSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
         Text("핸드폰 캐시 접근 권한")
 
 
-        Switch(
-          colors = switchColors,
+        CustomSwitch(
           modifier = Modifier.semantics { contentDescription = "Demo" },
           checked = openDeviceAccessModal,
           onCheckedChange = { openDeviceAccessModal = it })
@@ -88,8 +81,7 @@ fun GeneralSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
 //                Clear all sleep history
         Text("수면 기록 모두 지우기")
 
-        Switch(
-          colors = switchColors,
+        CustomSwitch(
           modifier = Modifier.semantics { contentDescription = "Demo" },
           checked = openClearHistoryModal,
           onCheckedChange = { openClearHistoryModal = it })
@@ -107,8 +99,7 @@ fun GeneralSetting(switchColors: SwitchColors = SwitchDefaults.colors()) {
 //                Emergency SOS Recipient Settings
         Text("위급 SOS 수신자 설정")
 
-        Switch(
-          colors = switchColors,
+        CustomSwitch(
           modifier = Modifier.semantics { contentDescription = "Demo" },
           checked = openSOSRecipientModal,
           onCheckedChange = { openSOSRecipientModal = it })

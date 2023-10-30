@@ -28,8 +28,7 @@ import androidx.core.content.getSystemService
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.screen.a0common.theme.BackgroundTop
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
-import com.sewon.topperhealth.screen.a0common.theme.typography
-import com.sewon.topperhealth.service.bluetooth.ClassicClient
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.service.bluetooth.ClassicGatt
 import com.sewon.topperhealth.service.bluetooth.util.Connected
 import timber.log.Timber
@@ -74,7 +73,7 @@ fun DialogRelay(onDismissRequest: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
         item {
-          Text(text = "Saved devices", style = typography.titleMedium)
+          Text("Saved devices", style = topperTypography.titleLarge)
           Spacer(modifier = Modifier.height(10.dp))
         }
         items(pairedDevices) {

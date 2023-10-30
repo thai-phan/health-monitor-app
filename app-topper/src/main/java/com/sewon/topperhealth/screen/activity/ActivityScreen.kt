@@ -41,6 +41,8 @@ import androidx.navigation.compose.rememberNavController
 import com.sewon.topperhealth.service.bluetooth.LowEnergyGatt
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.screen.a0common.Destinations
+import com.sewon.topperhealth.screen.a0common.theme.BackgroundMiddle
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.activity.component.CircularTimePicker
 import com.sewon.topperhealth.screen.activity.component.ModalAssessment
 import com.sewon.topperhealth.screen.activity.component.ModalQuality
@@ -159,12 +161,12 @@ fun SleepActivity(
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically
     ) {
-      Text("수면시간 체크", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+      Text("수면시간 체크", style = topperTypography.headlineSmall)
 
       Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
         onClick = { redirectReportPage() }) {
         Text(
-          text = "Report"
+          text = "Report", color = BackgroundMiddle
         )
       }
     }

@@ -28,10 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.setting.subb.UiStateB
 
 
@@ -66,7 +65,7 @@ fun ModalCAlarmSetting(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("알람설정", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("알람설정", style = topperTypography.titleLarge)
 
       Column(
         modifier = Modifier

@@ -19,10 +19,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +39,7 @@ fun ModalAInduceEnergy(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("수면유도 에너지", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 22.sp)
+      Text("수면유도 에너지", style = topperTypography.titleLarge)
       Spacer(modifier = Modifier.height(20.dp))
       Text(
         "미주신경 자극으로 심신을 안정화시켜 잠에 빨리 들 수 있도록 도와줍니다. " +
