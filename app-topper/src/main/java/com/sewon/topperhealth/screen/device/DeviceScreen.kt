@@ -67,9 +67,7 @@ fun DeviceScreen(
       }
     }
 //        PullRefreshIndicator(refreshing, state, Modifier.align(Alignment.TopCenter))
-
   }
-
 }
 
 @Preview

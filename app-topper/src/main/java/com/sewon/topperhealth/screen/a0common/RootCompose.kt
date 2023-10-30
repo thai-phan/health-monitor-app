@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sewon.topperhealth.screen.a0common.theme.HealthAppTheme
+import com.sewon.topperhealth.screen.a0common.theme.TopperAppTheme
 import com.sewon.topperhealth.screen.NavigationGraph
 
 @Composable
@@ -39,7 +39,7 @@ fun RootCompose(finishActivity: () -> Unit) {
     }
   }
 
-  HealthAppTheme() {
+  TopperAppTheme() {
     val tabs = remember { MainTabs.values() }
 
     Scaffold(

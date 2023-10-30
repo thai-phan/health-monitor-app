@@ -59,8 +59,6 @@ class LowEnergyService : Service() {
 
   private val mainLooper: Handler = Handler(Looper.getMainLooper())
   private val binder: IBinder = ServiceBinder()
-  private val queue1: ArrayDeque<QueueItem> = ArrayDeque()
-  private val queue2: ArrayDeque<QueueItem> = ArrayDeque()
   private val lastRead: QueueItem = QueueItem(QueueType.Read)
   private var lowEnergyGatt: LowEnergyGatt? = null
   private var lowEnergyClient: LowEnergyClient? = null
@@ -147,24 +145,6 @@ class LowEnergyService : Service() {
     // use synchronized() to prevent new items in queue2
     // new items will not be added to queue1 because mainLooper.post and attach() run in main thread
     synchronized(this) { this.lowEnergyClient = listener }
-    for (item in queue1) {
-      when (item.type) {
-        QueueType.Connect -> listener.onClientConnect()
-        QueueType.ConnectError -> item.e?.let { listener.onClientConnectError(it) }
-        QueueType.Read -> item.datas?.let { listener.onClientRead(it) }
-        QueueType.IoError -> item.e?.let { listener.onSerialIoError(it) }
-      }
-    }
-    for (item in queue2) {
-      when (item.type) {
-        QueueType.Connect -> listener.onClientConnect()
-        QueueType.ConnectError -> item.e?.let { listener.onClientConnectError(it) }
-        QueueType.Read -> item.datas?.let { listener.onClientRead(it) }
-        QueueType.IoError -> item.e?.let { listener.onSerialIoError(it) }
-      }
-    }
-    queue1.clear()
-    queue2.clear()
   }
 
 
@@ -175,12 +155,8 @@ class LowEnergyService : Service() {
           mainLooper.post {
             if (lowEnergyClient != null) {
               lowEnergyClient!!.onClientConnect()
-            } else {
-              queue1.add(QueueItem(QueueType.Connect))
             }
           }
-        } else {
-          queue2.add(QueueItem(QueueType.Connect))
         }
       }
     }
@@ -193,14 +169,8 @@ class LowEnergyService : Service() {
           mainLooper.post {
             if (lowEnergyClient != null) {
               lowEnergyClient!!.onClientConnectError(e)
-            } else {
-              queue1.add(QueueItem(QueueType.ConnectError, e))
-              disconnectBluetoothSocket()
             }
           }
-        } else {
-          queue2.add(QueueItem(QueueType.ConnectError, e))
-          disconnectBluetoothSocket()
         }
       }
     }
@@ -237,15 +207,9 @@ class LowEnergyService : Service() {
               }
               if (lowEnergyClient != null) {
                 datas.let { lowEnergyClient!!.onClientRead(it) }
-              } else {
-                queue1.add(QueueItem(QueueType.Read, datas))
               }
             }
           }
-        } else {
-          if (queue2.isEmpty() || queue2.last.type != QueueType.Read)
-            queue2.add(QueueItem(QueueType.Read))
-          queue2.last.add(data)
         }
       }
     }
@@ -258,14 +222,8 @@ class LowEnergyService : Service() {
           mainLooper.post {
             if (lowEnergyClient != null) {
               lowEnergyClient!!.onSerialIoError(e)
-            } else {
-              queue1.add(QueueItem(QueueType.IoError, e))
-              disconnectBluetoothSocket()
             }
           }
-        } else {
-          queue2.add(QueueItem(QueueType.IoError, e))
-          disconnectBluetoothSocket()
         }
       }
     }

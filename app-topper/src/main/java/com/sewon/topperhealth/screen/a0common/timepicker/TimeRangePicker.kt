@@ -19,7 +19,6 @@ import com.sewon.topperhealth.screen.a0common.timepicker.utils.dpToPx
 import com.sewon.topperhealth.screen.a0common.timepicker.utils.getColorResCompat
 import com.sewon.topperhealth.screen.a0common.timepicker.utils.getTextColor
 import com.sewon.topperhealth.screen.a0common.timepicker.utils.spToPx
-
 import com.sewon.topperhealth.screen.a0common.timepicker.utils.MathUtils.angleTo360
 import com.sewon.topperhealth.screen.a0common.timepicker.utils.MathUtils.angleTo720
 import com.sewon.topperhealth.screen.a0common.timepicker.utils.MathUtils.angleToMinutes
@@ -822,10 +821,10 @@ class TimeRangePicker @JvmOverloads constructor(
       invalidate()
     }
 
-  val duration: TimeDuration
+  private val duration: TimeDuration
     get() = TimeDuration(startTime, endTime)
 
-  val durationMinutes: Int
+  private val durationMinutes: Int
     get() = duration.durationMinutes
 
   var minDuration: Time
@@ -904,7 +903,7 @@ class TimeRangePicker @JvmOverloads constructor(
       computeClockRadius()
     }
 
-  var sliderColor
+  private var sliderColor
     @ColorInt
     get() = _sliderColor
     set(@ColorInt value) {
@@ -936,7 +935,7 @@ class TimeRangePicker @JvmOverloads constructor(
       sliderRangeColor = ContextCompat.getColor(context, value)
     }
 
-  var sliderRangeGradientStart
+  private var sliderRangeGradientStart
     @ColorInt
     get() = _sliderRangeGradientStart
     set(@ColorInt value) {
@@ -1034,7 +1033,7 @@ class TimeRangePicker @JvmOverloads constructor(
       thumbIconStart = ContextCompat.getDrawable(context, value)
     }
 
-  var thumbIconEnd
+  private var thumbIconEnd
     get() = _thumbIconEnd
     set(value) {
       _thumbIconEnd = value?.mutate()

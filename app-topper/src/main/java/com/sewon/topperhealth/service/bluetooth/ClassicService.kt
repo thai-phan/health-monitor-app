@@ -76,8 +76,6 @@ class ClassicService : Service() {
   fun attach(listener: ClassicClient) {
     require(Looper.getMainLooper().thread === Thread.currentThread()) { "not in main thread" }
     cancelNotification()
-    // use synchronized() to prevent new items in queue2
-    // new items will not be added to queue1 because mainLooper.post and attach() run in main thread
     synchronized(this) {
       this.client = listener
     }

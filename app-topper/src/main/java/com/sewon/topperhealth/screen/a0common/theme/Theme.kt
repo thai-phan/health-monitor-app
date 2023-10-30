@@ -8,7 +8,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 // Material 3 color schemes
-private val darkColorScheme = darkColorScheme(
+private val darkTopperScheme = darkColorScheme(
   primary = DarkPrimary,
   onPrimary = DarkOnPrimary,
   primaryContainer = DarkPrimaryContainer,
@@ -38,7 +38,7 @@ private val darkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun HealthAppTheme(
+fun TopperAppTheme(
   content: @Composable () -> Unit
 ) {
   val systemUiController = rememberSystemUiController()
@@ -48,7 +48,7 @@ fun HealthAppTheme(
   systemUiController.setNavigationBarColor(Color.Transparent)
 
   MaterialTheme(
-    colorScheme = darkColorScheme,
+    colorScheme = darkTopperScheme,
     typography = typography,
     shapes = topperShapes,
     content = content
