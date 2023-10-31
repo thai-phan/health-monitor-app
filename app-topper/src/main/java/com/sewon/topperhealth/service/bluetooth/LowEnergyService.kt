@@ -229,7 +229,7 @@ class LowEnergyService : Service() {
     }
   }
 
-  fun createNotificationHealth() {
+  fun createNotificationTopper() {
     val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
     val att = AudioAttributes.Builder()
       .setUsage(AudioAttributes.USAGE_NOTIFICATION)

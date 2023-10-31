@@ -42,6 +42,7 @@ fun TopperAppTheme(
   content: @Composable () -> Unit
 ) {
   val systemUiController = rememberSystemUiController()
+  
 
   systemUiController.setStatusBarColor(Color.Transparent)
 

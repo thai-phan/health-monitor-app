@@ -59,6 +59,7 @@ dependencies {
   implementation(libs.androidx.annotation)
   implementation(libs.androidx.core.i18n)
   implementation(libs.androidx.core.ktx)
+  implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.constraintlayout)
   implementation(libs.androidx.constraintlayout.compose)
   implementation(libs.androidx.lifecycle.livedata.ktx)
