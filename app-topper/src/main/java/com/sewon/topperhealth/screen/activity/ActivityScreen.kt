@@ -184,11 +184,8 @@ fun SleepActivity(
 
     Column(Modifier.verticalScroll(rememberScrollState())) {
       TimeSelection(uiState.startTime, uiState.endTime)
-
       SwitchAction()
-
       Spacer(modifier = Modifier.height(10.dp))
-
       ButtonAction(
         isStarted.value, isAlarm.value,
         startSleep = { startSleep() },

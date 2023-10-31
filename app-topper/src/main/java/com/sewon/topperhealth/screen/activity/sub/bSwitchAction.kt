@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchColors
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,28 +23,20 @@ import com.sewon.topperhealth.service.bluetooth.util.TextUtil
 
 @SuppressLint("MissingPermission")
 @Composable
-fun SwitchAction(
-
-) {
-
+fun SwitchAction() {
   val context = LocalContext.current
-
   val isPlaySoundSleepInduceUI by MainActivity.lowEnergyService.isPlaySoundSleepInduce
-
   val isRelayDialog = rememberSaveable { mutableStateOf(false) }
   val isRelayClose = rememberSaveable { mutableStateOf(false) }
-
   val deviceName by remember {
     mutableStateOf(MainActivity.classicClient.deviceName)
   }
-
   val connected by remember {
     mutableStateOf(MainActivity.classicClient.connected)
   }
 
   fun toggleRelay(value: Boolean) {
     isRelayClose.value = value
-
     if (value) {
       val byteArray = TextUtil.fromHexString("A0 01 01 A2")
       MainActivity.classicService.writeFromService(context, byteArray)
@@ -55,6 +44,10 @@ fun SwitchAction(
       val byteArray = TextUtil.fromHexString("A0 01 00 A1")
       MainActivity.classicService.writeFromService(context, byteArray)
     }
+  }
+
+  fun toggleSound(value: Boolean) {
+    MainActivity.lowEnergyService.toggleSoundSleepInduce(value)
   }
 
   Row(
@@ -65,14 +58,11 @@ fun SwitchAction(
     verticalAlignment = Alignment.CenterVertically
   ) {
     Text("수면유도에너지")
-
     Button(onClick = {
       isRelayDialog.value = !isRelayDialog.value
     }) {
       Text(deviceName.value)
     }
-
-
     CustomSwitch(
       checked = isRelayClose.value,
       onCheckedChange = {
@@ -81,7 +71,6 @@ fun SwitchAction(
       enabled = connected.value == Connected.True
     )
   }
-
   Row(
     modifier = Modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.SpaceBetween,
@@ -90,10 +79,9 @@ fun SwitchAction(
     Text("수면유도사운드")
     CustomSwitch(checked = isPlaySoundSleepInduceUI,
       onCheckedChange = {
-        MainActivity.lowEnergyService.toggleSoundSleepInduce()
+        toggleSound(it)
       })
   }
-
   if (isRelayDialog.value) {
     DialogRelay(onDismissRequest = {
       isRelayDialog.value = false

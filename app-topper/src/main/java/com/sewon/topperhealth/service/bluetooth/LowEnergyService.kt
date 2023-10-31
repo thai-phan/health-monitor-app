@@ -71,8 +71,8 @@ class LowEnergyService : Service() {
   private lateinit var playerSleepInduce: MediaPlayer
   val isPlaySoundSleepInduce = mutableStateOf(true)
 
-  fun toggleSoundSleepInduce() {
-    isPlaySoundSleepInduce.value = !isPlaySoundSleepInduce.value
+  fun toggleSoundSleepInduce(value: Boolean) {
+    isPlaySoundSleepInduce.value = value
   }
 
   fun playSoundSleepInduce() {
@@ -83,9 +83,7 @@ class LowEnergyService : Service() {
   }
 
   fun stopSoundSleepInduce() {
-    if (isPlaySoundSleepInduce.value) {
-      playerSleepInduce.stop()
-    }
+    playerSleepInduce.stop()
   }
 
   var sessionId = 0

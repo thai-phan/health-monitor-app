@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import com.sewon.topperhealth.service.bluetooth.util.QueueItem
 import com.sewon.topperhealth.service.bluetooth.util.QueueType
 import timber.log.Timber
@@ -19,6 +20,12 @@ import java.util.ArrayDeque
  * use listener chain: SerialSocket -> SerialService -> UI fragment
  */
 class ClassicService : Service() {
+
+  companion object {
+    //Define a LiveData to observe in activity
+    val tokenLiveData = MutableLiveData<String>()
+  }
+
   val TAG = this.javaClass.name
 
   internal inner class ServiceBinder : Binder() {
@@ -91,7 +98,7 @@ class ClassicService : Service() {
   }
 
   private fun cancelNotification() {
-    stopForeground(true)
+    stopForeground(STOP_FOREGROUND_REMOVE)
   }
 
   /**
