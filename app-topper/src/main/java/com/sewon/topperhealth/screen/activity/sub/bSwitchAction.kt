@@ -9,6 +9,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -18,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.activity.component.DialogRelay
+import com.sewon.topperhealth.service.bluetooth.ClassicClient
 import com.sewon.topperhealth.service.bluetooth.util.Connected
 import com.sewon.topperhealth.service.bluetooth.util.TextUtil
 
@@ -28,12 +30,8 @@ fun SwitchAction() {
   val isPlaySoundSleepInduceUI by MainActivity.lowEnergyService.isPlaySoundSleepInduce
   val isRelayDialog = rememberSaveable { mutableStateOf(false) }
   val isRelayClose = rememberSaveable { mutableStateOf(false) }
-  val deviceName by remember {
-    mutableStateOf(MainActivity.classicClient.deviceName)
-  }
-  val connected by remember {
-    mutableStateOf(MainActivity.classicClient.connected)
-  }
+  val deviceName  = ClassicClient.deviceName.observeAsState()
+  val connected = ClassicClient.connected.observeAsState()
 
   fun toggleRelay(value: Boolean) {
     isRelayClose.value = value
@@ -61,7 +59,7 @@ fun SwitchAction() {
     Button(onClick = {
       isRelayDialog.value = !isRelayDialog.value
     }) {
-      Text(deviceName.value)
+      deviceName.value?.let { Text(it) }
     }
     CustomSwitch(
       checked = isRelayClose.value,

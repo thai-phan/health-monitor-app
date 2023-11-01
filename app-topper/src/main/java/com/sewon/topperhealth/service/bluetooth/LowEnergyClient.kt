@@ -1,7 +1,7 @@
 package com.sewon.topperhealth.service.bluetooth
 
 import android.text.SpannableStringBuilder
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeDataProcessing
 import com.sewon.topperhealth.service.bluetooth.util.Connected
@@ -11,15 +11,18 @@ import java.util.ArrayDeque
 
 
 class LowEnergyClient {
-  val TAG = this.javaClass.name
 
-  private var connected = Connected.False
+  companion object {
+    val deviceAddress = MutableLiveData("")
+    val deviceName = MutableLiveData("")
+    val log = MutableLiveData("")
+    val isAlarm = MutableLiveData(false)
+    val connected = MutableLiveData(Connected.False)
+  }
+
+  val tag: String = this.javaClass.name
+
   private val hexEnabled = false
-
-  var log = mutableStateOf("")
-
-  var isAlarm = mutableStateOf(false)
-
 
   fun startAlarmListener() {
     isAlarm.value = true
@@ -34,11 +37,11 @@ class LowEnergyClient {
 
 
   fun onClientConnect() {
-    connected = Connected.True
+    connected.value = Connected.True
   }
 
   fun onClientConnectError(e: Exception) {
-    connected = Connected.False
+    connected.value = Connected.False
   }
 
   fun onClientRead(data: ByteArray) {
@@ -52,7 +55,7 @@ class LowEnergyClient {
   }
 
   fun onSerialIoError(e: Exception) {
-    Timber.tag(TAG).d("onSerialRead")
+    Timber.tag(tag).d("onSerialRead")
   }
 
   private var sensorLoopCount = 0

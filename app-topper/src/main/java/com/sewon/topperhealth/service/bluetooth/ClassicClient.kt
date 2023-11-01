@@ -1,10 +1,9 @@
 package com.sewon.topperhealth.service.bluetooth
 
-import android.text.SpannableStringBuilder
-import androidx.compose.runtime.mutableStateOf
-import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeDataProcessing
+import androidx.lifecycle.MutableLiveData
 import com.sewon.topperhealth.service.bluetooth.util.Connected
-import com.sewon.topperhealth.service.bluetooth.util.TextUtil
+import com.sewon.topperhealth.service.bluetooth.util.Constants.BLUETOOTH_DISCONNECTED
+import com.sewon.topperhealth.service.bluetooth.util.Constants.BLUETOOTH_NO_CONNECTION
 
 
 import timber.log.Timber
@@ -12,36 +11,28 @@ import java.util.ArrayDeque
 
 
 class ClassicClient {
-
-  val TAG = this.javaClass.name
-
-  var connected = mutableStateOf(Connected.False)
-  var deviceAddress = mutableStateOf("")
-  var deviceName = mutableStateOf("No connection")
-
-  var classicLog = ""
-
-  var isAlarm = false
-
-
-  fun startAlarmListener() {
-    isAlarm = true
+  companion object {
+    var connected = MutableLiveData(Connected.False)
+    var deviceAddress = MutableLiveData("")
+    var deviceName = MutableLiveData(BLUETOOTH_NO_CONNECTION)
   }
+
+  //  val itemState by viewModel.itemsLiveData.observeAsState()
+  val tag: String = this.javaClass.name
 
 
   fun onClientConnect() {
-    Timber.tag("ClassicClient").d("Connected.True")
     connected.value = Connected.True
   }
 
-  fun onSerialConnectError(e: Exception) {
+  fun onClientConnectError(e: Exception) {
     disconnect()
   }
 
   private fun disconnect() {
     connected.value = Connected.False
     deviceAddress.value = ""
-    deviceName.value = ""
+    deviceName.value = BLUETOOTH_DISCONNECTED
 //    service.disconnect()
   }
 
@@ -56,27 +47,12 @@ class ClassicClient {
   }
 
   fun onClientIoError(e: Exception) {
-    Timber.tag(TAG).d("onClientIoError")
+    Timber.tag(tag).d("onClientIoError")
     disconnect()
 
   }
 
-  private var sensorLoopCount = 0
 
   private fun receive(datas: ArrayDeque<ByteArray>) {
-    val stringBuilder = SpannableStringBuilder()
-    for (data in datas) {
-      val dataStr = String(data)
-      RealtimeDataProcessing.validateDataFormat(dataStr)
-      val text = TextUtil.toCaretString(dataStr, true)
-      stringBuilder.append(text)
-    }
-
-    if (sensorLoopCount < 2) {
-      sensorLoopCount += 1
-    } else {
-      sensorLoopCount = 0
-    }
-    classicLog = "$stringBuilder $sensorLoopCount"
   }
 }

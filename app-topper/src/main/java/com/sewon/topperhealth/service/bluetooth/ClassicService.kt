@@ -26,7 +26,7 @@ class ClassicService : Service() {
     val tokenLiveData = MutableLiveData<String>()
   }
 
-  val TAG = this.javaClass.name
+  val tag: String = this.javaClass.name
 
   internal inner class ServiceBinder : Binder() {
     val service: ClassicService
@@ -119,7 +119,7 @@ class ClassicService : Service() {
     if (connected) {
       synchronized(this) {
         mainLooper.post {
-          client!!.onSerialConnectError(e)
+          client!!.onClientConnectError(e)
         }
       }
     }
@@ -158,7 +158,7 @@ class ClassicService : Service() {
     if (connected) {
       synchronized(this) {
         mainLooper.post {
-          Timber.tag(TAG).d("onSerialIoError")
+          Timber.tag(tag).d("onSerialIoError")
           connected = false
           client!!.onClientIoError(e)
         }

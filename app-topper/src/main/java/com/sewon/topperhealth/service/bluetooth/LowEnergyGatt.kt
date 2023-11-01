@@ -27,7 +27,7 @@ import java.util.UUID
  */
 @SuppressLint("MissingPermission") // various BluetoothGatt, BluetoothDevice methods
 class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : BluetoothGattCallback() {
-  val TAG: String = this.javaClass.name
+  val tag: String = this.javaClass.name
 
   /**
    * delegate device specific behaviour to inner class
@@ -99,7 +99,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     get() = if (device.name != null) device.name else device.address
 
   fun disconnect() {
-    Timber.tag(TAG).d("disconnect")
+    Timber.tag(tag).d("disconnect")
     service = null // ignore remaining data and errors
     canceled = true
     synchronized(writeBuffer) {
@@ -110,13 +110,13 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     writeCharacteristic = null
     if (delegate != null) delegate!!.disconnect()
     if (gatt != null) {
-      Timber.tag(TAG).d("gatt.disconnect")
+      Timber.tag(tag).d("gatt.disconnect")
       gatt!!.disconnect()
-      Timber.tag(TAG).d("gatt.close")
+      Timber.tag(tag).d("gatt.close")
       try {
         gatt!!.close()
       } catch (ignored: Exception) {
-        Timber.tag(TAG).d(ignored)
+        Timber.tag(tag).d(ignored)
       }
       gatt = null
       connected = false
@@ -143,9 +143,9 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
 //      disconnectBroadcastReceiver,
 //      IntentFilter(Constants.INTENT_ACTION_DISCONNECT)
 //    )
-    Timber.tag(TAG).d("connect %s", device)
+    Timber.tag(tag).d("connect %s", device)
 //    context.registerReceiver(pairingBroadcastReceiver, pairingIntentFilter)
-    Timber.tag(TAG).d("connectGatt, LE")
+    Timber.tag(tag).d("connectGatt, LE")
     gatt = device.connectGatt(context, false, this, BluetoothDevice.TRANSPORT_LE)
     if (gatt == null) throw IOException("connectGatt failed")
     // continues asynchronously in onPairingBroadcastReceive() and onConnectionStateChange()
@@ -163,24 +163,24 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     when (intent.action) {
       BluetoothDevice.ACTION_PAIRING_REQUEST -> {
         val pairingVariant = intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_VARIANT, -1)
-        Timber.tag(TAG).d("pairing request $pairingVariant")
+        Timber.tag(tag).d("pairing request $pairingVariant")
         onSerialConnectError(IOException("context.getString(R.string.pairing_request)"))
       }
 
       BluetoothDevice.ACTION_BOND_STATE_CHANGED -> {
         val bondState = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, -1)
         val previousBondState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, -1)
-        Timber.tag(TAG).d("bond state $previousBondState->$bondState")
+        Timber.tag(tag).d("bond state $previousBondState->$bondState")
       }
 
-      else -> Timber.tag(TAG).d("unknown broadcast %s", intent.action)
+      else -> Timber.tag(tag).d("unknown broadcast %s", intent.action)
     }
   }
 
   override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
     // status directly taken from gat_api.h, e.g. 133=0x85=GATT_ERROR ~= timeout
     if (newState == BluetoothProfile.STATE_CONNECTED) {
-      Timber.tag(TAG).d("connect status $status, discoverServices")
+      Timber.tag(tag).d("connect status $status, discoverServices")
       if (!gatt.discoverServices()) onSerialConnectError(IOException("discoverServices failed"))
     } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
       // TODO: notify disconnected
@@ -190,13 +190,13 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
         onSerialConnectError(IOException("gatt status $status"))
       }
     } else {
-      Timber.tag(TAG).d("unknown connect state $newState $status")
+      Timber.tag(tag).d("unknown connect state $newState $status")
     }
     // continues asynchronously in onServicesDiscovered()
   }
 
   override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
-    Timber.tag(TAG).d("servicesDiscovered, status %s", status)
+    Timber.tag(tag).d("servicesDiscovered, status %s", status)
     if (canceled) return
     connectCharacteristics1(gatt)
   }
@@ -217,8 +217,8 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     if (canceled) return
     if (delegate == null || readCharacteristic == null || writeCharacteristic == null) {
       for (gattService in gatt.services) {
-        Timber.tag(TAG).d("service %s", gattService.uuid)
-        for (characteristic in gattService.characteristics) Timber.tag(TAG)
+        Timber.tag(tag).d("service %s", gattService.uuid)
+        for (characteristic in gattService.characteristics) Timber.tag(tag)
           .d("characteristic %s", characteristic.uuid)
       }
       onSerialConnectError(IOException("no serial profile found"))
@@ -228,16 +228,16 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
   }
 
   private fun connectCharacteristics2(gatt: BluetoothGatt) {
-    Timber.tag(TAG).d("request max MTU")
+    Timber.tag(tag).d("request max MTU")
     if (!gatt.requestMtu(MAX_MTU)) onSerialConnectError(IOException("request MTU failed"))
     // continues asynchronously in onMtuChanged
   }
 
   override fun onMtuChanged(gatt: BluetoothGatt, mtu: Int, status: Int) {
-    Timber.tag(TAG).d("mtu size $mtu, status=$status")
+    Timber.tag(tag).d("mtu size $mtu, status=$status")
     if (status == BluetoothGatt.GATT_SUCCESS) {
       payloadSize = mtu - 3
-      Timber.tag(TAG).d("payload size %s", payloadSize)
+      Timber.tag(tag).d("payload size %s", payloadSize)
     }
     connectCharacteristics3(gatt)
   }
@@ -260,16 +260,16 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     }
     val readProperties = readCharacteristic!!.properties
     if (readProperties and BluetoothGattCharacteristic.PROPERTY_INDICATE != 0) {
-      Timber.tag(TAG).d("enable read indication")
+      Timber.tag(tag).d("enable read indication")
       readDescriptor.value = BluetoothGattDescriptor.ENABLE_INDICATION_VALUE
     } else if (readProperties and BluetoothGattCharacteristic.PROPERTY_NOTIFY != 0) {
-      Timber.tag(TAG).d("enable read notification")
+      Timber.tag(tag).d("enable read notification")
       readDescriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
     } else {
       onSerialConnectError(IOException("no indication/notification for read characteristic ($readProperties)"))
       return
     }
-    Timber.tag(TAG).d("writing read characteristic descriptor")
+    Timber.tag(tag).d("writing read characteristic descriptor")
     if (!gatt.writeDescriptor(readDescriptor)) {
       onSerialConnectError(IOException("read characteristic CCCD descriptor not writable"))
     }
@@ -284,7 +284,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     delegate!!.onDescriptorWrite(gatt, descriptor, status)
     if (canceled) return
     if (descriptor.characteristic === readCharacteristic) {
-      Timber.tag(TAG).d("writing read characteristic descriptor finished, status=%s", status)
+      Timber.tag(tag).d("writing read characteristic descriptor finished, status=%s", status)
       if (status != BluetoothGatt.GATT_SUCCESS) {
         onSerialConnectError(IOException("write descriptor failed"))
       } else {
@@ -292,7 +292,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
         // before confirmed by this method, so receive data can be shown before device is shown as 'Connected'.
         onSerialConnect()
         connected = true
-        Timber.tag(TAG).d("connected")
+        Timber.tag(tag).d("connected")
       }
     }
   }
@@ -309,7 +309,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     if (characteristic === readCharacteristic) { // NOPMD - test object identity
       val data = readCharacteristic!!.value
       onSerialRead(data)
-      Timber.tag(TAG).d("read, len=%s", data.size)
+      Timber.tag(tag).d("read, len=%s", data.size)
     }
   }
 
@@ -324,7 +324,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     if (canceled) return
     if (characteristic === readCharacteristic) { // NOPMD - test object identity
       onSerialRead(value)
-      Timber.tag(TAG).d("read, len=%s", value.size)
+      Timber.tag(tag).d("read, len=%s", value.size)
     }
   }
 
@@ -342,7 +342,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
         writePending = true
       } else {
         writeBuffer.add(data0)
-        Timber.tag(TAG)
+        Timber.tag(tag)
           .d("write queued, len=%s", data0!!.size)
         data0 = null
       }
@@ -351,7 +351,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
           val from = i * payloadSize
           val to = Math.min(from + payloadSize, data.size)
           writeBuffer.add(Arrays.copyOfRange(data, from, to))
-          Timber.tag(TAG)
+          Timber.tag(tag)
             .d("write queued, len=%s", to - from)
         }
       }
@@ -361,7 +361,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
       if (!gatt!!.writeCharacteristic(writeCharacteristic)) {
         onSerialIoError(IOException("write failed"))
       } else {
-        Timber.tag(TAG).d("write started, len=%s", data0!!.size)
+        Timber.tag(tag).d("write started, len=%s", data0!!.size)
       }
     }
     // continues asynchronously in onCharacteristicWrite()
@@ -380,7 +380,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     delegate!!.onCharacteristicWrite(gatt, characteristic, status)
     if (canceled) return
     if (characteristic === writeCharacteristic) { // NOPMD - test object identity
-      Timber.tag(TAG).d("write finished, status=%s", status)
+      Timber.tag(tag).d("write finished, status=%s", status)
       writeNext()
     }
   }
@@ -401,7 +401,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
       if (!gatt!!.writeCharacteristic(writeCharacteristic)) {
         onSerialIoError(IOException("write failed"))
       } else {
-        Timber.tag(TAG).d("write started, len=%s", data.size)
+        Timber.tag(tag).d("write started, len=%s", data.size)
       }
     }
   }
@@ -456,7 +456,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
    */
   private inner class Cc245XDelegate : DeviceDelegate() {
     override fun connectCharacteristics(s: BluetoothGattService): Boolean {
-      Timber.tag(TAG).d("service cc254x uart")
+      Timber.tag(tag).d("service cc254x uart")
       readCharacteristic = s.getCharacteristic(BLE_CC254X_CHAR_RW)
       writeCharacteristic = s.getCharacteristic(BLE_CC254X_CHAR_RW)
       return true
@@ -465,7 +465,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
 
   private inner class MicrochipDelegate : DeviceDelegate() {
     override fun connectCharacteristics(s: BluetoothGattService): Boolean {
-      Timber.tag(TAG).d("service microchip uart")
+      Timber.tag(tag).d("service microchip uart")
       readCharacteristic = s.getCharacteristic(BLE_MICROCHIP_CHAR_RW)
       writeCharacteristic = s.getCharacteristic(BLE_MICROCHIP_CHAR_W)
       if (writeCharacteristic == null) writeCharacteristic = s.getCharacteristic(
@@ -477,7 +477,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
 
   private inner class NrfDelegate : DeviceDelegate() {
     override fun connectCharacteristics(s: BluetoothGattService): Boolean {
-      Timber.tag(TAG).d("service nrf uart")
+      Timber.tag(tag).d("service nrf uart")
       val rw2 = s.getCharacteristic(BLE_NRF_CHAR_RW2)
       val rw3 = s.getCharacteristic(BLE_NRF_CHAR_RW3)
       if (rw2 != null && rw3 != null) {
@@ -485,7 +485,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
         val rw3prop = rw3.properties
         val rw2write = rw2prop and BluetoothGattCharacteristic.PROPERTY_WRITE != 0
         val rw3write = rw3prop and BluetoothGattCharacteristic.PROPERTY_WRITE != 0
-        Timber.tag(TAG).d("characteristic properties $rw2prop/$rw3prop")
+        Timber.tag(tag).d("characteristic properties $rw2prop/$rw3prop")
         if (rw2write && rw3write) {
           onSerialConnectError(IOException("multiple write characteristics ($rw2prop/$rw3prop)"))
         } else if (rw2write) {
@@ -508,7 +508,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     private var readCredits = 0
     private var writeCredits = 0
     override fun connectCharacteristics(s: BluetoothGattService): Boolean {
-      Timber.tag(TAG).d("service telit tio 2.0")
+      Timber.tag(tag).d("service telit tio 2.0")
       readCredits = 0
       writeCredits = 0
       readCharacteristic = s.getCharacteristic(BLE_TIO_CHAR_RX)
@@ -545,12 +545,12 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
         return false
       }
       readCreditsDescriptor.value = BluetoothGattDescriptor.ENABLE_INDICATION_VALUE
-      Timber.tag(TAG).d("writing read credits characteristic descriptor")
+      Timber.tag(tag).d("writing read credits characteristic descriptor")
       if (!gatt!!.writeDescriptor(readCreditsDescriptor)) {
         onSerialConnectError(IOException("read credits characteristic CCCD descriptor not writable"))
         return false
       }
-      Timber.tag(TAG).d("writing read credits characteristic descriptor")
+      Timber.tag(tag).d("writing read credits characteristic descriptor")
       return false
       // continues asynchronously in connectCharacteristics2
     }
@@ -561,7 +561,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
       status: Int
     ) {
       if (d.characteristic === readCreditsCharacteristic) {
-        Timber.tag(TAG)
+        Timber.tag(tag)
           .d("writing read credits characteristic descriptor finished, status=%s", status)
         if (status != BluetoothGatt.GATT_SUCCESS) {
           onSerialConnectError(IOException("write credits descriptor failed"))
@@ -570,7 +570,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
         }
       }
       if (d.characteristic === readCharacteristic) {
-        Timber.tag(TAG).d("writing read characteristic descriptor finished, status=%s", status)
+        Timber.tag(tag).d("writing read characteristic descriptor finished, status=%s", status)
         if (status == BluetoothGatt.GATT_SUCCESS) {
           readCharacteristic!!.writeType = BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE
           writeCharacteristic!!.writeType = BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE
@@ -587,15 +587,15 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
       if (c === readCreditsCharacteristic) { // NOPMD - test object identity
         val newCredits = readCreditsCharacteristic!!.value[0].toInt()
         synchronized(writeBuffer) { writeCredits += newCredits }
-        Timber.tag(TAG).d("got write credits +$newCredits =$writeCredits")
+        Timber.tag(tag).d("got write credits +$newCredits =$writeCredits")
         if (!writePending && !writeBuffer.isEmpty()) {
-          Timber.tag(TAG).d("resume blocked write")
+          Timber.tag(tag).d("resume blocked write")
           writeNext()
         }
       }
       if (c === readCharacteristic) { // NOPMD - test object identity
         grantReadCredits()
-        Timber.tag(TAG).d("read, credits=%s", readCredits)
+        Timber.tag(tag).d("read, credits=%s", readCredits)
       }
     }
 
@@ -604,16 +604,16 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     ) {
       if (c === writeCharacteristic) { // NOPMD - test object identity
         synchronized(writeBuffer) { if (writeCredits > 0) writeCredits -= 1 }
-        Timber.tag(TAG).d("write finished, credits=%s", writeCredits)
+        Timber.tag(tag).d("write finished, credits=%s", writeCredits)
       }
       if (c === writeCreditsCharacteristic) { // NOPMD - test object identity
-        Timber.tag(TAG).d("write credits finished, status=%s", status)
+        Timber.tag(tag).d("write credits finished, status=%s", status)
       }
     }
 
     override fun canWrite(): Boolean {
       if (writeCredits > 0) return true
-      Timber.tag(TAG).d("no write credits")
+      Timber.tag(tag).d("no write credits")
       return false
     }
 
@@ -630,7 +630,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
         val newCredits = maxReadCredits - readCredits
         readCredits += newCredits
         val data = byteArrayOf(newCredits.toByte())
-        Timber.tag(TAG).d("grant read credits +$newCredits =$readCredits")
+        Timber.tag(tag).d("grant read credits +$newCredits =$readCredits")
         writeCreditsCharacteristic!!.value = data
         if (!gatt!!.writeCharacteristic(writeCreditsCharacteristic)) {
           if (connected) onSerialIoError(IOException("write read credits failed")) else onSerialConnectError(

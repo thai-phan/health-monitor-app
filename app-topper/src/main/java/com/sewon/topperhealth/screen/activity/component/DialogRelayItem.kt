@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -54,9 +55,9 @@ fun DialogRelayItem(
     }
   }
 
-  val deviceAddress by remember { mutableStateOf(MainActivity.classicClient.deviceAddress) }
+  val deviceAddress = ClassicClient.deviceAddress.observeAsState()
 
-  val connected by remember { mutableStateOf(MainActivity.classicClient.connected) }
+  val connected = ClassicClient.connected.observeAsState()
 
   Column(
     modifier = Modifier

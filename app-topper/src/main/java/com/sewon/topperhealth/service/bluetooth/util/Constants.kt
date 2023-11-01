@@ -24,4 +24,7 @@ object Constants {
 
   const val NO_VITAL_SIGN_THRESHOLD = 1200
   const val NO_TARGET_THRESHOLD = 1200
+
+  const val BLUETOOTH_NO_CONNECTION = "No connection"
+  const val BLUETOOTH_DISCONNECTED = "Disconnected"
 }

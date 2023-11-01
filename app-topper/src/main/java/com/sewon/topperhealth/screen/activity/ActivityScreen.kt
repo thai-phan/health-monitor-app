@@ -21,6 +21,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -50,6 +51,7 @@ import com.sewon.topperhealth.screen.activity.sub.ButtonAction
 import com.sewon.topperhealth.screen.activity.sub.SwitchAction
 import com.sewon.topperhealth.screen.activity.sub.TimeSelection
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
+import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import timber.log.Timber
 
 
@@ -63,12 +65,11 @@ fun SleepActivity(
   val context = LocalContext.current
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-  val log by remember {
-    MainActivity.lowEnergyClient.log
-  }
+  val log by LowEnergyClient.log.observeAsState()
+  val deviceAddress by LowEnergyClient.deviceAddress.observeAsState()
+  val isAlarm by LowEnergyClient.isAlarm.observeAsState()
 
-
-  val deviceAddress by MainActivity.lowEnergyService.deviceAddress
+  val isStarted = remember { mutableStateOf(false) }
 
 
   fun composeConnectToSensor() {
@@ -85,9 +86,6 @@ fun SleepActivity(
       Timber.tag("composeConnectToSensor").w(exception)
     }
   }
-
-  val isStarted = remember { mutableStateOf(false) }
-  val isAlarm = remember { MainActivity.lowEnergyClient.isAlarm }
 
 
   fun startSleep() {
@@ -116,11 +114,6 @@ fun SleepActivity(
     MainActivity.alarmPendingIntent =
       PendingIntent.getBroadcast(context, 1234, alarmIntent, PendingIntent.FLAG_MUTABLE)
 
-//    val calendar = GregorianCalendar.getInstance()
-//    calendar[GregorianCalendar.SECOND] = calendar[GregorianCalendar.SECOND] + 5
-
-//    MainActivity.alarmManager
-//      .setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), DAY, MainActivity.alarmPendingIntent)
     MainActivity.alarmManager.set(
       AlarmManager.RTC_WAKEUP,
       endTimeCalendar.timeInMillis,
@@ -145,11 +138,8 @@ fun SleepActivity(
     navController.navigate(Destinations.REPORT_ROUTE)
   }
 
-
   var openAssessmentModal by rememberSaveable { mutableStateOf(false) }
   var openQualityModal by rememberSaveable { mutableStateOf(false) }
-
-
 
   Column(
     modifier = modifier
@@ -186,16 +176,18 @@ fun SleepActivity(
       TimeSelection(uiState.startTime, uiState.endTime)
       SwitchAction()
       Spacer(modifier = Modifier.height(10.dp))
-      ButtonAction(
-        isStarted.value, isAlarm.value,
-        startSleep = { startSleep() },
-        cancelSleep = {
-          cancelSleep()
-          openAssessmentModal = !openAssessmentModal
-        },
-        stopAlarm = { stopAlarm() }
-      )
-      Text(log)
+      isAlarm?.let {
+        ButtonAction(
+          isStarted.value, it,
+          startSleep = { startSleep() },
+          cancelSleep = {
+            cancelSleep()
+            openAssessmentModal = !openAssessmentModal
+          },
+          stopAlarm = { stopAlarm() }
+        )
+      }
+      log?.let { Text(it) }
     }
 
     if (openAssessmentModal) {

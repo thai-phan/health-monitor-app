@@ -41,7 +41,9 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class LowEnergyService : Service() {
-  val TAG = this.javaClass.name
+
+
+  val tag: String = this.javaClass.name
 
   private val job = SupervisorJob()
   private val scope = CoroutineScope(Dispatchers.IO + job)
@@ -64,9 +66,6 @@ class LowEnergyService : Service() {
   private var lowEnergyClient: LowEnergyClient? = null
   private var connected = false
 
-  val deviceAddress = mutableStateOf("")
-  val deviceName = mutableStateOf("")
-//  val deviceUUID = mutableStateOf("")
 
   private lateinit var playerSleepInduce: MediaPlayer
   val isPlaySoundSleepInduce = mutableStateOf(true)
@@ -92,7 +91,7 @@ class LowEnergyService : Service() {
   fun updateCurrentSessionRefValue(refHRV: Double, refHR: Double, refBR: Double) {
     scope.launch {
       sessionRepository.updateSessionRefValue(sessionId, refHRV, refHR, refBR)
-      Timber.tag(TAG).d("updateCurrentSessionRefValue")
+      Timber.tag(tag).d("updateCurrentSessionRefValue")
     }
   }
 

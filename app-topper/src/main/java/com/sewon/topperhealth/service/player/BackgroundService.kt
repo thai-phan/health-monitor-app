@@ -36,8 +36,4 @@ class BackgroundSoundService : Service() {
   }
 
   override fun onLowMemory() {}
-
-  companion object {
-    private val TAG: String? = null
-  }
 }

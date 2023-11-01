@@ -29,6 +29,7 @@ import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.screen.a0common.theme.BackgroundTop
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
+import com.sewon.topperhealth.service.bluetooth.ClassicClient
 import com.sewon.topperhealth.service.bluetooth.ClassicGatt
 import com.sewon.topperhealth.service.bluetooth.util.Connected
 import timber.log.Timber
@@ -51,9 +52,9 @@ fun DialogRelay(onDismissRequest: () -> Unit) {
       val device = adapter.getRemoteDevice(classicDevice.address)
       val classicGatt = ClassicGatt(context, device)
       MainActivity.classicService.connect(classicGatt)
-      MainActivity.classicClient.connected.value = Connected.Pending
-      MainActivity.classicClient.deviceAddress.value = device.address
-      MainActivity.classicClient.deviceName.value = device.name
+      ClassicClient.connected.value = Connected.Pending
+      ClassicClient.deviceAddress.value = device.address
+      ClassicClient.deviceName.value = device.name
 
     } catch (exception: Exception) {
       Timber.tag("composeConnectToRelay").w(exception)
