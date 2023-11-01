@@ -15,7 +15,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.sewon.topperhealth.MainActivity
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.activity.component.DialogRelay
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
@@ -57,7 +59,7 @@ fun SwitchAction() {
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
   ) {
-    Text("수면유도에너지")
+    Text(stringResource(R.string.setting_c_sleep_inducing_energy))
     Button(onClick = {
       isRelayDialog.value = !isRelayDialog.value
     }) {
@@ -76,7 +78,7 @@ fun SwitchAction() {
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
   ) {
-    Text("수면유도사운드")
+    Text(stringResource(R.string.setting_c_sleep_inducing_energy))
     isPlaySound?.let { it ->
       CustomSwitch(checked = it,
         onCheckedChange = {

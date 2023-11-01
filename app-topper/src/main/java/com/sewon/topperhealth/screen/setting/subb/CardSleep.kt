@@ -25,9 +25,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.setting.subb.component.ModalAWakeUpTime
@@ -58,7 +60,7 @@ fun SleepSetting(
         .padding(20.dp)
 
     ) {
-      Text("수면설정", style = topperTypography.titleMedium)
+      Text(stringResource(R.string.setting_b_sleep_setting), style = topperTypography.titleMedium)
 
       Row(
         modifier = Modifier
@@ -68,7 +70,7 @@ fun SleepSetting(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {
-        Text("기상알람시간")
+        Text(stringResource(R.string.wakeup_time))
         Row {
           Text(uiState.wakeupTimeStr)
           Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -92,7 +94,7 @@ fun SleepSetting(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {
-        Text("취침시간")
+        Text(stringResource(R.string.bedtime))
         Row {
           Text(uiState.sleepTimeStr)
           Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -118,7 +120,7 @@ fun SleepSetting(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {
-        Text("알람설정")
+        Text(stringResource(R.string.setting_b_alarm_setting))
         Row {
           Text(uiState.alarmBehavior)
           Spacer(Modifier.size(ButtonDefaults.IconSpacing))

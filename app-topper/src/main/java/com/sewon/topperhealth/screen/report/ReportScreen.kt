@@ -14,10 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.report.suba.SessionSelection
 import com.sewon.topperhealth.screen.report.subb.SleepChart
@@ -48,7 +50,7 @@ fun ReportScreen(
       )
   ) {
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-      Text("수면 리포트", style = topperTypography.headlineSmall)
+      Text(stringResource(R.string.report_sleep_report), style = topperTypography.headlineSmall)
     }
     if (uiState.sessionList.isNotEmpty()) {
       SessionSelection(uiState.sessionList, selectReportSession = {

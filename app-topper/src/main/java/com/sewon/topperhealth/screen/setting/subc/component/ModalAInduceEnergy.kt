@@ -19,7 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,11 +41,10 @@ fun ModalAInduceEnergy(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("수면유도 에너지", style = topperTypography.titleLarge)
+      Text(stringResource(R.string.setting_c_sleep_inducing_energy), style = topperTypography.titleLarge)
       Spacer(modifier = Modifier.height(20.dp))
       Text(
-        "미주신경 자극으로 심신을 안정화시켜 잠에 빨리 들 수 있도록 도와줍니다. " +
-            "소리에 민감한 사용자에게 추천합니다."
+        stringResource(R.string.setting_c_sleep_inducing_energy_message)
       )
       Spacer(modifier = Modifier.height(20.dp))
 
@@ -54,11 +55,12 @@ fun ModalAInduceEnergy(
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
-          Text("취소")
+          Text(stringResource(R.string.cancel))
+
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {}) {
-          Text("저장")
+          Text(stringResource(R.string.save))
         }
       }
     }

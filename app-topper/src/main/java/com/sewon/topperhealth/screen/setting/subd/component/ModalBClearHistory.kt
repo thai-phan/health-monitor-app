@@ -19,7 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 
@@ -40,15 +42,12 @@ fun ModalBClearHistory(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("수면기록 모두 지우기", style = topperTypography.titleLarge)
+      Text(stringResource(R.string.setting_d_clear), style = topperTypography.titleLarge)
 
       Spacer(modifier = Modifier.height(20.dp))
 
 
-      Text(
-        "실행으로 모든 수면 기록과 분석결과가 삭제되어 과거 레포트를 확인하실 수 없습니다.\n" +
-            "실행 하시겠습니까?"
-      )
+      Text(stringResource(R.string.setting_d_clear_question))
       Spacer(modifier = Modifier.height(20.dp))
 
       Row(
@@ -58,11 +57,12 @@ fun ModalBClearHistory(
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
-          Text("취소")
+          Text(stringResource(R.string.cancel))
+
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {}) {
-          Text("저장")
+          Text(stringResource(R.string.save))
         }
       }
     }

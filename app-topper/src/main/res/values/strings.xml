@@ -7,11 +7,49 @@
 
   <!--  User page -->
   <string name="setting_title">My Setting</string>
-  <string name="profile">Profile</string>
 
   <string name="user_not_found">User not found</string>
   <string name="loading_user_error">Error while loading user</string>
-
   <string name="setting_not_found">Setting not found</string>
+
+  <string name="report_sleep_report">Sleep Report</string>
+
+
+  <string name="setting_a_profile">Profile</string>
+  <string name="setting_a_gender">Gender</string>
+  <string name="setting_a_age">Age</string>
+
+  <string name="setting_b_sleep_setting">Sleep settings</string>
+  <string name="wakeup_time">Wake-up time</string>
+  <string name="bedtime">Bed Time</string>
+  <string name="setting_b_alarm_setting">Alarm Settings</string>
+
+  <string name="setting_c_sleep_inducing_solution">Sleep-inducing solution</string>
+  <string name="setting_c_sleep_inducing_energy">Sleep-inducing energy</string>
+  <string name="setting_c_sleep_inducing_sound">Sleep-inducing sound</string>
+  <string name="setting_c_sleep_score_thresholds">Sleep Score Thresholds</string>
+
+  <string name="setting_d_general_setting">General Settings</string>
+  <string name="setting_d_access">Access to cell phone cache</string>
+  <string name="setting_d_clear">Clear all sleep history</string>
+  <string name="setting_d_access_cellphone_cache">Set cell phone cache access rights</string>
+  <string name="setting_d_cache_question">You cannot use the service if you do not have access to the mobile phone cache. Do you want to allow access?</string>
+  <string name="setting_d_clear_question">All sleep records and analysis results have been deleted by execution, so you cannot check the past report. Do you want to run it?</string>
+  <string name="setting_d_recipient_setting">Alarm recipient settings</string>
+  <string name="setting_d_relation">Relation</string>
+  <string name="setting_d_emergency">Emergency SOS recipient settings</string>
+
+  <string name="setting_e_product_registration">Product Registration / Connection</string>
+  <string name="setting_e_product_number">Product number registration (S/N)</string>
+  <string name="setting_e_bluetooth">Bluetooth connection</string>
+  <string name="setting_d_contact_information">Contact information</string>
+  <string name="cancel">Cancel</string>
+  <string name="save">Save</string>
+  <string name="male">Male</string>
+  <string name="female">Female</string>
+  <string name="setting_c_sleep_inducing_energy_message">It stabilizes the mind and body by stimulating the vagus nerve and helps you fall asleep quickly. Recommended for sound-sensitive users.</string>
+  <string name="setting_c_sleep_inducing_sound_message">It induces alpha waves by using the patented MC Square brain synchronization sound to help you fall asleep quickly. Recommended for users familiar with white noise.</string>
+  <string name="sleep_quality_index">Sleep Quality Index (SQI)</string>
+
 
 </resources>

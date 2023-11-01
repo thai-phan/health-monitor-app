@@ -23,7 +23,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 
@@ -77,13 +79,14 @@ fun ModalQuality(
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
-          Text("취소")
+          Text(stringResource(R.string.cancel))
+
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {
           onSaveQuality(rating, memo)
         }) {
-          Text("저장")
+          Text(stringResource(R.string.save))
         }
       }
     }

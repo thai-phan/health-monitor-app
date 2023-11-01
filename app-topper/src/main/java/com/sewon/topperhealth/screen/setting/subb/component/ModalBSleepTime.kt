@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.topperhealth.R
@@ -51,7 +52,7 @@ fun ModalBSleepTime(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("취침시간", style = topperTypography.titleLarge)
+      Text(stringResource(R.string.bedtime), style = topperTypography.titleLarge)
 
       Row(
         modifier = Modifier
@@ -85,14 +86,15 @@ fun ModalBSleepTime(
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
-          Text("취소")
+          Text(stringResource(R.string.cancel))
+
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {
           onChangeBedTime(time)
           onToggleModal()
         }) {
-          Text("저장")
+          Text(stringResource(R.string.save))
         }
       }
     }

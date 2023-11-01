@@ -8,8 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.a0common.timepicker.TimeRangePicker
 
@@ -24,7 +26,7 @@ fun TimeSelection(startTime: TimeRangePicker.Time, endTime: TimeRangePicker.Time
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
-      Text("취침시간")
+      Text(stringResource(R.string.bedtime))
       Text(startTime.toString(), style = topperTypography.headlineLarge)
     }
     Column(
@@ -32,7 +34,7 @@ fun TimeSelection(startTime: TimeRangePicker.Time, endTime: TimeRangePicker.Time
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
-      Text("기상시간")
+      Text(stringResource(R.string.wakeup_time))
       Text(endTime.toString(), style = topperTypography.headlineLarge)
     }
   }

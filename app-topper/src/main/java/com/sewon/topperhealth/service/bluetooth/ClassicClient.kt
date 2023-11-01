@@ -1,12 +1,10 @@
 package com.sewon.topperhealth.service.bluetooth
 
+
 import androidx.lifecycle.MutableLiveData
 import com.sewon.topperhealth.service.bluetooth.util.Connected
 import com.sewon.topperhealth.service.bluetooth.util.Constants.BLUETOOTH_DISCONNECTED
 import com.sewon.topperhealth.service.bluetooth.util.Constants.BLUETOOTH_NO_CONNECTION
-
-
-import timber.log.Timber
 import java.util.ArrayDeque
 
 
@@ -18,7 +16,6 @@ class ClassicClient {
   }
 
   val tag: String = this.javaClass.name
-
 
   fun onClientConnect() {
     connected.value = Connected.True

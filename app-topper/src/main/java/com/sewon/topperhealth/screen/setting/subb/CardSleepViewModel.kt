@@ -94,6 +94,4 @@ class ViewModelCardSleep @Inject constructor(
     }
     return Async.Success(setting)
   }
-
-
 }

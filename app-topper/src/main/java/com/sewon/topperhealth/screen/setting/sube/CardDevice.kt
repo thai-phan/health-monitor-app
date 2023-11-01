@@ -19,9 +19,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
@@ -40,13 +42,16 @@ fun DeviceConnectionSetting() {
         .padding(20.dp)
 
     ) {
-      Text("제품등록 / 연결", style = topperTypography.titleMedium)
+      Text(
+        stringResource(R.string.setting_e_product_registration),
+        style = topperTypography.titleMedium
+      )
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
       ) {
-        Text("제품번호등록 (S/N)")
+        Text(stringResource(R.string.setting_e_product_number))
 
         var checked by remember { mutableStateOf(true) }
 
@@ -63,7 +68,7 @@ fun DeviceConnectionSetting() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
       ) {
-        Text("블루투스연결")
+        Text(stringResource(R.string.setting_e_bluetooth))
 
         var checked by remember { mutableStateOf(true) }
 

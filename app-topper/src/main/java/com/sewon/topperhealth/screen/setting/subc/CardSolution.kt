@@ -21,9 +21,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
@@ -50,7 +52,10 @@ fun InductionSolutionSetting() {
         .padding(20.dp)
 
     ) {
-      Text("수면유도 솔루션", style = topperTypography.titleMedium)
+      Text(
+        stringResource(R.string.setting_c_sleep_inducing_solution),
+        style = topperTypography.titleMedium
+      )
 
       Row(
         modifier = Modifier
@@ -59,7 +64,7 @@ fun InductionSolutionSetting() {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {
-        Text("수면유도 에너지")
+        Text(stringResource(R.string.setting_c_sleep_inducing_energy))
 
         var checked by remember { mutableStateOf(true) }
 
@@ -78,7 +83,7 @@ fun InductionSolutionSetting() {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {
-        Text("수면유도 사운드")
+        Text(stringResource(R.string.setting_c_sleep_inducing_sound))
 
         var checked by remember { mutableStateOf(true) }
 
@@ -97,7 +102,7 @@ fun InductionSolutionSetting() {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
       ) {
-        Text("수면점수 임계값 설정")
+        Text(stringResource(R.string.setting_c_sleep_score_thresholds))
 
         var checked by remember { mutableStateOf(true) }
 

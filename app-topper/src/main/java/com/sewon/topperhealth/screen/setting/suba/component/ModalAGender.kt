@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sewon.topperhealth.R
@@ -44,7 +45,7 @@ fun ModalAGender(
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("연령", style = topperTypography.titleLarge)
+      Text(stringResource(R.string.setting_a_age), style = topperTypography.titleLarge)
 
       Row(
         modifier = Modifier
@@ -79,14 +80,15 @@ fun ModalAGender(
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
-          Text("취소")
+          Text(stringResource(R.string.cancel))
+
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {
           onChangeGender(gender)
           onToggleModal()
         }) {
-          Text("저장")
+          Text(stringResource(R.string.save))
         }
       }
     }

@@ -20,9 +20,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
@@ -51,7 +53,7 @@ fun GeneralSetting() {
         .padding(20.dp)
 
     ) {
-      Text("일반설정", style = topperTypography.titleMedium)
+      Text(stringResource(R.string.setting_d_general_setting), style = topperTypography.titleMedium)
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -59,9 +61,7 @@ fun GeneralSetting() {
           .fillMaxWidth()
           .clickable(onClick = { openDeviceAccessModal = !openDeviceAccessModal })
       ) {
-//                Cell phone cache access rights
-        Text("핸드폰 캐시 접근 권한")
-
+        Text(stringResource(R.string.setting_d_access))
 
         CustomSwitch(
           modifier = Modifier.semantics { contentDescription = "Demo" },
@@ -78,8 +78,7 @@ fun GeneralSetting() {
           .fillMaxWidth()
           .clickable(onClick = { openClearHistoryModal = !openClearHistoryModal })
       ) {
-//                Clear all sleep history
-        Text("수면 기록 모두 지우기")
+        Text(stringResource(R.string.setting_d_clear))
 
         CustomSwitch(
           modifier = Modifier.semantics { contentDescription = "Demo" },
@@ -96,8 +95,7 @@ fun GeneralSetting() {
           .fillMaxWidth()
           .clickable(onClick = { openSOSRecipientModal = !openSOSRecipientModal })
       ) {
-//                Emergency SOS Recipient Settings
-        Text("위급 SOS 수신자 설정")
+        Text(stringResource(R.string.setting_d_emergency))
 
         CustomSwitch(
           modifier = Modifier.semantics { contentDescription = "Demo" },

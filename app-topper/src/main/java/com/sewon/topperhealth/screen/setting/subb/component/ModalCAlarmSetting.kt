@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.sewon.topperhealth.R
@@ -65,7 +66,7 @@ fun ModalCAlarmSetting(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("알람설정", style = topperTypography.titleLarge)
+      Text(stringResource(R.string.setting_b_alarm_setting), style = topperTypography.titleLarge)
 
       Column(
         modifier = Modifier
@@ -111,14 +112,15 @@ fun ModalCAlarmSetting(
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
-          Text("취소")
+          Text(stringResource(R.string.cancel))
+
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {
           onChangeAlarmType(selectedOption)
           onToggleModal()
         }) {
-          Text("저장")
+          Text(stringResource(R.string.save))
         }
       }
     }

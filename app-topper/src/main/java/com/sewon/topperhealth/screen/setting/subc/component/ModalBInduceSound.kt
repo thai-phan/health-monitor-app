@@ -19,7 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 
@@ -41,11 +43,12 @@ fun ModalBInduceSound(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("수면유도 사운드", style = topperTypography.titleLarge)
-      Spacer(modifier = Modifier.height(20.dp))
       Text(
-        "특허받은 엠씨스퀘어 브레인동조화 사운드를 이용해 알파파를 유도하여 잠에 빨리 들 수 있도록 도와줍니다. 백색소음에 익숙한 사용자에게 추천합니다"
+        stringResource(R.string.setting_c_sleep_inducing_sound),
+        style = topperTypography.titleLarge
       )
+      Spacer(modifier = Modifier.height(20.dp))
+      Text(stringResource(R.string.setting_c_sleep_inducing_sound_message))
       Spacer(modifier = Modifier.height(20.dp))
 
       Row(
@@ -55,11 +58,12 @@ fun ModalBInduceSound(
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
-          Text("취소")
+          Text(stringResource(R.string.cancel))
+
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {}) {
-          Text("저장")
+          Text(stringResource(R.string.save))
         }
       }
     }

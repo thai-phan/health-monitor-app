@@ -63,21 +63,6 @@ class ViewModelCardProfile @Inject constructor(
 
   init {
     loadData()
-
-//        https://stackoverflow.com/questions/73839026/jetpack-compose-displaying-data-in-compose-using-mvvm
-    CoroutineScope(Dispatchers.IO).launch {
-      Timber.tag("Timber").d("CoroutineScope IO")
-//            userSetting = userSettingRepository.loadUserSetting()
-//            print(userSetting.first().get(0).gender)
-    }
-//            /* _posts.value is used now due to the datatype change */
-//            _posts.value = KtorClient.httpClient.get("https://learnchn.herokuapp.com/") {
-//                header("Content-Type", "application/json")
-//            }
-//
-//            Log.d("HomeViewModel", "init: ${_posts.value[1].phrase}")
-//            Log.d("HomeViewModel", "init: ${_posts.value[1].id}")
-//        }
   }
 
   fun changeGender(gender: String) = viewModelScope.launch {

@@ -20,7 +20,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 
@@ -43,23 +45,40 @@ fun ModalCSOSRecipient(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("알람 수신자 설정", style = topperTypography.titleLarge)
+      Text(
+        stringResource(R.string.setting_d_recipient_setting),
+        style = topperTypography.titleLarge
+      )
 
       Spacer(modifier = Modifier.height(20.dp))
 
       Row {
-        TextField(modifier = Modifier.weight(1f), value = "관계", onValueChange = {})
-        TextField(modifier = Modifier.weight(1f), value = "연락처", onValueChange = {})
+        TextField(
+          stringResource(R.string.setting_d_relation),
+          modifier = Modifier.weight(1f),
+          onValueChange = {})
+        TextField(stringResource(R.string.setting_d_contact_information),
+          modifier = Modifier.weight(1f),
+          onValueChange = {})
       }
 
       Row() {
-        TextField(modifier = Modifier.weight(1f), value = "관계", onValueChange = {})
-        TextField(modifier = Modifier.weight(1f), value = "연락처", onValueChange = {})
+        TextField(
+          stringResource(R.string.setting_d_relation),
+          modifier = Modifier.weight(1f),
+          onValueChange = {})
+        TextField(stringResource(R.string.setting_d_contact_information),
+          modifier = Modifier.weight(1f),
+          onValueChange = {})
       }
 
       Row {
-        TextField(modifier = Modifier.weight(1f), value = "관계", onValueChange = {})
-        TextField(modifier = Modifier.weight(1f), value = "연락처", onValueChange = {})
+        TextField(stringResource(R.string.setting_d_relation),
+          modifier = Modifier.weight(1f),
+          onValueChange = {})
+        TextField(stringResource(R.string.setting_d_contact_information),
+          modifier = Modifier.weight(1f),
+          onValueChange = {})
       }
       Spacer(modifier = Modifier.height(20.dp))
 
@@ -70,11 +89,11 @@ fun ModalCSOSRecipient(
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
-          Text("취소")
+          Text(stringResource(R.string.cancel))
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {}) {
-          Text("저장")
+          Text(stringResource(R.string.save))
         }
       }
     }

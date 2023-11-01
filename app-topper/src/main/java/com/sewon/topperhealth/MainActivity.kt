@@ -30,11 +30,9 @@ class MainActivity : ComponentActivity() {
 
     lateinit var alarmManager: AlarmManager
     lateinit var alarmPendingIntent: PendingIntent
-    lateinit var reportDataProcessing: ReportDataProcessing
 
     var lowEnergyClient = LowEnergyClient()
     var classicClient = ClassicClient()
-
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {

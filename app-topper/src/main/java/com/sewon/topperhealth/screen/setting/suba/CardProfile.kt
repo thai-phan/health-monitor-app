@@ -60,7 +60,7 @@ fun ProfileSetting(
 
     ) {
       Text(
-        stringResource(R.string.profile),
+        stringResource(R.string.setting_a_profile),
         fontSize = 18.sp,
         fontWeight = FontWeight(900),
         color = Color(0xFFEDEDED)
@@ -74,7 +74,7 @@ fun ProfileSetting(
           .height(height)
           .clickable(onClick = { openGenderModal = !openGenderModal }),
       ) {
-        Text("성별")
+        Text(stringResource(R.string.setting_a_gender))
         Row() {
           Text(uiState.gender, color = Color.White)
           Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -96,7 +96,7 @@ fun ProfileSetting(
           .height(height)
           .clickable(onClick = { openDateModal = !openDateModal }),
       ) {
-        Text("연령")
+        Text(stringResource(R.string.setting_a_age))
         Row() {
           Text(uiState.birthday, color = Color.White)
           Spacer(Modifier.size(ButtonDefaults.IconSpacing))

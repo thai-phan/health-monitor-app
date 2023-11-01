@@ -19,7 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 
@@ -40,10 +42,10 @@ fun ModalADeviceAccess(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("핸드폰 캐시 접근 권한 설정", style = topperTypography.titleLarge)
+      Text(stringResource(R.string.setting_d_access_cellphone_cache), style = topperTypography.titleLarge)
       Spacer(modifier = Modifier.height(20.dp))
 
-      Text("핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?")
+      Text(stringResource(R.string.setting_d_cache_question))
 
       Spacer(modifier = Modifier.height(20.dp))
       Row(
@@ -53,11 +55,11 @@ fun ModalADeviceAccess(
         horizontalArrangement = Arrangement.Center
       ) {
         Button(onClick = onToggleModal) {
-          Text("취소")
+          Text(stringResource(R.string.cancel))
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {}) {
-          Text("저장")
+          Text(stringResource(R.string.save))
         }
       }
     }
