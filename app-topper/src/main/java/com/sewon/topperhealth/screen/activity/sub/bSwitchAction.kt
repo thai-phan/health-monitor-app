@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +19,7 @@ import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.activity.component.DialogRelay
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
+import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import com.sewon.topperhealth.service.bluetooth.util.Connected
 import com.sewon.topperhealth.service.bluetooth.util.TextUtil
 
@@ -27,10 +27,12 @@ import com.sewon.topperhealth.service.bluetooth.util.TextUtil
 @Composable
 fun SwitchAction() {
   val context = LocalContext.current
-  val isPlaySoundSleepInduceUI by MainActivity.lowEnergyService.isPlaySoundSleepInduce
+
   val isRelayDialog = rememberSaveable { mutableStateOf(false) }
   val isRelayClose = rememberSaveable { mutableStateOf(false) }
-  val deviceName  = ClassicClient.deviceName.observeAsState()
+
+  val isPlaySound by LowEnergyService.isPlaySound.observeAsState()
+  val deviceName = ClassicClient.deviceName.observeAsState()
   val connected = ClassicClient.connected.observeAsState()
 
   fun toggleRelay(value: Boolean) {
@@ -75,10 +77,12 @@ fun SwitchAction() {
     verticalAlignment = Alignment.CenterVertically
   ) {
     Text("수면유도사운드")
-    CustomSwitch(checked = isPlaySoundSleepInduceUI,
-      onCheckedChange = {
-        toggleSound(it)
-      })
+    isPlaySound?.let { it ->
+      CustomSwitch(checked = it,
+        onCheckedChange = {
+          toggleSound(it)
+        })
+    }
   }
   if (isRelayDialog.value) {
     DialogRelay(onDismissRequest = {

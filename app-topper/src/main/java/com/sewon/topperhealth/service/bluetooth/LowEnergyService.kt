@@ -13,8 +13,8 @@ import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.MutableLiveData
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.service.algorithm.sleep.TopperData
 import com.sewon.topperhealth.data.model.toLocal
@@ -41,7 +41,9 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class LowEnergyService : Service() {
-
+  companion object {
+    val isPlaySound = MutableLiveData(true)
+  }
 
   val tag: String = this.javaClass.name
 
@@ -67,22 +69,22 @@ class LowEnergyService : Service() {
   private var connected = false
 
 
-  private lateinit var playerSleepInduce: MediaPlayer
-  val isPlaySoundSleepInduce = mutableStateOf(true)
+  private lateinit var playerInduce: MediaPlayer
+
 
   fun toggleSoundSleepInduce(value: Boolean) {
-    isPlaySoundSleepInduce.value = value
+    isPlaySound.value = value
   }
 
   fun playSoundSleepInduce() {
-    if (isPlaySoundSleepInduce.value) {
-      playerSleepInduce = MediaPlayer.create(this, R.raw.sleep_induce_sound_2)
-      playerSleepInduce.start()
+    if (isPlaySound.value == true) {
+      playerInduce = MediaPlayer.create(this, R.raw.sleep_induce_sound_2)
+      playerInduce.start()
     }
   }
 
   fun stopSoundSleepInduce() {
-    playerSleepInduce.stop()
+    playerInduce.stop()
   }
 
   var sessionId = 0
@@ -91,7 +93,6 @@ class LowEnergyService : Service() {
   fun updateCurrentSessionRefValue(refHRV: Double, refHR: Double, refBR: Double) {
     scope.launch {
       sessionRepository.updateSessionRefValue(sessionId, refHRV, refHR, refBR)
-      Timber.tag(tag).d("updateCurrentSessionRefValue")
     }
   }
 
@@ -203,7 +204,7 @@ class LowEnergyService : Service() {
                 lastRead.init() // (2)
               }
               if (lowEnergyClient != null) {
-                datas.let { lowEnergyClient!!.onClientRead(it) }
+                datas.let { lowEnergyClient!!.onClientReadLE(it) }
               }
             }
           }

@@ -158,7 +158,6 @@ class ClassicService : Service() {
     if (connected) {
       synchronized(this) {
         mainLooper.post {
-          Timber.tag(tag).d("onSerialIoError")
           connected = false
           client!!.onClientIoError(e)
         }

@@ -28,13 +28,11 @@ class LowEnergyClient {
     isAlarm.value = true
   }
 
-  // TODO:
   fun stopAlarmListener() {
     isAlarm.value = false
     AlarmReceiver.ringtone.stop()
     AlarmReceiver.vibrator.cancel()
   }
-
 
   fun onClientConnect() {
     connected.value = Connected.True
@@ -44,14 +42,14 @@ class LowEnergyClient {
     connected.value = Connected.False
   }
 
-  fun onClientRead(data: ByteArray) {
+  fun onClientReadLE(data: ByteArray) {
     val datas = ArrayDeque<ByteArray>()
     datas.add(data)
-    receive(datas)
+    onClientReceiveLE(datas)
   }
 
-  fun onClientRead(datas: ArrayDeque<ByteArray>) {
-    receive(datas)
+  fun onClientReadLE(datas: ArrayDeque<ByteArray>) {
+    onClientReceiveLE(datas)
   }
 
   fun onSerialIoError(e: Exception) {
@@ -60,7 +58,7 @@ class LowEnergyClient {
 
   private var sensorLoopCount = 0
 
-  private fun receive(datas: ArrayDeque<ByteArray>) {
+  private fun onClientReceiveLE(datas: ArrayDeque<ByteArray>) {
     val stringBuilder = SpannableStringBuilder()
     for (data in datas) {
       if (hexEnabled) {

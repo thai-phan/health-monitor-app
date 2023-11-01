@@ -1,6 +1,5 @@
 package com.sewon.topperhealth.service.bluetooth.util
 
-import com.sewon.topperhealth.service.bluetooth.ClassicService
 import java.util.ArrayDeque
 
 enum class QueueType {

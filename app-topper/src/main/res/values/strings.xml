@@ -2,8 +2,8 @@
   <string name="app_name">IntelliNest</string>
 
   <string name="activity_page">Activity</string>
-  <string name="report_page">리포트</string>
-  <string name="setting_page">내정보</string>
+  <string name="report_page">Report</string>
+  <string name="setting_page">Setting</string>
 
   <!--  User page -->
   <string name="setting_title">My Setting</string>

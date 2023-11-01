@@ -17,7 +17,6 @@ class ClassicClient {
     var deviceName = MutableLiveData(BLUETOOTH_NO_CONNECTION)
   }
 
-  //  val itemState by viewModel.itemsLiveData.observeAsState()
   val tag: String = this.javaClass.name
 
 
@@ -33,7 +32,6 @@ class ClassicClient {
     connected.value = Connected.False
     deviceAddress.value = ""
     deviceName.value = BLUETOOTH_DISCONNECTED
-//    service.disconnect()
   }
 
   fun onClientRead(data: ByteArray) {
@@ -47,12 +45,10 @@ class ClassicClient {
   }
 
   fun onClientIoError(e: Exception) {
-    Timber.tag(tag).d("onClientIoError")
     disconnect()
-
   }
 
-
   private fun receive(datas: ArrayDeque<ByteArray>) {
+
   }
 }
