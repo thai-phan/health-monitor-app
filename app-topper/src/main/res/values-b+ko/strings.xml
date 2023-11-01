@@ -53,6 +53,13 @@
   <string name="setting_c_sleep_inducing_energy_message">미주신경 자극으로 심신을 안정화시켜 잠에 빨리 들 수 있도록 도와줍니다. 소리에 민감한 사용자에게 추천합니다.</string>
   <string name="setting_c_sleep_inducing_sound_message">특허받은 엠씨스퀘어 브레인동조화 사운드를 이용해 알파파를 유도하여 잠에 빨리 들 수 있도록 도와줍니다. 백색소음에 익숙한 사용자에게 추천합니다.</string>
   <string name="sleep_quality_index">수면품질지표(SQI)</string>
+  <string name="sleep_stage">수면단계</string>
+  <string name="nervous_balance">자율 신경계 밸런스</string>
+  <string name="stress_score">스트레스 점수</string>
+  <string name="total_sleep_time">총수면 시간</string>
+  <string name="sleep_efficiency">수면효율</string>
+  <string name="sleep_delay_time">수면지연 시간</string>
+  <string name="sleep_awakening_time">수면각성 시간</string>
 
 
 </resources>

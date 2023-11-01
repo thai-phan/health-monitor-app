@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.report.UiState
 import com.sewon.topperhealth.screen.report.component.CircularChart
 
@@ -20,27 +22,28 @@ fun SleepChart(uiState: UiState) {
   Row() {
     CircularChart(
       modifier = Modifier.weight(1f),
-      label = "총수면 시간",
+      label = stringResource(R.string.total_sleep_time),
       angle = uiState.sleepTime,
       brush = yellowBrush
     )
 
     CircularChart(
       modifier = Modifier.weight(1f),
-      label = "수면효율",
-      angle = uiState.sleepEfficiency, brush = blueBrush
+      label = stringResource(R.string.sleep_efficiency),
+      angle = uiState.sleepEfficiency,
+      brush = blueBrush
     )
 
     CircularChart(
       modifier = Modifier.weight(1f),
-      label = "수면지연 시간",
+      label = stringResource(R.string.sleep_delay_time),
       angle = uiState.sleepLatency,
       brush = yellowBrush
     )
 
     CircularChart(
       modifier = Modifier.weight(1f),
-      label = "수면각성 시간",
+      label = stringResource(R.string.sleep_awakening_time),
       angle = uiState.wakeupOnSleep,
       brush = blueBrush
     )
