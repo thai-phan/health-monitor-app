@@ -45,7 +45,7 @@
   <string name="setting_d_contact_information">Contact information</string>
   <string name="cancel">Cancel</string>
   <string name="save">Save</string>
-  <string name="male">Male</string>
+  <string name="male" translatable="false">Male</string>
   <string name="female">Female</string>
   <string name="setting_c_sleep_inducing_energy_message">It stabilizes the mind and body by stimulating the vagus nerve and helps you fall asleep quickly. Recommended for sound-sensitive users.</string>
   <string name="setting_c_sleep_inducing_sound_message">It induces alpha waves by using the patented MC Square brain synchronization sound to help you fall asleep quickly. Recommended for users familiar with white noise.</string>
@@ -55,8 +55,8 @@
   <string name="stress_score">Stress Score</string>
   <string name="total_sleep_time">Total Sleep Time</string>
   <string name="sleep_efficiency">Sleep Efficiency</string>
-  <string name="sleep_delay_time">Sleep delay time</string>
-  <string name="sleep_awakening_time">sleep awakening time</string>
+  <string name="sleep_delay_time">Sleep Delay Time</string>
+  <string name="sleep_awakening_time">Sleep Awakening Time</string>
 
 
 </resources>
