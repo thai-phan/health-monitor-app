@@ -1,9 +1,9 @@
 <resources>
   <string name="app_name">IntelliNest</string>
 
-  <string name="activity_page">Activity</string>
-  <string name="report_page">Report</string>
-  <string name="setting_page">Setting</string>
+  <string name="activity">Activity</string>
+  <string name="report">Report</string>
+  <string name="setting">Setting</string>
 
   <!--  User page -->
   <string name="setting_title">My Setting</string>
@@ -57,6 +57,11 @@
   <string name="sleep_efficiency">Sleep Efficiency</string>
   <string name="sleep_delay_time">Sleep Delay Time</string>
   <string name="sleep_awakening_time">Sleep Awakening Time</string>
+  <string name="intellinest">Intellinest</string>
+  <string name="sleep_monitoring">Sleep Health Monitoring System</string>
+  <string name="available_devices">Available devices</string>
+  <string name="sleep_time_check">Sleep time check</string>
+  <string name="agree">Agree</string>
 
 
 </resources>

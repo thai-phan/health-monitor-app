@@ -3,7 +3,9 @@ package com.sewon.topperhealth.screen.splash
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -19,16 +21,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import kotlinx.coroutines.delay
 
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SplashScreen(modifier: Modifier = Modifier,delayTime: Long, onRedirectRoute: () -> Unit) {
+fun SplashScreen(modifier: Modifier = Modifier, delayTime: Long, onRedirectRoute: () -> Unit) {
   val scale = remember {
     Animatable(0f)
   }
@@ -77,15 +82,16 @@ fun SplashScreen(modifier: Modifier = Modifier,delayTime: Long, onRedirectRoute:
       }
       Column(
         modifier = Modifier
+//          .border(BorderStroke(1.dp, Color.Red))
           .weight(1f),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
       ) {
-        Text("인텔리네스트 ", fontSize = 26.sp)
+        Text(stringResource(R.string.app_name), style = topperTypography.headlineMedium)
         FlowRow {
-          Text("수면건강 ", fontSize = 26.sp)
-          Text("모니터링 ", fontSize = 26.sp)
-          Text("시스템", fontSize = 26.sp)
+          Text("수면건강 ", style = topperTypography.headlineMedium)
+          Text("모니터링 ", style = topperTypography.headlineMedium)
+          Text("시스템", style = topperTypography.headlineMedium)
         }
       }
     }

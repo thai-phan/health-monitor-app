@@ -20,7 +20,7 @@ enum class MainTabs(
   @DrawableRes val icon: Int,
   val route: String
 ) {
-  ACTIVITY(R.string.activity_page, R.drawable.ic_tab_activity, Destinations.ACTIVITY_ROUTE),
-  REPORT(R.string.report_page, R.drawable.ic_tab_report, Destinations.REPORT_ROUTE),
-  SETTING(R.string.setting_page, R.drawable.ic_tab_setting, Destinations.SETTING_ROUTE),
+  ACTIVITY(R.string.activity, R.drawable.ic_tab_activity, Destinations.ACTIVITY_ROUTE),
+  REPORT(R.string.report, R.drawable.ic_tab_report, Destinations.REPORT_ROUTE),
+  SETTING(R.string.setting, R.drawable.ic_tab_setting, Destinations.SETTING_ROUTE),
 }

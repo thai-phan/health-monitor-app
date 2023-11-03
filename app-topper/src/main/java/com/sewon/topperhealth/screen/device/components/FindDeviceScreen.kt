@@ -33,7 +33,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.sewon.topperhealth.R
 import kotlinx.coroutines.delay
 import timber.log.Timber
 
@@ -92,7 +94,7 @@ internal fun FindDevicesScreen(
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      Text(text = "Available devices", style = MaterialTheme.typography.titleSmall)
+      Text(stringResource(R.string.available_devices), style = MaterialTheme.typography.titleSmall)
       if (scanning) {
         CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
       } else {

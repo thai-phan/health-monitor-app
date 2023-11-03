@@ -48,7 +48,6 @@ fun DialogRelay(onDismissRequest: () -> Unit) {
 
   fun composeConnectToRelay(classicDevice: BluetoothDevice) {
     try {
-      Timber.tag("composeConnectToRelay").w("connecting")
       val device = adapter.getRemoteDevice(classicDevice.address)
       val classicGatt = ClassicGatt(context, device)
       MainActivity.classicService.connect(classicGatt)

@@ -21,6 +21,8 @@ class Application : Application() {
 //        config.setLocale(locale)
 //        getBaseContext().getResources().configuration(config,
 //            getBaseContext().getResources().getDisplayMetrics());
+
+
     if (BuildConfig.DEBUG) {
       Timber.plant(Timber.DebugTree())
     }

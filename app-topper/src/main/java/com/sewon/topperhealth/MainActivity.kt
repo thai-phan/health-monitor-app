@@ -3,22 +3,23 @@ package com.sewon.topperhealth
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.core.view.WindowCompat
 import com.sewon.topperhealth.screen.RootCompose
-import com.sewon.topperhealth.service.algorithm.sleep.report.ReportDataProcessing
-import com.sewon.topperhealth.service.bluetooth.ClassicService
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
+import com.sewon.topperhealth.service.bluetooth.ClassicService
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -48,10 +49,34 @@ class MainActivity : ComponentActivity() {
     }
   }
 
-  @RequiresApi(Build.VERSION_CODES.S)
   override fun onResume() {
     super.onResume()
+//    val locale = Locale("ko")
+//    Locale.setDefault(locale)
+//    val config: Configuration = baseContext.resources.configuration
+//    config.setLocale(locale)
+//    val resources: Resources = context.getResources()
+//    createConfigurationContext(config);
+  }
 
+  override fun attachBaseContext(base: Context) {
+    super.attachBaseContext(updateResources(base))
+  }
+
+  private fun updateResources(context: Context): Context {
+    val resources = context.resources
+    val config = Configuration(resources.configuration)
+    val locale = Locale("en")
+    config.setLocale(locale)
+    return context.createConfigurationContext(config)
+  }
+
+
+  private fun setLocale(locale: Locale) {
+    val resources = resources
+    val configuration = resources.configuration
+    configuration.setLocale(locale)
+    applicationContext.createConfigurationContext(configuration)
   }
 
 

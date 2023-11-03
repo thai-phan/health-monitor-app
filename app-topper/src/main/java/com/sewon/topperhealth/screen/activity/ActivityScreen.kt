@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,6 +42,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sewon.topperhealth.service.bluetooth.LowEnergyGatt
 import com.sewon.topperhealth.MainActivity
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.Destinations
 import com.sewon.topperhealth.screen.a0common.theme.BackgroundMiddle
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
@@ -151,13 +153,11 @@ fun SleepActivity(
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically
     ) {
-      Text("수면시간 체크", style = topperTypography.headlineSmall)
+      Text(stringResource(R.string.sleep_time_check), style = topperTypography.headlineSmall)
 
       Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
         onClick = { redirectReportPage() }) {
-        Text(
-          text = "Report", color = BackgroundMiddle
-        )
+        Text(stringResource(R.string.report), color = BackgroundMiddle)
       }
     }
 

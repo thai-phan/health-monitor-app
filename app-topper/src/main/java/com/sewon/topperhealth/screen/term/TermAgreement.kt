@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -58,7 +59,7 @@ fun TermAgreement(modifier: Modifier = Modifier, onRedirectRoute: () -> Unit) {
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically
     ) {
-      Text("인텔리네스트", style = topperTypography.headlineSmall)
+      Text(stringResource(R.string.app_name), style = topperTypography.headlineSmall)
       Image(
         painter = painterResource(id = R.drawable.ic_intellinest_white),
         contentDescription = "intellinest",
@@ -108,7 +109,7 @@ fun TermAgreement(modifier: Modifier = Modifier, onRedirectRoute: () -> Unit) {
               checkedState.value = it
             },
           )
-          Text(text = "동의", modifier = Modifier.padding(16.dp))
+          Text(stringResource(R.string.agree), modifier = Modifier.padding(16.dp))
         }
 
         Button(
@@ -117,7 +118,7 @@ fun TermAgreement(modifier: Modifier = Modifier, onRedirectRoute: () -> Unit) {
           },
           enabled = checkedState.value
         ) {
-          Text(text = "Agree")
+          Text(stringResource(R.string.agree))
         }
       }
     }
