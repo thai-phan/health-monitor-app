@@ -28,7 +28,8 @@ import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalBInduceSound(
-  onToggleModal: () -> Unit
+  onToggleModal: () -> Unit,
+  onChangeInduceSound: () -> Unit
 ) {
 
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
@@ -62,7 +63,10 @@ fun ModalBInduceSound(
 
         }
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = {}) {
+        Button(onClick = {
+          onChangeInduceSound()
+          onToggleModal()
+        }) {
           Text(stringResource(R.string.save))
         }
       }

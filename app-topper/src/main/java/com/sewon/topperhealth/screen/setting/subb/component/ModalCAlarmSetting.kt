@@ -38,7 +38,9 @@ import com.sewon.topperhealth.screen.setting.subb.UiStateB
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalCAlarmSetting(
-  uiState: UiStateB, onChangeAlarmType: (String) -> Unit, onToggleModal: () -> Unit
+  uiState: UiStateB,
+  onToggleModal: () -> Unit,
+  onChangeAlarmType: (String) -> Unit
 ) {
 
   val skipPartiallyExpanded by remember { mutableStateOf(false) }

@@ -60,7 +60,6 @@
   <string name="sleep_efficiency">수면효율</string>
   <string name="sleep_delay_time">수면지연 시간</string>
   <string name="sleep_awakening_time">수면각성 시간</string>
-  <string name="intellinest">인텔리네스트</string>
   <string name="sleep_monitoring">수면건강 모니터링 시스템</string>
   <string name="available_devices">사용 가능한 장치</string>
   <string name="sleep_time_check">수면시간 체크</string>

@@ -112,15 +112,19 @@ fun ProfileSetting(
   }
 
   if (openGenderModal) {
-    ModalAGender(uiState,
+    ModalAGender(
+      uiState,
+      onToggleModal = { openGenderModal = !openGenderModal },
       onChangeGender = viewModel::changeGender,
-      onToggleModal = { openGenderModal = !openGenderModal })
+    )
   }
 
   if (openDateModal) {
-    ModalDate(uiState,
+    ModalDate(
+      uiState,
+      onToggleModal = { openDateModal = !openDateModal },
       onSubmitBirthday = viewModel::changeBirthday,
-      onToggleModal = { openDateModal = !openDateModal })
+    )
   }
 
 }

@@ -28,7 +28,8 @@ import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalADeviceAccess(
-  onToggleModal: () -> Unit
+  onToggleModal: () -> Unit,
+  onChangeDeviceAccess: () -> Unit
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
@@ -58,11 +59,15 @@ fun ModalADeviceAccess(
           Text(stringResource(R.string.cancel))
         }
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = {}) {
+        Button(onClick = {
+
+          onChangeDeviceAccess()
+          onToggleModal()
+
+        }) {
           Text(stringResource(R.string.save))
         }
       }
     }
-
   }
 }

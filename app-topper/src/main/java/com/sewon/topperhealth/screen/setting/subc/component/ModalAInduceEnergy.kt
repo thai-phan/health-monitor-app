@@ -27,7 +27,8 @@ import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalAInduceEnergy(
-  onToggleModal: () -> Unit
+  onToggleModal: () -> Unit,
+  onChangeInduceEnergy: () -> Unit
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
@@ -41,7 +42,10 @@ fun ModalAInduceEnergy(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text(stringResource(R.string.setting_c_sleep_inducing_energy), style = topperTypography.titleLarge)
+      Text(
+        stringResource(R.string.setting_c_sleep_inducing_energy),
+        style = topperTypography.titleLarge
+      )
       Spacer(modifier = Modifier.height(20.dp))
       Text(
         stringResource(R.string.setting_c_sleep_inducing_energy_message)
@@ -59,7 +63,10 @@ fun ModalAInduceEnergy(
 
         }
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = {}) {
+        Button(onClick = {
+          onChangeInduceEnergy()
+          onToggleModal()
+        }) {
           Text(stringResource(R.string.save))
         }
       }

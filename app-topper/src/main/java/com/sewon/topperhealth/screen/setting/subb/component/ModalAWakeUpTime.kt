@@ -35,8 +35,8 @@ import java.time.LocalTime
 @Composable
 fun ModalAWakeUpTime(
   uiState: UiStateB,
+  onToggleModal: () -> Unit,
   onChangeAlarmTime: (LocalTime) -> Unit,
-  onToggleModal: () -> Unit
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)

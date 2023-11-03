@@ -26,7 +26,7 @@ data class UiStateC(
 )
 
 @HiltViewModel
-class ViewModelCardSolution @Inject constructor(
+class CardSolutionViewModel @Inject constructor(
   private val userRepository: UserRepository,
   private val settingRepository: SettingRepository
 ) : ViewModel() {
@@ -67,6 +67,18 @@ class ViewModelCardSolution @Inject constructor(
 
   fun toggleAlarmSetting(alarmOn: Boolean) = viewModelScope.launch {
 //        settingRepository.updateAlarmSetting(userId, alarmOn)
+  }
+
+  fun changeInduceEnergy() {
+
+  }
+
+  fun changeInduceSound() {
+
+  }
+
+  fun changeScoreThreshold() {
+
   }
 
   private fun handleSetting(setting: Setting?): Async<Setting?> {

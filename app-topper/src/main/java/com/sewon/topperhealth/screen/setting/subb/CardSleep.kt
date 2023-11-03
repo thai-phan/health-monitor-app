@@ -139,22 +139,25 @@ fun SleepSetting(
   if (openWakeupModal) {
     ModalAWakeUpTime(
       uiState,
+      onToggleModal = { openWakeupModal = !openWakeupModal },
       onChangeAlarmTime = viewModel::changeSettingAlarmTime,
-      onToggleModal = { openWakeupModal = !openWakeupModal })
+    )
   }
 
   if (openSleepTimeModal) {
     ModalBSleepTime(
       uiState,
-      onChangeBedTime = viewModel::changeSettingBedTime,
-      onToggleModal = { openSleepTimeModal = !openSleepTimeModal })
+      onToggleModal = { openSleepTimeModal = !openSleepTimeModal },
+      onChangeBedTime = viewModel::changeSettingBedTime
+    )
   }
 
 
   if (openAlarmTypeModal) {
     ModalCAlarmSetting(
       uiState,
-      onChangeAlarmType = viewModel::changeSettingAlarmBehavior,
-      onToggleModal = { openAlarmTypeModal = !openAlarmTypeModal })
+      onToggleModal = { openAlarmTypeModal = !openAlarmTypeModal },
+      onChangeAlarmType = viewModel::changeSettingAlarmBehavior
+    )
   }
 }

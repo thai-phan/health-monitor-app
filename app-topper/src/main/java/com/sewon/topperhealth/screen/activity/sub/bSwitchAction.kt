@@ -3,6 +3,7 @@ package com.sewon.topperhealth.screen.activity.sub
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
@@ -16,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
@@ -59,13 +62,19 @@ fun SwitchAction() {
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
   ) {
-    Text(stringResource(R.string.setting_c_sleep_inducing_energy))
-    Button(onClick = {
-      isRelayDialog.value = !isRelayDialog.value
-    }) {
+    Text(
+      stringResource(R.string.setting_c_sleep_inducing_energy),
+      modifier = Modifier.weight(3f),
+      maxLines = 2,
+    )
+    Button(modifier = Modifier.weight(3f),
+      onClick = {
+        isRelayDialog.value = !isRelayDialog.value
+      }) {
       deviceName.value?.let { Text(it) }
     }
     CustomSwitch(
+      modifier = Modifier.weight(1f),
       checked = isRelayClose.value,
       onCheckedChange = {
         toggleRelay(it)

@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
@@ -32,11 +33,14 @@ import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.setting.subc.component.ModalAInduceEnergy
 import com.sewon.topperhealth.screen.setting.subc.component.ModalBInduceSound
 import com.sewon.topperhealth.screen.setting.subc.component.ModalCScoreThreshold
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 
 // Card 3
 @Composable
-fun InductionSolutionSetting() {
+fun InductionSolutionSetting(
+  viewModel: CardSolutionViewModel = hiltViewModel()
+) {
   var openInduceEnergyModal by rememberSaveable { mutableStateOf(false) }
   var openInduceSoundModal by rememberSaveable { mutableStateOf(false) }
   var openScoreThresholdModal by rememberSaveable { mutableStateOf(false) }
@@ -116,16 +120,24 @@ fun InductionSolutionSetting() {
 
   if (openInduceEnergyModal) {
     ModalAInduceEnergy(
-      onToggleModal = { openInduceEnergyModal = !openInduceEnergyModal })
+      onToggleModal = {
+        openInduceEnergyModal = !openInduceEnergyModal
+      },
+      onChangeInduceEnergy = viewModel::changeInduceEnergy
+    )
   }
 
   if (openInduceSoundModal) {
     ModalBInduceSound(
-      onToggleModal = { openInduceSoundModal = !openInduceSoundModal })
+      onToggleModal = { openInduceSoundModal = !openInduceSoundModal },
+      onChangeInduceSound = viewModel::changeInduceSound
+    )
   }
 
   if (openScoreThresholdModal) {
     ModalCScoreThreshold(
-      onToggleModal = { openScoreThresholdModal = !openScoreThresholdModal })
+      onToggleModal = { openScoreThresholdModal = !openScoreThresholdModal },
+      onChangeScoreThreshold = viewModel::changeScoreThreshold
+    )
   }
 }

@@ -66,12 +66,11 @@ class MainActivity : ComponentActivity() {
   private fun updateResources(context: Context): Context {
     val resources = context.resources
     val config = Configuration(resources.configuration)
-    val locale = Locale("en")
+    val locale = Locale("ko")
     config.setLocale(locale)
     return context.createConfigurationContext(config)
   }
-
-
+  
   private fun setLocale(locale: Locale) {
     val resources = resources
     val configuration = resources.configuration

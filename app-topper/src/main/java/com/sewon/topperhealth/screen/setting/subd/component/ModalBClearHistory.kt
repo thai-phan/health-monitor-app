@@ -28,7 +28,8 @@ import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalBClearHistory(
-  onToggleModal: () -> Unit
+  onToggleModal: () -> Unit,
+  onClearHistory: () -> Unit
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
@@ -61,7 +62,10 @@ fun ModalBClearHistory(
 
         }
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = {}) {
+        Button(onClick = {
+          onClearHistory()
+          onToggleModal()
+        }) {
           Text(stringResource(R.string.save))
         }
       }

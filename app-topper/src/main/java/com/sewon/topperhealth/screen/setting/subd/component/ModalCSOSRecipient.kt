@@ -19,8 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
@@ -29,11 +31,14 @@ import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalCSOSRecipient(
-  onToggleModal: () -> Unit
+  onToggleModal: () -> Unit,
+  onChangeSOSRecipient: () -> Unit
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
-
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
+
+  val relation = stringResource(R.string.setting_d_relation)
+  val contact = stringResource(R.string.setting_d_contact_information)
 
   ModalBottomSheet(
 //    modifier = Modifier.fillMaxHeight(),
@@ -49,36 +54,57 @@ fun ModalCSOSRecipient(
         stringResource(R.string.setting_d_recipient_setting),
         style = topperTypography.titleLarge
       )
-
       Spacer(modifier = Modifier.height(20.dp))
 
+      val relation1 by remember { mutableStateOf(TextFieldValue(relation)) }
+      val contact1 by remember { mutableStateOf(TextFieldValue(contact)) }
       Row {
         TextField(
-          stringResource(R.string.setting_d_relation),
+          relation1,
           modifier = Modifier.weight(1f),
-          onValueChange = {})
-        TextField(stringResource(R.string.setting_d_contact_information),
+          onValueChange = {
+
+          })
+        TextField(
+          contact1,
           modifier = Modifier.weight(1f),
-          onValueChange = {})
+          onValueChange = {
+
+          })
       }
 
+      val relation2 by remember { mutableStateOf(TextFieldValue(relation)) }
+      val contact2 by remember { mutableStateOf(TextFieldValue(contact)) }
       Row() {
         TextField(
-          stringResource(R.string.setting_d_relation),
+          relation2,
           modifier = Modifier.weight(1f),
-          onValueChange = {})
-        TextField(stringResource(R.string.setting_d_contact_information),
+          onValueChange = {
+
+          })
+        TextField(
+          contact2,
           modifier = Modifier.weight(1f),
-          onValueChange = {})
+          onValueChange = {
+
+          })
       }
 
+      val relation3 by remember { mutableStateOf(TextFieldValue(relation)) }
+      val contact3 by remember { mutableStateOf(TextFieldValue(contact)) }
       Row {
-        TextField(stringResource(R.string.setting_d_relation),
+        TextField(
+          relation3,
           modifier = Modifier.weight(1f),
-          onValueChange = {})
-        TextField(stringResource(R.string.setting_d_contact_information),
+          onValueChange = {
+
+          })
+        TextField(
+          contact3,
           modifier = Modifier.weight(1f),
-          onValueChange = {})
+          onValueChange = {
+
+          })
       }
       Spacer(modifier = Modifier.height(20.dp))
 
@@ -92,7 +118,10 @@ fun ModalCSOSRecipient(
           Text(stringResource(R.string.cancel))
         }
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = {}) {
+        Button(onClick = {
+
+          onChangeSOSRecipient()
+        }) {
           Text(stringResource(R.string.save))
         }
       }

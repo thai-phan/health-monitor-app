@@ -34,8 +34,8 @@ import java.time.LocalTime
 @Composable
 fun ModalBSleepTime(
   uiState: UiStateB,
+  onToggleModal: () -> Unit,
   onChangeBedTime: (LocalTime) -> Unit,
-  onToggleModal: () -> Unit
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)

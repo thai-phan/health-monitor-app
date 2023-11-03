@@ -26,7 +26,7 @@ data class UiStateD(
 )
 
 @HiltViewModel
-class ViewModelCardSleep @Inject constructor(
+class CardGeneralViewModel @Inject constructor(
   private val userRepository: UserRepository,
   private val settingRepository: SettingRepository
 ) : ViewModel() {
@@ -65,7 +65,15 @@ class ViewModelCardSleep @Inject constructor(
       initialValue = UiStateD(isLoading = true)
     )
 
-  fun toggleAlarmSetting(alarmOn: Boolean) = viewModelScope.launch {
+  fun onChangeAccessDevice() = viewModelScope.launch {
+//        settingRepository.updateAlarmSetting(userId, alarmOn)
+  }
+
+  fun onChangeClearHistory() = viewModelScope.launch {
+//        settingRepository.updateAlarmSetting(userId, alarmOn)
+  }
+
+  fun onChangeSOSRecipient() = viewModelScope.launch {
 //        settingRepository.updateAlarmSetting(userId, alarmOn)
   }
 

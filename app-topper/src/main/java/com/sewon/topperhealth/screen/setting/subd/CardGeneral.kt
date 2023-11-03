@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
@@ -35,7 +36,10 @@ import com.sewon.topperhealth.screen.setting.subd.component.ModalCSOSRecipient
 
 // Card 4
 @Composable
-fun GeneralSetting() {
+fun GeneralSetting(
+
+  viewModel: CardGeneralViewModel = hiltViewModel()
+) {
 
   var openDeviceAccessModal by rememberSaveable { mutableStateOf(false) }
   var openClearHistoryModal by rememberSaveable { mutableStateOf(false) }
@@ -107,16 +111,22 @@ fun GeneralSetting() {
 
   if (openDeviceAccessModal) {
     ModalADeviceAccess(
-      onToggleModal = { openDeviceAccessModal = !openDeviceAccessModal })
+      onToggleModal = { openDeviceAccessModal = !openDeviceAccessModal },
+      onChangeDeviceAccess = viewModel::onChangeAccessDevice
+    )
   }
 
   if (openClearHistoryModal) {
     ModalBClearHistory(
-      onToggleModal = { openClearHistoryModal = !openClearHistoryModal })
+      onToggleModal = { openClearHistoryModal = !openClearHistoryModal },
+      onClearHistory = viewModel::onChangeClearHistory
+    )
   }
 
   if (openSOSRecipientModal) {
     ModalCSOSRecipient(
-      onToggleModal = { openSOSRecipientModal = !openSOSRecipientModal })
+      onToggleModal = { openSOSRecipientModal = !openSOSRecipientModal },
+      onChangeSOSRecipient = viewModel::onChangeSOSRecipient
+    )
   }
 }
