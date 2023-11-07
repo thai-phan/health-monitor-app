@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
 import androidx.room.Upsert
 import com.sewon.topperhealth.data.source.local.entity.LocalSleepSession
 import java.util.Date
@@ -56,8 +55,9 @@ interface LocalSessionDao {
   @Query("SELECT * FROM sleep_session WHERE session_id = :sessionId")
   suspend fun loadById(sessionId: Int): LocalSleepSession?
 
-  @Update
-  suspend fun updateSession(localSleepSession: LocalSleepSession)
+
+  @Query("DELETE FROM sleep_session")
+  suspend fun queryDeleteAll(): Int
 
 
   @Insert

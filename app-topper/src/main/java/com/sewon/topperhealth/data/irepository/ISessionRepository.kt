@@ -22,4 +22,5 @@ interface ISessionRepository {
 
   suspend fun updateSessionQualityMemo(sessionId: Int, rating: Int, memo: String)
 
+  suspend fun deleteAll(): Int
 }

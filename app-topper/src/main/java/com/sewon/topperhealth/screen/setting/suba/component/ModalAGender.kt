@@ -32,8 +32,8 @@ import com.sewon.topperhealth.screen.setting.suba.UiStateA
 @Composable
 fun ModalAGender(
   uiState: UiStateA,
-  onChangeGender: (value: String) -> Unit,
   onToggleModal: () -> Unit,
+  onChangeGender: (value: String) -> Unit,
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
@@ -64,7 +64,7 @@ fun ModalAGender(
             picker.displayedValues = data
             picker.value = data.indexOf(gender)
             picker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS;
-            picker.setOnValueChangedListener { picker, oldVal, newVal ->
+            picker.setOnValueChangedListener { _, oldVal, newVal ->
               setGender(data.get(newVal))
               // do your other stuff depends on the new value
             }

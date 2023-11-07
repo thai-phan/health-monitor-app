@@ -20,6 +20,13 @@ data class Setting(
   val threshold: String,
   val createdAt: Date,
   val updatedAt: Date,
+
+  var relation1: String,
+  var relation2: String,
+  var relation3: String,
+  var contact1: String,
+  var contact2: String,
+  var contact3: String,
 )
 
 
@@ -41,6 +48,13 @@ fun Setting.toLocal() = LocalSetting(
   threshold = threshold,
   createdAt = createdAt,
   updatedAt = updatedAt,
+
+  relation1 = relation1,
+  relation2 = relation2,
+  relation3 = relation3,
+  contact1 = contact1,
+  contact2 = contact2,
+  contact3 = contact3,
 )
 
 
@@ -62,6 +76,13 @@ fun LocalSetting.toExternal() = Setting(
   threshold = threshold,
   createdAt = createdAt,
   updatedAt = updatedAt,
+
+  relation1 = relation1,
+  relation2 = relation2,
+  relation3 = relation3,
+  contact1 = contact1,
+  contact2 = contact2,
+  contact3 = contact3,
 )
 
 fun List<LocalSetting>.toExternal() = map(LocalSetting::toExternal)

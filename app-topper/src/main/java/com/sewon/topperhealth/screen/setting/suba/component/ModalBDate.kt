@@ -35,8 +35,8 @@ import java.util.Calendar
 @Composable
 fun ModalDate(
   uiState: UiStateA,
-  onSubmitBirthday: (Int, Int, Int) -> Unit,
   onToggleModal: () -> Unit,
+  onSubmitBirthday: (Int, Int, Int) -> Unit,
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)

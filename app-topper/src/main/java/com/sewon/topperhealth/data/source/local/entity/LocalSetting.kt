@@ -23,7 +23,14 @@ data class LocalSetting(
   @ColumnInfo(name = "product_sn") val productSn: String,
   @ColumnInfo(name = "threshold") val threshold: String,
   @ColumnInfo(name = "created_at") val createdAt: Date,
-  @ColumnInfo(name = "updated_at") val updatedAt: Date
+  @ColumnInfo(name = "updated_at") val updatedAt: Date,
+
+  @ColumnInfo(name = "relation1") var relation1: String,
+  @ColumnInfo(name = "contact1") var contact1: String,
+  @ColumnInfo(name = "relation2") var relation2: String,
+  @ColumnInfo(name = "contact2") var contact2: String,
+  @ColumnInfo(name = "relation3") var relation3: String,
+  @ColumnInfo(name = "contact3") var contact3: String,
 ) {
   @ColumnInfo(name = "setting_id")
   @PrimaryKey(autoGenerate = true)

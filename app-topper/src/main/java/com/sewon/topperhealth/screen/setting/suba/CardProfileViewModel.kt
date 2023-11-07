@@ -23,8 +23,8 @@ import javax.inject.Inject
 
 data class UiStateA(
   val calendar: Calendar = Calendar.getInstance(),
-  val birthday: String = "Please select",
-  val gender: String = "1980-01-01",
+  val birthday: String = "1980-01-01",
+  val gender: String = "Please select",
   val isLoading: Boolean = false,
   val userMessage: Int? = null
 )

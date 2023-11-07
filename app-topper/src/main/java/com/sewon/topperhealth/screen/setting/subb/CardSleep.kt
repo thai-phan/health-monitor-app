@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -38,6 +39,7 @@ import com.sewon.topperhealth.screen.setting.subb.component.ModalCAlarmSetting
 
 @Composable
 fun SleepSetting(
+  rowHeight: Dp,
   viewModel: ViewModelCardSleep = hiltViewModel(),
 ) {
 
@@ -47,8 +49,6 @@ fun SleepSetting(
   var openSleepTimeModal by rememberSaveable { mutableStateOf(false) }
   var openAlarmTypeModal by rememberSaveable { mutableStateOf(false) }
 
-
-  val height = 45.dp
   Card(
     shape = topperShapes.small,
     colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
@@ -65,7 +65,7 @@ fun SleepSetting(
       Row(
         modifier = Modifier
           .fillMaxWidth()
-          .height(height)
+          .height(rowHeight)
           .clickable(onClick = { openWakeupModal = !openWakeupModal }),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -74,12 +74,7 @@ fun SleepSetting(
         Row {
           Text(uiState.wakeupTimeStr)
           Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-          Icon(
-            Icons.Filled.ChevronRight,
-            tint = Color.White,
-            contentDescription = "contentDescription",
-            modifier = Modifier.size(ButtonDefaults.IconSize)
-          )
+          Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
         }
       }
 
@@ -89,7 +84,7 @@ fun SleepSetting(
       Row(
         modifier = Modifier
           .fillMaxWidth()
-          .height(height)
+          .height(rowHeight)
           .clickable(onClick = { openSleepTimeModal = !openSleepTimeModal }),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -98,12 +93,7 @@ fun SleepSetting(
         Row {
           Text(uiState.sleepTimeStr)
           Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-          Icon(
-            Icons.Filled.ChevronRight,
-            tint = Color.White,
-            contentDescription = "contentDescription",
-            modifier = Modifier.size(ButtonDefaults.IconSize)
-          )
+          Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
         }
       }
 
@@ -113,7 +103,7 @@ fun SleepSetting(
       Row(
         modifier = Modifier
           .fillMaxWidth()
-          .height(height)
+          .height(rowHeight)
           .clickable(onClick = {
             openAlarmTypeModal = !openAlarmTypeModal
           }),
@@ -124,12 +114,7 @@ fun SleepSetting(
         Row {
           Text(uiState.alarmBehavior)
           Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-          Icon(
-            Icons.Filled.ChevronRight,
-            tint = Color.White,
-            contentDescription = "contentDescription",
-            modifier = Modifier.size(ButtonDefaults.IconSize)
-          )
+          Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
         }
       }
     }

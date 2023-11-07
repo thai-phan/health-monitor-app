@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import java.util.Date
 
 
-//INSERT INTO session (`created_at`,`finished_at`,`session_id`) VALUES ("20:21:46.571240","20:21:46.571240", 1)
 @Entity(tableName = "sleep_session")
 data class LocalSleepSession(
   @ColumnInfo(name = "ref_hrv") val refHRV: Double,

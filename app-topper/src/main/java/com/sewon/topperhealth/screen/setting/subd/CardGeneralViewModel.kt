@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.data.model.Setting
-import com.sewon.topperhealth.data.source.local.repository.UserRepository
+import com.sewon.topperhealth.data.source.local.repository.SessionRepository
 import com.sewon.topperhealth.data.source.local.repository.SettingRepository
+import com.sewon.topperhealth.data.source.local.repository.TopperRepository
+import com.sewon.topperhealth.screen.setting.subd.component.RecipientState
 import com.sewon.topperhealth.util.Async
 import com.sewon.topperhealth.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,16 +21,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class UiStateD(
-  val alarmTime: String = "",
-  val alarmOn: Boolean = false,
+  val message: Int? = null,
+  val relation1: String = "",
+  val contact1: String = "",
+  val relation2: String = "",
+  val contact2: String = "",
+  val relation3: String = "",
+  val contact3: String = "",
   val isLoading: Boolean = false,
-  val message: Int? = null
-)
+
+  )
 
 @HiltViewModel
 class CardGeneralViewModel @Inject constructor(
-  private val userRepository: UserRepository,
-  private val settingRepository: SettingRepository
+  private val settingRepository: SettingRepository,
+  private val topperRepository: TopperRepository,
+  private val sessionRepository: SessionRepository,
 ) : ViewModel() {
 
   var userId = 0
@@ -52,10 +60,14 @@ class CardGeneralViewModel @Inject constructor(
 
         is Async.Success -> {
           UiStateD(
-            alarmTime = settingAsync.data!!.wakeupTime.toString(),
-            alarmOn = settingAsync.data.alarmOn,
             message = message,
-            isLoading = isLoading
+            isLoading = isLoading,
+            relation1 = settingAsync.data!!.relation1,
+            contact1 = settingAsync.data.contact1,
+            relation2 = settingAsync.data.relation2,
+            contact2 = settingAsync.data.contact2,
+            relation3 = settingAsync.data.relation3,
+            contact3 = settingAsync.data.contact3,
           )
         }
       }
@@ -69,12 +81,18 @@ class CardGeneralViewModel @Inject constructor(
 //        settingRepository.updateAlarmSetting(userId, alarmOn)
   }
 
-  fun onChangeClearHistory() = viewModelScope.launch {
-//        settingRepository.updateAlarmSetting(userId, alarmOn)
+  fun onClearHistory() = viewModelScope.launch {
+    topperRepository.deleteAll()
+    sessionRepository.deleteAll()
   }
 
-  fun onChangeSOSRecipient() = viewModelScope.launch {
-//        settingRepository.updateAlarmSetting(userId, alarmOn)
+  fun onChangeSOSRecipient(state: RecipientState) = viewModelScope.launch {
+    settingRepository.updateRecipientList(
+      userId,
+      state.relation1, state.contact1,
+      state.relation2, state.contact2,
+      state.relation3, state.contact3
+    )
   }
 
   private fun handleSetting(setting: Setting?): Async<Setting?> {

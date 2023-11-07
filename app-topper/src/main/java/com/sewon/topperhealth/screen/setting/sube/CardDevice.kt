@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
@@ -30,7 +31,9 @@ import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 
 @Composable
-fun DeviceConnectionSetting() {
+fun DeviceConnectionSetting(
+  rowHeight: Dp,
+) {
   Card(
     shape = topperShapes.small,
     colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
@@ -49,7 +52,7 @@ fun DeviceConnectionSetting() {
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().height(rowHeight)
       ) {
         Text(stringResource(R.string.setting_e_product_number))
 
@@ -66,7 +69,7 @@ fun DeviceConnectionSetting() {
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().height(rowHeight)
       ) {
         Text(stringResource(R.string.setting_e_bluetooth))
 

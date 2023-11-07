@@ -37,6 +37,20 @@ interface LocalSettingDao {
   @Query("UPDATE setting SET alarm_behavior = :alarmBehavior WHERE user_id = :userid")
   suspend fun queryUpdateAlarmTypeSettingQuery(userid: Int, alarmBehavior: String): Int
 
+  @Query(
+    "UPDATE setting SET relation1 = :relation1, contact1 = :contact1, " +
+        "relation2 = :relation2, contact2 = :contact2, " +
+        "relation3 = :relation3, contact3 = :contact3 " +
+        "WHERE user_id = :userid"
+  )
+  suspend fun queryUpdateRecipient(
+    userid: Int,
+    relation1: String, contact1: String,
+    relation2: String, contact2: String,
+    relation3: String, contact3: String
+  ): Int
+
+
   @Insert
   suspend fun insert(localSetting: LocalSetting): Long
 }

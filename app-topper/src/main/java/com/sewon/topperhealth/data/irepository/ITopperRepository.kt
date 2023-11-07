@@ -10,4 +10,6 @@ interface ITopperRepository {
   suspend fun getDataCount(): Int
 
   suspend fun insertNewTopperData(localTopper: LocalTopper): String
+
+  suspend fun deleteAll(): Int
 }

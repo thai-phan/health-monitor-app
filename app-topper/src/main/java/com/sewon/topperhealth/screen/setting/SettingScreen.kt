@@ -27,6 +27,8 @@ fun SettingScreen(
   viewModel: SettingViewModel = hiltViewModel()
 ) {
 
+  val rowHeight = 45.dp
+
   Column(
     modifier = modifier
       .padding(
@@ -39,15 +41,15 @@ fun SettingScreen(
       modifier = Modifier.verticalScroll(rememberScrollState()),
       verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-      ProfileSetting()
+      ProfileSetting(rowHeight)
 
-      SleepSetting()
+      SleepSetting(rowHeight)
 
-      InductionSolutionSetting()
+      InductionSolutionSetting(rowHeight)
 
-      GeneralSetting()
+      GeneralSetting(rowHeight)
 
-      DeviceConnectionSetting()
+      DeviceConnectionSetting(rowHeight)
     }
   }
 }

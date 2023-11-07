@@ -42,10 +42,8 @@ fun TopperAppTheme(
   content: @Composable () -> Unit
 ) {
   val systemUiController = rememberSystemUiController()
-  
 
   systemUiController.setStatusBarColor(Color.Transparent)
-
   systemUiController.setNavigationBarColor(Color.Transparent)
 
   MaterialTheme(

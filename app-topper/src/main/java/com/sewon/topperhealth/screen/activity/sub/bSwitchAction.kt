@@ -59,22 +59,27 @@ fun SwitchAction() {
     modifier = Modifier
       .fillMaxWidth()
       .clickable(onClick = { isRelayDialog.value = !isRelayDialog.value }),
-    horizontalArrangement = Arrangement.SpaceBetween,
-    verticalAlignment = Alignment.CenterVertically
+    horizontalArrangement = Arrangement.Center,
   ) {
-    Text(
-      stringResource(R.string.setting_c_sleep_inducing_energy),
-      modifier = Modifier.weight(3f),
-      maxLines = 2,
-    )
-    Button(modifier = Modifier.weight(3f),
+    Button(
       onClick = {
         isRelayDialog.value = !isRelayDialog.value
       }) {
       deviceName.value?.let { Text(it) }
     }
+  }
+  Row(
+    modifier = Modifier
+      .fillMaxWidth(),
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.CenterVertically
+  ) {
+    Text(
+      stringResource(R.string.setting_c_sleep_inducing_energy),
+      maxLines = 2,
+    )
+
     CustomSwitch(
-      modifier = Modifier.weight(1f),
       checked = isRelayClose.value,
       onCheckedChange = {
         toggleRelay(it)

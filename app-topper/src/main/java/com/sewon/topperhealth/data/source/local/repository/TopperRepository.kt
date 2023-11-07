@@ -10,26 +10,29 @@ import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
 class TopperRepository @Inject constructor(
-  private val LocalTopperDao: LocalTopperDao,
+  private val localTopperDao: LocalTopperDao,
   @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
   @ApplicationScope private val scope: CoroutineScope,
 ) : ITopperRepository {
 
 
   override suspend fun getAllDataFromSession(sessionId: Int): List<LocalTopper> {
-    return LocalTopperDao.queryAllDataFromSession(sessionId)
+    return localTopperDao.queryAllDataFromSession(sessionId)
   }
 
 
   override suspend fun getDataCount(): Int {
-    return LocalTopperDao.queryCountData()
+    return localTopperDao.queryCountData()
   }
 //     Count number record
 
 
   override suspend fun insertNewTopperData(localTopper: LocalTopper): String {
-    var aaa = LocalTopperDao.insert(localTopper)
+    var aaa = localTopperDao.insert(localTopper)
     return "true"
   }
 
+  override suspend fun deleteAll(): Int {
+    return localTopperDao.queryDeleteAll()
+  }
 }

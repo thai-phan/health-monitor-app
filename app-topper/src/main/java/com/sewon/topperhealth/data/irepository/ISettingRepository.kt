@@ -21,5 +21,12 @@ interface ISettingRepository {
 
   suspend fun updateSleepTimeSetting(userId: Int, sleepTime: LocalTime): Int
 
-  suspend fun updateAlarmTypeSetting(userId: Int, alarmSetting: String): Int
+  suspend fun updateAlarmTypeBehavior(userId: Int, alarmBehavior: String): Int
+
+  suspend fun updateRecipientList(
+    userId: Int,
+    relation1: String, contact1: String,
+    relation2: String, contact2: String,
+    relation3: String, contact3: String,
+  ): Int
 }

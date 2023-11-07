@@ -85,7 +85,7 @@ class ViewModelCardSleep @Inject constructor(
   }
 
   fun changeSettingAlarmBehavior(alarmBehavior: String) = viewModelScope.launch {
-    settingRepository.updateAlarmTypeSetting(userId, alarmBehavior)
+    settingRepository.updateAlarmTypeBehavior(userId, alarmBehavior)
   }
 
   private fun handleSetting(setting: Setting?): Async<Setting?> {

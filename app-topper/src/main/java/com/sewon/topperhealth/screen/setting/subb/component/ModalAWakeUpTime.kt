@@ -72,7 +72,7 @@ fun ModalAWakeUpTime(
             timePicker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             timePicker.hour = time.hour
             timePicker.minute = time.minute
-            timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
+            timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
               setTime(LocalTime.of(hourOfDay, minute))
             }
 

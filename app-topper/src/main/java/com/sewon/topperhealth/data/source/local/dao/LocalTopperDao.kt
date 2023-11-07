@@ -16,12 +16,14 @@ interface LocalTopperDao {
   @Query("SELECT count(br) FROM topper")
   suspend fun queryCountData(): Int
 
+  @Query("DELETE FROM topper")
+  suspend fun queryDeleteAll(): Int
 
   @Insert
   suspend fun insertAll(vararg localTopper: LocalTopper)
 
   @Delete
-  suspend fun delete(user: LocalTopper)
+  suspend fun delete(localTopper: LocalTopper)
 
   @Insert
   suspend fun insert(localTopper: LocalTopper)

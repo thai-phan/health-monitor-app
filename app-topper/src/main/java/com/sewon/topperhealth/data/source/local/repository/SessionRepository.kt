@@ -56,4 +56,7 @@ class SessionRepository @Inject constructor(
     return localSessionDao.queryUpdateSessionQualityMemo(sessionId, rating, memo)
   }
 
+  override suspend fun deleteAll(): Int {
+    return localSessionDao.queryDeleteAll()
+  }
 }

@@ -19,26 +19,41 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
+import com.sewon.topperhealth.screen.setting.subd.UiStateD
 
+data class RecipientState(
+  var relation1: String,
+  var contact1: String,
+  var relation2: String,
+  var contact2: String,
+  var relation3: String,
+  var contact3: String,
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalCSOSRecipient(
+  uiState: UiStateD,
   onToggleModal: () -> Unit,
-  onChangeSOSRecipient: () -> Unit
+  onChangeSOSRecipient: (RecipientState) -> Unit
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
 
-  val relation = stringResource(R.string.setting_d_relation)
-  val contact = stringResource(R.string.setting_d_contact_information)
+  val (recipientState, setRecipientState) = remember {
+    mutableStateOf(
+      RecipientState(
+        uiState.relation1, uiState.contact1,
+        uiState.relation2, uiState.contact2,
+        uiState.relation3, uiState.contact3
+      )
+    )
+  }
 
   ModalBottomSheet(
 //    modifier = Modifier.fillMaxHeight(),
@@ -56,54 +71,48 @@ fun ModalCSOSRecipient(
       )
       Spacer(modifier = Modifier.height(20.dp))
 
-      val relation1 by remember { mutableStateOf(TextFieldValue(relation)) }
-      val contact1 by remember { mutableStateOf(TextFieldValue(contact)) }
       Row {
         TextField(
-          relation1,
+          value = recipientState.relation1,
           modifier = Modifier.weight(1f),
           onValueChange = {
-
+            setRecipientState(recipientState.copy(relation1 = it))
           })
         TextField(
-          contact1,
-          modifier = Modifier.weight(1f),
+          value = recipientState.contact1,
+          modifier = Modifier.weight(2f),
           onValueChange = {
-
+            setRecipientState(recipientState.copy(contact1 = it))
           })
       }
 
-      val relation2 by remember { mutableStateOf(TextFieldValue(relation)) }
-      val contact2 by remember { mutableStateOf(TextFieldValue(contact)) }
       Row() {
         TextField(
-          relation2,
+          value = recipientState.relation2,
           modifier = Modifier.weight(1f),
           onValueChange = {
-
+            setRecipientState(recipientState.copy(relation1 = it))
           })
         TextField(
-          contact2,
-          modifier = Modifier.weight(1f),
+          value = recipientState.contact2,
+          modifier = Modifier.weight(2f),
           onValueChange = {
-
+            setRecipientState(recipientState.copy(contact2 = it))
           })
       }
 
-      val relation3 by remember { mutableStateOf(TextFieldValue(relation)) }
-      val contact3 by remember { mutableStateOf(TextFieldValue(contact)) }
       Row {
         TextField(
-          relation3,
+          value = recipientState.relation3,
           modifier = Modifier.weight(1f),
           onValueChange = {
-
+            setRecipientState(recipientState.copy(relation3 = it))
           })
         TextField(
-          contact3,
-          modifier = Modifier.weight(1f),
+          value = recipientState.contact3,
+          modifier = Modifier.weight(2f),
           onValueChange = {
-
+            setRecipientState(recipientState.copy(contact3 = it))
           })
       }
       Spacer(modifier = Modifier.height(20.dp))
@@ -119,8 +128,8 @@ fun ModalCSOSRecipient(
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {
-
-          onChangeSOSRecipient()
+          onToggleModal()
+          onChangeSOSRecipient(recipientState)
         }) {
           Text(stringResource(R.string.save))
         }
