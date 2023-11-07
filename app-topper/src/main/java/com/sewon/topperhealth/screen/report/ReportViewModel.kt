@@ -57,7 +57,7 @@ class ReportViewModel @Inject constructor(
   private fun initFirstSession() {
     viewModelScope.launch {
       val sessionList = sessionRepository.getSleepSessionList()
-
+      Timber.tag("ReportViewModel").d("initFirstSession")
       _uiState.update {
         it.copy(sessionList = sessionList)
       }

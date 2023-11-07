@@ -187,7 +187,7 @@ fun SleepActivity(
           stopAlarm = { stopAlarm() }
         )
       }
-      log?.let { Text(it) }
+//      log?.let { Text(it) }
     }
 
     if (openAssessmentModal) {
