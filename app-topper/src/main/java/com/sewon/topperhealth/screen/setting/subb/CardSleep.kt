@@ -40,7 +40,7 @@ import com.sewon.topperhealth.screen.setting.subb.component.ModalCAlarmSetting
 @Composable
 fun SleepSetting(
   rowHeight: Dp,
-  viewModel: ViewModelCardSleep = hiltViewModel(),
+  viewModel: CardSleepViewModel = hiltViewModel(),
 ) {
 
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -125,7 +125,7 @@ fun SleepSetting(
     ModalAWakeUpTime(
       uiState,
       onToggleModal = { openWakeupModal = !openWakeupModal },
-      onChangeAlarmTime = viewModel::changeSettingAlarmTime,
+      onChangeWakeupTime = viewModel::changeWakeupTime,
     )
   }
 
@@ -133,7 +133,7 @@ fun SleepSetting(
     ModalBSleepTime(
       uiState,
       onToggleModal = { openSleepTimeModal = !openSleepTimeModal },
-      onChangeBedTime = viewModel::changeSettingBedTime
+      onChangeBedTime = viewModel::changeBedTime
     )
   }
 
@@ -142,7 +142,7 @@ fun SleepSetting(
     ModalCAlarmSetting(
       uiState,
       onToggleModal = { openAlarmTypeModal = !openAlarmTypeModal },
-      onChangeAlarmType = viewModel::changeSettingAlarmBehavior
+      onChangeAlarmType = viewModel::changeAlarmBehavior
     )
   }
 }

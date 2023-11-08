@@ -10,6 +10,7 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
@@ -82,6 +83,13 @@ class MainActivity : ComponentActivity() {
   override fun onStart() {
     super.onStart()
 
+//    val lparams = window.attributes
+//    lparams.screenBrightness = 0.2f
+//    window.attributes = lparams
+
+//    window.attributes = window.attributes.apply { screenBrightness = 0.2f }
+//    applicationContext
+
     alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
     val bleIntent = Intent(this, LowEnergyService::class.java)
@@ -96,6 +104,8 @@ class MainActivity : ComponentActivity() {
   override fun onPause() {
 //    mSensorManager.unregisterListener(sensorListener)
     super.onPause()
+
+
   }
 
   override fun onStop() {

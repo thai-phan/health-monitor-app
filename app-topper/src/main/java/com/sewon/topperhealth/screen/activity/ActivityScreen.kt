@@ -1,11 +1,16 @@
 package com.sewon.topperhealth.screen.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.icu.util.GregorianCalendar
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,18 +34,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.content.getSystemService
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.sewon.topperhealth.service.bluetooth.LowEnergyGatt
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.Destinations
@@ -54,6 +57,7 @@ import com.sewon.topperhealth.screen.activity.sub.SwitchAction
 import com.sewon.topperhealth.screen.activity.sub.TimeSelection
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
+import com.sewon.topperhealth.service.bluetooth.LowEnergyGatt
 import timber.log.Timber
 
 
@@ -64,7 +68,19 @@ fun SleepActivity(
   navController: NavHostController = rememberNavController(),
   viewModel: ActivityViewModel = hiltViewModel(),
 ) {
+  fun Context.findActivity(): AppCompatActivity? = when (this) {
+    is AppCompatActivity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
+  }
+
+  val configuration = LocalConfiguration.current
+//  configuration.
+
   val context = LocalContext.current
+  val activity = context.context
+
+
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   val log by LowEnergyClient.log.observeAsState()
@@ -91,6 +107,12 @@ fun SleepActivity(
 
 
   fun startSleep() {
+    if (activity != null) {
+      Timber.tag("startSleep").d("startSleep")
+      activity.window.attributes = activity.window.attributes.apply { screenBrightness = 0.2f }
+    }
+
+
     MainActivity.lowEnergyService.playSoundSleepInduce()
 
     isStarted.value = true

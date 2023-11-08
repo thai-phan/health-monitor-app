@@ -36,7 +36,7 @@ import java.time.LocalTime
 fun ModalAWakeUpTime(
   uiState: UiStateB,
   onToggleModal: () -> Unit,
-  onChangeAlarmTime: (LocalTime) -> Unit,
+  onChangeWakeupTime: (LocalTime) -> Unit,
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
@@ -94,7 +94,7 @@ fun ModalAWakeUpTime(
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {
-          onChangeAlarmTime(time)
+          onChangeWakeupTime(time)
           onToggleModal()
         }) {
           Text(stringResource(R.string.save))

@@ -29,8 +29,7 @@ data class UiStateD(
   val relation3: String = "",
   val contact3: String = "",
   val isLoading: Boolean = false,
-
-  )
+)
 
 @HiltViewModel
 class CardGeneralViewModel @Inject constructor(
@@ -42,13 +41,14 @@ class CardGeneralViewModel @Inject constructor(
   var userId = 0
   private val _isLoading = MutableStateFlow(false)
   private val _message: MutableStateFlow<Int?> = MutableStateFlow(null)
-  private var _settingAsync = settingRepository.flowLoadUserSetting(userId).map {
+  private var _settingAsync = settingRepository.flowLoadUserSetting(userId)
+  private var _settingAsyncMap = _settingAsync.map {
     handleSetting(it)
   }
     .catch { emit(Async.Error(R.string.setting_not_found)) }
 
   val uiState: StateFlow<UiStateD> =
-    combine(_settingAsync, _message, _isLoading) { settingAsync, message, isLoading ->
+    combine(_settingAsyncMap, _message, _isLoading) { settingAsync, message, isLoading ->
       when (settingAsync) {
         Async.Loading -> {
           UiStateD(isLoading = true)

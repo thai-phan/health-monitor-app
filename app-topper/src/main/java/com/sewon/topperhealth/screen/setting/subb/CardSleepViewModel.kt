@@ -9,13 +9,17 @@ import com.sewon.topperhealth.data.model.Setting
 import com.sewon.topperhealth.util.Async
 import com.sewon.topperhealth.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -33,10 +37,12 @@ data class UiStateB(
 )
 
 @HiltViewModel
-class ViewModelCardSleep @Inject constructor(
+@OptIn(ExperimentalCoroutinesApi::class)
+class CardSleepViewModel @Inject constructor(
   private val userRepository: UserRepository,
   private val settingRepository: SettingRepository
 ) : ViewModel() {
+  private var curUsername = "admin_id"
 
   var userId = 0
   private val _isLoading = MutableStateFlow(false)
@@ -45,7 +51,9 @@ class ViewModelCardSleep @Inject constructor(
     handleSetting(it)
   }.catch { emit(Async.Error(R.string.setting_not_found)) }
 
-  val uiState: StateFlow<UiStateB> =
+  private val flow = MutableSharedFlow<Unit>()
+  val uiState: StateFlow<UiStateB> = flow.flatMapLatest {
+
     combine(_settingAsync, _message, _isLoading) { settingAsync, message, isLoading ->
       when (settingAsync) {
         Async.Loading -> {
@@ -70,21 +78,63 @@ class ViewModelCardSleep @Inject constructor(
           )
         }
       }
-    }.stateIn(
-      scope = viewModelScope,
-      started = WhileUiSubscribed,
-      initialValue = UiStateB(isLoading = true)
-    )
+    }
+  }.stateIn(
+    scope = viewModelScope,
+    started = WhileUiSubscribed,
+    initialValue = UiStateB(isLoading = true)
+  )
 
-  fun changeSettingAlarmTime(alarmTime: LocalTime) = viewModelScope.launch {
-    settingRepository.updateWakeupTimeSetting(userId, alarmTime)
+//  private val _uiState = MutableStateFlow(UiStateB())
+//  val uiState: StateFlow<UiStateA> = _uiState.asStateFlow()
+
+
+//  fun loadData() {
+//    val user = userRepository.getUserByUsername(curUsername)
+//    if (user != null) {
+//      val calendar = Calendar.getInstance()
+//      calendar.time = user.birthday
+//      val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+//      val birthdayString = dateFormat.format(calendar.time)
+//
+//      _uiState.update {
+//        it.copy(
+//          alarmOn = user.alarmOn,
+//          sleepTimeStr = settingAsync.data.sleepTime.toString(),
+//          sleepTime = settingAsync.data.sleepTime,
+//          wakeupTimeStr = settingAsync.data.wakeupTime.toString(),
+//          wakeupTime = settingAsync.data.wakeupTime,
+//          alarmBehavior = settingAsync.data.alarmBehavior,
+//          bedOn = settingAsync.data.bedOn,
+//          message = message,
+//          isLoading = isLoading
+//        )
+//      }
+//    }
+//  }
+//
+//  init {
+//    loadData()
+//  }
+
+  fun changeWakeupTime(wakeupTime: LocalTime) = viewModelScope.launch {
+    Timber.tag("changeSettingWakeupTime").d("changeSettingWakeupTime")
+    settingRepository.updateWakeupTimeSetting(userId, wakeupTime)
+    flow.tryEmit(Unit)
+//    _settingAsync.retry(3) { e ->
+//      Timber.tag("_settingAsync").d("_settingAsync")
+//      // retry on any IOException but also introduce delay if retrying
+//      (e is IOException).also { if (it) delay(1000) }
+//    }
+//    aa.retry()
+
   }
 
-  fun changeSettingBedTime(bedTime: LocalTime) = viewModelScope.launch {
+  fun changeBedTime(bedTime: LocalTime) = viewModelScope.launch {
     settingRepository.updateSleepTimeSetting(userId, bedTime)
   }
 
-  fun changeSettingAlarmBehavior(alarmBehavior: String) = viewModelScope.launch {
+  fun changeAlarmBehavior(alarmBehavior: String) = viewModelScope.launch {
     settingRepository.updateAlarmTypeBehavior(userId, alarmBehavior)
   }
 

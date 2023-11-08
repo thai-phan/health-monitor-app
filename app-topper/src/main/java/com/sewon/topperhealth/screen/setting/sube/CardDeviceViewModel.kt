@@ -26,7 +26,7 @@ data class UiStateE(
 )
 
 @HiltViewModel
-class ViewModelCardSleep @Inject constructor(
+class CardDeviceViewModel @Inject constructor(
   private val userRepository: UserRepository,
   private val settingRepository: SettingRepository
 ) : ViewModel() {
