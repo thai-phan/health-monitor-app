@@ -1,5 +1,7 @@
 package com.sewon.topperhealth.screen.setting.subd
 
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.topperhealth.R
@@ -7,17 +9,21 @@ import com.sewon.topperhealth.data.model.Setting
 import com.sewon.topperhealth.data.source.local.repository.SessionRepository
 import com.sewon.topperhealth.data.source.local.repository.SettingRepository
 import com.sewon.topperhealth.data.source.local.repository.TopperRepository
+import com.sewon.topperhealth.screen.setting.subb.UiStateB
 import com.sewon.topperhealth.screen.setting.subd.component.RecipientState
 import com.sewon.topperhealth.util.Async
 import com.sewon.topperhealth.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 data class UiStateD(
@@ -39,43 +45,30 @@ class CardGeneralViewModel @Inject constructor(
 ) : ViewModel() {
 
   var userId = 0
-  private val _isLoading = MutableStateFlow(false)
-  private val _message: MutableStateFlow<Int?> = MutableStateFlow(null)
-  private var _settingAsync = settingRepository.flowLoadUserSetting(userId)
-  private var _settingAsyncMap = _settingAsync.map {
-    handleSetting(it)
+
+  private val _uiState = MutableStateFlow(UiStateD())
+  val uiState: StateFlow<UiStateD> = _uiState.asStateFlow()
+
+  init {
+    loadData()
   }
-    .catch { emit(Async.Error(R.string.setting_not_found)) }
 
-  val uiState: StateFlow<UiStateD> =
-    combine(_settingAsyncMap, _message, _isLoading) { settingAsync, message, isLoading ->
-      when (settingAsync) {
-        Async.Loading -> {
-          UiStateD(isLoading = true)
-        }
+  private fun loadData() = viewModelScope.launch {
+    val setting = settingRepository.loadUserSetting(userId)
+    if (setting != null) {
 
-        is Async.Error -> {
-          UiStateD(message = settingAsync.errorMessage)
-        }
-
-        is Async.Success -> {
-          UiStateD(
-            message = message,
-            isLoading = isLoading,
-            relation1 = settingAsync.data!!.relation1,
-            contact1 = settingAsync.data.contact1,
-            relation2 = settingAsync.data.relation2,
-            contact2 = settingAsync.data.contact2,
-            relation3 = settingAsync.data.relation3,
-            contact3 = settingAsync.data.contact3,
-          )
-        }
+      _uiState.update {
+        it.copy(
+          relation1 = setting.relation1,
+          contact1 = setting.contact1,
+          relation2 = setting.relation2,
+          contact2 = setting.contact2,
+          relation3 = setting.relation3,
+          contact3 = setting.contact3,
+        )
       }
-    }.stateIn(
-      scope = viewModelScope,
-      started = WhileUiSubscribed,
-      initialValue = UiStateD(isLoading = true)
-    )
+    }
+  }
 
   fun onChangeAccessDevice() = viewModelScope.launch {
 //        settingRepository.updateAlarmSetting(userId, alarmOn)
@@ -93,14 +86,6 @@ class CardGeneralViewModel @Inject constructor(
       state.relation2, state.contact2,
       state.relation3, state.contact3
     )
+    loadData()
   }
-
-  private fun handleSetting(setting: Setting?): Async<Setting?> {
-    if (setting == null) {
-      return Async.Error(R.string.setting_not_found)
-    }
-    return Async.Success(setting)
-  }
-
-
 }

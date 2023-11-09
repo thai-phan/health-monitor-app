@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
 import android.content.Intent
 import android.icu.util.GregorianCalendar
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -93,6 +94,8 @@ fun SleepActivity(
 
 
   fun startSleep() {
+
+
     if (activity != null) {
       activity.window?.attributes = activity.window.attributes.apply {
         screenBrightness = 0.2f

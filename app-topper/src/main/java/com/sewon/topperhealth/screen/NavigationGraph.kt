@@ -108,7 +108,9 @@ fun NavigationGraph(
     }
 
     composable(Destinations.REPORT_ROUTE) { from ->
-      ReportScreen(modifier)
+      ReportScreen(modifier) {
+        navController.navigate(Destinations.ACTIVITY_ROUTE)
+      }
     }
 
     composable(Destinations.SETTING_ROUTE) {

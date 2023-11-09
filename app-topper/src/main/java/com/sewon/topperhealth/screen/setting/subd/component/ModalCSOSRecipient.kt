@@ -1,5 +1,7 @@
 package com.sewon.topperhealth.screen.setting.subd.component
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -54,6 +56,10 @@ fun ModalCSOSRecipient(
       )
     )
   }
+
+//  val number = Uri.parse("tel:123456789")
+//  val callIntent = Intent(Intent.ACTION_DIAL, number)
+//  context.startActivity(callIntent)
 
   ModalBottomSheet(
 //    modifier = Modifier.fillMaxHeight(),

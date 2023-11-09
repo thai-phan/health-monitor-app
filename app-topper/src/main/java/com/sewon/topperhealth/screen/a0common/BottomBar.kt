@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import timber.log.Timber
 import java.util.Locale
 
 @Composable
@@ -44,25 +45,26 @@ fun BottomBar(
           containerColor = Color(0xFF000103),
         ) {
           tabs.forEach { tab ->
-            if (tab.route != MainTabs.ACTIVITY.route) {
-              NavigationBarItem(
-                icon = { Icon(painterResource(tab.icon), contentDescription = null) },
-                label = { Text(stringResource(tab.title).uppercase(Locale.getDefault())) },
-                selected = currentRoute == tab.route,
-                onClick = {
-                  if (tab.route != currentRoute) {
-                    navController.navigate(tab.route) {
-                      popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
-                      }
-                      launchSingleTop = true
-                      restoreState = true
+            NavigationBarItem(
+              icon = { Icon(painterResource(tab.icon), contentDescription = null) },
+              label = { Text(stringResource(tab.title).uppercase(Locale.getDefault())) },
+              selected = currentRoute == tab.route,
+              onClick = {
+                if (tab.route != currentRoute) {
+                  Timber.tag("BottomBar").d(currentRoute)
+                  Timber.tag("BottomBar").d(tab.route)
+//                  navController.navigate(tab.route)
+                  navController.navigate(tab.route) {
+                    popUpTo(navController.graph.startDestinationId) {
+                      saveState = true
                     }
+                    launchSingleTop = true
+                    restoreState = true
                   }
-                },
-                modifier = Modifier.navigationBarsPadding()
-              )
-            }
+                }
+              },
+              modifier = Modifier.navigationBarsPadding()
+            )
           }
         }
       }

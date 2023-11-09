@@ -7,17 +7,11 @@ import com.sewon.topperhealth.data.source.local.repository.SettingRepository
 import com.sewon.topperhealth.data.source.local.repository.UserRepository
 import com.sewon.topperhealth.data.model.Setting
 import com.sewon.topperhealth.util.Async
-import com.sewon.topperhealth.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalTime
@@ -37,7 +31,6 @@ data class UiStateB(
 )
 
 @HiltViewModel
-@OptIn(ExperimentalCoroutinesApi::class)
 class CardSleepViewModel @Inject constructor(
   private val userRepository: UserRepository,
   private val settingRepository: SettingRepository
@@ -45,82 +38,37 @@ class CardSleepViewModel @Inject constructor(
   private var curUsername = "admin_id"
 
   var userId = 0
-  private val _isLoading = MutableStateFlow(false)
-  private val _message: MutableStateFlow<Int?> = MutableStateFlow(null)
-  private var _settingAsync = settingRepository.flowLoadUserSetting(userId).map {
-    handleSetting(it)
-  }.catch { emit(Async.Error(R.string.setting_not_found)) }
 
-  private val flow = MutableSharedFlow<Unit>()
-  val uiState: StateFlow<UiStateB> = flow.flatMapLatest {
+  private val _uiState = MutableStateFlow(UiStateB())
+  val uiState: StateFlow<UiStateB> = _uiState.asStateFlow()
 
-    combine(_settingAsync, _message, _isLoading) { settingAsync, message, isLoading ->
-      when (settingAsync) {
-        Async.Loading -> {
-          UiStateB(isLoading = true)
-        }
+  init {
+    loadData()
+  }
 
-        is Async.Error -> {
-          UiStateB(message = settingAsync.errorMessage)
-        }
+  private fun loadData() = viewModelScope.launch {
+    val setting = settingRepository.loadUserSetting(userId)
+    if (setting != null) {
 
-        is Async.Success -> {
-          UiStateB(
-            alarmOn = settingAsync.data!!.alarmOn,
-            sleepTimeStr = settingAsync.data.sleepTime.toString(),
-            sleepTime = settingAsync.data.sleepTime,
-            wakeupTimeStr = settingAsync.data.wakeupTime.toString(),
-            wakeupTime = settingAsync.data.wakeupTime,
-            alarmBehavior = settingAsync.data.alarmBehavior,
-            bedOn = settingAsync.data.bedOn,
-            message = message,
-            isLoading = isLoading
-          )
-        }
+      _uiState.update {
+        it.copy(
+          alarmOn = setting.alarmOn,
+          sleepTimeStr = setting.sleepTime.toString(),
+          sleepTime = setting.sleepTime,
+          wakeupTimeStr = setting.wakeupTime.toString(),
+          wakeupTime = setting.wakeupTime,
+          alarmBehavior = setting.alarmBehavior,
+          bedOn = setting.bedOn,
+        )
       }
     }
-  }.stateIn(
-    scope = viewModelScope,
-    started = WhileUiSubscribed,
-    initialValue = UiStateB(isLoading = true)
-  )
+  }
 
-//  private val _uiState = MutableStateFlow(UiStateB())
-//  val uiState: StateFlow<UiStateA> = _uiState.asStateFlow()
-
-
-//  fun loadData() {
-//    val user = userRepository.getUserByUsername(curUsername)
-//    if (user != null) {
-//      val calendar = Calendar.getInstance()
-//      calendar.time = user.birthday
-//      val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
-//      val birthdayString = dateFormat.format(calendar.time)
-//
-//      _uiState.update {
-//        it.copy(
-//          alarmOn = user.alarmOn,
-//          sleepTimeStr = settingAsync.data.sleepTime.toString(),
-//          sleepTime = settingAsync.data.sleepTime,
-//          wakeupTimeStr = settingAsync.data.wakeupTime.toString(),
-//          wakeupTime = settingAsync.data.wakeupTime,
-//          alarmBehavior = settingAsync.data.alarmBehavior,
-//          bedOn = settingAsync.data.bedOn,
-//          message = message,
-//          isLoading = isLoading
-//        )
-//      }
-//    }
-//  }
-//
-//  init {
-//    loadData()
-//  }
 
   fun changeWakeupTime(wakeupTime: LocalTime) = viewModelScope.launch {
     Timber.tag("changeSettingWakeupTime").d("changeSettingWakeupTime")
     settingRepository.updateWakeupTimeSetting(userId, wakeupTime)
-    flow.tryEmit(Unit)
+    loadData()
 //    _settingAsync.retry(3) { e ->
 //      Timber.tag("_settingAsync").d("_settingAsync")
 //      // retry on any IOException but also introduce delay if retrying
@@ -132,10 +80,12 @@ class CardSleepViewModel @Inject constructor(
 
   fun changeBedTime(bedTime: LocalTime) = viewModelScope.launch {
     settingRepository.updateSleepTimeSetting(userId, bedTime)
+    loadData()
   }
 
   fun changeAlarmBehavior(alarmBehavior: String) = viewModelScope.launch {
     settingRepository.updateAlarmTypeBehavior(userId, alarmBehavior)
+    loadData()
   }
 
   private fun handleSetting(setting: Setting?): Async<Setting?> {

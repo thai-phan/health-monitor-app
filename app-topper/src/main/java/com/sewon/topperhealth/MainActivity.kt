@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
 import androidx.activity.ComponentActivity
@@ -80,6 +81,9 @@ class MainActivity : ComponentActivity() {
 
   override fun onStart() {
     super.onStart()
+
+
+
 
     alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 

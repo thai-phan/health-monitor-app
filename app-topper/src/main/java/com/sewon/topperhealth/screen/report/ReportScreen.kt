@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,12 +32,15 @@ import com.sewon.topperhealth.screen.report.sube.SleepSummary
 fun ReportScreen(
   modifier: Modifier,
   viewModel: ReportViewModel = hiltViewModel(),
+  goToActivity: () -> Unit
 ) {
 
   val context = LocalContext.current
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-//    val regularClass = RegularClass(context)
+
+  //    val regularClass = RegularClass(context)
 //    regularClass.findResource()
+
 
   fun selectSessionReport(id: Int) {
     viewModel.showSessionReport(id)
@@ -64,16 +68,14 @@ fun ReportScreen(
         SleepScore(uiState)
         SleepDetail(uiState)
         SleepSummary(uiState)
+
       }
     } else {
       Text("Sleep Session Empty")
     }
+    Button(onClick = { goToActivity() }) {
+      Text(stringResource(R.string.activity))
+    }
   }
 }
 
-
-@Preview
-@Composable
-fun PreviewReport() {
-  ReportScreen(Modifier)
-}
