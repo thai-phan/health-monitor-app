@@ -5,12 +5,8 @@ import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import android.icu.util.GregorianCalendar
-import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,10 +30,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -68,18 +63,9 @@ fun SleepActivity(
   navController: NavHostController = rememberNavController(),
   viewModel: ActivityViewModel = hiltViewModel(),
 ) {
-  fun Context.findActivity(): AppCompatActivity? = when (this) {
-    is AppCompatActivity -> this
-    is ContextWrapper -> baseContext.findActivity()
-    else -> null
-  }
-
-  val configuration = LocalConfiguration.current
-//  configuration.
 
   val context = LocalContext.current
-  val activity = context.context
-
+  val activity = LocalView.current.context as? Activity
 
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -108,10 +94,10 @@ fun SleepActivity(
 
   fun startSleep() {
     if (activity != null) {
-      Timber.tag("startSleep").d("startSleep")
-      activity.window.attributes = activity.window.attributes.apply { screenBrightness = 0.2f }
+      activity.window?.attributes = activity.window.attributes.apply {
+        screenBrightness = 0.2f
+      }
     }
-
 
     MainActivity.lowEnergyService.playSoundSleepInduce()
 
@@ -146,6 +132,12 @@ fun SleepActivity(
   }
 
   fun cancelSleep() {
+    if (activity != null) {
+      activity.window?.attributes = activity.window.attributes.apply {
+        screenBrightness = -1.0f
+      }
+    }
+
     isStarted.value = false
     MainActivity.lowEnergyService.stopSoundSleepInduce()
     MainActivity.alarmManager.cancel(MainActivity.alarmPendingIntent)
@@ -237,8 +229,8 @@ fun SleepActivity(
   }
 }
 
-@Preview
-@Composable
-fun PreviewSleepActivity() {
-  SleepActivity()
-}
+//@Preview
+//@Composable
+//fun PreviewSleepActivity() {
+//  SleepActivity()
+//}

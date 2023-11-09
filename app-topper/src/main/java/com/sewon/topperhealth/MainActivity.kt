@@ -7,10 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
@@ -82,13 +80,6 @@ class MainActivity : ComponentActivity() {
 
   override fun onStart() {
     super.onStart()
-
-//    val lparams = window.attributes
-//    lparams.screenBrightness = 0.2f
-//    window.attributes = lparams
-
-//    window.attributes = window.attributes.apply { screenBrightness = 0.2f }
-//    applicationContext
 
     alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
