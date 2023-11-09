@@ -23,8 +23,9 @@ import javax.inject.Inject
 
 data class UiStateA(
   val calendar: Calendar = Calendar.getInstance(),
+  val gender: String = "",
+  val genderStr: String = "Please select",
   val birthday: String = "1980-01-01",
-  val gender: String = "Please select",
   val isLoading: Boolean = false,
   val userMessage: Int? = null
 )
@@ -54,6 +55,7 @@ class ViewModelCardProfile @Inject constructor(
         it.copy(
           calendar = calendar,
           gender = user.gender,
+          genderStr = user.gender,
           birthday = birthdayString,
         )
       }
@@ -71,7 +73,6 @@ class ViewModelCardProfile @Inject constructor(
   }
 
   fun changeBirthday(year: Int, month: Int, day: Int) = viewModelScope.launch {
-    Timber.tag("Timber").d("changeBirthday")
     val date = Calendar.getInstance().apply {
       set(year, month, day)
     }.time

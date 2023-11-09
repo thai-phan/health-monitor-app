@@ -72,7 +72,7 @@ fun ProfileSetting(
       ) {
         Text(stringResource(R.string.setting_a_gender))
         Row() {
-          Text(uiState.gender, color = Color.White)
+          Text(uiState.genderStr, color = Color.White)
           Spacer(Modifier.size(ButtonDefaults.IconSpacing))
           Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
         }

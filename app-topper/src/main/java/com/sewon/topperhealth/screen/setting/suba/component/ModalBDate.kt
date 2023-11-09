@@ -50,7 +50,7 @@ fun ModalDate(
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text("성별", style = topperTypography.titleLarge)
+      Text(stringResource(R.string.setting_a_age), style = topperTypography.titleLarge)
       AndroidView(modifier = Modifier
         .fillMaxWidth()
         .height(200.dp), factory = { context ->

@@ -37,15 +37,16 @@ fun ModalAGender(
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
-
-  val (gender, setGender) = remember { mutableStateOf(uiState.gender) }
+  val genderOption = arrayOf("남성", "여성")
+  val genderInit = if (uiState.gender != "") uiState.gender else "남성"
+  val (gender, setGender) = remember { mutableStateOf(genderInit) }
 
   ModalBottomSheet(
     onDismissRequest = onToggleModal,
     sheetState = bottomSheetState,
   ) {
     Column(modifier = Modifier.padding(horizontal = 50.dp)) {
-      Text(stringResource(R.string.setting_a_age), style = topperTypography.titleLarge)
+      Text(stringResource(R.string.setting_a_gender), style = topperTypography.titleLarge)
 
       Row(
         modifier = Modifier
@@ -58,15 +59,14 @@ fun ModalAGender(
             val view =
               LayoutInflater.from(context).inflate(R.layout.number_picker, null)
             val picker = view.findViewById<NumberPicker>(R.id.number_picker)
-            val data = arrayOf("남성", "여성")
+
             picker.minValue = 0
-            picker.maxValue = data.size - 1
-            picker.displayedValues = data
-            picker.value = data.indexOf(gender)
+            picker.maxValue = genderOption.size - 1
+            picker.displayedValues = genderOption
+            picker.value = genderOption.indexOf(gender)
             picker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS;
-            picker.setOnValueChangedListener { _, oldVal, newVal ->
-              setGender(data.get(newVal))
-              // do your other stuff depends on the new value
+            picker.setOnValueChangedListener { _, _, newVal ->
+              setGender(genderOption[newVal])
             }
             picker
           }
