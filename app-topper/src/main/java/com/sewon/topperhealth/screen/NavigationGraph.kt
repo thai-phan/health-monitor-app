@@ -49,8 +49,8 @@ fun NavigationGraph(
   ) {
     var redirectRoute = Destinations.TERM_AGREEMENT_ROUTE
     if (isAccepted.value) {
-//      redirectRoute = MainDestinations.ACTIVITY_ROUTE
-      redirectRoute = Destinations.TERM_AGREEMENT_ROUTE
+      redirectRoute = Destinations.ACTIVITY_ROUTE
+//      redirectRoute = Destinations.TERM_AGREEMENT_ROUTE
     }
 
     composable(Destinations.SPLASH_ROUTE) {
@@ -69,15 +69,16 @@ fun NavigationGraph(
 
     composable(Destinations.TERM_AGREEMENT_ROUTE) {
       TermAgreement(
-        modifier,
+        modifier
       ) {
+        store.acceptTermAgreement(true)
         navController.navigate(Destinations.DEVICE_ROUTE)
       }
     }
 
     composable(Destinations.DEVICE_ROUTE) {
       DeviceScreen(
-        modifier,
+        modifier
       ) {
         navController.navigate(Destinations.ACTIVITY_ROUTE) {
 //          TODO: research
