@@ -79,12 +79,19 @@ fun ModalCSOSRecipient(
 
       Row {
         TextField(
+          label = {
+            Text(stringResource(R.string.setting_d_relation))
+          },
           value = recipientState.relation1,
           modifier = Modifier.weight(1f),
           onValueChange = {
             setRecipientState(recipientState.copy(relation1 = it))
           })
+        Spacer(Modifier.width(10.dp))
         TextField(
+          label = {
+            Text(stringResource(R.string.setting_d_contact_information))
+          },
           value = recipientState.contact1,
           modifier = Modifier.weight(2f),
           onValueChange = {
@@ -94,12 +101,19 @@ fun ModalCSOSRecipient(
 
       Row() {
         TextField(
+          label = {
+            Text(stringResource(R.string.setting_d_relation))
+          },
           value = recipientState.relation2,
           modifier = Modifier.weight(1f),
           onValueChange = {
-            setRecipientState(recipientState.copy(relation1 = it))
+            setRecipientState(recipientState.copy(relation2 = it))
           })
+        Spacer(Modifier.width(10.dp))
         TextField(
+          label = {
+            Text(stringResource(R.string.setting_d_contact_information))
+          },
           value = recipientState.contact2,
           modifier = Modifier.weight(2f),
           onValueChange = {
@@ -109,12 +123,19 @@ fun ModalCSOSRecipient(
 
       Row {
         TextField(
+          label = {
+            Text(stringResource(R.string.setting_d_relation))
+          },
           value = recipientState.relation3,
           modifier = Modifier.weight(1f),
           onValueChange = {
             setRecipientState(recipientState.copy(relation3 = it))
           })
+        Spacer(Modifier.width(10.dp))
         TextField(
+          label = {
+            Text(stringResource(R.string.setting_d_contact_information))
+          },
           value = recipientState.contact3,
           modifier = Modifier.weight(2f),
           onValueChange = {
