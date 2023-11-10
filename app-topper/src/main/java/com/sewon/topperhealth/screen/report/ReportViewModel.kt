@@ -88,6 +88,7 @@ class ReportViewModel @Inject constructor(
   }
 
   private fun getSleepSummary(session: SleepSession) {
+    Timber.tag("getSleepSummary").d(session.rating.toString())
     val sleepEfficiency = session.rating.toFloat()
 
     val startTime: Date = session.actualStartTime

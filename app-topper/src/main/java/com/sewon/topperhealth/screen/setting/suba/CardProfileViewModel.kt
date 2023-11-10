@@ -9,8 +9,6 @@ import com.sewon.topperhealth.data.model.User
 import com.sewon.topperhealth.data.source.local.repository.UserRepository
 import com.sewon.topperhealth.util.Async
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,12 +30,10 @@ data class UiStateA(
 
 
 @HiltViewModel
-class ViewModelCardProfile @Inject constructor(
+class CardProfileViewModel @Inject constructor(
   private val userRepository: UserRepository,
 ) : ViewModel() {
   private var curUsername = "admin_id"
-  private val _isLoading = MutableStateFlow(false)
-  private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
 
   private val _uiState = MutableStateFlow(UiStateA())
   val uiState: StateFlow<UiStateA> = _uiState.asStateFlow()

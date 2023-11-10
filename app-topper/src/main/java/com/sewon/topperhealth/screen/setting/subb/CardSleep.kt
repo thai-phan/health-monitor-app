@@ -61,7 +61,7 @@ fun SleepSetting(
 
     ) {
       Text(stringResource(R.string.setting_b_sleep_setting), style = topperTypography.titleMedium)
-
+      Spacer(Modifier.height(10.dp))
       Row(
         modifier = Modifier
           .fillMaxWidth()

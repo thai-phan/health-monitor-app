@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.res.Configuration
-import android.net.Uri
+import android.content.res.Resources
 import android.os.Bundle
 import android.os.IBinder
 import androidx.activity.ComponentActivity
@@ -43,46 +43,44 @@ class MainActivity : ComponentActivity() {
     WindowCompat.setDecorFitsSystemWindows(window, false)
 
     setContent {
-      RootCompose {
+      RootCompose(setLocale = {
+        reload()
+      }) {
         finish()
       }
     }
   }
 
+  private fun reload() {
+    recreate()
+  }
+
   override fun onResume() {
     super.onResume()
-//    val locale = Locale("ko")
-//    Locale.setDefault(locale)
-//    val config: Configuration = baseContext.resources.configuration
-//    config.setLocale(locale)
-//    val resources: Resources = context.getResources()
-//    createConfigurationContext(config);
+
+    setLocale("ko")
   }
 
-  override fun attachBaseContext(base: Context) {
-    super.attachBaseContext(updateResources(base))
-  }
+//  override fun attachBaseContext(base: Context) {
+//    super.attachBaseContext(updateResources(base))
+//  }
 
   private fun updateResources(context: Context): Context {
-    val resources = context.resources
-    val config = Configuration(resources.configuration)
-    val locale = Locale("en")
-    config.setLocale(locale)
+    val config = Configuration(context.resources.configuration)
+    config.setLocale(Locale("en"))
     return context.createConfigurationContext(config)
   }
 
-  private fun setLocale(locale: Locale) {
-    val resources = resources
-    val configuration = resources.configuration
-    configuration.setLocale(locale)
-    applicationContext.createConfigurationContext(configuration)
+  private fun setLocale(localeStr: String) {
+    Locale.setDefault(Locale(localeStr))
+    val config = resources.configuration
+    config.setLocale(Locale(localeStr))
+    resources.updateConfiguration(config, resources.displayMetrics)
   }
 
 
   override fun onStart() {
     super.onStart()
-
-
 
 
     alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager

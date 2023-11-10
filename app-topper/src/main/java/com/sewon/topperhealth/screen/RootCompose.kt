@@ -24,7 +24,7 @@ import com.sewon.topperhealth.screen.a0common.MainTabs
 import com.sewon.topperhealth.screen.a0common.blackGreenBackground
 
 @Composable
-fun RootCompose(finishActivity: () -> Unit) {
+fun RootCompose(setLocale: (String) -> Unit, finishActivity: () -> Unit) {
 
   val navController = rememberNavController()
   val navBackStackEntry by navController.currentBackStackEntryAsState()

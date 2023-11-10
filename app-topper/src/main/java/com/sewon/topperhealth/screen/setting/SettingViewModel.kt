@@ -67,12 +67,12 @@ class SettingViewModel @Inject constructor(
           threshold = "threshold",
           createdAt = curDate,
           updatedAt = curDate,
-          relation1 = "relation1",
-          relation2 = "relation2",
-          relation3 = "relation3",
-          contact1 = "contact1",
-          contact2 = "contact2",
-          contact3 = "contact3",
+          relation1 = "관계",
+          relation2 = "관계",
+          relation3 = "관계",
+          contact1 = "연락처",
+          contact2 = "연락처",
+          contact3 = "연락처",
         )
         settingRepository.addSetting(setting)
       }

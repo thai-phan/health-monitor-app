@@ -74,7 +74,7 @@ fun SleepActivity(
   val deviceAddress by LowEnergyClient.deviceAddress.observeAsState()
   val isAlarm by LowEnergyClient.isAlarm.observeAsState()
 
-  val isStarted = remember { mutableStateOf(false) }
+  val isStarted by LowEnergyClient.isStarted.observeAsState()
 
 
   fun composeConnectToSensor() {
@@ -104,7 +104,7 @@ fun SleepActivity(
 
     MainActivity.lowEnergyService.playSoundSleepInduce()
 
-    isStarted.value = true
+    LowEnergyClient.isStarted.value = true
 
     val startTimeCalendar = GregorianCalendar.getInstance()
     startTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, uiState.startTime.hour)
@@ -141,7 +141,7 @@ fun SleepActivity(
       }
     }
 
-    isStarted.value = false
+    LowEnergyClient.isStarted.value = false
     MainActivity.lowEnergyService.stopSoundSleepInduce()
     MainActivity.alarmManager.cancel(MainActivity.alarmPendingIntent)
 
@@ -192,15 +192,17 @@ fun SleepActivity(
       SwitchAction()
       Spacer(modifier = Modifier.height(10.dp))
       isAlarm?.let {
-        ButtonAction(
-          isStarted.value, it,
-          startSleep = { startSleep() },
-          cancelSleep = {
-            cancelSleep()
-            openAssessmentModal = !openAssessmentModal
-          },
-          stopAlarm = { stopAlarm() }
-        )
+        isStarted?.let { it1 ->
+          ButtonAction(
+            it1, it,
+            startSleep = { startSleep() },
+            cancelSleep = {
+              cancelSleep()
+              openAssessmentModal = !openAssessmentModal
+            },
+            stopAlarm = { stopAlarm() }
+          )
+        }
       }
 //      log?.let { Text(it) }
     }

@@ -61,7 +61,7 @@ fun InductionSolutionSetting(
         stringResource(R.string.setting_c_sleep_inducing_solution),
         style = topperTypography.titleMedium
       )
-
+      Spacer(Modifier.height(10.dp))
       Row(
         modifier = Modifier
           .fillMaxWidth()

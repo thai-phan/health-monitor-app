@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,10 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
@@ -43,7 +40,7 @@ import com.sewon.topperhealth.screen.setting.suba.component.ModalDate
 @Composable
 fun ProfileSetting(
   rowHeight: Dp,
-  viewModel: ViewModelCardProfile = hiltViewModel()
+  viewModel: CardProfileViewModel = hiltViewModel()
 
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -61,7 +58,8 @@ fun ProfileSetting(
         .fillMaxWidth()
         .padding(20.dp)
     ) {
-      Text(stringResource(R.string.setting_a_profile), style = topperTypography.titleMedium )
+      Text(stringResource(R.string.setting_a_profile), style = topperTypography.titleMedium)
+      Spacer(Modifier.height(10.dp))
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

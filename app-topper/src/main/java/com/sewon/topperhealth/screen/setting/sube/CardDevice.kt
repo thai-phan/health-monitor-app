@@ -49,10 +49,13 @@ fun DeviceConnectionSetting(
         stringResource(R.string.setting_e_product_registration),
         style = topperTypography.titleMedium
       )
+      Spacer(Modifier.height(10.dp))
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().height(rowHeight)
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(rowHeight)
       ) {
         Text(stringResource(R.string.setting_e_product_number))
 
@@ -69,7 +72,9 @@ fun DeviceConnectionSetting(
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().height(rowHeight)
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(rowHeight)
       ) {
         Text(stringResource(R.string.setting_e_bluetooth))
 

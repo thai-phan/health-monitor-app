@@ -18,6 +18,7 @@ class LowEnergyClient {
     val log = MutableLiveData("")
     val isAlarm = MutableLiveData(false)
     val connected = MutableLiveData(Connected.False)
+    val isStarted = MutableLiveData(false)
   }
 
   val tag: String = this.javaClass.name
