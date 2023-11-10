@@ -22,6 +22,7 @@ import com.sewon.topperhealth.screen.report.ReportScreen
 import com.sewon.topperhealth.screen.setting.SettingScreen
 import com.sewon.topperhealth.screen.splash.SplashScreen
 import com.sewon.topperhealth.screen.term.TermAgreement
+import kotlinx.coroutines.CoroutineScope
 
 
 @Composable
@@ -71,7 +72,8 @@ fun NavigationGraph(
       TermAgreement(
         modifier
       ) {
-        store.acceptTermAgreement(true)
+//        TODO: check
+//        store.acceptTermAgreement(true)
         navController.navigate(Destinations.DEVICE_ROUTE)
       }
     }
