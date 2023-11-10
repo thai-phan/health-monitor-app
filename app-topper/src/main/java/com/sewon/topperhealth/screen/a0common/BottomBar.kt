@@ -51,9 +51,6 @@ fun BottomBar(
               selected = currentRoute == tab.route,
               onClick = {
                 if (tab.route != currentRoute) {
-                  Timber.tag("BottomBar").d(currentRoute)
-                  Timber.tag("BottomBar").d(tab.route)
-//                  navController.navigate(tab.route)
                   navController.navigate(tab.route) {
                     popUpTo(navController.graph.startDestinationId) {
                       saveState = true

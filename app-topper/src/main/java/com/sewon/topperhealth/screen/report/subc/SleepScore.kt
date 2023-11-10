@@ -31,8 +31,8 @@ fun SleepScore(
     Chart1SleepStage(uiState.sleepStage)
   }
 
-  Text("RPI Tachogram")
-  Column {
-    Chart2SleepRPI(uiState.sleepRPI)
-  }
+//  Text("RPI Tachogram")
+//  Column {
+//    Chart2SleepRPI(uiState.sleepRPI)
+//  }
 }

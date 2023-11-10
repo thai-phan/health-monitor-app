@@ -61,7 +61,7 @@ import timber.log.Timber
 @Composable
 fun SleepActivity(
   modifier: Modifier = Modifier,
-  navController: NavHostController = rememberNavController(),
+  redirectReportPage: () -> Unit,
   viewModel: ActivityViewModel = hiltViewModel(),
 ) {
 
@@ -153,9 +153,6 @@ fun SleepActivity(
     MainActivity.lowEnergyClient.stopAlarmListener()
   }
 
-  fun redirectReportPage() {
-    navController.navigate(Destinations.REPORT_ROUTE)
-  }
 
   var openAssessmentModal by rememberSaveable { mutableStateOf(false) }
   var openQualityModal by rememberSaveable { mutableStateOf(false) }
@@ -191,6 +188,7 @@ fun SleepActivity(
 
     Column(Modifier.verticalScroll(rememberScrollState())) {
       TimeSelection(uiState.startTime, uiState.endTime)
+      Spacer(modifier = Modifier.height(10.dp))
       SwitchAction()
       Spacer(modifier = Modifier.height(10.dp))
       isAlarm?.let {

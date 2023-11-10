@@ -44,7 +44,6 @@ fun NavigationGraph(
     mutableStateOf(!showOnboardingInitially)
   }
 
-  val actions = remember(navController) { MainActions(navController) }
   NavHost(
     navController = navController, startDestination = startDestination
   ) {
@@ -71,18 +70,30 @@ fun NavigationGraph(
     composable(Destinations.TERM_AGREEMENT_ROUTE) {
       TermAgreement(
         modifier,
-        onRedirectRoute = {
-          navController.navigate(Destinations.DEVICE_ROUTE)
-        }
-      )
+      ) {
+        navController.navigate(Destinations.DEVICE_ROUTE)
+      }
     }
 
     composable(Destinations.DEVICE_ROUTE) {
       DeviceScreen(
         modifier,
-        navController = navController,
-
-        )
+      ) {
+        navController.navigate(Destinations.ACTIVITY_ROUTE) {
+//          TODO: research
+          popUpTo(navController.graph.startDestinationId) {
+            // Save backstack state. This will ensure restoration of
+            // nested navigation screen when the user comes back to
+            // the destination.
+            saveState = true
+          }
+          // prevent duplicate destinations when the navigation is
+          // clicked multiple times
+          launchSingleTop = true
+          // restore state if previously saved
+          restoreState = true
+        }
+      }
     }
 
     composable(MainTabs.ACTIVITY.route) { backStackEntry ->
@@ -90,7 +101,15 @@ fun NavigationGraph(
 //            navController.getBackStackEntry("parentNavigationRoute")
 //        }
 //        val parentViewModel = hiltViewModel(parentEntry)
-      SleepActivity(modifier, navController)
+      SleepActivity(modifier, redirectReportPage = {
+        navController.navigate(Destinations.REPORT_ROUTE) {
+          popUpTo(navController.graph.startDestinationId) {
+            saveState = true
+          }
+          launchSingleTop = true
+          restoreState = true
+        }
+      })
       // Show onboarding instead if not shown yet.
 //        LaunchedEffect(onboardingComplete) {
 //            if (!onboardingComplete.value) {
@@ -108,9 +127,7 @@ fun NavigationGraph(
     }
 
     composable(Destinations.REPORT_ROUTE) { from ->
-      ReportScreen(modifier) {
-        navController.navigate(Destinations.ACTIVITY_ROUTE)
-      }
+      ReportScreen(modifier)
     }
 
     composable(Destinations.SETTING_ROUTE) {
@@ -133,39 +150,6 @@ fun NavigationGraph(
 //                upPress = { actions.upPress(backStackEntry) }
 //            )
 //        }
-  }
-}
-
-/**
- * Models the navigation actions in the app.
- */
-class MainActions(navController: NavHostController) {
-  val onboardingComplete: () -> Unit = {
-    navController.popBackStack()
-  }
-
-  // Used from COURSES_ROUTE
-  val openCourse = { newCourseId: Long, from: NavBackStackEntry ->
-    // In order to discard duplicated navigation events, we check the Lifecycle
-    if (from.lifecycleIsResumed()) {
-      navController.navigate("${Destinations.SETTING_ROUTE}/$newCourseId")
-    }
-  }
-
-  // Used from COURSE_DETAIL_ROUTE
-  val relatedCourse = { newCourseId: Long, from: NavBackStackEntry ->
-    // In order to discard duplicated navigation events, we check the Lifecycle
-    if (from.lifecycleIsResumed()) {
-      navController.navigate("${Destinations.REPORT_ROUTE}/$newCourseId")
-    }
-  }
-
-  // Used from COURSE_DETAIL_ROUTE
-  val upPress: (from: NavBackStackEntry) -> Unit = { from ->
-    // In order to discard duplicated navigation events, we check the Lifecycle
-    if (from.lifecycleIsResumed()) {
-      navController.navigateUp()
-    }
   }
 }
 

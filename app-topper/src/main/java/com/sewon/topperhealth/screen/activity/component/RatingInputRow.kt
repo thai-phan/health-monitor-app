@@ -15,7 +15,7 @@ import com.sewon.topperhealth.R
  */
 @Composable
 fun RatingInputRow(rating: Int, onRatingChange: (Int) -> Unit, modifier: Modifier = Modifier) {
-  InputRow(inputLabel = stringResource(R.string.app_name), modifier = modifier) {
+  InputRow(modifier = modifier) {
     AndroidView(
       factory = { context ->
         RatingBar(context).apply {
@@ -34,7 +34,6 @@ fun RatingInputRow(rating: Int, onRatingChange: (Int) -> Unit, modifier: Modifie
 
 @Composable
 fun InputRow(
-  inputLabel: String,
   modifier: Modifier = Modifier,
   content: @Composable () -> Unit
 ) {

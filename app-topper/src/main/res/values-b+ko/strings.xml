@@ -64,6 +64,9 @@
   <string name="available_devices">사용 가능한 장치</string>
   <string name="sleep_time_check">수면시간 체크</string>
   <string name="agree">동의</string>
+  <string name="sleep_quality_question">질문 : 오늘 수면의 질은 어떠셨나요?</string>
+  <string name="sleep_assessment_question">질문 : 시간동안 얼마나 자주 피곤하고 무기력감을 느꼈나요?</string>
+  <string name="sleep_assessment">최근 수면의 질 평가</string>
 
 
 </resources>

@@ -32,14 +32,10 @@ import com.sewon.topperhealth.screen.report.sube.SleepSummary
 fun ReportScreen(
   modifier: Modifier,
   viewModel: ReportViewModel = hiltViewModel(),
-  goToActivity: () -> Unit
 ) {
 
   val context = LocalContext.current
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-  //    val regularClass = RegularClass(context)
-//    regularClass.findResource()
 
 
   fun selectSessionReport(id: Int) {
@@ -66,15 +62,12 @@ fun ReportScreen(
       ) {
         SleepChart(uiState)
         SleepScore(uiState)
-        SleepDetail(uiState)
-        SleepSummary(uiState)
+//        SleepDetail(uiState)
+//        SleepSummary(uiState)
 
       }
     } else {
       Text("Sleep Session Empty")
-    }
-    Button(onClick = { goToActivity() }) {
-      Text(stringResource(R.string.activity))
     }
   }
 }

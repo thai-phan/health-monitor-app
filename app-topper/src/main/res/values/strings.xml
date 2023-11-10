@@ -62,6 +62,9 @@
   <string name="available_devices">Available devices</string>
   <string name="sleep_time_check">Sleep time check</string>
   <string name="agree">Agree</string>
+  <string name="sleep_quality_question">How was the quality of your sleep today?</string>
+  <string name="sleep_assessment_question">Question: How often did you feel tired and lethargic during the time?</string>
+  <string name="sleep_assessment">Recent Quality of Sleep Assessment</string>
 
 
 </resources>

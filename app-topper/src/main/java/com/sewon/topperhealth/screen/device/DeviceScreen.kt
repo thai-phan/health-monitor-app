@@ -27,14 +27,14 @@ import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 @Composable
 fun DeviceScreen(
   modifier: Modifier = Modifier,
-  navController: NavHostController = rememberNavController(),
+  goToActivity: () -> Unit,
 ) {
   val context = LocalContext.current
 
   fun selectBleDevice(bleDevice: BluetoothDevice) {
     LowEnergyClient.deviceAddress.value = bleDevice.address
     LowEnergyClient.deviceName.value = bleDevice.name
-    navController.navigate(Destinations.ACTIVITY_ROUTE)
+    goToActivity()
   }
 
   Column(
@@ -70,8 +70,8 @@ fun DeviceScreen(
   }
 }
 
-@Preview
-@Composable
-fun PreviewUserSetting() {
-  DeviceScreen()
-}
+//@Preview
+//@Composable
+//fun PreviewUserSetting() {
+//  DeviceScreen()
+//}

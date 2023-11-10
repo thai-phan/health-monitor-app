@@ -54,10 +54,10 @@ fun ModalAssessment(
         .fillMaxSize()
         .padding(horizontal = 50.dp)
     ) {
-      Text("최근 수면의 질 평가", style = topperTypography.titleLarge)
+      Text(stringResource(R.string.sleep_assessment), style = topperTypography.titleLarge)
       Spacer(modifier = Modifier.height(20.dp))
-      Text("질문 : 시간동안 얼마나 자주 피곤하고 무기력감을 느꼈나요?")
-
+      Text(stringResource(R.string.sleep_assessment_question))
+      Spacer(modifier = Modifier.height(20.dp))
       Column(
         modifier = Modifier
           .selectableGroup(),
@@ -93,6 +93,7 @@ fun ModalAssessment(
           }
         }
       }
+      Spacer(modifier = Modifier.height(20.dp))
       Row(
         modifier = Modifier
           .fillMaxWidth()
