@@ -68,17 +68,15 @@ class LowEnergyService : Service() {
   private var lowEnergyClient: LowEnergyClient? = null
   private var connected = false
 
-
   private lateinit var playerInduce: MediaPlayer
-
 
   fun toggleSoundSleepInduce(value: Boolean) {
     isPlaySound.value = value
   }
 
   fun playSoundSleepInduce() {
+    playerInduce = MediaPlayer.create(this, R.raw.sleep_induce_sound_2)
     if (isPlaySound.value == true) {
-      playerInduce = MediaPlayer.create(this, R.raw.sleep_induce_sound_2)
       playerInduce.start()
     }
   }

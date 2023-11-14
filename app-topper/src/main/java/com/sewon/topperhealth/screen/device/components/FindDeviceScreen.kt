@@ -115,6 +115,7 @@ internal fun FindDevicesScreen(
     ) {
       if (devices.isEmpty()) {
         item {
+//          TODO: translate
           Text(text = "No devices found")
         }
       }
