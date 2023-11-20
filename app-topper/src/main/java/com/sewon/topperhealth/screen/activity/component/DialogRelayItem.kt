@@ -18,10 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -31,7 +28,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
-import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
 import com.sewon.topperhealth.service.bluetooth.util.Connected
@@ -57,7 +53,7 @@ fun DialogRelayItem(
 
   val deviceAddress = ClassicClient.deviceAddress.observeAsState()
 
-  val connected = ClassicClient.connected.observeAsState()
+  val connectState = ClassicClient.connected.observeAsState()
 
   Column(
     modifier = Modifier
@@ -82,11 +78,14 @@ fun DialogRelayItem(
 
     Text(text = bluetoothDevice.address, color = Color.Black)
 
-    if (connected.value == Connected.False) {
+    if (connectState.value == Connected.NotConnected) {
       Text("Not Connected", color = Color.Black)
     }
+    if (connectState.value == Connected.False) {
+      Text("Disconnected", color = Color.Black)
+    }
     if (deviceAddress.value == bluetoothDevice.address) {
-      if (connected.value == Connected.Pending) {
+      if (connectState.value == Connected.Pending) {
         Row {
           CircularProgressIndicator(
             modifier = Modifier.width(20.dp),
@@ -95,7 +94,7 @@ fun DialogRelayItem(
           Text("Pending", color = Color.Black)
         }
       }
-      if (connected.value == Connected.True) {
+      if (connectState.value == Connected.True) {
         Text("Connected", color = Color.Black)
       }
     }

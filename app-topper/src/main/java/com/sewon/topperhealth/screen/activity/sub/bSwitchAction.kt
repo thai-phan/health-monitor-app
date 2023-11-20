@@ -3,7 +3,6 @@ package com.sewon.topperhealth.screen.activity.sub
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
@@ -17,8 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
@@ -38,7 +35,7 @@ fun SwitchAction() {
 
   val isPlaySound by LowEnergyService.isPlaySound.observeAsState()
   val deviceName = ClassicClient.deviceName.observeAsState()
-  val connected = ClassicClient.connected.observeAsState()
+  val connectState = ClassicClient.connected.observeAsState()
 
   fun toggleRelay(value: Boolean) {
     isRelayClose.value = value
@@ -84,7 +81,7 @@ fun SwitchAction() {
       onCheckedChange = {
         toggleRelay(it)
       },
-      enabled = connected.value == Connected.True
+      enabled = connectState.value == Connected.True
     )
   }
   Row(

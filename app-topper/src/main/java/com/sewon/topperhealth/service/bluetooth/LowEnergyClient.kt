@@ -14,14 +14,14 @@ class LowEnergyClient {
 
   companion object {
     val deviceAddress = MutableLiveData("")
-    val deviceName = MutableLiveData("")
+    val deviceName = MutableLiveData("Not Connected")
     val log = MutableLiveData("")
     val isAlarm = MutableLiveData(false)
-    val connected = MutableLiveData(Connected.False)
+    val connected = MutableLiveData(Connected.NotConnected)
     val isStarted = MutableLiveData(false)
   }
 
-  val tag: String = this.javaClass.name
+  val tag: String = "TimberLowEnergyClient"
 
   private val hexEnabled = false
 
@@ -54,7 +54,8 @@ class LowEnergyClient {
   }
 
   fun onSerialIoError(e: Exception) {
-    Timber.tag(tag).d("onSerialRead")
+    connected.value = Connected.False
+    Timber.tag(tag).d("onSerialIoError")
   }
 
   private var sensorLoopCount = 0

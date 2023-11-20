@@ -15,10 +15,7 @@ import timber.log.Timber
 import java.io.IOException
 import java.util.ArrayDeque
 
-/**
- * create notification and queue serial data while activity is not in the foreground
- * use listener chain: SerialSocket -> SerialService -> UI fragment
- */
+
 class ClassicService : Service() {
 
   companion object {
@@ -26,7 +23,7 @@ class ClassicService : Service() {
     val tokenLiveData = MutableLiveData<String>()
   }
 
-  val tag: String = this.javaClass.name
+  val tag: String = "TimberClassicService"
 
   internal inner class ServiceBinder : Binder() {
     val service: ClassicService
@@ -101,9 +98,7 @@ class ClassicService : Service() {
     stopForeground(STOP_FOREGROUND_REMOVE)
   }
 
-  /**
-   * SerialListener
-   */
+
   fun onServiceConnect() {
     if (connected) {
       synchronized(this) {

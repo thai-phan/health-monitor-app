@@ -10,12 +10,12 @@ import java.util.ArrayDeque
 
 class ClassicClient {
   companion object {
-    var connected = MutableLiveData(Connected.False)
+    var connected = MutableLiveData(Connected.NotConnected)
     var deviceAddress = MutableLiveData("")
     var deviceName = MutableLiveData(BLUETOOTH_NO_CONNECTION)
   }
 
-  val tag: String = this.javaClass.name
+  val tag: String = "TimberClassicClient"
 
   fun onClientConnect() {
     connected.value = Connected.True
@@ -27,7 +27,7 @@ class ClassicClient {
 
   private fun disconnect() {
     connected.value = Connected.False
-    deviceAddress.value = ""
+    deviceAddress.value = "Disconnected"
     deviceName.value = BLUETOOTH_DISCONNECTED
   }
 

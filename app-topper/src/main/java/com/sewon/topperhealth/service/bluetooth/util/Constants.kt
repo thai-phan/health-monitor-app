@@ -3,7 +3,7 @@ package com.sewon.topperhealth.service.bluetooth.util;
 import com.sewon.topperhealth.BuildConfig
 
 enum class Connected {
-  False, Pending, True
+  NotConnected, Pending, False, True
 }
 
 object Constants {

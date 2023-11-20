@@ -35,17 +35,13 @@ import java.util.Date
 import javax.inject.Inject
 
 
-/**
- * create notification and queue serial data while activity is not in the foreground
- * use listener chain: SerialSocket -> SerialService -> UI fragment
- */
 @AndroidEntryPoint
 class LowEnergyService : Service() {
   companion object {
     val isPlaySound = MutableLiveData(true)
   }
 
-  val tag: String = this.javaClass.name
+  val tag: String = "TimberLowEnergyService"
 
   private val job = SupervisorJob()
   private val scope = CoroutineScope(Dispatchers.IO + job)
