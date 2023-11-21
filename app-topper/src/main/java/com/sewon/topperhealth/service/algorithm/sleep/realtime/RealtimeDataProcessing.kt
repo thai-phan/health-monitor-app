@@ -3,6 +3,7 @@ package com.sewon.topperhealth.service.algorithm.sleep.realtime
 import androidx.compose.runtime.mutableStateOf
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.service.algorithm.sleep.TopperData
+import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 
 class RealtimeDataProcessing {
 
@@ -17,14 +18,14 @@ class RealtimeDataProcessing {
         processData(messageList)
       } else {
         isWrongDeviceType.value = true
-        MainActivity.lowEnergyService.disconnectBluetoothSocket()
+        MainActivity.lowEnergyService.disconnectBluetoothGatt()
       }
     }
 
     private var deplayCount = 0
 
     fun processData(messageList: List<String>) {
-      val topperData = TopperData(MainActivity.lowEnergyService.sessionId, messageList)
+      val topperData = TopperData(LowEnergyService.sessionId, messageList)
 
 //      RealtimeAlgorithm.processData(topperData)
 

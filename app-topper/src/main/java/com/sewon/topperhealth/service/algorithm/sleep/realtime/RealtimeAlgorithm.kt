@@ -3,6 +3,7 @@ package com.sewon.topperhealth.service.algorithm.sleep.realtime
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants
 import com.sewon.topperhealth.service.algorithm.sleep.TopperData
+import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import timber.log.Timber
 import java.util.Date
 
@@ -90,7 +91,7 @@ class RealtimeAlgorithm {
       Timber.tag("Timber").d("callDeepSleep")
       val curTime = Date()
 
-      if (curTime < MainActivity.lowEnergyService.pickerEndTime) {
+      if (curTime < LowEnergyService.pickerEndTime) {
         saveDatabase(topperData)
       } else {
         if (topperData.HR != 0 && topperData.BR != 0) {

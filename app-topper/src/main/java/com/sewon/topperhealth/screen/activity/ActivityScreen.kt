@@ -7,7 +7,6 @@ import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
 import android.content.Intent
 import android.icu.util.GregorianCalendar
-import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,11 +20,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -38,11 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.screen.a0common.Destinations
 import com.sewon.topperhealth.screen.a0common.theme.BackgroundMiddle
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.activity.component.CircularTimePicker
@@ -54,6 +50,7 @@ import com.sewon.topperhealth.screen.activity.sub.TimeSelection
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyGatt
+import com.sewon.topperhealth.service.bluetooth.util.Connected
 import timber.log.Timber
 
 
@@ -75,7 +72,7 @@ fun SleepActivity(
   val isAlarm by LowEnergyClient.isAlarm.observeAsState()
 
   val isStarted by LowEnergyClient.isStarted.observeAsState()
-
+  val lowEnergyConnectState = LowEnergyClient.connected.observeAsState()
 
   fun composeConnectToSensor() {
     try {
@@ -142,11 +139,13 @@ fun SleepActivity(
     }
 
     LowEnergyClient.isStarted.value = false
-    MainActivity.lowEnergyService.stopSoundSleepInduce()
+    LowEnergyClient.connected.value = Connected.False
+
     MainActivity.alarmManager.cancel(MainActivity.alarmPendingIntent)
+    MainActivity.lowEnergyService.stopSoundSleepInduce()
+    MainActivity.lowEnergyService.disconnectBluetoothGatt()
 
     viewModel.updateCurrentSessionEndTime()
-    MainActivity.lowEnergyService.disconnectBluetoothSocket()
   }
 
   fun stopAlarm() {
@@ -186,15 +185,33 @@ fun SleepActivity(
 
     Spacer(modifier = Modifier.height(10.dp))
 
-    Column(Modifier.verticalScroll(rememberScrollState())) {
+    Column(
+      modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState()),
+      horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
       TimeSelection(uiState.startTime, uiState.endTime)
       Spacer(modifier = Modifier.height(10.dp))
       SwitchAction()
       Spacer(modifier = Modifier.height(10.dp))
-      isAlarm?.let {
-        isStarted?.let { it1 ->
+      TextButton(
+        onClick = {
+
+        }) {
+        Text("Sensor ")
+        when (lowEnergyConnectState.value) {
+          Connected.NotConnected -> Text("Not Connected")
+          Connected.Pending -> Text("Pending")
+          Connected.True -> Text("Connected")
+          Connected.False -> Text("Disconnected")
+          else -> Text("Not Connected")
+        }
+      }
+      isStarted?.let { it1 ->
+        isAlarm?.let { it2 ->
           ButtonAction(
-            it1, it,
+            it1, it2,
             startSleep = { startSleep() },
             cancelSleep = {
               cancelSleep()
@@ -204,7 +221,7 @@ fun SleepActivity(
           )
         }
       }
-//      log?.let { Text(it) }
+      log?.let { Text(it) }
     }
 
     if (openAssessmentModal) {

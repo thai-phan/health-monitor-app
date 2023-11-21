@@ -1,7 +1,6 @@
 package com.sewon.topperhealth.screen.activity.sub
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,7 +34,7 @@ fun SwitchAction() {
 
   val isPlaySound by LowEnergyService.isPlaySound.observeAsState()
   val deviceName = ClassicClient.deviceName.observeAsState()
-  val connectState = ClassicClient.connected.observeAsState()
+  val classicConnectState = ClassicClient.connected.observeAsState()
 
   fun toggleRelay(value: Boolean) {
     isRelayClose.value = value
@@ -54,19 +53,6 @@ fun SwitchAction() {
 
   Row(
     modifier = Modifier
-      .fillMaxWidth()
-      .clickable(onClick = { isRelayDialog.value = !isRelayDialog.value }),
-    horizontalArrangement = Arrangement.Center,
-  ) {
-    Button(
-      onClick = {
-        isRelayDialog.value = !isRelayDialog.value
-      }) {
-      deviceName.value?.let { Text(it) }
-    }
-  }
-  Row(
-    modifier = Modifier
       .fillMaxWidth(),
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
@@ -76,13 +62,21 @@ fun SwitchAction() {
       maxLines = 2,
     )
 
-    CustomSwitch(
-      checked = isRelayClose.value,
-      onCheckedChange = {
-        toggleRelay(it)
-      },
-      enabled = connectState.value == Connected.True
-    )
+    if (classicConnectState.value == Connected.True) {
+      CustomSwitch(
+        checked = isRelayClose.value,
+        onCheckedChange = {
+          toggleRelay(it)
+        },
+      )
+    } else {
+      Button(
+        onClick = {
+          isRelayDialog.value = !isRelayDialog.value
+        }) {
+        deviceName.value?.let { Text(it) }
+      }
+    }
   }
   Row(
     modifier = Modifier.fillMaxWidth(),

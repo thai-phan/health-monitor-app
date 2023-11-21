@@ -306,7 +306,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     if (characteristic === readCharacteristic) { // NOPMD - test object identity
       val data = readCharacteristic!!.value
       onGattRead(data)
-      Timber.tag(tag).d("read, len=%s", data.size)
+//      Timber.tag(tag).d("read, len=%s", data.size)
     }
   }
 
@@ -321,7 +321,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     if (canceled) return
     if (characteristic === readCharacteristic) { // NOPMD - test object identity
       onGattRead(value)
-      Timber.tag(tag).d("read, len=%s", value.size)
+//      Timber.tag(tag).d("read, len=%s", value.size)
     }
   }
 

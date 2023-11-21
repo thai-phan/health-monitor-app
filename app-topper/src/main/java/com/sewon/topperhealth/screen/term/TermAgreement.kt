@@ -2,6 +2,7 @@ package com.sewon.topperhealth.screen.term
 
 import android.content.res.AssetManager
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -100,6 +101,9 @@ fun TermAgreement(modifier: Modifier = Modifier, onRedirectRoute: () -> Unit) {
           )
         val checkedState = remember { mutableStateOf(false) }
         Row(
+          modifier = Modifier
+            .fillMaxWidth()
+            .clickable { checkedState.value = !checkedState.value },
           verticalAlignment = Alignment.CenterVertically,
           horizontalArrangement = Arrangement.Center
         ) {

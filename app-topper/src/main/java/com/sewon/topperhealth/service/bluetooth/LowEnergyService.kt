@@ -28,7 +28,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.io.IOException
 import java.util.ArrayDeque
 import java.util.Date
@@ -39,6 +38,8 @@ import javax.inject.Inject
 class LowEnergyService : Service() {
   companion object {
     val isPlaySound = MutableLiveData(true)
+    var sessionId = 0
+    var pickerEndTime: Date = Date()
   }
 
   val tag: String = "TimberLowEnergyService"
@@ -81,8 +82,6 @@ class LowEnergyService : Service() {
     playerInduce.stop()
   }
 
-  var sessionId = 0
-  var pickerEndTime: Date = Date()
 
   fun updateCurrentSessionRefValue(refHRV: Double, refHR: Double, refBR: Double) {
     scope.launch {
@@ -99,7 +98,7 @@ class LowEnergyService : Service() {
 
   override fun onDestroy() {
     cancelNotification()
-    disconnectBluetoothSocket()
+    disconnectBluetoothGatt()
     super.onDestroy()
   }
 
@@ -114,11 +113,11 @@ class LowEnergyService : Service() {
     connected = true
   }
 
-  fun disconnectBluetoothSocket() {
+  fun disconnectBluetoothGatt() {
     connected = false // ignore data,errors while disconnecting
     cancelNotification()
     if (lowEnergyGatt != null) {
-      lowEnergyGatt!!.disconnect()
+      lowEnergyGatt?.disconnect()
       lowEnergyGatt = null
     }
   }

@@ -77,26 +77,20 @@ fun DialogRelayItem(
     }
 
     Text(text = bluetoothDevice.address, color = Color.Black)
+    Text("Relay ")
+    when (connectState.value) {
+      Connected.NotConnected -> Text("Not Connected", color = Color.Black)
+      Connected.Pending -> Row {
+        CircularProgressIndicator(
+          modifier = Modifier.width(20.dp),
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Text("Pending", color = Color.Black)
+      }
 
-    if (connectState.value == Connected.NotConnected) {
-      Text("Not Connected", color = Color.Black)
-    }
-    if (connectState.value == Connected.False) {
-      Text("Disconnected", color = Color.Black)
-    }
-    if (deviceAddress.value == bluetoothDevice.address) {
-      if (connectState.value == Connected.Pending) {
-        Row {
-          CircularProgressIndicator(
-            modifier = Modifier.width(20.dp),
-          )
-          Spacer(modifier = Modifier.width(10.dp))
-          Text("Pending", color = Color.Black)
-        }
-      }
-      if (connectState.value == Connected.True) {
-        Text("Connected", color = Color.Black)
-      }
+      Connected.True -> Text("Connected", color = Color.Black)
+      Connected.False -> Text("Disconnected", color = Color.Black)
+      else -> Text("Not Connected", color = Color.Black)
     }
   }
 }

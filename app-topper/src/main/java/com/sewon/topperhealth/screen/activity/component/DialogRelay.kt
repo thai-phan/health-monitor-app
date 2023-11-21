@@ -64,7 +64,7 @@ fun DialogRelay(onDismissRequest: () -> Unit) {
     Card(
       colors = CardDefaults.cardColors(BackgroundTop),
       modifier = Modifier
-        .fillMaxHeight(0.5f),
+        .fillMaxHeight(0.7f),
       shape = topperShapes.medium,
     ) {
 

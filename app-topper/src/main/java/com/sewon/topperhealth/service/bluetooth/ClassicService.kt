@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.sewon.topperhealth.service.bluetooth.util.QueueItem
 import com.sewon.topperhealth.service.bluetooth.util.QueueType
-import timber.log.Timber
 import java.io.IOException
 import java.util.ArrayDeque
 
@@ -34,7 +33,7 @@ class ClassicService : Service() {
   private val lastRead: QueueItem = QueueItem(QueueType.Read)
 
   private val binder: IBinder = ServiceBinder()
-  private var socket: ClassicGatt? = null
+  private var gatt: ClassicGatt? = null
   private var client: ClassicClient? = null
   private var connected = false
 
@@ -55,16 +54,16 @@ class ClassicService : Service() {
   @Throws(IOException::class)
   fun connect(socket: ClassicGatt) {
     socket.connect(this)
-    this.socket = socket
+    this.gatt = socket
     connected = true
   }
 
   fun disconnect() {
     connected = false // ignore data,errors while disconnecting
     cancelNotification()
-    if (socket != null) {
-      socket!!.disconnect()
-      socket = null
+    if (gatt != null) {
+      gatt!!.disconnect()
+      gatt = null
     }
   }
 
@@ -74,7 +73,7 @@ class ClassicService : Service() {
       Toast.makeText(context, "not connected", Toast.LENGTH_SHORT).show()
       return
     }
-    socket?.writeFromGatt(data)
+    gatt?.writeFromGatt(data)
   }
 
   fun attach(listener: ClassicClient) {

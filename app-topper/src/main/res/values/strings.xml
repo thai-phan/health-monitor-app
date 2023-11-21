@@ -65,6 +65,7 @@
   <string name="sleep_quality_question">How was the quality of your sleep today?</string>
   <string name="sleep_assessment_question">Question: How often did you feel tired and lethargic during the time?</string>
   <string name="sleep_assessment">Recent Quality of Sleep Assessment</string>
+  <string name="no_device_found">No devices found</string>
 
 
 </resources>

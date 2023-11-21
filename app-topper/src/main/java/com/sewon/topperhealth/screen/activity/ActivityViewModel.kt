@@ -12,6 +12,7 @@ import com.sewon.topperhealth.data.irepository.ISettingRepository
 import com.sewon.topperhealth.data.irepository.ITopperRepository
 import com.sewon.topperhealth.data.irepository.IUserRepository
 import com.sewon.topperhealth.data.model.SleepSession
+import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -104,8 +105,8 @@ class ActivityViewModel @Inject constructor(
     )
     val sessionId: Int = sessionRepository.createNewSession(sleepSession).toInt()
     thisSessionId = sessionId
-    MainActivity.lowEnergyService.sessionId = sessionId
-    MainActivity.lowEnergyService.pickerEndTime = pickerEndTime.time
+    LowEnergyService.sessionId = sessionId
+    LowEnergyService.pickerEndTime = pickerEndTime.time
   }
 
   fun updateCurrentSessionEndTime() = viewModelScope.launch {
