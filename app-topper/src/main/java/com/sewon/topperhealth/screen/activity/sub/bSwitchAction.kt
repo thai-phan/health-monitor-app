@@ -89,7 +89,7 @@ fun SwitchAction() {
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
   ) {
-    Text(stringResource(R.string.setting_c_sleep_inducing_energy))
+    Text(stringResource(R.string.setting_c_sleep_inducing_sound))
     isPlaySound?.let { it ->
       CustomSwitch(checked = it,
         onCheckedChange = {
