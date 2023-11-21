@@ -115,8 +115,7 @@ internal fun FindDevicesScreen(
     ) {
       if (devices.isEmpty()) {
         item {
-//          TODO: translate
-          Text(text = "No devices found")
+          Text(stringResource(R.string.no_device_found))
         }
       }
       items(devices) { item ->
