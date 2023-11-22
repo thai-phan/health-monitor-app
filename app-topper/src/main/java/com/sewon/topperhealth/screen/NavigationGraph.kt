@@ -23,6 +23,8 @@ import com.sewon.topperhealth.screen.setting.SettingScreen
 import com.sewon.topperhealth.screen.splash.SplashScreen
 import com.sewon.topperhealth.screen.term.TermAgreement
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -30,32 +32,29 @@ fun NavigationGraph(
   modifier: Modifier = Modifier,
   finishActivity: () -> Unit = {},
   navController: NavHostController = rememberNavController(),
-  showOnboardingInitially: Boolean = false
 ) {
 
   val startDestination: String = Destinations.SPLASH_ROUTE
 
-  val mainStartDestination = Destinations.REPORT_ROUTE
-
   val context = LocalContext.current
-  val store = HealthDataStore(context)
-  val isAccepted = store.getIsTermAgreementAccepted.collectAsState(initial = false)
 
-  val onboardingComplete = remember(showOnboardingInitially) {
-    mutableStateOf(!showOnboardingInitially)
+  val dataStore = HealthDataStore(context)
+
+  val isAccepted = remember {
+    dataStore.getIsTermAgreementAccepted
+  }.collectAsState(initial = null)
+
+  val splashScreenRedirect = remember {
+    mutableStateOf(Destinations.TERM_AGREEMENT_ROUTE)
   }
-
   NavHost(
     navController = navController, startDestination = startDestination
   ) {
-    var redirectRoute = Destinations.TERM_AGREEMENT_ROUTE
-    if (isAccepted.value) {
-      redirectRoute = Destinations.ACTIVITY_ROUTE
-//      redirectRoute = Destinations.TERM_AGREEMENT_ROUTE
+    if (isAccepted.value == true) {
+      splashScreenRedirect.value = Destinations.DEVICE_ROUTE
     }
 
     composable(Destinations.SPLASH_ROUTE) {
-      // Intercept back in Onboarding: make it finish the activity
       BackHandler {
         finishActivity()
       }
@@ -64,7 +63,7 @@ fun NavigationGraph(
         modifier,
         delayTime = 1000L
       ) {
-        navController.navigate(redirectRoute)
+        navController.navigate(splashScreenRedirect.value)
       }
     }
 
@@ -72,8 +71,9 @@ fun NavigationGraph(
       TermAgreement(
         modifier
       ) {
-//        TODO: check
-//        store.acceptTermAgreement(true)
+        CoroutineScope(Dispatchers.IO).launch {
+          dataStore.acceptTermAgreement(true)
+        }
         navController.navigate(Destinations.DEVICE_ROUTE)
       }
     }
@@ -113,20 +113,6 @@ fun NavigationGraph(
           restoreState = true
         }
       })
-      // Show onboarding instead if not shown yet.
-//        LaunchedEffect(onboardingComplete) {
-//            if (!onboardingComplete.value) {
-//                navController.navigate(AppDestinations.SPLASH_ROUTE)
-//            }
-//        }
-//        if (onboardingComplete.value) { // Avoid glitch when showing onboarding
-//            FeaturedCourses(
-//                courses = courses,
-//                selectCourse = { id -> onCourseSelected(id, from) },
-//                modifier = modifier
-//            )
-//        }
-
     }
 
     composable(Destinations.REPORT_ROUTE) { from ->
@@ -136,23 +122,6 @@ fun NavigationGraph(
     composable(Destinations.SETTING_ROUTE) {
       SettingScreen(modifier)
     }
-
-//        composable(
-//            "${MainDestinations.COURSE_DETAIL_ROUTE}/{$COURSE_DETAIL_ID_KEY}",
-//            arguments = listOf(
-//                navArgument(COURSE_DETAIL_ID_KEY) { type = NavType.LongType }
-//            )
-//        ) { backStackEntry: NavBackStackEntry ->
-//            val arguments = requireNotNull(backStackEntry.arguments)
-//            val currentCourseId = arguments.getLong(COURSE_DETAIL_ID_KEY)
-//            CourseDetails(
-//                courseId = currentCourseId,
-//                selectCourse = { newCourseId ->
-//                    actions.relatedCourse(newCourseId, backStackEntry)
-//                },
-//                upPress = { actions.upPress(backStackEntry) }
-//            )
-//        }
   }
 }
 

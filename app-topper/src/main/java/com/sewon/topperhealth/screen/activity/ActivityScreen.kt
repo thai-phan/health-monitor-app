@@ -93,11 +93,11 @@ fun SleepActivity(
   fun startSleep() {
 
 
-    if (activity != null) {
-      activity.window?.attributes = activity.window.attributes.apply {
-        screenBrightness = 0.2f
-      }
-    }
+//    if (activity != null) {
+//      activity.window?.attributes = activity.window.attributes.apply {
+//        screenBrightness = 0.2f
+//      }
+//    }
 
     MainActivity.lowEnergyService.playSoundSleepInduce()
 

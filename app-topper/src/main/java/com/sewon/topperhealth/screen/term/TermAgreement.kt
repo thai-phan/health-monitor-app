@@ -102,7 +102,6 @@ fun TermAgreement(modifier: Modifier = Modifier, onRedirectRoute: () -> Unit) {
         val checkedState = remember { mutableStateOf(false) }
         Row(
           modifier = Modifier
-            .fillMaxWidth()
             .clickable { checkedState.value = !checkedState.value },
           verticalAlignment = Alignment.CenterVertically,
           horizontalArrangement = Arrangement.Center
