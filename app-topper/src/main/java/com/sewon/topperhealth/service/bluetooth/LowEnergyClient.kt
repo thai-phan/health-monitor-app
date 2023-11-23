@@ -3,7 +3,7 @@ package com.sewon.topperhealth.service.bluetooth
 import android.text.SpannableStringBuilder
 import androidx.lifecycle.MutableLiveData
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
-import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeDataProcessing
+import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeHandler
 import com.sewon.topperhealth.service.bluetooth.util.Connected
 import com.sewon.topperhealth.service.bluetooth.util.TextUtil
 import timber.log.Timber
@@ -11,6 +11,7 @@ import java.util.ArrayDeque
 
 
 class LowEnergyClient {
+  val tag: String = "TimberLowEnergyClient"
 
   companion object {
     val deviceAddress = MutableLiveData("")
@@ -21,7 +22,6 @@ class LowEnergyClient {
     val isStarted = MutableLiveData(false)
   }
 
-  val tag: String = "TimberLowEnergyClient"
 
   private val hexEnabled = false
 
@@ -41,6 +41,7 @@ class LowEnergyClient {
 
   fun onClientConnectError(e: Exception) {
     connected.value = Connected.False
+    Timber.tag(tag).d(e)
   }
 
   fun onClientReadLE(data: ByteArray) {
@@ -55,7 +56,7 @@ class LowEnergyClient {
 
   fun onSerialIoError(e: Exception) {
     connected.value = Connected.False
-    Timber.tag(tag).d("onSerialIoError")
+    Timber.tag(tag).d(e)
   }
 
   private var sensorLoopCount = 0
@@ -67,13 +68,13 @@ class LowEnergyClient {
         stringBuilder.append(TextUtil.toHexString(data)).append('\n')
       } else {
         val dataStr = String(data)
-        RealtimeDataProcessing.validateDataFormat(dataStr)
+        RealtimeHandler.validateDataFormat(dataStr)
         val text = TextUtil.toCaretString(dataStr, true)
         stringBuilder.append(text)
       }
     }
 
-    if (sensorLoopCount < 2) {
+    if (sensorLoopCount < 5) {
       sensorLoopCount += 1
     } else {
       sensorLoopCount = 0

@@ -5,7 +5,7 @@ import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.service.algorithm.sleep.TopperData
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 
-class RealtimeDataProcessing {
+class RealtimeHandler {
 
   companion object {
     private val isWrongDeviceType = mutableStateOf(false)
