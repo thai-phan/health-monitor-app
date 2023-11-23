@@ -6,8 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.sewon.topperhealth.data.model.SleepSession
 import com.sewon.topperhealth.data.irepository.ISessionRepository
 import com.sewon.topperhealth.data.irepository.ITopperRepository
-import com.sewon.topperhealth.service.algorithm.sleep.report.ReportAlgorithm
-import com.sewon.topperhealth.service.algorithm.sleep.report.ReportDataProcessing
+import com.sewon.topperhealth.service.algorithm.sleep.report.ReportProcess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,11 +25,9 @@ data class UiState(
   val sleepEfficiency: Float = 0.0f,
   val sleepLatency: Float = 0.0f,
   val wakeupOnSleep: Float = 0.0f,
-
   val sleepRating: Float = 0.0f,
   val sleepStage: List<Float> = listOf(),
   val sleepRPI: List<Float> = listOf(),
-
   val meanHR: Float = 0.0f,
   val meanBR: Float = 0.0f,
   val sDRP: Float = 0.0f,
@@ -39,9 +36,10 @@ data class UiState(
   val lowFreq: Float = 0.0f,
   val highFreq: Float = 0.0f,
   val lfHfRatio: Float = 0.0f,
-
   val nervousScore: List<Float> = listOf(),
   val stressScore: Float = 0.0f,
+
+  val totalRecord: Int = 0
 )
 
 @HiltViewModel
@@ -72,17 +70,26 @@ class ReportViewModel @Inject constructor(
   fun showSessionReport(sessionId: Int) = viewModelScope.launch {
     val allData = topperRepository.getAllDataFromSession(sessionId)
     val session = sessionRepository.getSessionById(sessionId)
+    _uiState.update {
+      it.copy(
+        totalRecord = allData.size,
+      )
+    }
     if (session != null && allData.isNotEmpty()) {
-      ReportDataProcessing.importData(allData)
-      ReportAlgorithm.refHRV = session.refHRV
-      ReportAlgorithm.refHR = session.refHR
-      ReportAlgorithm.refBR = session.refBR
+      ReportProcess.importData(allData)
+      ReportProcess.refHRV = session.refHRV
+      ReportProcess.refHR = session.refHR
+      ReportProcess.refBR = session.refBR
 
       getSleepSummary(session)
       getSleepRPI()
       getECG()
       getRPITriangular()
     } else {
+      // TODO:
+//      ReportAlgorithm.refHRV = 0.0
+//      ReportAlgorithm.refHR = 0.0
+//      ReportAlgorithm.refBR = 0.0
       Timber.tag("ReportViewModel").d("showSessionReport error")
     }
   }
@@ -112,11 +119,11 @@ class ReportViewModel @Inject constructor(
   }
 
   private fun getSleepRPI() {
-    val sleepStage = ReportAlgorithm.processByTime()
+    val sleepStage = ReportProcess.getSleepStage()
 
-    val sleepRPI: List<Float> = ReportDataProcessing.getBSleepRPI()
-    val meanHR = ReportDataProcessing.getCMeanHR()
-    val meanBR = ReportDataProcessing.getCMeanBR()
+    val sleepRPI: List<Float> = ReportProcess.getBSleepRPI()
+    val meanHR = ReportProcess.getCMeanHR()
+    val meanBR = ReportProcess.getCMeanBR()
     _uiState.update {
       it.copy(
         sleepStage = sleepStage,
@@ -128,7 +135,7 @@ class ReportViewModel @Inject constructor(
   }
 
   private fun getECG() {
-    val topper = ReportDataProcessing.getECGAlgorithmResult()
+    val topper = ReportProcess.getECGAlgorithmResult()
     val nervousScore = listOf(topper.LF.toFloat(), topper.HF.toFloat())
     _uiState.update {
       it.copy()
@@ -147,7 +154,7 @@ class ReportViewModel @Inject constructor(
   }
 
   private fun getRPITriangular() {
-    val rPITriangular = ReportDataProcessing.getRPITriangular()
+    val rPITriangular = ReportProcess.getRPITriangular()
     _uiState.update {
       it.copy(rPITriangular = rPITriangular)
     }

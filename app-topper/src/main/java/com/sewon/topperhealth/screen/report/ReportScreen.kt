@@ -34,7 +34,6 @@ fun ReportScreen(
   viewModel: ReportViewModel = hiltViewModel(),
 ) {
 
-  val context = LocalContext.current
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
 
@@ -60,6 +59,7 @@ fun ReportScreen(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(20.dp)
       ) {
+        Text(uiState.totalRecord.toString())
         SleepChart(uiState)
         SleepScore(uiState)
 //        SleepDetail(uiState)

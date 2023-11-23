@@ -104,7 +104,7 @@ fun NavigationGraph(
 //            navController.getBackStackEntry("parentNavigationRoute")
 //        }
 //        val parentViewModel = hiltViewModel(parentEntry)
-      SleepActivity(modifier, redirectReportPage = {
+      SleepActivity(modifier) {
         navController.navigate(Destinations.REPORT_ROUTE) {
           popUpTo(navController.graph.startDestinationId) {
             saveState = true
@@ -112,7 +112,7 @@ fun NavigationGraph(
           launchSingleTop = true
           restoreState = true
         }
-      })
+      }
     }
 
     composable(Destinations.REPORT_ROUTE) { from ->

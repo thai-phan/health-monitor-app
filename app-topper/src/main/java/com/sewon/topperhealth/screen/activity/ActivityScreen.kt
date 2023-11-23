@@ -58,8 +58,8 @@ import timber.log.Timber
 @Composable
 fun SleepActivity(
   modifier: Modifier = Modifier,
-  redirectReportPage: () -> Unit,
   viewModel: ActivityViewModel = hiltViewModel(),
+  redirectReportPage: () -> Unit,
 ) {
 
   val context = LocalContext.current
@@ -243,6 +243,7 @@ fun SleepActivity(
         onSaveQuality = { rating, memo ->
           openQualityModal = !openQualityModal
           viewModel.saveQuality(rating, memo)
+          redirectReportPage()
         }
       )
     }

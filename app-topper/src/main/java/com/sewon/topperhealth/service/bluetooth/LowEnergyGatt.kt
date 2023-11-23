@@ -25,9 +25,6 @@ import java.util.UUID
 class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : BluetoothGattCallback() {
   val tag: String = "TimberLowEnergyGatt"
 
-  /**
-   * delegate device specific behaviour to inner class
-   */
   open class DeviceDelegate {
     open fun connectCharacteristics(s: BluetoothGattService): Boolean {
       return true
@@ -74,8 +71,6 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
   private var payloadSize = DEFAULT_MTU - 3
 
   init {
-//    if (context instanceof Activity)
-//      throw new InvalidParameterException("expected non UI context");
     pairingIntentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
     pairingIntentFilter.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST)
     pairingBroadcastReceiver = object : BroadcastReceiver() {
