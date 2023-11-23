@@ -9,13 +9,14 @@ import java.util.ArrayDeque
 
 
 class ClassicClient {
+  val tag: String = "TimberClassicClient"
+
   companion object {
     var connected = MutableLiveData(Connected.NotConnected)
     var deviceAddress = MutableLiveData("")
     var deviceName = MutableLiveData(BLUETOOTH_NO_CONNECTION)
   }
 
-  val tag: String = "TimberClassicClient"
 
   fun onClientConnect() {
     connected.value = Connected.True

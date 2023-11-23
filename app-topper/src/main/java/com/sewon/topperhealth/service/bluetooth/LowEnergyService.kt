@@ -36,13 +36,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LowEnergyService : Service() {
+  val tag: String = "TimberLowEnergyService"
+
   companion object {
     val isPlaySound = MutableLiveData(true)
     var sessionId = 0
     var pickerEndTime: Date = Date()
   }
-
-  val tag: String = "TimberLowEnergyService"
 
   private val job = SupervisorJob()
   private val scope = CoroutineScope(Dispatchers.IO + job)

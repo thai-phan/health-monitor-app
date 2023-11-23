@@ -16,13 +16,13 @@ import java.util.ArrayDeque
 
 
 class ClassicService : Service() {
+  val tag: String = "TimberClassicService"
 
   companion object {
     //Define a LiveData to observe in activity
     val tokenLiveData = MutableLiveData<String>()
   }
 
-  val tag: String = "TimberClassicService"
 
   internal inner class ServiceBinder : Binder() {
     val service: ClassicService
