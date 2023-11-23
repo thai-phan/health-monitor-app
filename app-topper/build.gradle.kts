@@ -1,29 +1,34 @@
 plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.android)
-  alias(libs.plugins.dagger.hilt.android)
-//  id "org.jetbrains.kotlin.jvm" version "1.9.0"
-  id("com.google.devtools.ksp") version ("1.8.20-1.0.11")
-  id("kotlin-kapt")
+  alias(libs.plugins.ksp)
+  alias(libs.plugins.hilt.android)
 }
 
 android {
   namespace = "com.sewon.topperhealth"
-  compileSdk = 34
+  compileSdk = libs.versions.compileSdk.get().toInt()
   defaultConfig {
     applicationId = "com.sewon.topperhealth"
-    minSdk = 29
-    targetSdk = 34
+    minSdk = libs.versions.minSdk.get().toInt()
+    targetSdk = libs.versions.targetSdk.get().toInt()
     versionCode = 1
     versionName = "1.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-//        javaCompileOptions {
-//            annotationProcessorOptions {
-//                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
-//            }
-//        }
+//    javaCompileOptions {
+//      annotationProcessorOptions {
+//        argument("room.schemaLocation", "$projectDir/schemas")
+//      }
+//    }
+
+
+//    javaCompileOptions {
+//      annotationProcessorOptions {
+//        arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
+//      }
+//    }
   }
   buildTypes {
     release {
@@ -38,10 +43,10 @@ android {
     targetCompatibility = JavaVersion.VERSION_17
   }
   composeOptions {
-    kotlinCompilerExtensionVersion = "1.4.6"
+    kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
   }
   kotlinOptions {
-    jvmTarget = "17"
+    jvmTarget = JavaVersion.VERSION_17.toString()
   }
   buildFeatures {
     buildConfig = true
@@ -82,8 +87,9 @@ dependencies {
 
   // Hilt dependency injection
   implementation(libs.hilt.android)
-  kapt(libs.androidx.hilt.compiler)
-  kapt(libs.hilt.android.compiler)
+  ksp(libs.hilt.compiler)   // Hilt compiler
+//  kapt(libs.androidx.hilt.compiler)
+//  kapt(libs.hilt.android.compiler)
 
   implementation(libs.hilt.navigation.compose)
 
@@ -100,21 +106,11 @@ dependencies {
   implementation(libs.androidx.room.ktx)
   // To use Kotlin Symbol Processing (KSP)
   ksp(libs.androidx.room.compiler)
-//  // optional - RxJava3 support for Room
-//  implementation(libs.androidx.room.rxjava3)
-//  // optional - Guava support for Room, including Optional and ListenableFuture
-//  implementation(libs.androidx.room.guava)
-//  // optional - Test helpers
-//  testImplementation(libs.androidx.room.testing)
-//  // optional - Paging 3 Integration
-//  implementation(libs.androidx.room.paging)
 
   // DataStore
   //
   // Preferences DataStore (SharedPreferences like APIs)
   implementation(libs.androidx.datastore.preferences)
-  // optional - RxJava3 support
-  implementation(libs.androidx.datastore.preferences.rxjava3)
 
   // UI Compose
   //

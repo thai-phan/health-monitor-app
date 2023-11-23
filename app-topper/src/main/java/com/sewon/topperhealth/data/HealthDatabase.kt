@@ -22,7 +22,8 @@ import com.sewon.topperhealth.data.source.local.converter.TimeConverter
     LocalSetting::class,
     LocalSleepSession::class
 
-  ], version = 1
+  ],
+  version = 1
 )
 @TypeConverters(
   DateConverter::class,

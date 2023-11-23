@@ -1,4 +1,7 @@
 [versions]
+compileSdk = "34"
+minSdk = "29"
+targetSdk = "34"
 accompanist-permissions = "0.32.0"
 accompanistSystemuicontroller = "0.32.0"
 activity-compose = "1.8.1"
@@ -6,7 +9,7 @@ androidx-junit = "1.1.5"
 annotation = "1.7.0"
 apache-commons-math3 = "3.6.1"
 appcompat = "1.6.1"
-compiler = "1.5.4"
+compose-compiler = "1.5.4"
 composeVersion = "1.5.4"
 constraintlayout = "2.1.4"
 constraintlayout-compose = "1.0.1"
@@ -17,9 +20,8 @@ core-i18n = "1.0.0-alpha01"
 datastorePreferencesRxjava3 = "1.0.0"
 datastorePreferences = "1.0.0"
 espressoCore = "3.5.1"
-hilt-android-compiler = "2.48.1"
+hilt = "2.48.1"
 hilt-compiler = "1.1.0"
-hilt-android = "2.48.1"
 junit = "4.13.2"
 leakcanaryAndroid = "2.12"
 logging-interceptor = "4.11.0"
@@ -29,27 +31,26 @@ lifecycle-livedata-ktx = "2.6.2"
 material3 = "1.1.2"
 navigation-compose = "2.7.5"
 okhttp = "4.11.0"
-pluginsAndroidApplication = "8.1.2"
-pluginsAndroidLibrary = "8.1.2"
-pluginsKotlinAndroid = "1.8.20"
-pluginsHiltAndroid = "2.44"
+pluginsAndroidGradle = "8.1.4"
+pluginsKotlinAndroid = "1.9.20"
+pluginsKsp = "1.9.20-1.0.14"
 preference-ktx = "1.2.1"
 retrofit = "2.9.0"
-roomVersion = "2.5.2"
-vicoChartVersion = "1.11.3"
+roomVersion = "2.6.0"
+vicoChartVersion = "1.13.0"
 timber = "5.0.1"
 
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "pluginsAndroidGradle" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 androidx-animation = { module = "androidx.compose.animation:animation", version.ref = "composeVersion" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
-androidx-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compiler" }
+androidx-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose-compiler" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
-androidx-datastore-preferences-rxjava3 = { module = "androidx.datastore:datastore-preferences-rxjava3", version.ref = "datastorePreferencesRxjava3" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 androidx-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "composeVersion" }
@@ -87,8 +88,9 @@ apache-commons-math3 = { module = "org.apache.commons:commons-math3", version.re
 compose-m3 = { module = "com.patrykandpatrick.vico:compose-m3", version.ref = "vicoChartVersion" }
 compose = { module = "com.patrykandpatrick.vico:compose", version.ref = "vicoChartVersion" }
 core = { module = "com.patrykandpatrick.vico:core", version.ref = "vicoChartVersion" }
-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android-compiler" }
-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-compiler" }
 junit = { module = "junit:junit", version.ref = "junit" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
@@ -100,11 +102,16 @@ logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", ver
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeVersion" }
 
+
 [bundles]
 
+
+
 [plugins]
-android-application = { id = "com.android.application", version.ref = "pluginsAndroidApplication" }
-android-library = { id = "com.android.library", version.ref = "pluginsAndroidLibrary" }
+android-application = { id = "com.android.application", version.ref = "pluginsAndroidGradle" }
+android-library = { id = "com.android.library", version.ref = "pluginsAndroidGradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "pluginsKotlinAndroid" }
-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "pluginsHiltAndroid" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "pluginsKsp" }
+
 #kotlin-kapt = { id = "com.google.devtools.ksp", version.ref = "pluginsHiltAndroid" }
