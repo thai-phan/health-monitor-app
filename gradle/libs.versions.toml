@@ -1,12 +1,12 @@
 [versions]
 accompanist-permissions = "0.32.0"
 accompanistSystemuicontroller = "0.32.0"
-activity-compose = "1.8.0"
+activity-compose = "1.8.1"
 androidx-junit = "1.1.5"
 annotation = "1.7.0"
 apache-commons-math3 = "3.6.1"
 appcompat = "1.6.1"
-compiler = "1.5.3"
+compiler = "1.5.4"
 composeVersion = "1.5.4"
 constraintlayout = "2.1.4"
 constraintlayout-compose = "1.0.1"
@@ -21,7 +21,6 @@ hilt-android-compiler = "2.48.1"
 hilt-compiler = "1.1.0"
 hilt-android = "2.48.1"
 junit = "4.13.2"
-kotlin_android = "1.8.20"
 leakcanaryAndroid = "2.12"
 logging-interceptor = "4.11.0"
 lifecycle-runtime-compose = "2.6.2"
@@ -30,6 +29,10 @@ lifecycle-livedata-ktx = "2.6.2"
 material3 = "1.1.2"
 navigation-compose = "2.7.5"
 okhttp = "4.11.0"
+pluginsAndroidApplication = "8.1.2"
+pluginsAndroidLibrary = "8.1.2"
+pluginsKotlinAndroid = "1.8.20"
+pluginsHiltAndroid = "2.44"
 preference-ktx = "1.2.1"
 retrofit = "2.9.0"
 roomVersion = "2.5.2"
@@ -100,4 +103,8 @@ ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", versio
 [bundles]
 
 [plugins]
-#kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin_android" }
+android-application = { id = "com.android.application", version.ref = "pluginsAndroidApplication" }
+android-library = { id = "com.android.library", version.ref = "pluginsAndroidLibrary" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "pluginsKotlinAndroid" }
+dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "pluginsHiltAndroid" }
+#kotlin-kapt = { id = "com.google.devtools.ksp", version.ref = "pluginsHiltAndroid" }

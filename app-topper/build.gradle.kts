@@ -1,9 +1,10 @@
 plugins {
-  id("com.android.application")
-  id("org.jetbrains.kotlin.android")
+  alias(libs.plugins.android.application)
+  alias(libs.plugins.kotlin.android)
+  alias(libs.plugins.dagger.hilt.android)
+//  id "org.jetbrains.kotlin.jvm" version "1.9.0"
   id("com.google.devtools.ksp") version ("1.8.20-1.0.11")
   id("kotlin-kapt")
-  id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -81,7 +82,6 @@ dependencies {
 
   // Hilt dependency injection
   implementation(libs.hilt.android)
-  // kapt "com.google.dagger:hilt-compiler:2.46.1")
   kapt(libs.androidx.hilt.compiler)
   kapt(libs.hilt.android.compiler)
 

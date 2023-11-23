@@ -425,8 +425,7 @@ class TimeRangePicker @JvmOverloads constructor(
       _middlePoint.y + _radius
     )
 
-    val sweepAngle =
-      angleTo360(_angleStart - _angleEnd)
+    val sweepAngle = angleTo360(_angleStart - _angleEnd)
 
     canvas.drawCircle(
       _middlePoint.x,
@@ -442,10 +441,7 @@ class TimeRangePicker @JvmOverloads constructor(
     val startThumbX = _thumbPositionCache.x
     val startThumbY = _thumbPositionCache.y
 
-    getThumbPosition(
-      _angleEnd,
-      _thumbPositionCache
-    )
+    getThumbPosition(_angleEnd, _thumbPositionCache)
 
     val endThumbX = _thumbPositionCache.x
     val endThumbY = _thumbPositionCache.y

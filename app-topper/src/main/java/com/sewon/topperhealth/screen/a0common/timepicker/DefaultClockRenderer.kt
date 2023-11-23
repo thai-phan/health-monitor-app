@@ -82,7 +82,7 @@ class DefaultClockRenderer(private val picker: TimeRangePicker) : BitmapCachedCl
           // width & height are always the same, so there is no need to do extra check with height
           if (oldSize != size) {
             // reconfiguring works only when new size is smaller or equal to old
-            if (Build.VERSION.SDK_INT >= 19 && size < oldSize) {
+            if (size < oldSize) {
               resizeBitmapCacheThroughReconfiguring(size)
             } else {
               resizeBitmapCacheThroughRecreating(size)
@@ -116,7 +116,6 @@ class DefaultClockRenderer(private val picker: TimeRangePicker) : BitmapCachedCl
     _bitmapCacheCanvas = Canvas(b)
   }
 
-  @RequiresApi(19)
   private fun resizeBitmapCacheThroughReconfiguring(newSize: Int) {
     val bitmap = _bitmapCache ?: throw RuntimeException("_bitmapCache == null")
     bitmap.reconfigure(newSize, newSize, Bitmap.Config.ARGB_8888)
