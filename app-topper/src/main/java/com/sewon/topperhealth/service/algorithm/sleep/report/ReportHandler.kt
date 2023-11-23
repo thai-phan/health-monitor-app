@@ -6,7 +6,7 @@ import com.sewon.topperhealth.service.algorithm.ecg.ECGTopper
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants
 
 
-class ReportProcess {
+class ReportHandler {
 
   companion object {
 
@@ -14,7 +14,7 @@ class ReportProcess {
     var refHR = 0.0
     var refBR = 0.0
 
-    lateinit var allData: List<LocalTopper>
+    private lateinit var allData: List<LocalTopper>
 
     fun importData(data: List<LocalTopper>) {
       allData = data
@@ -31,7 +31,7 @@ class ReportProcess {
     fun getCMeanBR(): Float {
       return allData.map { it.br }.average().toFloat()
     }
-    
+
     fun getECGAlgorithmResult(): ECGTopper {
       val HRVArray: DoubleArray = allData.map { it.hrv }.toDoubleArray()
       return ECGAnalysisProc.ECG_PPG_AnalysisData(HRVArray)

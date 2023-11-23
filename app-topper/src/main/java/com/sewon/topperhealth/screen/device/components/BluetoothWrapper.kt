@@ -27,9 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 
 
-/**
- * This composable wraps the permission logic and checks if bluetooth it's available and enabled
- */
 @Composable
 fun BluetoothWrapper(
   modifier: Modifier = Modifier,

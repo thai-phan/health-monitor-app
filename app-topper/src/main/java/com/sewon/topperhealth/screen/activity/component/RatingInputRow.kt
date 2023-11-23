@@ -6,13 +6,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
-import com.sewon.topperhealth.R
 
-/**
- * Showing star rating by using RatingBar through AndroidView
- */
+
 @Composable
 fun RatingInputRow(rating: Int, onRatingChange: (Int) -> Unit, modifier: Modifier = Modifier) {
   InputRow(modifier = modifier) {

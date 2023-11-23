@@ -19,7 +19,6 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 
 
-
 @SuppressLint("InlinedApi")
 @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
 @Composable

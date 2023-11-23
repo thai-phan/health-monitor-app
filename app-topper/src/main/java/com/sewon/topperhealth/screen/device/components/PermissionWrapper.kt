@@ -25,12 +25,6 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
 
-/**
- * A variation of PermissionScreen that takes a list of permissions and only calls [onGranted] when
- * all the requiredPermissions are granted.
- *
- * By default it assumes that all [permissions] are required.
- */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun PermissionWrapper(

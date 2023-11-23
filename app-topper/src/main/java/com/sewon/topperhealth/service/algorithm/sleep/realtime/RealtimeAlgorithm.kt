@@ -48,7 +48,6 @@ class RealtimeAlgorithm {
       }
     }
 
-
     var countInsomniaValue = 0
     var countDeepSleep = 0
 

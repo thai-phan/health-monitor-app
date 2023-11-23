@@ -18,8 +18,6 @@ import com.sewon.topperhealth.screen.a0common.timepicker.TimeRangePicker
 
 @Composable
 fun TimeSelection(startTime: TimeRangePicker.Time, endTime: TimeRangePicker.Time) {
-
-
   Row(modifier = Modifier.fillMaxWidth()) {
     Column(
       modifier = Modifier.weight(1f),

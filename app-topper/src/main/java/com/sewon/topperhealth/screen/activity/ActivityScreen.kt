@@ -43,7 +43,7 @@ import com.sewon.topperhealth.screen.a0common.theme.BackgroundMiddle
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.activity.component.CircularTimePicker
 import com.sewon.topperhealth.screen.activity.component.ModalAssessment
-import com.sewon.topperhealth.screen.activity.component.ModalQuality
+import com.sewon.topperhealth.screen.activity.component.ModalStarQuality
 import com.sewon.topperhealth.screen.activity.sub.ButtonAction
 import com.sewon.topperhealth.screen.activity.sub.SwitchAction
 import com.sewon.topperhealth.screen.activity.sub.TimeSelection
@@ -237,7 +237,7 @@ fun SleepActivity(
     }
 
     if (openQualityModal) {
-      ModalQuality(onToggleModal = {
+      ModalStarQuality(onToggleModal = {
         openQualityModal = !openQualityModal
       },
         onSaveQuality = { rating, memo ->

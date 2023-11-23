@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.sewon.topperhealth.data.model.SleepSession
 import com.sewon.topperhealth.data.irepository.ISessionRepository
 import com.sewon.topperhealth.data.irepository.ITopperRepository
-import com.sewon.topperhealth.service.algorithm.sleep.report.ReportProcess
+import com.sewon.topperhealth.service.algorithm.sleep.report.ReportHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -76,10 +76,10 @@ class ReportViewModel @Inject constructor(
       )
     }
     if (session != null && allData.isNotEmpty()) {
-      ReportProcess.importData(allData)
-      ReportProcess.refHRV = session.refHRV
-      ReportProcess.refHR = session.refHR
-      ReportProcess.refBR = session.refBR
+      ReportHandler.importData(allData)
+      ReportHandler.refHRV = session.refHRV
+      ReportHandler.refHR = session.refHR
+      ReportHandler.refBR = session.refBR
 
       getSleepSummary(session)
       getSleepRPI()
@@ -119,11 +119,11 @@ class ReportViewModel @Inject constructor(
   }
 
   private fun getSleepRPI() {
-    val sleepStage = ReportProcess.getSleepStage()
+    val sleepStage = ReportHandler.getSleepStage()
 
-    val sleepRPI: List<Float> = ReportProcess.getBSleepRPI()
-    val meanHR = ReportProcess.getCMeanHR()
-    val meanBR = ReportProcess.getCMeanBR()
+    val sleepRPI: List<Float> = ReportHandler.getBSleepRPI()
+    val meanHR = ReportHandler.getCMeanHR()
+    val meanBR = ReportHandler.getCMeanBR()
     _uiState.update {
       it.copy(
         sleepStage = sleepStage,
@@ -135,7 +135,7 @@ class ReportViewModel @Inject constructor(
   }
 
   private fun getECG() {
-    val topper = ReportProcess.getECGAlgorithmResult()
+    val topper = ReportHandler.getECGAlgorithmResult()
     val nervousScore = listOf(topper.LF.toFloat(), topper.HF.toFloat())
     _uiState.update {
       it.copy()
@@ -154,7 +154,7 @@ class ReportViewModel @Inject constructor(
   }
 
   private fun getRPITriangular() {
-    val rPITriangular = ReportProcess.getRPITriangular()
+    val rPITriangular = ReportHandler.getRPITriangular()
     _uiState.update {
       it.copy(rPITriangular = rPITriangular)
     }
