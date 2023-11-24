@@ -42,18 +42,20 @@ fun NavigationGraph(
 
   val isAccepted = remember {
     dataStore.getIsTermAgreementAccepted
-  }.collectAsState(initial = null)
+  }.collectAsState(initial = false)
+
 
   val splashScreenRedirect = remember {
     mutableStateOf(Destinations.TERM_AGREEMENT_ROUTE)
   }
+
+  if (isAccepted.value) {
+    splashScreenRedirect.value = Destinations.DEVICE_ROUTE
+  }
+
   NavHost(
     navController = navController, startDestination = startDestination
   ) {
-    if (isAccepted.value == true) {
-      splashScreenRedirect.value = Destinations.DEVICE_ROUTE
-    }
-
     composable(Destinations.SPLASH_ROUTE) {
       BackHandler {
         finishActivity()
@@ -83,17 +85,10 @@ fun NavigationGraph(
         modifier
       ) {
         navController.navigate(Destinations.ACTIVITY_ROUTE) {
-//          TODO: research
           popUpTo(navController.graph.startDestinationId) {
-            // Save backstack state. This will ensure restoration of
-            // nested navigation screen when the user comes back to
-            // the destination.
             saveState = true
           }
-          // prevent duplicate destinations when the navigation is
-          // clicked multiple times
           launchSingleTop = true
-          // restore state if previously saved
           restoreState = true
         }
       }
@@ -106,10 +101,17 @@ fun NavigationGraph(
 //        val parentViewModel = hiltViewModel(parentEntry)
       SleepActivity(modifier) {
         navController.navigate(Destinations.REPORT_ROUTE) {
+          //          TODO: research
           popUpTo(navController.graph.startDestinationId) {
+            // Save backstack state. This will ensure restoration of
+            // nested navigation screen when the user comes back to
+            // the destination.
             saveState = true
           }
+          // prevent duplicate destinations when the navigation is
+          // clicked multiple times
           launchSingleTop = true
+          // restore state if previously saved
           restoreState = true
         }
       }
