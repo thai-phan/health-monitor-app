@@ -85,9 +85,9 @@ androidx-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "comp
 androidx-ui = { module = "androidx.compose.ui:ui", version.ref = "composeVersion" }
 androidx-ui-viewbinding = { module = "androidx.compose.ui:ui-viewbinding", version.ref = "composeVersion" }
 apache-commons-math3 = { module = "org.apache.commons:commons-math3", version.ref = "apache-commons-math3" }
-compose-m3 = { module = "com.patrykandpatrick.vico:compose-m3", version.ref = "vicoChartVersion" }
-compose = { module = "com.patrykandpatrick.vico:compose", version.ref = "vicoChartVersion" }
-core = { module = "com.patrykandpatrick.vico:core", version.ref = "vicoChartVersion" }
+vico-compose-m3 = { module = "com.patrykandpatrick.vico:compose-m3", version.ref = "vicoChartVersion" }
+vico-compose = { module = "com.patrykandpatrick.vico:compose", version.ref = "vicoChartVersion" }
+vico-core = { module = "com.patrykandpatrick.vico:core", version.ref = "vicoChartVersion" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }

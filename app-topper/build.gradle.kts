@@ -16,19 +16,6 @@ android {
     versionName = "1.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-//    javaCompileOptions {
-//      annotationProcessorOptions {
-//        argument("room.schemaLocation", "$projectDir/schemas")
-//      }
-//    }
-
-
-//    javaCompileOptions {
-//      annotationProcessorOptions {
-//        arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
-//      }
-//    }
   }
   buildTypes {
     release {
@@ -87,10 +74,7 @@ dependencies {
 
   // Hilt dependency injection
   implementation(libs.hilt.android)
-  ksp(libs.hilt.compiler)   // Hilt compiler
-//  kapt(libs.androidx.hilt.compiler)
-//  kapt(libs.hilt.android.compiler)
-
+  ksp(libs.hilt.compiler)
   implementation(libs.hilt.navigation.compose)
 
 
@@ -102,14 +86,11 @@ dependencies {
   // Database
   //
   implementation(libs.androidx.room.runtime)
-  // annotationProcessor "androidx.room:room-compiler:$room_version")
   implementation(libs.androidx.room.ktx)
-  // To use Kotlin Symbol Processing (KSP)
   ksp(libs.androidx.room.compiler)
 
   // DataStore
   //
-  // Preferences DataStore (SharedPreferences like APIs)
   implementation(libs.androidx.datastore.preferences)
 
   // UI Compose
@@ -131,16 +112,12 @@ dependencies {
   implementation(libs.androidx.ui.viewbinding)
   debugImplementation(libs.androidx.ui.tooling)
 
-  //    implementation("nl.joery.timerangepicker:timerangepicker:1.0.0")
 
   // Chart
   //
-  // Includes the core logic for charts and other elements.
-  implementation(libs.core)
-  // For Jetpack Compose.
-  implementation(libs.compose)
-  // For `compose`. Creates a `ChartStyle` based on an M3 Material Theme.
-  implementation(libs.compose.m3)
+  implementation(libs.vico.core)
+  implementation(libs.vico.compose)
+  implementation(libs.vico.compose.m3)
 
 
   // Log
