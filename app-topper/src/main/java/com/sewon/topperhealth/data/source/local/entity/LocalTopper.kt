@@ -15,6 +15,7 @@ data class LocalTopper(
   @ColumnInfo(name = "hr_wfm") val hrWfm: Double,
   @ColumnInfo(name = "br_wfm") val brWfm: Double,
   @ColumnInfo(name = "is_sleep") val isSleep: Boolean,
+  @ColumnInfo(name = "status") val status: String,
   @ColumnInfo(name = "session_id") val sessionId: Int,
   @ColumnInfo(name = "created_at") val createdAt: LocalTime,
 ) {

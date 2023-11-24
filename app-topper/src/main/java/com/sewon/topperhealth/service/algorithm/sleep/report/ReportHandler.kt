@@ -6,102 +6,94 @@ import com.sewon.topperhealth.service.algorithm.ecg.ECGTopper
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants
 
 
-class ReportHandler {
+class ReportHandler(
+  var sessionData: List<LocalTopper>,
+  var refHRV: Double,
+  var refHR: Double,
+  var refBR: Double
+) {
+  fun getBSleepRPI(): List<Float> {
+    return sessionData.map { it.hrv.toFloat() }
+  }
 
-  companion object {
+  fun getCMeanHR(): Float {
+    return sessionData.map { it.hr }.average().toFloat()
+  }
 
-    var refHRV = 0.0
-    var refHR = 0.0
-    var refBR = 0.0
+  fun getCMeanBR(): Float {
+    return sessionData.map { it.br }.average().toFloat()
+  }
 
-    private lateinit var allData: List<LocalTopper>
+  fun getECGAlgorithmResult(): ECGTopper {
+    val HRVArray: DoubleArray = sessionData.map { it.hrv }.toDoubleArray()
+    return ECGAnalysisProc.ECG_PPG_AnalysisData(HRVArray)
+  }
 
-    fun importData(data: List<LocalTopper>) {
-      allData = data
+  fun getRPITriangular(): Float {
+    val HRVList = sessionData.map { it.hrv }
+    return mostCommon(HRVList).toFloat()
+  }
+
+  private fun <T> mostCommon(list: List<T>): T {
+    val map: MutableMap<T, Int> = HashMap()
+    for (t in list) {
+      val value = map[t]
+      map[t] = if (value == null) 1 else value + 1
     }
-
-    fun getBSleepRPI(): List<Float> {
-      return allData.map { it.hrv.toFloat() }
+    var max: Map.Entry<T, Int>? = null
+    for (e in map.entries) {
+      if ((max == null) || (e.value > max.value)) max = e
     }
+    return max!!.key
+  }
 
-    fun getCMeanHR(): Float {
-      return allData.map { it.hr }.average().toFloat()
-    }
 
-    fun getCMeanBR(): Float {
-      return allData.map { it.br }.average().toFloat()
-    }
+  fun getSleepStage(): List<Float> {
+    var sumHRV = 0.0
+    var sumHR = 0.0
+    var sumBR = 0.0
+    val stageList = mutableListOf<Float>()
+    var countTime = 0
 
-    fun getECGAlgorithmResult(): ECGTopper {
-      val HRVArray: DoubleArray = allData.map { it.hrv }.toDoubleArray()
-      return ECGAnalysisProc.ECG_PPG_AnalysisData(HRVArray)
-    }
+    for (data in sessionData) {
+      if (countTime == AlgorithmConstants.SLEEP_STAGE_NUMBER) {
+        val meanHRV = sumHRV / countTime
+        val meanHR = sumHR / countTime
+        val meanBR = sumBR / countTime
+        val stage = calculatorSleepStage(meanHRV, meanHR, meanBR)
+        stageList.add(stage.toFloat())
 
-    fun getRPITriangular(): Float {
-      val HRVList = allData.map { it.hrv }
-      return mostCommon(HRVList).toFloat()
-    }
-
-    private fun <T> mostCommon(list: List<T>): T {
-      val map: MutableMap<T, Int> = HashMap()
-      for (t in list) {
-        val value = map[t]
-        map[t] = if (value == null) 1 else value + 1
+        sumHRV = 0.0
+        sumHR = 0.0
+        sumBR = 0.0
+        countTime = 0
       }
-      var max: Map.Entry<T, Int>? = null
-      for (e in map.entries) {
-        if ((max == null) || (e.value > max.value)) max = e
-      }
-      return max!!.key
+      sumHRV += data.hrv
+      sumHR += data.hr
+      sumBR += data.br
+      countTime += 1
     }
+    return stageList
+  }
 
-
-    fun getSleepStage(): List<Float> {
-      var sumHRV = 0.0
-      var sumHR = 0.0
-      var sumBR = 0.0
-      val stageList = mutableListOf<Float>()
-      var countTime = 0
-
-      for (data in allData) {
-        if (countTime == AlgorithmConstants.SLEEP_STAGE_NUMBER) {
-          val meanHRV = sumHRV / countTime
-          val meanHR = sumHR / countTime
-          val meanBR = sumBR / countTime
-          val stage = processReport(meanHRV, meanHR, meanBR)
-          stageList.add(stage.toFloat())
-
-          sumHRV = 0.0
-          sumHR = 0.0
-          sumBR = 0.0
-          countTime = 0
-        }
-        sumHRV += data.hrv
-        sumHR += data.hr
-        sumBR += data.br
-        countTime += 1
-      }
-      return stageList
-    }
-
-    private fun processReport(meanHrv: Double, meanHr: Double, meanBr: Double): Int {
-      if (meanHrv < refHRV * AlgorithmConstants.REPORT_HRV_THRESHOLD) {
-        return AlgorithmConstants.REPORT_STAGE_REM
-      } else {
-        if (meanHr >= refHR * AlgorithmConstants.REPORT_HR_THRESHOLD) {
-          if (meanBr >= refBR * AlgorithmConstants.REPORT_HRUP_BR_THRESHOLD) {
-            return AlgorithmConstants.REPORT_STAGE_N2
-          } else {
-            return AlgorithmConstants.REPORT_STAGE_N3
-          }
+  private fun calculatorSleepStage(meanHrv: Double, meanHr: Double, meanBr: Double): Int {
+    if (meanHrv < refHRV * AlgorithmConstants.SLEEP_HRV_THRESHOLD) {
+      return AlgorithmConstants.SLEEP_STAGE_REM
+    } else {
+      return if (meanHr >= refHR * AlgorithmConstants.SLEEP_HR_THRESHOLD) {
+        if (meanBr >= refBR * AlgorithmConstants.SLEEP_HRUP_BR_THRESHOLD) {
+          AlgorithmConstants.SLEEP_STAGE_N2
         } else {
-          if (meanBr >= refBR * AlgorithmConstants.REPORT_HRDOWN_BR_THRESHOLD) {
-            return AlgorithmConstants.REPORT_STAGE_WAKE
-          } else {
-            return AlgorithmConstants.REPORT_STAGE_N1
-          }
+          AlgorithmConstants.SLEEP_STAGE_N3
+        }
+      } else {
+        if (meanBr >= refBR * AlgorithmConstants.SLEEP_HRDOWN_BR_THRESHOLD) {
+          AlgorithmConstants.SLEEP_STAGE_WAKE
+        } else {
+          AlgorithmConstants.SLEEP_STAGE_N1
         }
       }
     }
   }
+
 }

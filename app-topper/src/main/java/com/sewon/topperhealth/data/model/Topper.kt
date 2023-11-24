@@ -12,6 +12,7 @@ data class Topper(
   val hrWfm: Double,
   val brWfm: Double,
   val isSleep: Boolean,
+  val status: String,
   val sessionId: Int,
   val createdAt: LocalTime,
 )
@@ -27,6 +28,7 @@ fun Topper.toLocal() = LocalTopper(
   hrWfm = hrWfm,
   brWfm = brWfm,
   isSleep = isSleep,
+  status = status,
   createdAt = createdAt,
   sessionId = sessionId
 )
@@ -41,6 +43,7 @@ fun LocalTopper.toExternal() = Topper(
   hrWfm = hrWfm,
   brWfm = brWfm,
   isSleep = isSleep,
+  status = status,
   sessionId = sessionId,
   createdAt = createdAt
 )

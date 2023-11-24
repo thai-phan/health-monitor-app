@@ -8,7 +8,7 @@ interface ISessionRepository {
 
   suspend fun getSleepSessionList(): List<SleepSession>
 
-  suspend fun getSessionById(id: Int): SleepSession?
+  suspend fun getSessionById(id: Int): SleepSession
 
   suspend fun createNewSession(sleepSession: SleepSession): Long
 

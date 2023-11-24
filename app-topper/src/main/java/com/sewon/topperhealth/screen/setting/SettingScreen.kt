@@ -15,11 +15,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
-import com.sewon.topperhealth.screen.setting.suba.ProfileSetting
-import com.sewon.topperhealth.screen.setting.subb.SleepSetting
-import com.sewon.topperhealth.screen.setting.subc.InductionSolutionSetting
-import com.sewon.topperhealth.screen.setting.subd.GeneralSetting
-import com.sewon.topperhealth.screen.setting.sube.DeviceConnectionSetting
+import com.sewon.topperhealth.screen.setting.childa.ProfileSetting
+import com.sewon.topperhealth.screen.setting.childb.SleepSetting
+import com.sewon.topperhealth.screen.setting.childc.InductionSolutionSetting
+import com.sewon.topperhealth.screen.setting.childd.GeneralSetting
+import com.sewon.topperhealth.screen.setting.childe.DeviceConnectionSetting
 
 @Composable
 fun SettingScreen(

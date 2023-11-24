@@ -1,7 +1,9 @@
 package com.sewon.topperhealth.service.bluetooth
 
 import android.text.SpannableStringBuilder
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
+import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeHandler
 import com.sewon.topperhealth.service.bluetooth.util.Connected
@@ -68,7 +70,7 @@ class LowEnergyClient {
         stringBuilder.append(TextUtil.toHexString(data)).append('\n')
       } else {
         val dataStr = String(data)
-        RealtimeHandler.validateDataFormat(dataStr)
+        validateDataFormat(dataStr)
         val text = TextUtil.toCaretString(dataStr, true)
         stringBuilder.append(text)
       }
@@ -80,5 +82,19 @@ class LowEnergyClient {
       sensorLoopCount = 0
     }
     log.value = "$stringBuilder $sensorLoopCount"
+  }
+
+  private val isWrongDeviceType = mutableStateOf(false)
+
+  private val regex = Regex("[01234]")
+
+  private fun validateDataFormat(dataStr: String) {
+    val messageList = dataStr.split(" ").filter { it != "" }
+    if (messageList[0].matches(regex)) {
+      RealtimeHandler.receiveData(messageList)
+    } else {
+      isWrongDeviceType.value = true
+      MainActivity.lowEnergyService.disconnectBluetoothGatt()
+    }
   }
 }

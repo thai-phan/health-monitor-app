@@ -12,6 +12,7 @@ class TopperData(currentSessionId: Int, stringList: List<String>) {
   var HRWfm: Double
   var BRWfm: Double
   var isSleep: Boolean
+  var status: String
   var sessionId: Int = 0
   var createdAt: LocalTime
 
@@ -31,6 +32,7 @@ class TopperData(currentSessionId: Int, stringList: List<String>) {
       0.0
     }
     isSleep = true
+    status = ""
     sessionId = currentSessionId
     createdAt = LocalTime.now()
   }
@@ -44,6 +46,7 @@ class TopperData(currentSessionId: Int, stringList: List<String>) {
       hrWfm = HRWfm,
       brWfm = BRWfm,
       isSleep = isSleep,
+      status = status,
       sessionId = sessionId,
       createdAt = createdAt
     )

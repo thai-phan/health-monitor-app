@@ -44,9 +44,10 @@ import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.activity.component.CircularTimePicker
 import com.sewon.topperhealth.screen.activity.component.ModalAssessment
 import com.sewon.topperhealth.screen.activity.component.ModalStarQuality
-import com.sewon.topperhealth.screen.activity.sub.ButtonAction
-import com.sewon.topperhealth.screen.activity.sub.SwitchAction
-import com.sewon.topperhealth.screen.activity.sub.TimeSelection
+import com.sewon.topperhealth.screen.activity.child.ButtonAction
+import com.sewon.topperhealth.screen.activity.child.ActivityLog
+import com.sewon.topperhealth.screen.activity.child.SwitchAction
+import com.sewon.topperhealth.screen.activity.child.TimeSelection
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyGatt
@@ -67,7 +68,6 @@ fun SleepActivity(
 
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-  val log by LowEnergyClient.log.observeAsState()
   val deviceAddress by LowEnergyClient.deviceAddress.observeAsState()
   val isAlarm by LowEnergyClient.isAlarm.observeAsState()
 
@@ -208,20 +208,17 @@ fun SleepActivity(
           else -> Text("Not Connected")
         }
       }
-      isStarted?.let { it1 ->
-        isAlarm?.let { it2 ->
-          ButtonAction(
-            it1, it2,
-            startSleep = { startSleep() },
-            cancelSleep = {
-              cancelSleep()
-              openAssessmentModal = !openAssessmentModal
-            },
-            stopAlarm = { stopAlarm() }
-          )
-        }
-      }
-      log?.let { Text(it) }
+      ButtonAction(
+        isStarted!!, isAlarm!!,
+        startSleep = { startSleep() },
+        cancelSleep = {
+          cancelSleep()
+          openAssessmentModal = !openAssessmentModal
+        },
+        stopAlarm = { stopAlarm() }
+      )
+
+      ActivityLog()
     }
 
     if (openAssessmentModal) {

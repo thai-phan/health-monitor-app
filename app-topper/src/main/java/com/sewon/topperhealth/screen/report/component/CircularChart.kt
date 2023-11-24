@@ -76,5 +76,4 @@ fun CircularChart(
     }
     Text(label)
   }
-
 }

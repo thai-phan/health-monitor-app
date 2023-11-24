@@ -53,7 +53,7 @@ interface LocalSessionDao {
   suspend fun queryUpdateSessionQualityMemo(sessionId: Int, rating: Int, memo: String)
 
   @Query("SELECT * FROM sleep_session WHERE session_id = :sessionId")
-  suspend fun loadById(sessionId: Int): LocalSleepSession?
+  suspend fun loadById(sessionId: Int): LocalSleepSession
 
 
   @Query("DELETE FROM sleep_session")

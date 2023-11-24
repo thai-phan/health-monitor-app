@@ -22,8 +22,8 @@ class SessionRepository @Inject constructor(
     return localSessionDao.getAllSession().toExternal()
   }
 
-  override suspend fun getSessionById(id: Int): SleepSession? {
-    return localSessionDao.loadById(id)?.toExternal()
+  override suspend fun getSessionById(id: Int): SleepSession {
+    return localSessionDao.loadById(id).toExternal()
   }
 
   override suspend fun createNewSession(sleepSession: SleepSession): Long {
