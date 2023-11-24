@@ -27,6 +27,7 @@ fun Chart1SleepStage(data: List<Float>) {
         defaultLines.map { defaultLine -> defaultLine.copy(pointConnector = pointConnector) }
       },
     )
+//    TODO: Add legend
     Chart(
       chart = lineChart,
       model = chartEntryModel,

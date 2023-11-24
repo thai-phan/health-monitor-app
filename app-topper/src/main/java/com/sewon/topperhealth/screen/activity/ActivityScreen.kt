@@ -152,15 +152,15 @@ fun SleepActivity(
     MainActivity.lowEnergyClient.stopAlarmListener()
   }
 
-
   var openAssessmentModal by rememberSaveable { mutableStateOf(false) }
   var openQualityModal by rememberSaveable { mutableStateOf(false) }
-
   Column(
     modifier = modifier
       .fillMaxSize()
       .padding(horizontal = 30.dp, vertical = 20.dp)
   ) {
+//    ActivityLog()
+    
     Row(
       modifier = Modifier.fillMaxWidth(),
       horizontalArrangement = Arrangement.SpaceBetween,
@@ -218,7 +218,7 @@ fun SleepActivity(
         stopAlarm = { stopAlarm() }
       )
 
-      ActivityLog()
+
     }
 
     if (openAssessmentModal) {

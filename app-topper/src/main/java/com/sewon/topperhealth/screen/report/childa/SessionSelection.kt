@@ -29,7 +29,7 @@ fun SessionSelection(sessionList: List<SleepSession>, selectReportSession: (id: 
   Box(
     modifier = Modifier
       .fillMaxWidth()
-      .padding(32.dp)
+      .padding(0.dp)
   ) {
     ExposedDropdownMenuBox(
       expanded = expanded,

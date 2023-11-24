@@ -4,8 +4,10 @@ package com.sewon.topperhealth.screen.report
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -50,14 +52,15 @@ fun ReportScreen(
       SessionSelection(uiState.sessionList, selectReportSession = {
         selectSessionReport(it)
       })
+      Spacer(modifier = Modifier.height(10.dp))
       Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(20.dp)
       ) {
-        Text(uiState.totalRecord.toString())
-        Text(uiState.refHRV.toString())
-        Text(uiState.refHR.toString())
-        Text(uiState.refBR.toString())
+//        Text(uiState.totalRecord.toString())
+//        Text(uiState.refHRV.toString())
+//        Text(uiState.refHR.toString())
+//        Text(uiState.refBR.toString())
 
         SleepChart(uiState)
         SleepScore(uiState)
