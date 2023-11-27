@@ -22,7 +22,6 @@ fun SleepScore(
   Text(stringResource(R.string.sleep_quality_index))
   Spacer(modifier = Modifier.height(20.dp))
   Column {
-    Text(uiState.sleepRating.toString())
     ProgressBar(uiState.sleepRating)
   }
 

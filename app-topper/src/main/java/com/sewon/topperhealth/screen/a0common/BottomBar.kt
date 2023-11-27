@@ -53,7 +53,7 @@ fun BottomBar(
                 if (tab.route != currentRoute) {
                   navController.navigate(tab.route) {
                     popUpTo(navController.graph.startDestinationId) {
-                      saveState = true
+                      saveState = false
                     }
                     launchSingleTop = true
                     restoreState = true

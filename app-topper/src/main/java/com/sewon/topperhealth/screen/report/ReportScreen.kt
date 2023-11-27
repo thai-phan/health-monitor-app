@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
+import com.sewon.topperhealth.screen.report.childa.ReportLog
 import com.sewon.topperhealth.screen.report.childa.SessionSelection
 import com.sewon.topperhealth.screen.report.childb.SleepChart
 import com.sewon.topperhealth.screen.report.childc.SleepScore
@@ -57,10 +58,7 @@ fun ReportScreen(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(20.dp)
       ) {
-//        Text(uiState.totalRecord.toString())
-//        Text(uiState.refHRV.toString())
-//        Text(uiState.refHR.toString())
-//        Text(uiState.refBR.toString())
+//        ReportLog(uiState)
 
         SleepChart(uiState)
         SleepScore(uiState)
