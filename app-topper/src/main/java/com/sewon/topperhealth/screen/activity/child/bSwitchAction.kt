@@ -33,8 +33,8 @@ fun SwitchAction() {
   val isRelayClose = rememberSaveable { mutableStateOf(false) }
 
   val isPlaySound by LowEnergyService.isPlaySound.observeAsState()
-  val deviceName = ClassicClient.deviceName.observeAsState()
-  val classicConnectState = ClassicClient.connected.observeAsState()
+  val deviceName by ClassicClient.deviceName.observeAsState()
+  val classicConnectState by ClassicClient.connected.observeAsState()
 
   fun toggleRelay(value: Boolean) {
     isRelayClose.value = value
@@ -62,7 +62,7 @@ fun SwitchAction() {
       maxLines = 2,
     )
 
-    if (classicConnectState.value == Connected.True) {
+    if (classicConnectState == Connected.True) {
       CustomSwitch(
         checked = isRelayClose.value,
         onCheckedChange = {
@@ -74,7 +74,7 @@ fun SwitchAction() {
         onClick = {
           isRelayDialog.value = !isRelayDialog.value
         }) {
-        deviceName.value?.let { Text(it) }
+        Text(deviceName!!)
       }
     }
   }
@@ -86,7 +86,7 @@ fun SwitchAction() {
     Text(stringResource(R.string.setting_c_sleep_inducing_sound))
     CustomSwitch(checked = isPlaySound!!,
       onCheckedChange = {
-        toggleSound(isPlaySound!!)
+        toggleSound(it)
       })
   }
   if (isRelayDialog.value) {
