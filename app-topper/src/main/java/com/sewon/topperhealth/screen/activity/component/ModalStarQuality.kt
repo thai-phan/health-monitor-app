@@ -42,7 +42,7 @@ fun ModalStarQuality(
 
   val (rating, setRating) = remember { mutableIntStateOf(5) }
 
-  var memo by remember { mutableStateOf("노트") }
+  var memo by remember { mutableStateOf("") }
 
   ModalBottomSheet(
     onDismissRequest = onToggleModal,
@@ -64,10 +64,9 @@ fun ModalStarQuality(
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
 
-        RatingInputRow(rating = rating,
-          onRatingChange = { rating ->
-            setRating(rating)
-          })
+        RatingInputRow(rating = rating) { rating ->
+          setRating(rating)
+        }
 
         TextField(value = memo, onValueChange = {
           memo = it

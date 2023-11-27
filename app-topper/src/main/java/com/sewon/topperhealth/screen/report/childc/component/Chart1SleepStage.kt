@@ -53,17 +53,14 @@ fun Chart1SleepStage(data: List<Float>) {
       chart = lineChart,
       model = chartEntryModel,
       startAxis = rememberStartAxis(
-        valueFormatter = startAxisValueFormatter,
-        itemPlacer = startAxisItemPlacer
+        valueFormatter = DefaultAxisValueFormatter(),
+//        itemPlacer = AxisItemPlacer.Vertical.default(4)
       ),
-
       bottomAxis = rememberBottomAxis(),
     )
   }
 }
 
-private val startAxisValueFormatter = DefaultAxisValueFormatter<Start>()
-private val startAxisItemPlacer = AxisItemPlacer.Vertical.default(5)
 
 private val legendItemLabelTextSize = 12.sp
 private val legendItemIconSize = 8.dp

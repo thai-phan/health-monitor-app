@@ -160,7 +160,7 @@ fun SleepActivity(
       .padding(horizontal = 30.dp, vertical = 20.dp)
   ) {
 //    ActivityLog()
-    
+
     Row(
       modifier = Modifier.fillMaxWidth(),
       horizontalArrangement = Arrangement.SpaceBetween,
@@ -236,13 +236,11 @@ fun SleepActivity(
     if (openQualityModal) {
       ModalStarQuality(onToggleModal = {
         openQualityModal = !openQualityModal
-      },
-        onSaveQuality = { rating, memo ->
-          openQualityModal = !openQualityModal
-          viewModel.saveQuality(rating, memo)
-          redirectReportPage()
-        }
-      )
+      }) { rating, memo ->
+        openQualityModal = !openQualityModal
+        viewModel.saveQuality(rating, memo)
+        redirectReportPage()
+      }
     }
   }
 }

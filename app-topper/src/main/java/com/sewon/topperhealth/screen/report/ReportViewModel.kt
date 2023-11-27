@@ -110,7 +110,7 @@ class ReportViewModel @Inject constructor(
           sleepEfficiency = sleepEfficiency / 100,
           sleepLatency = sleepLatency / 60,
           wakeupOnSleep = wakeupOnSleep / 60,
-          sleepRating = session.rating.toFloat() * 20,
+          sleepRating = session.rating.toFloat(),
           sleepStage = sleepStage,
 
           //  Hide
