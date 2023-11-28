@@ -86,7 +86,7 @@ fun NavigationGraph(
       ) {
         navController.navigate(Destinations.ACTIVITY_ROUTE) {
           popUpTo(navController.graph.startDestinationId) {
-            saveState = true
+            saveState = false
           }
           launchSingleTop = true
           restoreState = true
@@ -99,14 +99,22 @@ fun NavigationGraph(
 //            navController.getBackStackEntry("parentNavigationRoute")
 //        }
 //        val parentViewModel = hiltViewModel(parentEntry)
-      SleepActivity(modifier) {
+      SleepActivity(modifier, redirectDevicePage = {
+        navController.navigate(Destinations.DEVICE_ROUTE) {
+          popUpTo(navController.graph.startDestinationId) {
+            saveState = false
+          }
+          launchSingleTop = true
+          restoreState = true
+        }
+      }) {
         navController.navigate(Destinations.REPORT_ROUTE) {
           //          TODO: research
           popUpTo(navController.graph.startDestinationId) {
             // Save backstack state. This will ensure restoration of
             // nested navigation screen when the user comes back to
             // the destination.
-            saveState = true
+            saveState = false
           }
           // prevent duplicate destinations when the navigation is
           // clicked multiple times

@@ -6,8 +6,8 @@ import com.sewon.topperhealth.screen.report.UiState
 
 @Composable
 fun ReportLog(uiState: UiState) {
-  Text(uiState.totalRecord.toString())
-  Text(uiState.refHRV.toString())
-  Text(uiState.refHR.toString())
-  Text(uiState.refBR.toString())
+  Text("Total: ${uiState.totalRecord}")
+  Text("HR: ${uiState.refHR}")
+  Text("BR: ${uiState.refBR}")
+  Text("HRV: ${uiState.refHRV}")
 }

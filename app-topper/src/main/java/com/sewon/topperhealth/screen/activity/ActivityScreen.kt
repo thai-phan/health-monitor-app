@@ -49,6 +49,7 @@ import com.sewon.topperhealth.screen.activity.child.ActivityLog
 import com.sewon.topperhealth.screen.activity.child.SwitchAction
 import com.sewon.topperhealth.screen.activity.child.TimeSelection
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
+import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeHandler
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyGatt
 import com.sewon.topperhealth.service.bluetooth.util.Connected
@@ -60,6 +61,7 @@ import timber.log.Timber
 fun SleepActivity(
   modifier: Modifier = Modifier,
   viewModel: ActivityViewModel = hiltViewModel(),
+  redirectDevicePage: () -> Unit,
   redirectReportPage: () -> Unit,
 ) {
 
@@ -98,7 +100,7 @@ fun SleepActivity(
 //        screenBrightness = 0.2f
 //      }
 //    }
-
+    RealtimeHandler.resetData()
     MainActivity.lowEnergyService.playSoundSleepInduce()
 
     LowEnergyClient.isStarted.value = true
@@ -159,7 +161,6 @@ fun SleepActivity(
       .fillMaxSize()
       .padding(horizontal = 30.dp, vertical = 20.dp)
   ) {
-//    ActivityLog()
 
     Row(
       modifier = Modifier.fillMaxWidth(),
@@ -167,6 +168,11 @@ fun SleepActivity(
       verticalAlignment = Alignment.CenterVertically
     ) {
       Text(stringResource(R.string.sleep_time_check), style = topperTypography.headlineSmall)
+//
+//      Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
+//        onClick = { redirectDevicePage() }) {
+//        Text(stringResource(R.string.device), color = BackgroundMiddle)
+//      }
 
       Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
         onClick = { redirectReportPage() }) {
@@ -218,8 +224,9 @@ fun SleepActivity(
         stopAlarm = { stopAlarm() }
       )
 
-
+      ActivityLog()
     }
+
 
     if (openAssessmentModal) {
       ModalAssessment(onToggleModal = {

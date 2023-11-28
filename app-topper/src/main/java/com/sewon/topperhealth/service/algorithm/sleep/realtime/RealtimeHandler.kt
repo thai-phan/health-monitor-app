@@ -1,6 +1,5 @@
 package com.sewon.topperhealth.service.algorithm.sleep.realtime
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants
@@ -12,7 +11,7 @@ import java.util.Date
 class RealtimeHandler {
 
   companion object {
-    private var referenceCount = 3 * 60
+    private var referenceCount = 3 * 60 * 20
 
     fun receiveData(messageList: List<String>) {
       val topperData = TopperData(LowEnergyService.sessionId, messageList)
@@ -20,15 +19,25 @@ class RealtimeHandler {
 //      MainActivity.lowEnergyService.insertNewTopperToDatabase(topperData)
     }
 
+    fun resetData() {
+      Timber.tag("RealtimeHandler").d("reset data")
+      sumHRV = 0.0
+      sumHR = 0.0
+      sumBR = 0.0
+      refHRV.value = 0.0
+      refHR.value = 0.0
+      refBR.value = 0.0
+      countReferenceData.value = 0
+      countInsomniaValue = 0
+      countDeepSleep = 0
+    }
+
     var sumHRV = 0.0
     var sumHR = 0.0
     var sumBR = 0.0
-
     var refHRV = MutableLiveData(0.0)
     var refHR = MutableLiveData(0.0)
     var refBR = MutableLiveData(0.0)
-
-
     var countReferenceData = MutableLiveData(0)
 
     private fun processData(topperData: TopperData) {

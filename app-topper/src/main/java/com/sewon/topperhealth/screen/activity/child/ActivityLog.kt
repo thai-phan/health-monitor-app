@@ -13,17 +13,16 @@ fun ActivityLog() {
 
   val log by LowEnergyClient.log.observeAsState()
   val count by RealtimeHandler.countReferenceData.observeAsState()
-
   val refHRV by RealtimeHandler.refHRV.observeAsState()
   val refHR by RealtimeHandler.refHR.observeAsState()
   val refBR by RealtimeHandler.refBR.observeAsState()
 
 
   Column {
-    Text(log.toString())
-    Text(count.toString())
-    Text(refHRV.toString())
-    Text(refHR.toString())
-    Text(refBR.toString())
+    Text("Log: ${log}")
+    Text("Total: ${count}")
+    Text("HR: ${refHR}")
+    Text("BR: ${refBR}")
+    Text("HRV: ${refHRV}")
   }
 }

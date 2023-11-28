@@ -7,7 +7,7 @@ import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants
 
 
 class ReportHandler(
-  var sessionData: List<LocalTopper>,
+  private var sessionData: List<LocalTopper>,
   var refHRV: Double,
   var refHR: Double,
   var refBR: Double
