@@ -10,7 +10,9 @@ import java.util.Date
 
 class RealtimeHandler {
 
+
   companion object {
+    val tag = "RealtimeHandler"
     private var referenceCount = 3 * 60 * 20
 
     fun receiveData(messageList: List<String>) {
@@ -20,7 +22,7 @@ class RealtimeHandler {
     }
 
     fun resetData() {
-      Timber.tag("RealtimeHandler").d("reset data")
+      Timber.tag(tag).d("reset data")
       sumHRV = 0.0
       sumHR = 0.0
       sumBR = 0.0
@@ -71,7 +73,7 @@ class RealtimeHandler {
       }
 
       if (!saveDone) {
-        topperData.status = "Miss threshold"
+        topperData.status = AlgorithmConstants.STATUS_MISS_THRESHOLD
         saveDatabase(topperData)
       }
     }
@@ -101,33 +103,33 @@ class RealtimeHandler {
 
 
     private fun callInsomnia(topperData: TopperData) {
-      Timber.tag("RealtimeHandler").d("callInsomnia")
+      Timber.tag(tag).d("callInsomnia")
       if (topperData.HR != 0 && topperData.BR != 0) {
         if (topperData.HR - refHR.value!! > 5 || refHR.value!! - topperData.HR > 5) {
-          topperData.status = "Insomnia Sleep"
+          topperData.status = AlgorithmConstants.STATUS_INSOMIA_SLEEP
           saveDatabase(topperData)
         }
       } else {
 //        WASO
-        topperData.status = "WASO"
+        topperData.status = AlgorithmConstants.STATUS_WASO
         topperData.isSleep = false
         saveDatabase(topperData)
       }
     }
 
     private fun callDeepSleep(topperData: TopperData) {
-      Timber.tag("RealtimeHandler").d("callDeepSleep")
+      Timber.tag(tag).d("callDeepSleep")
       val curTime = Date()
       if (curTime < LowEnergyService.pickerEndTime) {
         saveDatabase(topperData)
       } else {
         if (topperData.HR != 0 && topperData.BR != 0) {
           if (topperData.HR - refHR.value!! > 5 || refHR.value!! - topperData.HR > 5) {
-            topperData.status = "Deep Sleep"
+            topperData.status = AlgorithmConstants.STATUS_DEEP_SLEEP
             saveDatabase(topperData)
           }
         } else {
-          topperData.status = "Not Sleep"
+          topperData.status = AlgorithmConstants.STATUS_NOT_SLEEP
           topperData.isSleep = false
           saveDatabase(topperData)
         }

@@ -91,10 +91,11 @@ class ReportViewModel @Inject constructor(
       val sleepEfficiency = session.rating.toFloat()
       val startTime: Date = session.actualStartTime
       val wakeUpTime: Date = session.actualEndTime
-      val totalSleepTime = Date(wakeUpTime.time - startTime.time).time.toFloat()
+      val totalSleepTime = (wakeUpTime.time - startTime.time).toFloat()
       val sleepTime: Date = session.sleepTime
-      val sleepLatency = Date(sleepTime.time - startTime.time).time.toFloat()
+      val sleepLatency = (sleepTime.time - startTime.time).toFloat()
       val wakeupOnSleep = session.wakeUpCount.toFloat()
+      Timber.tag("wakeupOnSleep").d(wakeupOnSleep.toString())
       val sleepStage = reportHandler.getSleepStage()
 
       val sleepRPI: List<Float> = reportHandler.getBSleepRPI()
@@ -106,11 +107,11 @@ class ReportViewModel @Inject constructor(
 
       _uiState.update {
         it.copy(
-          sleepTime = totalSleepTime / 12,
-          sleepEfficiency = sleepEfficiency / 100,
-          sleepLatency = sleepLatency / 60,
-          wakeupOnSleep = wakeupOnSleep / 60,
-          sleepRating = session.rating.toFloat() * 20,
+          sleepTime = totalSleepTime * 100 / (12 * 3600 * 1000),
+          sleepEfficiency = sleepEfficiency * 20,
+          sleepLatency = sleepLatency * 100 / (3600 * 1000),
+          wakeupOnSleep = wakeupOnSleep * 100 / (20 * 3600),
+          sleepRating = sleepEfficiency * 20,
           sleepStage = sleepStage,
 
           //  Hide
@@ -128,10 +129,16 @@ class ReportViewModel @Inject constructor(
         )
       }
     } else {
-      // TODO:
-//      ReportAlgorithm.refHRV = 0.0
-//      ReportAlgorithm.refHR = 0.0
-//      ReportAlgorithm.refBR = 0.0
+      _uiState.update {
+        it.copy(
+          sleepTime = 0.0f,
+          sleepEfficiency = 0.0f,
+          sleepLatency = 0.0f,
+          wakeupOnSleep = 0.0f,
+          sleepRating = 0.0f,
+          sleepStage = listOf(),
+        )
+      }
       Timber.tag("ReportViewModel").d("showSessionReport error")
     }
   }

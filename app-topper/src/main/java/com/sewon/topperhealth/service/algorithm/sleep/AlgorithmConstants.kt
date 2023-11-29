@@ -17,4 +17,10 @@ object AlgorithmConstants {
   const val SLEEP_HRDOWN_BR_THRESHOLD = 1.2
 
   const val SLEEP_STAGE_NUMBER = 100
+
+  const val STATUS_MISS_THRESHOLD = "Miss threshold"
+  const val STATUS_INSOMIA_SLEEP = "Insomnia Sleep"
+  const val STATUS_DEEP_SLEEP = "Deep Sleep"
+  const val STATUS_NOT_SLEEP = "Not Sleep"
+  const val STATUS_WASO = "WASO"
 }

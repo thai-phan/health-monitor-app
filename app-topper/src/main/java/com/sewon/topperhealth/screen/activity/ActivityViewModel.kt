@@ -3,7 +3,6 @@ package com.sewon.topperhealth.screen.activity
 import android.icu.util.Calendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.api.HttpService
 import com.sewon.topperhealth.api.ServerService
 import com.sewon.topperhealth.screen.a0common.timepicker.TimeRangePicker
@@ -89,18 +88,17 @@ class ActivityViewModel @Inject constructor(
 
 
   fun createSession(pickerStartTime: Calendar, pickerEndTime: Calendar) = viewModelScope.launch {
-    val actualStartTime = Date()
-    val sleepTime = Date()
+    val currentTimeMillis = Date()
 
     val sleepSession = SleepSession(
       0.0, 0.0, 0.0, false,
       0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-      90, 10,
+      0, 0,
       pickerStartTime.time,
       pickerEndTime.time,
-      actualStartTime,
-      sleepTime,
-      sleepTime,
+      currentTimeMillis,
+      currentTimeMillis,
+      currentTimeMillis,
       "", ""
     )
     val sessionId: Int = sessionRepository.createNewSession(sleepSession).toInt()

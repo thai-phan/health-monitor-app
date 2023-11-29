@@ -74,6 +74,7 @@ fun CircularChart(
         blendMode = BlendMode.SrcOver
       )
     }
+    Text(angle.toString())
     Text(label)
   }
 }

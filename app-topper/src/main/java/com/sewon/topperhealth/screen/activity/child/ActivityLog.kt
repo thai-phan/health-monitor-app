@@ -19,10 +19,10 @@ fun ActivityLog() {
 
 
   Column {
-    Text("Log: ${log}")
-    Text("Total: ${count}")
-    Text("HR: ${refHR}")
-    Text("BR: ${refBR}")
-    Text("HRV: ${refHRV}")
+    Text("Log: $log")
+    Text("Total: $count")
+    Text("HR: $refHR")
+    Text("BR: $refBR")
+    Text("HRV: $refHRV")
   }
 }
