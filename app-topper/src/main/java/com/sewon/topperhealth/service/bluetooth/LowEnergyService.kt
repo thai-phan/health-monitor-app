@@ -36,7 +36,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LowEnergyService : Service() {
-  val tag: String = "TimberLowEnergyService"
+  val tag = "TimberLowEnergyService"
 
   companion object {
     val isPlaySound = MutableLiveData(true)

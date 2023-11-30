@@ -12,7 +12,7 @@ class RealtimeHandler {
 
 
   companion object {
-    val tag = "RealtimeHandler"
+    val tag = "TimberRealtimeHandler"
     private var referenceCount = 3 * 60 * 20
 
     fun receiveData(messageList: List<String>) {

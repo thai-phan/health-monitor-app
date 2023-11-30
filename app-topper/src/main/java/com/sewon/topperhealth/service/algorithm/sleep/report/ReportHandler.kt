@@ -12,6 +12,8 @@ class ReportHandler(
   var refHR: Double,
   var refBR: Double
 ) {
+  val tag = "TimberReportHandler"
+
   fun getBSleepRPI(): List<Float> {
     return sessionData.map { it.hrv.toFloat() }
   }
