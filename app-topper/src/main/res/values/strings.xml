@@ -67,6 +67,7 @@
   <string name="sleep_assessment">Recent Quality of Sleep Assessment</string>
   <string name="no_device_found">No devices found</string>
   <string name="device">Device</string>
-
+  <string name="wakeup">Wake-up</string>
+  <string name="stop_alarm">Stop Alarm</string>
 
 </resources>

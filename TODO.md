@@ -6,23 +6,14 @@ View the raw content of this file to understand the format.
 
 ### Todo
 
-- [ ] 
-
-// TODO: Add multi language
-
-// TODO: Check first load
-
-// TODO: Loading state
-
-// TODO: Run back ground
-
-// TODO: Back button
-
-// TODO: Navigate
+- [ ] Check first load
+- [ ] Loading state
+- [ ] Run back ground
+- [ ] Back button
 
 ### In Progress
 
-- [ ] 
+- [ ] Add multi language
 
 ### Done ✓
 

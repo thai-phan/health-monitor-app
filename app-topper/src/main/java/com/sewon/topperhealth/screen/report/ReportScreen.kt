@@ -58,7 +58,7 @@ fun ReportScreen(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(20.dp)
       ) {
-        ReportLog(uiState)
+//        ReportLog(uiState)
 
         SleepChart(uiState)
         SleepScore(uiState)

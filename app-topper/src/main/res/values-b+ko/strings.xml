@@ -22,6 +22,7 @@
   <string name="setting_a_age">연령</string>
 
   <string name="setting_b_sleep_setting">수면설정</string>
+  <string name="wakeup">기상</string>
   <string name="wakeup_time">기상시간</string>
   <string name="bedtime">취침시간</string>
   <string name="setting_b_alarm_setting">알람설정</string>
@@ -69,6 +70,7 @@
   <string name="sleep_assessment">최근 수면의 질 평가</string>
   <string name="no_device_found">장치를 찾을 수 없음</string>
   <string name="device">장치</string>
+  <string name="stop_alarm">알람 중지</string>
 
 
 </resources>

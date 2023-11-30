@@ -224,7 +224,7 @@ fun SleepActivity(
         stopAlarm = { stopAlarm() }
       )
 
-      ActivityLog()
+//      ActivityLog()
     }
 
 

@@ -38,7 +38,7 @@ class LowEnergyClient {
   }
 
   fun onClientConnect() {
-    connected.value = Connected.True
+    connected.value = Connected.Pending
   }
 
   fun onClientConnectError(e: Exception) {
@@ -53,6 +53,7 @@ class LowEnergyClient {
   }
 
   fun onClientReadLE(datas: ArrayDeque<ByteArray>) {
+    connected.value = Connected.True
     onClientReceiveLE(datas)
   }
 
