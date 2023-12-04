@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -22,9 +23,11 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,6 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.data.HealthDataStore
 import com.sewon.topperhealth.screen.a0common.theme.BackgroundMiddle
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.activity.component.CircularTimePicker
@@ -48,6 +52,7 @@ import com.sewon.topperhealth.screen.activity.child.ButtonAction
 import com.sewon.topperhealth.screen.activity.child.ActivityLog
 import com.sewon.topperhealth.screen.activity.child.SwitchAction
 import com.sewon.topperhealth.screen.activity.child.TimeSelection
+import com.sewon.topperhealth.screen.activity.component.DialogDevMode
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeHandler
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
@@ -68,6 +73,11 @@ fun SleepActivity(
   val context = LocalContext.current
   val activity = LocalView.current.context as? Activity
 
+  val dataStore = HealthDataStore(context)
+  val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
+  val isDimDisabled by remember { dataStore.isDimDisabled }.collectAsState(initial = false)
+
+
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   val deviceAddress by LowEnergyClient.deviceAddress.observeAsState()
@@ -75,6 +85,8 @@ fun SleepActivity(
 
   val isStarted by LowEnergyClient.isStarted.observeAsState()
   val lowEnergyConnectState = LowEnergyClient.connected.observeAsState()
+
+  val openDevMode = rememberSaveable { mutableStateOf(false) }
 
   fun composeConnectToSensor() {
     try {
@@ -93,7 +105,7 @@ fun SleepActivity(
 
 
   fun startSleep() {
-    if (activity != null) {
+    if (activity != null && !isDimDisabled) {
       activity.window?.attributes = activity.window.attributes.apply {
         screenBrightness = 0.2f
       }
@@ -166,8 +178,20 @@ fun SleepActivity(
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically
     ) {
+
       Text(stringResource(R.string.sleep_time_check), style = topperTypography.headlineSmall)
-//
+
+      Button(
+        modifier = Modifier
+          .height(1.dp)
+          .width(1.dp),
+        colors = ButtonDefaults.buttonColors(
+          containerColor = Color.Transparent,
+          contentColor = Color.Transparent
+        ),
+        onClick = { openDevMode.value = true }) {
+      }
+
 //      Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
 //        onClick = { redirectDevicePage() }) {
 //        Text(stringResource(R.string.device), color = BackgroundMiddle)
@@ -223,7 +247,9 @@ fun SleepActivity(
         stopAlarm = { stopAlarm() }
       )
 
-//      ActivityLog()
+      if (isLogShowed) {
+        ActivityLog()
+      }
     }
 
 
@@ -247,6 +273,11 @@ fun SleepActivity(
         viewModel.saveQuality(rating, memo)
         redirectReportPage()
       }
+    }
+
+
+    if (openDevMode.value) {
+      DialogDevMode(openDevMode)
     }
   }
 }

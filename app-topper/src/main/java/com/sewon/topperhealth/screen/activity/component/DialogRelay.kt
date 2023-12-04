@@ -60,7 +60,7 @@ fun DialogRelay(onDismissRequest: () -> Unit) {
     }
   }
 
-  Dialog(onDismissRequest = { onDismissRequest() }) {
+  Dialog(onDismissRequest = onDismissRequest) {
     Card(
       colors = CardDefaults.cardColors(BackgroundTop),
       modifier = Modifier

@@ -41,7 +41,7 @@ fun NavigationGraph(
   val dataStore = HealthDataStore(context)
 
   val isAccepted = remember {
-    dataStore.doAcceptTerm
+    dataStore.isTermAccepted
   }.collectAsState(initial = false)
 
 

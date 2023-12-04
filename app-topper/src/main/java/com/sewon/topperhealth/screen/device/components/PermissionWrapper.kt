@@ -68,7 +68,7 @@ fun PermissionWrapper(
           .map { it.permission },
       )
     } else {
-      PermissionRequestView(
+      PermissionRequest(
         permissionState,
         description,
         errorText,

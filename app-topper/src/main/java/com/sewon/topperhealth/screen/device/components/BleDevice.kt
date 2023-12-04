@@ -29,7 +29,7 @@ import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 
 @SuppressLint("MissingPermission")
 @Composable
-fun DeviceItem(
+fun BleDevice(
   color: Color,
   bluetoothDevice: BluetoothDevice,
   onSelectDevice: () -> Unit

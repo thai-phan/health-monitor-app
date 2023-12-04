@@ -24,7 +24,7 @@ import com.google.accompanist.permissions.MultiplePermissionsState
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun PermissionRequestView(
+fun PermissionRequest(
   state: MultiplePermissionsState,
   description: String?,
   errorText: String,

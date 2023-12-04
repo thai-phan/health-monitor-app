@@ -14,14 +14,14 @@ class HealthDataStore(private var context: Context) {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("settings")
     private val IS_TERM_ACCEPTED = booleanPreferencesKey("is_term_accepted")
     private val IS_LOG_SHOWED = booleanPreferencesKey("is_show_log")
-    private val IS_SCREEN_DIMMED = booleanPreferencesKey("is_screen_dim")
+    private val IS_DISABLE_DIM = booleanPreferencesKey("is_disable_dim")
   }
 
   suspend fun saveAcceptTerm(value: Boolean) {
     context.dataStore.edit { preferences -> preferences[IS_TERM_ACCEPTED] = value }
   }
 
-  val doAcceptTerm: Flow<Boolean> = context.dataStore.data.map { preferences ->
+  val isTermAccepted: Flow<Boolean> = context.dataStore.data.map { preferences ->
     preferences[IS_TERM_ACCEPTED] ?: false
   }
 
@@ -29,16 +29,16 @@ class HealthDataStore(private var context: Context) {
     context.dataStore.edit { preferences -> preferences[IS_LOG_SHOWED] = value }
   }
 
-  val doShowLog: Flow<Boolean> = context.dataStore.data.map { preferences ->
+  val isLogShowed: Flow<Boolean> = context.dataStore.data.map { preferences ->
     preferences[IS_LOG_SHOWED] ?: false
   }
 
-  suspend fun saveDimScreen(value: Boolean) {
-    context.dataStore.edit { preferences -> preferences[IS_SCREEN_DIMMED] = value }
+  suspend fun saveDisableDim(value: Boolean) {
+    context.dataStore.edit { preferences -> preferences[IS_DISABLE_DIM] = value }
   }
 
-  val doDimScreen: Flow<Boolean> = context.dataStore.data.map { preferences ->
-    preferences[IS_SCREEN_DIMMED] ?: false
+  val isDimDisabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+    preferences[IS_DISABLE_DIM] ?: false
   }
 
 

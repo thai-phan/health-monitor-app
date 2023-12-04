@@ -8,18 +8,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.screen.a0common.Destinations
-import com.sewon.topperhealth.screen.device.components.BluetoothWrapper
-import com.sewon.topperhealth.screen.device.components.FindDevicesScreen
+import com.sewon.topperhealth.screen.device.components.BleWrapper
+import com.sewon.topperhealth.screen.device.components.BleDevices
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 
 
@@ -30,6 +28,7 @@ fun DeviceScreen(
   goToActivity: () -> Unit,
 ) {
   val context = LocalContext.current
+
 
   fun selectBleDevice(bleDevice: BluetoothDevice) {
     LowEnergyClient.deviceAddress.value = bleDevice.address
@@ -45,24 +44,25 @@ fun DeviceScreen(
       ),
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
+
     Image(
       modifier = Modifier
-//        .border(BorderStroke(2.dp, Color.Red))
         .weight(1f)
         .fillMaxWidth(),
       painter = painterResource(id = R.drawable.ic_intellinest_white),
       contentDescription = "intellinest",
     )
+
     Image(
       modifier = Modifier
-//        .border(BorderStroke(2.dp, Color.Red))
         .weight(1f)
         .fillMaxWidth(),
       painter = painterResource(id = R.drawable.ic_bluetooth_wing),
       contentDescription = "Logo",
     )
-    BluetoothWrapper(modifier = Modifier.weight(6f)) {
-      FindDevicesScreen {
+
+    BleWrapper(modifier = Modifier.weight(6f)) {
+      BleDevices {
         selectBleDevice(it)
       }
     }

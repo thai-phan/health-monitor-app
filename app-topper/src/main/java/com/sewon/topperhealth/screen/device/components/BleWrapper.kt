@@ -28,7 +28,7 @@ import androidx.core.content.getSystemService
 
 
 @Composable
-fun BluetoothWrapper(
+fun BleWrapper(
   modifier: Modifier = Modifier,
   extraPermissions: Set<String> = emptySet(),
   content: @Composable BoxScope.(BluetoothAdapter) -> Unit,

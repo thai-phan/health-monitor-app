@@ -43,7 +43,7 @@ import timber.log.Timber
 @SuppressLint("InlinedApi", "MissingPermission")
 @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
 @Composable
-internal fun FindDevicesScreen(
+internal fun BleDevices(
   onSelectBle: (bleDevice: BluetoothDevice) -> Unit
 ) {
   val context = LocalContext.current
@@ -64,7 +64,7 @@ internal fun FindDevicesScreen(
   // This effect will start scanning for devices when the screen is visible
   // If scanning is stop removing the effect will stop the scanning.
   if (scanning) {
-    BluetoothScanEffect(
+    BleScanner(
       scanSettings = scanSettings,
       onScanFailed = {
         scanning = false
@@ -119,7 +119,7 @@ internal fun FindDevicesScreen(
         }
       }
       items(devices) { item ->
-        DeviceItem(
+        BleDevice(
           Color(0xFFE3ECA6),
           bluetoothDevice = item,
           onSelectDevice = {
