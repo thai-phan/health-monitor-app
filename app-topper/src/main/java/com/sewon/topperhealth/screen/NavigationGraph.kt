@@ -41,7 +41,7 @@ fun NavigationGraph(
   val dataStore = HealthDataStore(context)
 
   val isAccepted = remember {
-    dataStore.getIsTermAgreementAccepted
+    dataStore.doAcceptTerm
   }.collectAsState(initial = false)
 
 
@@ -74,7 +74,7 @@ fun NavigationGraph(
         modifier
       ) {
         CoroutineScope(Dispatchers.IO).launch {
-          dataStore.acceptTermAgreement(true)
+          dataStore.saveAcceptTerm(true)
         }
         navController.navigate(Destinations.DEVICE_ROUTE)
       }
