@@ -20,9 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.sewon.topperhealth.data.HealthDataStore
 
 @Composable
 fun CircularChart(
@@ -34,6 +36,11 @@ fun CircularChart(
   thickness: Dp = 12.dp,
   gapBetweenCircles: Dp = 20.dp
 ) {
+  val context = LocalContext.current
+  val dataStore = HealthDataStore(context)
+
+  val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
+
   val sweepAngles = 360 * angle / 100
 
   var sizeCom by remember { mutableStateOf(IntSize.Zero) }
@@ -74,7 +81,10 @@ fun CircularChart(
         blendMode = BlendMode.SrcOver
       )
     }
-    Text(angle.toString())
+    if (isLogShowed) {
+      Text(angle.toString())
+    }
+
     Text(label)
   }
 }

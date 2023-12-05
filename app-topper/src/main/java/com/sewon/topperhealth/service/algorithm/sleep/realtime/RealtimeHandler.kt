@@ -32,15 +32,17 @@ class RealtimeHandler {
       countReferenceData.value = 0
       countInsomniaValue = 0
       countDeepSleep = 0
+      isRefCalculated = false
     }
 
-    var sumHRV = 0.0
-    var sumHR = 0.0
-    var sumBR = 0.0
+    private var sumHRV = 0.0
+    private var sumHR = 0.0
+    private var sumBR = 0.0
     var refHRV = MutableLiveData(0.0)
     var refHR = MutableLiveData(0.0)
     var refBR = MutableLiveData(0.0)
     var countReferenceData = MutableLiveData(0)
+    private var isRefCalculated = false
 
     private fun processData(topperData: TopperData) {
       countReferenceData.value = countReferenceData.value?.plus(1)
@@ -57,25 +59,32 @@ class RealtimeHandler {
         MainActivity.lowEnergyService.updateCurrentSessionRefValue(
           refHRV.value!!, refHR.value!!, refBR.value!!
         )
+        isRefCalculated = true
       }
 
       var saveDone = false
 
-
-      if (topperData.HRV > refHRV.value!! * AlgorithmConstants.REALTIME_HRV_THRESHOLD) {
-        if (topperData.HR < refHR.value!! * AlgorithmConstants.REALTIME_HR_THRESHOLD) {
-          if (topperData.BR < refBR.value!! * AlgorithmConstants.REALTIME_BR_THRESHOLD) {
-            Timber.tag("RealtimeHandler").d("sleepStart")
-            sleepStart(topperData)
-            saveDone = true
+      if (!isRefCalculated) {
+        topperData.status = AlgorithmConstants.STATUS_CALCULATE_REF
+        saveDatabase(topperData)
+      } else {
+        if (topperData.HRV > refHRV.value!! * AlgorithmConstants.REALTIME_HRV_THRESHOLD) {
+          if (topperData.HR < refHR.value!! * AlgorithmConstants.REALTIME_HR_THRESHOLD) {
+            if (topperData.BR < refBR.value!! * AlgorithmConstants.REALTIME_BR_THRESHOLD) {
+              Timber.tag("RealtimeHandler").d("sleepStart")
+              sleepStart(topperData)
+              saveDone = true
+            }
           }
+        }
+
+        if (!saveDone) {
+          topperData.status = AlgorithmConstants.STATUS_MISS_THRESHOLD
+          saveDatabase(topperData)
         }
       }
 
-      if (!saveDone) {
-        topperData.status = AlgorithmConstants.STATUS_MISS_THRESHOLD
-        saveDatabase(topperData)
-      }
+
     }
 
     private var countInsomniaValue = 0

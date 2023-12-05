@@ -18,6 +18,7 @@ object AlgorithmConstants {
 
   const val SLEEP_STAGE_NUMBER = 100
 
+  const val STATUS_CALCULATE_REF = "Calculate reference"
   const val STATUS_MISS_THRESHOLD = "Miss threshold"
   const val STATUS_INSOMIA_SLEEP = "Insomnia Sleep"
   const val STATUS_DEEP_SLEEP = "Deep Sleep"
