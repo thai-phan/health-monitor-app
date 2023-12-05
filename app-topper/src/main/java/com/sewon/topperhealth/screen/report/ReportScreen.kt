@@ -13,14 +13,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.data.HealthDataStore
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
+import com.sewon.topperhealth.screen.activity.child.ActivityLog
 import com.sewon.topperhealth.screen.report.childa.ReportLog
 import com.sewon.topperhealth.screen.report.childa.SessionSelection
 import com.sewon.topperhealth.screen.report.childb.SleepChart
@@ -31,6 +36,10 @@ fun ReportScreen(
   modifier: Modifier,
   viewModel: ReportViewModel = hiltViewModel(),
 ) {
+  val context = LocalContext.current
+  val dataStore = HealthDataStore(context)
+
+  val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
 
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -58,7 +67,9 @@ fun ReportScreen(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(20.dp)
       ) {
-//        ReportLog(uiState)
+        if (isLogShowed) {
+          ReportLog(uiState)
+        }
 
         SleepChart(uiState)
         SleepScore(uiState)

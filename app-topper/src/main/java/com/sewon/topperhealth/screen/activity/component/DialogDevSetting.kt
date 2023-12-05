@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,21 +37,15 @@ fun DialogDevMode(
 
   val dataStore = HealthDataStore(context)
 
-  val isLogShowed = remember {
-    dataStore.isLogShowed
-  }.collectAsState(initial = false)
-
-  val isDimDisabled = remember {
-    dataStore.isDimDisabled
-  }.collectAsState(initial = false)
-
+  val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
+  val isDimDisabled by remember { dataStore.isDimDisabled }.collectAsState(initial = false)
 
 
   Dialog(onDismissRequest = { openDevMode.value = false }) {
     Card(
       modifier = Modifier
         .fillMaxWidth()
-        .height(375.dp)
+        .height(400.dp)
         .padding(16.dp),
       colors = CardDefaults.cardColors(BackgroundMiddle),
       shape = RoundedCornerShape(16.dp),
@@ -71,7 +66,7 @@ fun DialogDevMode(
           Text("Show Log")
 
           CustomSwitch(
-            checked = isLogShowed.value,
+            checked = isLogShowed,
             onCheckedChange = {
               CoroutineScope(Dispatchers.IO).launch {
                 dataStore.saveShowLog(it)
@@ -87,12 +82,11 @@ fun DialogDevMode(
           Text("Disable dim screen")
 
           CustomSwitch(
-            checked = isDimDisabled.value,
+            checked = isDimDisabled,
             onCheckedChange = {
               CoroutineScope(Dispatchers.IO).launch {
                 dataStore.saveDisableDim(it)
               }
-
             })
         }
       }
