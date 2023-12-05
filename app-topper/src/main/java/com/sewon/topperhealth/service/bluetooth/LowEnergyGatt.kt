@@ -23,7 +23,7 @@ import java.util.UUID
 
 @SuppressLint("MissingPermission") // various BluetoothGatt, BluetoothDevice methods
 class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : BluetoothGattCallback() {
-  val tag: String = "TimberLowEnergyGatt"
+  val tag = "TimberLowEnergyGatt"
 
   open class DeviceDelegate {
     open fun connectCharacteristics(s: BluetoothGattService): Boolean {

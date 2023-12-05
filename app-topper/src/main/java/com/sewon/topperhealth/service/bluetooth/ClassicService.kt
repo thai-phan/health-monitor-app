@@ -16,7 +16,7 @@ import java.util.ArrayDeque
 
 
 class ClassicService : Service() {
-  val tag: String = "TimberClassicService"
+  val tag = "TimberClassicService"
 
   companion object {
     //Define a LiveData to observe in activity

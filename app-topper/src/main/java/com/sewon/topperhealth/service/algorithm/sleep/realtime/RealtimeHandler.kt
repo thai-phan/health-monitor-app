@@ -3,6 +3,9 @@ package com.sewon.topperhealth.service.algorithm.sleep.realtime
 import androidx.lifecycle.MutableLiveData
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants
+import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.STABLE_MOVING
+import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.STABLE_NO_TARGET
+import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.STABLE_NO_VITAL_SIGN
 import com.sewon.topperhealth.service.algorithm.sleep.TopperData
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import timber.log.Timber
@@ -12,9 +15,10 @@ class RealtimeHandler {
 
 
   companion object {
-    val tag = "TimberRealtimeHandler"
+    const val tag = "TimberRealtimeHandler"
     private var referenceCount = 3 * 60 * 20
 
+    private var ONE_MINUTE_COUNT = 20 * 60
     fun receiveData(messageList: List<String>) {
       val topperData = TopperData(LowEnergyService.sessionId, messageList)
       processData(topperData)
@@ -38,10 +42,12 @@ class RealtimeHandler {
     private var sumHRV = 0.0
     private var sumHR = 0.0
     private var sumBR = 0.0
-    var refHRV = MutableLiveData(0.0)
-    var refHR = MutableLiveData(0.0)
-    var refBR = MutableLiveData(0.0)
-    var countReferenceData = MutableLiveData(0)
+    val refHRV = MutableLiveData(0.0)
+    val refHR = MutableLiveData(0.0)
+    val refBR = MutableLiveData(0.0)
+    val countReferenceData = MutableLiveData(0)
+    private var countInsomniaValue = 0
+    private var countDeepSleep = 0
     private var isRefCalculated = false
 
     private fun processData(topperData: TopperData) {
@@ -65,8 +71,7 @@ class RealtimeHandler {
       var saveDone = false
 
       if (!isRefCalculated) {
-        topperData.status = AlgorithmConstants.STATUS_CALCULATE_REF
-        saveDatabase(topperData)
+        saveDatabase(topperData, AlgorithmConstants.STATUS_CALCULATE_REF)
       } else {
         if (topperData.HRV > refHRV.value!! * AlgorithmConstants.REALTIME_HRV_THRESHOLD) {
           if (topperData.HR < refHR.value!! * AlgorithmConstants.REALTIME_HR_THRESHOLD) {
@@ -79,34 +84,29 @@ class RealtimeHandler {
         }
 
         if (!saveDone) {
-          topperData.status = AlgorithmConstants.STATUS_MISS_THRESHOLD
-          saveDatabase(topperData)
+          saveDatabase(topperData, AlgorithmConstants.STATUS_MISS_THRESHOLD)
         }
       }
-
-
     }
 
-    private var countInsomniaValue = 0
-    private var countDeepSleep = 0
-
     private fun sleepStart(topperData: TopperData) {
-      if (topperData.stable == 0 || topperData.stable == 1) {
-        if (countInsomniaValue == 1200) {
+      if (topperData.stable == STABLE_NO_TARGET || topperData.stable == STABLE_NO_VITAL_SIGN) {
+        if (countInsomniaValue >= ONE_MINUTE_COUNT) {
           callInsomnia(topperData)
+        } else {
+          saveDatabase(topperData, AlgorithmConstants.STATUS_INSOMIA_SLEEP_ACCUMULATE)
         }
         countInsomniaValue += 1
-      } else {
-        countInsomniaValue = 0
       }
 
-      if (topperData.stable == 2) {
-        if (countDeepSleep == 1200) {
+
+      if (topperData.stable == STABLE_MOVING) {
+        if (countDeepSleep >= ONE_MINUTE_COUNT) {
           callDeepSleep(topperData)
+        } else {
+          saveDatabase(topperData, AlgorithmConstants.STATUS_DEEP_SLEEP_ACCUMULATE)
         }
         countDeepSleep += 1
-      } else {
-        countDeepSleep = 0
       }
     }
 
@@ -115,14 +115,11 @@ class RealtimeHandler {
       Timber.tag(tag).d("callInsomnia")
       if (topperData.HR != 0 && topperData.BR != 0) {
         if (topperData.HR - refHR.value!! > 5 || refHR.value!! - topperData.HR > 5) {
-          topperData.status = AlgorithmConstants.STATUS_INSOMIA_SLEEP
-          saveDatabase(topperData)
+          saveDatabase(topperData, AlgorithmConstants.STATUS_INSOMIA_SLEEP)
         }
       } else {
-//        WASO
-        topperData.status = AlgorithmConstants.STATUS_WASO
         topperData.isSleep = false
-        saveDatabase(topperData)
+        saveDatabase(topperData, AlgorithmConstants.STATUS_WASO)
       }
     }
 
@@ -130,22 +127,21 @@ class RealtimeHandler {
       Timber.tag(tag).d("callDeepSleep")
       val curTime = Date()
       if (curTime < LowEnergyService.pickerEndTime) {
-        saveDatabase(topperData)
+        saveDatabase(topperData, AlgorithmConstants.STATUS_DEEP_SLEEP)
       } else {
         if (topperData.HR != 0 && topperData.BR != 0) {
           if (topperData.HR - refHR.value!! > 5 || refHR.value!! - topperData.HR > 5) {
-            topperData.status = AlgorithmConstants.STATUS_DEEP_SLEEP
-            saveDatabase(topperData)
+            saveDatabase(topperData, AlgorithmConstants.STATUS_DEEP_SLEEP)
           }
         } else {
-          topperData.status = AlgorithmConstants.STATUS_NOT_SLEEP
           topperData.isSleep = false
-          saveDatabase(topperData)
+          saveDatabase(topperData, AlgorithmConstants.STATUS_NOT_SLEEP)
         }
       }
     }
 
-    private fun saveDatabase(topperData: TopperData) {
+    private fun saveDatabase(topperData: TopperData, status: String) {
+      topperData.status = status
       MainActivity.lowEnergyService.insertNewTopperToDatabase(topperData)
     }
   }

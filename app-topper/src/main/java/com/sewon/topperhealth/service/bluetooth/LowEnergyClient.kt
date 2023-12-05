@@ -13,7 +13,7 @@ import java.util.ArrayDeque
 
 
 class LowEnergyClient {
-  val tag: String = "TimberLowEnergyClient"
+  val tag = "TimberLowEnergyClient"
 
   companion object {
     val deviceAddress = MutableLiveData("")

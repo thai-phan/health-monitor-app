@@ -16,15 +16,6 @@ object Constants {
   const val NOTIFY_MANAGER_START_FOREGROUND_SERVICE = 1001
 
 
-  const val STABLE_NO_TARGET = "0"
-  const val STABLE_NO_VITAL_SIGN = "1"
-  const val STABLE_MOVING = "2"
-  const val STABLE_BR_LOWER_50 = "3"
-  const val STABLE_BR_UPPER_50 = "4"
-
-  const val NO_VITAL_SIGN_THRESHOLD = 1200
-  const val NO_TARGET_THRESHOLD = 1200
-
   const val BLUETOOTH_NO_CONNECTION = "No connection"
   const val BLUETOOTH_DISCONNECTED = "Disconnected"
 }

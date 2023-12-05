@@ -9,7 +9,7 @@ import java.util.ArrayDeque
 
 
 class ClassicClient {
-  val tag: String = "TimberClassicClient"
+  val tag = "TimberClassicClient"
 
   companion object {
     var connected = MutableLiveData(Connected.NotConnected)
