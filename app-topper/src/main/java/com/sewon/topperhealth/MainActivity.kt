@@ -13,12 +13,14 @@ import android.os.IBinder
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
+import com.sewon.topperhealth.data.HealthDataStore
 import com.sewon.topperhealth.screen.RootCompose
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
 import com.sewon.topperhealth.service.bluetooth.ClassicService
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 import java.util.Locale
 
 
@@ -35,6 +37,8 @@ class MainActivity : ComponentActivity() {
     var lowEnergyClient = LowEnergyClient()
     var classicClient = ClassicClient()
   }
+
+  val dataStore = HealthDataStore(applicationContext)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -58,7 +62,7 @@ class MainActivity : ComponentActivity() {
   override fun onResume() {
     super.onResume()
 
-    setLocale("ko")
+//    setLocale("ko")
   }
 
 //  override fun attachBaseContext(base: Context) {

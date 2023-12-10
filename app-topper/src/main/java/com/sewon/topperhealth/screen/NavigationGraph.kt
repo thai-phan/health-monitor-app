@@ -1,6 +1,8 @@
 package com.sewon.topperhealth.screen
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +27,7 @@ import com.sewon.topperhealth.screen.term.TermAgreement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 
 @Composable
@@ -44,7 +47,6 @@ fun NavigationGraph(
     dataStore.isTermAccepted
   }.collectAsState(initial = false)
 
-
   val splashScreenRedirect = remember {
     mutableStateOf(Destinations.TERM_AGREEMENT_ROUTE)
   }
@@ -52,6 +54,22 @@ fun NavigationGraph(
   if (isAccepted.value) {
     splashScreenRedirect.value = Destinations.DEVICE_ROUTE
   }
+
+
+//  val locale = remember { mutableStateOf("en") }
+//
+//  fun ssss(localeStr: String) {
+//    Locale.setDefault(Locale(localeStr))
+//    locale.value = localeStr
+//    val config = context.resources.configuration
+//    config.setLocale(Locale(localeStr))
+//    context.resources.updateConfiguration(config, context.resources.displayMetrics)
+//  }
+//
+//
+//  Button(onClick = { ssss("en") }) {
+//    Text("Changge en")
+//  }
 
   NavHost(
     navController = navController, startDestination = startDestination
