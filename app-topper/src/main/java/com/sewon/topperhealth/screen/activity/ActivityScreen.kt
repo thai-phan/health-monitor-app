@@ -248,7 +248,7 @@ fun SleepActivity(
       )
 
       if (isLogShowed) {
-        ActivityLog()
+        ActivityLog(viewModel)
       }
     }
 

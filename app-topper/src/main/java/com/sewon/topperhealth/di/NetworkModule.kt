@@ -1,6 +1,6 @@
 package com.sewon.topperhealth.di
 
-import com.sewon.topperhealth.api.UnsplashService
+import com.sewon.topperhealth.data.source.server.UnsplashService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -50,7 +50,7 @@
   <string name="female">Female</string>
   <string name="setting_c_sleep_inducing_energy_message">It stabilizes the mind and body by stimulating the vagus nerve and helps you fall asleep quickly. Recommended for sound-sensitive users.</string>
   <string name="setting_c_sleep_inducing_sound_message">It induces alpha waves by using the patented MC Square brain synchronization sound to help you fall asleep quickly. Recommended for users familiar with white noise.</string>
-  <string name="sleep_quality_index">Sleep Quality Index (SQI)</string>
+  <!--  <string name="sleep_quality_index">Sleep Quality Index (SQI)</string>-->
   <string name="sleep_stage">Sleep Stage</string>
   <string name="nervous_balance">Autonomic nervous system balance</string>
   <string name="stress_score">Stress Score</string>
@@ -69,5 +69,6 @@
   <string name="device">Device</string>
   <string name="wakeup">Wake-up</string>
   <string name="stop_alarm">Stop Alarm</string>
+  <string name="sleep_evaluation_score">PSQI sleep evaluation score</string>
 
 </resources>

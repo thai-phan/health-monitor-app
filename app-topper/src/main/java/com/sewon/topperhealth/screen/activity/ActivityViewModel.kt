@@ -3,14 +3,15 @@ package com.sewon.topperhealth.screen.activity
 import android.icu.util.Calendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sewon.topperhealth.api.HttpService
-import com.sewon.topperhealth.api.ServerService
-import com.sewon.topperhealth.screen.a0common.timepicker.TimeRangePicker
+import com.sewon.topperhealth.api.OpenAIService
+import com.sewon.topperhealth.api.RequestBodySleepAdvice
+import com.sewon.topperhealth.api.AdviceMessage
 import com.sewon.topperhealth.data.irepository.ISessionRepository
 import com.sewon.topperhealth.data.irepository.ISettingRepository
 import com.sewon.topperhealth.data.irepository.ITopperRepository
 import com.sewon.topperhealth.data.irepository.IUserRepository
 import com.sewon.topperhealth.data.model.SleepSession
+import com.sewon.topperhealth.screen.a0common.timepicker.TimeRangePicker
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -121,38 +122,25 @@ class ActivityViewModel @Inject constructor(
     sessionRepository.updateSessionQualityMemo(thisSessionId, rating, memo)
   }
 
-
-  val exceptionHandler = CoroutineExceptionHandler { _, error ->
-    // Do what you want with the error
-    Timber.e(error)
-  }
-
-  fun queryFromServer() = viewModelScope.launch(exceptionHandler) {
+  fun queryOpenAI() = viewModelScope.launch {
     try {
-      val quotesApi = ServerService.create().testServer()
-      quotesApi.let {
-        Timber.v(it.totalCount.toString())
-      }
-      _uiState.update {
-        it.copy(status3 = quotesApi.count.toString())
-      }
-    } catch (error: Error) {
-      _uiState.update {
-        it.copy(status3 = "Disconnect")
-      }
-    }
+      val systemMessage = AdviceMessage("system", "You are a helpful assistant.")
+      val userMessage =
+        AdviceMessage("user", "PSQI 점수가 90점이고, 오후 10시에 수면 시작 오전 7시에 일어났어. 이 수면에 대한 조언을 50자 이내로 해줘.")
+      val body = RequestBodySleepAdvice(
+        model = "gpt-3.5-turbo",
+        messages = arrayListOf(systemMessage, userMessage),
+        temperature = 1,
+        max_tokens = 256,
+        top_p = 1,
+        frequency_penalty = 0,
+        presence_penalty = 0
+      )
 
-  }
+      val response = OpenAIService.create().getSleepAdvice(body)
 
-  fun queryFromServerHttp() = viewModelScope.launch {
-    try {
-      val quotesApi = HttpService.create().testServer()
-      quotesApi.let {
-        Timber.v(it.data)
-      }
-      // launching a new coroutine
       _uiState.update {
-        it.copy(status3 = quotesApi.data)
+        it.copy(status3 = response.choices[0].message.content)
       }
     } catch (error: Error) {
       Timber.v("catch")

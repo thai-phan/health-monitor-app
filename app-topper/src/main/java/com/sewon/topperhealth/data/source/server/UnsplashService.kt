@@ -1,7 +1,5 @@
-package com.sewon.topperhealth.api
+package com.sewon.topperhealth.data.source.server
 
-import com.sewon.topperhealth.data.source.server.ServerResponse
-import com.sewon.topperhealth.data.source.server.UnsplashSearchResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
@@ -10,9 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-/**
- * Used to connect to the Unsplash API to fetch photos
- */
+
 interface UnsplashService {
   @GET("/")
   suspend fun testServer(): ServerResponse

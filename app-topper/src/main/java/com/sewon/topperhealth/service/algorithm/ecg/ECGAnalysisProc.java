@@ -46,8 +46,8 @@ public class ECGAnalysisProc {
 
   public static double CalcRRIAvg(double[] rriData) {
     double sum = 0;
-    for (int i = 0; i < rriData.length; i++) {
-      sum += rriData[i];
+    for (double rriDatum : rriData) {
+      sum += rriDatum;
     }
     return sum / rriData.length;
   }
@@ -59,8 +59,8 @@ public class ECGAnalysisProc {
     double sd = 0.0;
     double diff;
 
-    for (int i = 0; i < rriData.length; i++) {
-      diff = rriData[i] - meanValue;
+    for (double rriDatum : rriData) {
+      diff = rriDatum - meanValue;
       sum += diff * diff;
     }
     sd = Math.sqrt(sum / rriData.length);
@@ -110,7 +110,7 @@ public class ECGAnalysisProc {
       for (int i = 0; i < (complx.length / 2); i++) {
         //복소수의 절대값의 제곱의 sqrt
         double dIMABS2 = Math.sqrt(Math.pow(complx[i].getReal(), 2) + Math.pow(complx[i].getImaginary(), 2));
-        double dABSPower = dIMABS2 / (sampleSize / 2);
+        double dABSPower = dIMABS2 / ((double) sampleSize / 2);
 
         FreqData node = new FreqData();
         // frequency계산
@@ -158,9 +158,8 @@ public class ECGAnalysisProc {
 
     double dLFScore = CalcLF(node.LF);
     double dHFScore = CalcHF(node.HF);
-    double dStressScore = CalcStress(dLFScore, dHFScore);
 
-    node.StressScore = dStressScore;
+    node.StressScore = CalcStress(dLFScore, dHFScore);
 
     return node;
   }

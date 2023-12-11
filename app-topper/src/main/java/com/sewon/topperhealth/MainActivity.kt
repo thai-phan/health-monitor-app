@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
     var classicClient = ClassicClient()
   }
 
-  val dataStore = HealthDataStore(applicationContext)
+//  val dataStore = HealthDataStore(applicationContext)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
   override fun onResume() {
     super.onResume()
 
-//    setLocale("ko")
+    setLocale("ko")
   }
 
 //  override fun attachBaseContext(base: Context) {
@@ -85,8 +85,6 @@ class MainActivity : ComponentActivity() {
 
   override fun onStart() {
     super.onStart()
-
-
     alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
     val bleIntent = Intent(this, LowEnergyService::class.java)
