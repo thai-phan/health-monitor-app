@@ -108,10 +108,10 @@ class ReportViewModel @Inject constructor(
       _uiState.update {
         it.copy(
           sleepTime = totalSleepTime * 100 / (12 * 3600 * 1000),
-          sleepEfficiency = sleepEfficiency * 20,
+          sleepEfficiency = sleepEfficiency,
           sleepLatency = sleepLatency * 100 / (3600 * 1000),
           wakeupOnSleep = wakeupOnSleep * 100 / (20 * 3600),
-          sleepRating = sleepEfficiency * 20,
+          sleepRating = sleepEfficiency,
           sleepStage = sleepStage,
 
           //  Hide

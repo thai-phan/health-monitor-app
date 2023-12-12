@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,14 +36,17 @@ import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 @Composable
 fun ModalAssessment(
   onToggleModal: () -> Unit,
-  onSaveAssessment: (String) -> Unit
+  onSaveAssessment: (Int) -> Unit
 ) {
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
 
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
-  val radioOptions = listOf("매우 그렇다", "그렇다", "그렇지 않다", "전혀 그렇지 않다")
 
-  val (selectedOption, onOptionSelected) = remember { mutableStateOf("매우 그렇다") }
+
+  val radioOptions = mapOf("매우 그렇다" to 3, "그렇다" to 2, "그렇지 않다" to 1, "전혀 그렇지 않다" to 0)
+
+  val (selectedKey, setSelectedKey) = remember { mutableStateOf("매우 그렇다") }
+  val (selectedValue, setSelectedValue) = remember { mutableIntStateOf(3) }
 
 
   ModalBottomSheet(
@@ -65,14 +69,17 @@ fun ModalAssessment(
       ) {
 
 
-        radioOptions.forEach { radio ->
+        radioOptions.forEach { (status, value) ->
           Row(
             modifier = Modifier
               .fillMaxWidth()
               .height(40.dp)
               .selectable(
-                selected = (radio == selectedOption),
-                onClick = { onOptionSelected(radio) },
+                selected = (status == selectedKey),
+                onClick = {
+                  setSelectedKey(status)
+                  setSelectedValue(value)
+                },
                 role = Role.RadioButton
               )
               .padding(horizontal = 16.dp),
@@ -80,11 +87,11 @@ fun ModalAssessment(
             verticalAlignment = Alignment.CenterVertically,
           ) {
             RadioButton(
-              selected = (radio == selectedOption),
+              selected = (status == selectedKey),
               onClick = null // null recommended for accessibility with screenreaders
             )
             Text(
-              text = radio,
+              text = status,
               modifier = Modifier
                 .padding(start = 16.dp)
                 .width(120.dp),
@@ -106,7 +113,7 @@ fun ModalAssessment(
         }
         Spacer(modifier = Modifier.width(20.dp))
         Button(onClick = {
-          onSaveAssessment(selectedOption)
+          onSaveAssessment(selectedValue)
         }) {
           Text(stringResource(R.string.save))
         }

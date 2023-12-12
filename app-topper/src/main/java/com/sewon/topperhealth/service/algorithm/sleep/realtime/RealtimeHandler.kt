@@ -3,6 +3,8 @@ package com.sewon.topperhealth.service.algorithm.sleep.realtime
 import androidx.lifecycle.MutableLiveData
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants
+import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.ONE_MINUTE_COUNT
+import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.REF_COUNT
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.STABLE_MOVING
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.STABLE_NO_TARGET
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.STABLE_NO_VITAL_SIGN
@@ -16,13 +18,14 @@ class RealtimeHandler {
 
   companion object {
     const val tag = "TimberRealtimeHandler"
-    private var referenceCount = 3 * 60 * 20
 
-    private var ONE_MINUTE_COUNT = 20 * 60
+    var referenceCount = MutableLiveData(REF_COUNT)
+    var sleepStatusCount = MutableLiveData(ONE_MINUTE_COUNT)
+
+
     fun receiveData(messageList: List<String>) {
       val topperData = TopperData(LowEnergyService.sessionId, messageList)
       processData(topperData)
-//      MainActivity.lowEnergyService.insertNewTopperToDatabase(topperData)
     }
 
     fun resetData() {
@@ -52,16 +55,16 @@ class RealtimeHandler {
 
     private fun processData(topperData: TopperData) {
       countReferenceData.value = countReferenceData.value?.plus(1)
-      if (countReferenceData.value!! < referenceCount) {
+      if (countReferenceData.value!! < referenceCount.value!!) {
         sumHRV = sumHRV.plus(topperData.HRV)
         sumHR = sumHR.plus(topperData.HR)
         sumBR = sumBR.plus(topperData.BR)
       }
 
-      if (countReferenceData.value == referenceCount) {
-        refHRV.value = sumHRV / referenceCount
-        refHR.value = sumHR / referenceCount
-        refBR.value = sumBR / referenceCount
+      if (countReferenceData.value == referenceCount.value) {
+        refHRV.value = sumHRV / referenceCount.value!!
+        refHR.value = sumHR / referenceCount.value!!
+        refBR.value = sumBR / referenceCount.value!!
         MainActivity.lowEnergyService.updateCurrentSessionRefValue(
           refHRV.value!!, refHR.value!!, refBR.value!!
         )
@@ -91,7 +94,7 @@ class RealtimeHandler {
 
     private fun sleepStart(topperData: TopperData) {
       if (topperData.stable == STABLE_NO_TARGET || topperData.stable == STABLE_NO_VITAL_SIGN) {
-        if (countInsomniaValue >= ONE_MINUTE_COUNT) {
+        if (countInsomniaValue >= sleepStatusCount.value!!) {
           callInsomnia(topperData)
         } else {
           saveDatabase(topperData, AlgorithmConstants.STATUS_INSOMIA_SLEEP_ACCUMULATE)
@@ -101,7 +104,7 @@ class RealtimeHandler {
 
 
       if (topperData.stable == STABLE_MOVING) {
-        if (countDeepSleep >= ONE_MINUTE_COUNT) {
+        if (countDeepSleep >= sleepStatusCount.value!!) {
           callDeepSleep(topperData)
         } else {
           saveDatabase(topperData, AlgorithmConstants.STATUS_DEEP_SLEEP_ACCUMULATE)

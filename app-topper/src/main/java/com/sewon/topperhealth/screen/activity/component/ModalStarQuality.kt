@@ -40,7 +40,7 @@ fun ModalStarQuality(
 
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
 
-  val (rating, setRating) = remember { mutableIntStateOf(5) }
+  val (rating, setRating) = remember { mutableIntStateOf(4) }
 
   var memo by remember { mutableStateOf("") }
 

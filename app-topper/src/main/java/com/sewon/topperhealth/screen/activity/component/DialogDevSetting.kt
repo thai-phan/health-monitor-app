@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
@@ -39,6 +40,7 @@ fun DialogDevMode(
 
   val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
   val isDimDisabled by remember { dataStore.isDimDisabled }.collectAsState(initial = false)
+  val referenceCount by remember { dataStore.referenceCount }.collectAsState(initial = 0)
 
 
   Dialog(onDismissRequest = { openDevMode.value = false }) {
@@ -64,7 +66,6 @@ fun DialogDevMode(
           modifier = Modifier.fillMaxWidth()
         ) {
           Text("Show Log")
-
           CustomSwitch(
             checked = isLogShowed,
             onCheckedChange = {
@@ -73,14 +74,12 @@ fun DialogDevMode(
               }
             })
         }
-
         Row(
           horizontalArrangement = Arrangement.SpaceBetween,
           verticalAlignment = Alignment.CenterVertically,
           modifier = Modifier.fillMaxWidth()
         ) {
           Text("Disable dim screen")
-
           CustomSwitch(
             checked = isDimDisabled,
             onCheckedChange = {
@@ -89,8 +88,23 @@ fun DialogDevMode(
               }
             })
         }
+        Row(
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically,
+          modifier = Modifier.fillMaxWidth()
+        ) {
+          Text("Reference Count")
+          TextField(
+            value = referenceCount.toString(),
+            onValueChange = {
+              CoroutineScope(Dispatchers.IO).launch {
+                dataStore.saveReferenceCount(it.toInt())
+              }
+            },
+            label = { Text("Reference Count") }
+          )
+        }
       }
     }
   }
-
 }

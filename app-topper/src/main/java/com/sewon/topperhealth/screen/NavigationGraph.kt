@@ -1,8 +1,6 @@
 package com.sewon.topperhealth.screen
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +25,6 @@ import com.sewon.topperhealth.screen.term.TermAgreement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 
 @Composable

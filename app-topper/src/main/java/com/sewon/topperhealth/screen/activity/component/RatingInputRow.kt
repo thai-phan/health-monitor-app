@@ -15,6 +15,7 @@ fun RatingInputRow(modifier: Modifier = Modifier, rating: Int, onRatingChange: (
     AndroidView(
       factory = { context ->
         RatingBar(context).apply {
+          numStars = 4
           stepSize = 1f
         }
       },

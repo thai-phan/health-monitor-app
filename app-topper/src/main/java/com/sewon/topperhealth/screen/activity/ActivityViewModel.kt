@@ -29,7 +29,10 @@ data class UiState(
   val sessionId: Int = 0,
   val startTime: TimeRangePicker.Time = TimeRangePicker.Time(22, 0),
   val endTime: TimeRangePicker.Time = TimeRangePicker.Time(7, 0),
-  val status1: String = "",
+)
+
+data class DataState(
+  val assessment: Int = 0,
   val status2: String = "",
   val status3: String = "",
   val description: String = "",
@@ -49,6 +52,8 @@ class ActivityViewModel @Inject constructor(
 ) : ViewModel() {
 
   private val _uiState = MutableStateFlow(UiState())
+  private val _dataState = MutableStateFlow(DataState())
+
   val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
   private var thisSessionId = 0
@@ -114,12 +119,52 @@ class ActivityViewModel @Inject constructor(
     Timber.tag("Timber").d("updateSessionRefValue")
   }
 
-  fun saveAssessment(assessment: String) = viewModelScope.launch {
-    sessionRepository.updateSessionAssessment(thisSessionId, assessment)
+  fun saveAssessment(assessment: Int) = viewModelScope.launch {
+    _dataState.update {
+      it.copy(
+        assessment = assessment,
+      )
+    }
+
   }
 
   fun saveQuality(rating: Int, memo: String) = viewModelScope.launch {
-    sessionRepository.updateSessionQualityMemo(thisSessionId, rating, memo)
+// Rating
+    val scoreRating = 4 - rating
+//    rating 4 star 1 score 18 - 0 = 18
+//    rating 3 star 2 score 18 - 1 = 17
+//    rating 2 star 3 score 18 - 2 = 16
+//    rating 1 star 4 score 18 - 3 = 15
+
+
+//    SLT score
+//    val session = sessionRepository.getSessionById(sessionId)
+//    sessionRepository.updateSessionAssessment(thisSessionId, assessment)
+//    val startTime: Date = session.actualStartTime
+//    val wakeUpTime: Date = session.actualEndTime
+//    val totalSleepTime = (wakeUpTime.time - startTime.time).toFloat()
+
+//        7 hours is 0 points
+//    6-7 hours is 1 point
+//    5-6 hours is 2 points, and
+//    less than 5 hours is 3 points
+
+//    TST score
+
+
+//    Sleep efficence
+
+
+//    assessment
+    _dataState.value.assessment
+
+
+//    PSQI
+
+
+    val score = (18 - scoreRating) / 18 * 100
+
+    sessionRepository.updateSessionQualityMemo(thisSessionId, score, memo)
   }
 
   fun queryOpenAI() = viewModelScope.launch {
@@ -139,14 +184,14 @@ class ActivityViewModel @Inject constructor(
 
       val response = OpenAIService.create().getSleepAdvice(body)
 
-      _uiState.update {
-        it.copy(status3 = response.choices[0].message.content)
-      }
+//      _uiState.update {
+//        it.copy(status3 = response.choices[0].message.content)
+//      }
     } catch (error: Error) {
       Timber.v("catch")
-      _uiState.update {
-        it.copy(status3 = "Disconnect")
-      }
+//      _uiState.update {
+//        it.copy(status3 = "Disconnect")
+//      }
     }
     println("asdas")
   }

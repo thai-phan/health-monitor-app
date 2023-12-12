@@ -13,9 +13,14 @@ import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.data.HealthDataStore
 import com.sewon.topperhealth.service.algorithm.sleep.TopperData
 import com.sewon.topperhealth.data.model.toLocal
 import com.sewon.topperhealth.data.irepository.ISessionRepository
@@ -27,6 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.ArrayDeque
@@ -39,10 +45,16 @@ class LowEnergyService : Service() {
   val tag = "TimberLowEnergyService"
 
   companion object {
+
     val isPlaySound = MutableLiveData(true)
     var sessionId = 0
     var pickerEndTime: Date = Date()
   }
+
+  val dataStore = HealthDataStore(this)
+
+  val referenceCount = dataStore.referenceCount.collect { value -> println(value) }
+
 
   private val job = SupervisorJob()
   private val scope = CoroutineScope(Dispatchers.IO + job)

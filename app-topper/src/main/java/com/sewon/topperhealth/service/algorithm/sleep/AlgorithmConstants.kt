@@ -1,6 +1,10 @@
 package com.sewon.topperhealth.service.algorithm.sleep
 
 object AlgorithmConstants {
+  const val REF_COUNT = 3 * 60 * 20
+  const val ONE_MINUTE_COUNT = 20 * 60
+
+
   const val REALTIME_HRV_THRESHOLD = 1.2
   const val REALTIME_HR_THRESHOLD = 0.9
   const val REALTIME_BR_THRESHOLD = 1.0
@@ -11,8 +15,6 @@ object AlgorithmConstants {
   const val STABLE_BR_LOWER_50 = 3
   const val STABLE_BR_UPPER_50 = 4
 
-  const val NO_VITAL_SIGN_THRESHOLD = 1200
-  const val NO_TARGET_THRESHOLD = 1200
 
   const val SLEEP_STAGE_WAKE = 4
   const val SLEEP_STAGE_REM = 3

@@ -25,7 +25,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.data.HealthDataStore
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
-import com.sewon.topperhealth.screen.activity.child.ActivityLog
 import com.sewon.topperhealth.screen.report.childa.ReportLog
 import com.sewon.topperhealth.screen.report.childa.SessionSelection
 import com.sewon.topperhealth.screen.report.childb.SleepChart

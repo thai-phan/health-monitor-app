@@ -5,8 +5,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.REF_COUNT
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -17,6 +19,8 @@ class HealthDataStore(private var context: Context) {
     private val IS_TERM_ACCEPTED = booleanPreferencesKey("is_term_accepted")
     private val IS_LOG_SHOWED = booleanPreferencesKey("is_show_log")
     private val IS_DISABLE_DIM = booleanPreferencesKey("is_disable_dim")
+    private val REFERENCE_COUNT = intPreferencesKey("reference_count")
+
   }
 
   suspend fun changeLanguage(language: String) {
@@ -49,6 +53,14 @@ class HealthDataStore(private var context: Context) {
 
   val isDimDisabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
     preferences[IS_DISABLE_DIM] ?: false
+  }
+
+  suspend fun saveReferenceCount(value: Int) {
+    context.dataStore.edit { preferences -> preferences[REFERENCE_COUNT] = value }
+  }
+
+  val referenceCount: Flow<Int> = context.dataStore.data.map { preferences ->
+    preferences[REFERENCE_COUNT] ?: REF_COUNT
   }
 
 
