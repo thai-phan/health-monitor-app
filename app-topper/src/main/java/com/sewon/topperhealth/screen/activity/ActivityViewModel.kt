@@ -174,35 +174,4 @@ class ActivityViewModel @Inject constructor(
 
     sessionRepository.updateSessionQualityMemo(_dataState.value.sessionId, score, memo)
   }
-
-  fun queryOpenAI() = viewModelScope.launch {
-    try {
-      val systemMessage = AdviceMessage("system", "You are a helpful assistant.")
-      val userMessage =
-        AdviceMessage("user", "PSQI 점수가 90점이고, 오후 10시에 수면 시작 오전 7시에 일어났어. 이 수면에 대한 조언을 50자 이내로 해줘.")
-      val body = RequestBodySleepAdvice(
-        model = "gpt-3.5-turbo",
-        messages = arrayListOf(systemMessage, userMessage),
-        temperature = 1,
-        max_tokens = 256,
-        top_p = 1,
-        frequency_penalty = 0,
-        presence_penalty = 0
-      )
-
-      val response = OpenAIService.create().getSleepAdvice(body)
-
-//      _uiState.update {
-//        it.copy(status3 = response.choices[0].message.content)
-//      }
-    } catch (error: Error) {
-      Timber.v("catch")
-//      _uiState.update {
-//        it.copy(status3 = "Disconnect")
-//      }
-    }
-    println("asdas")
-  }
-
-
 }
