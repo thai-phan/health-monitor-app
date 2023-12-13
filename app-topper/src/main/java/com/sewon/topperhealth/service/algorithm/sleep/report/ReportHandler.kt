@@ -80,19 +80,19 @@ class ReportHandler(
 
   private fun calculatorSleepStage(meanHrv: Double, meanHr: Double, meanBr: Double): Int {
     if (meanHrv < refHRV * AlgorithmConstants.SLEEP_HRV_THRESHOLD) {
-      return AlgorithmConstants.SLEEP_STAGE_REM
+      return AlgorithmConstants.SLEEP_STAGE_N3_REM
     } else {
       return if (meanHr >= refHR * AlgorithmConstants.SLEEP_HR_THRESHOLD) {
         if (meanBr >= refBR * AlgorithmConstants.SLEEP_HRUP_BR_THRESHOLD) {
-          AlgorithmConstants.SLEEP_STAGE_N2
+          AlgorithmConstants.SLEEP_STAGE_N1_N2
         } else {
-          AlgorithmConstants.SLEEP_STAGE_N3
+          AlgorithmConstants.SLEEP_STAGE_N3_REM
         }
       } else {
         if (meanBr >= refBR * AlgorithmConstants.SLEEP_HRDOWN_BR_THRESHOLD) {
           AlgorithmConstants.SLEEP_STAGE_WAKE
         } else {
-          AlgorithmConstants.SLEEP_STAGE_N1
+          AlgorithmConstants.SLEEP_STAGE_N1_N2
         }
       }
     }

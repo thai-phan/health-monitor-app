@@ -45,8 +45,8 @@ fun ModalAssessment(
 
   val radioOptions = mapOf("매우 그렇다" to 3, "그렇다" to 2, "그렇지 않다" to 1, "전혀 그렇지 않다" to 0)
 
-  val (selectedKey, setSelectedKey) = remember { mutableStateOf("매우 그렇다") }
-  val (selectedValue, setSelectedValue) = remember { mutableIntStateOf(3) }
+  val (selectedKey, setSelectedKey) = remember { mutableStateOf("전혀 그렇지 않다") }
+  val (selectedValue, setSelectedValue) = remember { mutableIntStateOf(0) }
 
 
   ModalBottomSheet(

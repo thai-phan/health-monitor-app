@@ -25,7 +25,7 @@ data class SleepSession(
   val pickerEndTime: Date,
   val actualStartTime: Date,
   val actualEndTime: Date,
-  val sleepTime: Date,
+  val fellAsleepTime: Date,
 
   val assessment: String,
   val memo: String,
@@ -55,7 +55,7 @@ fun SleepSession.toLocal() = LocalSleepSession(
   pickerEndTime = pickerEndTime,
   actualStartTime = actualStartTime,
   actualEndTime = actualEndTime,
-  sleepTime = sleepTime,
+  fellAsleepTime = fellAsleepTime,
 
   assessment = assessment,
   memo = memo
@@ -86,7 +86,7 @@ fun LocalSleepSession.toExternal() = SleepSession(
   pickerEndTime = pickerEndTime,
   actualStartTime = actualStartTime,
   actualEndTime = actualEndTime,
-  sleepTime = sleepTime,
+  fellAsleepTime = fellAsleepTime,
   sessionId = sessionId,
 
   assessment = assessment,

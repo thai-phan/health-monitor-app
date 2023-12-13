@@ -14,7 +14,6 @@ import com.sewon.topperhealth.data.model.SleepSession
 import com.sewon.topperhealth.screen.a0common.timepicker.TimeRangePicker
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,6 +31,7 @@ data class UiState(
 )
 
 data class DataState(
+  var sessionId: Int = 0,
   val assessment: Int = 0,
   val status2: String = "",
   val status3: String = "",
@@ -56,7 +56,6 @@ class ActivityViewModel @Inject constructor(
 
   val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-  private var thisSessionId = 0
 
   private fun loadData() = viewModelScope.launch {
     val user = settingRepository.loadUserSetting(0)
@@ -108,14 +107,16 @@ class ActivityViewModel @Inject constructor(
       "", ""
     )
     val sessionId: Int = sessionRepository.createNewSession(sleepSession).toInt()
-    thisSessionId = sessionId
+    _dataState.update {
+      it.copy(sessionId = sessionId)
+    }
     LowEnergyService.sessionId = sessionId
     LowEnergyService.pickerEndTime = pickerEndTime.time
   }
 
   fun updateCurrentSessionEndTime() = viewModelScope.launch {
     val actualEndTime = Date()
-    sessionRepository.updateSessionEndTime(thisSessionId, actualEndTime)
+    sessionRepository.updateSessionEndTime(_dataState.value.sessionId, actualEndTime)
     Timber.tag("Timber").d("updateSessionRefValue")
   }
 
@@ -125,46 +126,53 @@ class ActivityViewModel @Inject constructor(
         assessment = assessment,
       )
     }
-
   }
 
   fun saveQuality(rating: Int, memo: String) = viewModelScope.launch {
-// Rating
+//  Rating
     val scoreRating = 4 - rating
-//    rating 4 star 1 score 18 - 0 = 18
-//    rating 3 star 2 score 18 - 1 = 17
-//    rating 2 star 3 score 18 - 2 = 16
-//    rating 1 star 4 score 18 - 3 = 15
 
+    val session = sessionRepository.getSessionById(_dataState.value.sessionId)
+    val startTime: Date = session.actualStartTime
+    val wakeUpTime: Date = session.actualEndTime
+    val sleepTime: Date = session.fellAsleepTime
 
-//    SLT score
-//    val session = sessionRepository.getSessionById(sessionId)
-//    sessionRepository.updateSessionAssessment(thisSessionId, assessment)
-//    val startTime: Date = session.actualStartTime
-//    val wakeUpTime: Date = session.actualEndTime
-//    val totalSleepTime = (wakeUpTime.time - startTime.time).toFloat()
+//    Sleep latency time (SLT)
+    val sleepLatency = (sleepTime.time - startTime.time).toFloat() / (60 * 1000)
+    val scoreSleepLatency = when {
+      120 <= sleepLatency -> 3
+      60 <= sleepLatency -> 2
+      30 <= sleepLatency -> 1
+      else -> 0
+    }
 
-//        7 hours is 0 points
-//    6-7 hours is 1 point
-//    5-6 hours is 2 points, and
-//    less than 5 hours is 3 points
+//    Total sleep time (TST)
+    val totalSleepTime = (wakeUpTime.time - startTime.time).toFloat() / (3600 * 1000)
 
-//    TST score
+    val scoreTotalSleep = when {
+      7 <= totalSleepTime -> 0
+      6 <= totalSleepTime -> 1
+      5 <= totalSleepTime -> 2
+      else -> 3
+    }
 
-
-//    Sleep efficence
-
+//    Sleep efficiency
+    val wakeupOnSleep = session.wakeUpCount.toFloat() / (20 * 60)
+    val realSleepTime = (totalSleepTime * 60 - sleepLatency - wakeupOnSleep) / (totalSleepTime * 60)
+    val scoreSleepEfficiency = when {
+      0.85 <= realSleepTime -> 0
+      0.75 <= realSleepTime -> 1
+      0.65 <= realSleepTime -> 2
+      else -> 3
+    }
 
 //    assessment
-    _dataState.value.assessment
-
-
+    val scoreAssessment = _dataState.value.assessment
 //    PSQI
+    val score =
+      18 - scoreRating - scoreAssessment - scoreTotalSleep - scoreSleepLatency - scoreSleepEfficiency
 
-
-    val score = (18 - scoreRating) / 18 * 100
-
-    sessionRepository.updateSessionQualityMemo(thisSessionId, score, memo)
+    sessionRepository.updateSessionQualityMemo(_dataState.value.sessionId, score, memo)
   }
 
   fun queryOpenAI() = viewModelScope.launch {

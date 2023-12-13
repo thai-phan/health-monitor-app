@@ -128,7 +128,6 @@ public class ECGAnalysisProc {
 
     //LF: 0.04~0.15Hz 주파수 범위의 maginute 합
     //HF: 0.15~0.4Hz 주파수 범위의 maginute 합
-
     int iCntHF = 0, iCntLF = 0;
     double dHF = 0, dLF = 0, dVLF = 0;
 

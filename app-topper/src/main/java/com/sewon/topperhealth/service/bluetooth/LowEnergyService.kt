@@ -51,9 +51,8 @@ class LowEnergyService : Service() {
     var pickerEndTime: Date = Date()
   }
 
-  val dataStore = HealthDataStore(this)
-
-  val referenceCount = dataStore.referenceCount.collect { value -> println(value) }
+//  val dataStore = HealthDataStore(this)
+//  val referenceCount = dataStore.referenceCount.collect { value -> println(value) }
 
 
   private val job = SupervisorJob()

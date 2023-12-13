@@ -52,8 +52,8 @@ import com.sewon.topperhealth.screen.activity.child.ButtonAction
 import com.sewon.topperhealth.screen.activity.child.ActivityLog
 import com.sewon.topperhealth.screen.activity.child.SwitchAction
 import com.sewon.topperhealth.screen.activity.child.TimeSelection
-import com.sewon.topperhealth.screen.activity.component.DialogDevMode
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
+import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants
 import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeHandler
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyGatt
@@ -76,6 +76,7 @@ fun SleepActivity(
   val dataStore = HealthDataStore(context)
   val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
   val isDimDisabled by remember { dataStore.isDimDisabled }.collectAsState(initial = false)
+  val referenceCount by remember { dataStore.referenceCount }.collectAsState(initial = AlgorithmConstants.REF_COUNT)
 
 
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -112,6 +113,9 @@ fun SleepActivity(
     }
 
     RealtimeHandler.resetData()
+    Timber.tag("SleepActivity").d(referenceCount.toString())
+    RealtimeHandler.referenceCount.value = referenceCount
+
     MainActivity.lowEnergyService.playSoundSleepInduce()
 
     LowEnergyClient.isStarted.value = true

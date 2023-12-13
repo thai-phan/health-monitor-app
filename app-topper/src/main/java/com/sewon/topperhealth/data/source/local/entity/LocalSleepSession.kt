@@ -39,7 +39,7 @@ data class LocalSleepSession(
   @ColumnInfo(name = "picker_end_time") val pickerEndTime: Date,
   @ColumnInfo(name = "actual_start_time") val actualStartTime: Date,
   @ColumnInfo(name = "actual_end_time") val actualEndTime: Date,
-  @ColumnInfo(name = "sleep_time") val sleepTime: Date,
+  @ColumnInfo(name = "fell_asleep_time") val fellAsleepTime: Date,
 
   @ColumnInfo(name = "assessment") val assessment: String,
   @ColumnInfo(name = "memo") val memo: String,

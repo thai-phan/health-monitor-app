@@ -88,13 +88,13 @@ class ReportViewModel @Inject constructor(
       val reportHandler = ReportHandler(sessionData, session.refHRV, session.refHR, session.refBR)
 
 
-      val sleepEfficiency = session.rating.toFloat()
+      val sleepEfficiency = session.rating.toFloat() * 100 / 18
       val startTime: Date = session.actualStartTime
       val wakeUpTime: Date = session.actualEndTime
-      val totalSleepTime = (wakeUpTime.time - startTime.time).toFloat()
-      val sleepTime: Date = session.sleepTime
-      val sleepLatency = (sleepTime.time - startTime.time).toFloat()
-      val wakeupOnSleep = session.wakeUpCount.toFloat()
+      val totalSleepTime = (wakeUpTime.time - startTime.time).toFloat() * 100 / (12 * 3600 * 1000)
+      val sleepTime: Date = session.fellAsleepTime
+      val sleepLatency = (sleepTime.time - startTime.time).toFloat() * 100 / (3600 * 1000)
+      val wakeupOnSleep = session.wakeUpCount.toFloat() * 100 / (20 * 3600)
       Timber.tag("wakeupOnSleep").d(wakeupOnSleep.toString())
       val sleepStage = reportHandler.getSleepStage()
 
@@ -107,10 +107,10 @@ class ReportViewModel @Inject constructor(
 
       _uiState.update {
         it.copy(
-          sleepTime = totalSleepTime * 100 / (12 * 3600 * 1000),
+          sleepTime = totalSleepTime,
           sleepEfficiency = sleepEfficiency,
-          sleepLatency = sleepLatency * 100 / (3600 * 1000),
-          wakeupOnSleep = wakeupOnSleep * 100 / (20 * 3600),
+          sleepLatency = sleepLatency,
+          wakeupOnSleep = wakeupOnSleep,
           sleepRating = sleepEfficiency,
           sleepStage = sleepStage,
 

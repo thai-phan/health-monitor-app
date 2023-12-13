@@ -15,12 +15,9 @@ object AlgorithmConstants {
   const val STABLE_BR_LOWER_50 = 3
   const val STABLE_BR_UPPER_50 = 4
 
-
-  const val SLEEP_STAGE_WAKE = 4
-  const val SLEEP_STAGE_REM = 3
-  const val SLEEP_STAGE_N1 = 2
-  const val SLEEP_STAGE_N2 = 1
-  const val SLEEP_STAGE_N3 = 0
+  const val SLEEP_STAGE_WAKE = 3
+  const val SLEEP_STAGE_N1_N2 = 2
+  const val SLEEP_STAGE_N3_REM = 1
 
   const val SLEEP_HRV_THRESHOLD = 0.9
   const val SLEEP_HR_THRESHOLD = 0.9

@@ -13,9 +13,8 @@ import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import timber.log.Timber
 import java.util.Date
 
+
 class RealtimeHandler {
-
-
   companion object {
     const val tag = "TimberRealtimeHandler"
 

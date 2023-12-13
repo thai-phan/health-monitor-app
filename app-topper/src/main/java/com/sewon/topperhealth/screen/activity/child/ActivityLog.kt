@@ -15,6 +15,8 @@ fun ActivityLog(viewModel: ActivityViewModel) {
 
   val log by LowEnergyClient.log.observeAsState()
   val count by RealtimeHandler.countReferenceData.observeAsState()
+//  val referenceCount by RealtimeHandler.referenceCount.observeAsState()
+
   val refHRV by RealtimeHandler.refHRV.observeAsState()
   val refHR by RealtimeHandler.refHR.observeAsState()
   val refBR by RealtimeHandler.refBR.observeAsState()
@@ -28,6 +30,7 @@ fun ActivityLog(viewModel: ActivityViewModel) {
       Text(text = "aaaa")
     }
     Text("Log: $log")
+//    Text("Ref: $referenceCount")
     Text("Total: $count")
     Text("HR: $refHR")
     Text("BR: $refBR")

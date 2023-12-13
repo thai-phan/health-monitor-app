@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.screen.activity.component
+package com.sewon.topperhealth.screen.activity
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,6 +28,7 @@ import com.sewon.topperhealth.screen.a0common.theme.BackgroundMiddle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 
 @Composable
@@ -93,15 +94,19 @@ fun DialogDevMode(
           verticalAlignment = Alignment.CenterVertically,
           modifier = Modifier.fillMaxWidth()
         ) {
-          Text("Reference Count")
+          Text("Ref Count")
           TextField(
             value = referenceCount.toString(),
             onValueChange = {
               CoroutineScope(Dispatchers.IO).launch {
-                dataStore.saveReferenceCount(it.toInt())
+                try {
+                  Timber.tag("dev").d(it)
+                  dataStore.saveReferenceCount(it.toInt())
+                } catch (exception: NumberFormatException) {
+                  dataStore.saveReferenceCount(0)
+                }
               }
             },
-            label = { Text("Reference Count") }
           )
         }
       }
