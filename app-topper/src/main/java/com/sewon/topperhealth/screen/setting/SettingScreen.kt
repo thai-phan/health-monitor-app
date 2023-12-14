@@ -36,7 +36,7 @@ fun SettingScreen(
       ),
   ) {
     Text(stringResource(R.string.setting_title), style = topperTypography.headlineSmall)
-    Spacer(modifier = Modifier.height(20.dp))
+    Spacer(Modifier.height(20.dp))
     Column(
       modifier = Modifier.verticalScroll(rememberScrollState()),
       verticalArrangement = Arrangement.spacedBy(20.dp),

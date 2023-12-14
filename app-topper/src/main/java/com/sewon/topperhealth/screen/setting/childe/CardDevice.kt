@@ -66,9 +66,9 @@ fun DeviceConnectionSetting(
           checked = checked,
           onCheckedChange = { checked = it })
       }
-      Spacer(modifier = Modifier.height(5.dp))
+      Spacer(Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-      Spacer(modifier = Modifier.height(5.dp))
+      Spacer(Modifier.height(5.dp))
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

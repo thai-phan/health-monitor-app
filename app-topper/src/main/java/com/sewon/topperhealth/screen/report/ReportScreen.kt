@@ -61,7 +61,7 @@ fun ReportScreen(
       SessionSelection(uiState.sessionList, selectReportSession = {
         selectSessionReport(it)
       })
-      Spacer(modifier = Modifier.height(10.dp))
+      Spacer(Modifier.height(10.dp))
       Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(20.dp)

@@ -12,6 +12,7 @@ object Destinations {
   const val ACTIVITY_ROUTE = "activity_screen"
   const val REPORT_ROUTE = "report_screen"
   const val SETTING_ROUTE = "setting_screen"
+  const val ADVISE_ROUTE = "advise_screen"
 }
 
 

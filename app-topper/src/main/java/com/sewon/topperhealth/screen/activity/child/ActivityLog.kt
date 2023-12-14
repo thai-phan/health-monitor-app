@@ -21,14 +21,7 @@ fun ActivityLog(viewModel: ActivityViewModel) {
   val refHR by RealtimeHandler.refHR.observeAsState()
   val refBR by RealtimeHandler.refBR.observeAsState()
 
-  fun testOpenAI() {
-    viewModel.queryOpenAI()
-  }
-
   Column {
-    Button(onClick = { testOpenAI() }) {
-      Text(text = "aaaa")
-    }
     Text("Log: $log")
 //    Text("Ref: $referenceCount")
     Text("Total: $count")

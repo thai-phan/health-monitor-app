@@ -47,11 +47,11 @@ fun ModalADeviceAccess(
         stringResource(R.string.setting_d_access_cellphone_cache),
         style = topperTypography.titleLarge
       )
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
 
       Text(stringResource(R.string.setting_d_cache_question))
 
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
       Row(
         modifier = Modifier
           .fillMaxWidth()
@@ -61,7 +61,7 @@ fun ModalADeviceAccess(
         Button(onClick = onToggleModal) {
           Text(stringResource(R.string.cancel))
         }
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(Modifier.width(20.dp))
         Button(onClick = {
 
           onChangeDeviceAccess()

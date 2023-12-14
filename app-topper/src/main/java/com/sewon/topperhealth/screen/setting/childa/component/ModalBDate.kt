@@ -77,7 +77,7 @@ fun ModalDate(
           Text(stringResource(R.string.cancel))
 
         }
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(Modifier.width(20.dp))
         Button(onClick = {
           onSubmitBirthday(year, month, day)
           onToggleModal()

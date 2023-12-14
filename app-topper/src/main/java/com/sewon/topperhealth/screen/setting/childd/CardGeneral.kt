@@ -91,9 +91,9 @@ fun GeneralSetting(
 
         Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
       }
-      Spacer(modifier = Modifier.height(5.dp))
+      Spacer(Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-      Spacer(modifier = Modifier.height(5.dp))
+      Spacer(Modifier.height(5.dp))
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -106,9 +106,9 @@ fun GeneralSetting(
 
         Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
       }
-      Spacer(modifier = Modifier.height(5.dp))
+      Spacer(Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-      Spacer(modifier = Modifier.height(5.dp))
+      Spacer(Modifier.height(5.dp))
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

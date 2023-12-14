@@ -1,6 +1,7 @@
 package com.sewon.topperhealth.screen
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.magnifier
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +18,7 @@ import com.sewon.topperhealth.data.HealthDataStore
 import com.sewon.topperhealth.screen.a0common.Destinations
 import com.sewon.topperhealth.screen.a0common.MainTabs
 import com.sewon.topperhealth.screen.activity.SleepActivity
+import com.sewon.topperhealth.screen.advise.AdviseScreen
 import com.sewon.topperhealth.screen.device.DeviceScreen
 import com.sewon.topperhealth.screen.report.ReportScreen
 import com.sewon.topperhealth.screen.setting.SettingScreen
@@ -123,7 +125,7 @@ fun NavigationGraph(
           restoreState = true
         }
       }) {
-        navController.navigate(Destinations.REPORT_ROUTE) {
+        navController.navigate(Destinations.ADVISE_ROUTE) {
           //          TODO: research
           popUpTo(navController.graph.startDestinationId) {
             // Save backstack state. This will ensure restoration of
@@ -146,6 +148,10 @@ fun NavigationGraph(
 
     composable(Destinations.SETTING_ROUTE) {
       SettingScreen(modifier)
+    }
+
+    composable(Destinations.ADVISE_ROUTE) {
+      AdviseScreen(modifier)
     }
   }
 }

@@ -73,7 +73,7 @@ fun ModalCSOSRecipient(
         stringResource(R.string.setting_d_recipient_setting),
         style = topperTypography.titleLarge
       )
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
 
       Row {
         TextField(
@@ -140,7 +140,7 @@ fun ModalCSOSRecipient(
             setRecipientState(recipientState.copy(contact3 = it))
           })
       }
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
 
       Row(
         modifier = Modifier
@@ -151,7 +151,7 @@ fun ModalCSOSRecipient(
         Button(onClick = onToggleModal) {
           Text(stringResource(R.string.cancel))
         }
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(Modifier.width(20.dp))
         Button(onClick = {
           onToggleModal()
           onChangeSOSRecipient(recipientState)

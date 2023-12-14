@@ -54,9 +54,9 @@ fun ModalStarQuality(
         .padding(horizontal = 50.dp)
     ) {
       Text(stringResource(R.string.sleep_assessment), style = topperTypography.titleLarge)
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
       Text(stringResource(R.string.sleep_quality_question))
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
       Column(
         modifier = Modifier
           .selectableGroup()
@@ -72,7 +72,7 @@ fun ModalStarQuality(
           memo = it
         })
       }
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
       Row(
         modifier = Modifier
           .fillMaxWidth()
@@ -82,7 +82,7 @@ fun ModalStarQuality(
         Button(onClick = onToggleModal) {
           Text(stringResource(R.string.cancel))
         }
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(Modifier.width(20.dp))
         Button(onClick = {
           onSaveQuality(rating, memo)
         }) {

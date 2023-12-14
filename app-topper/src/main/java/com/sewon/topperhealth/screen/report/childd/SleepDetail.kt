@@ -47,7 +47,7 @@ fun SleepDetail(uiState: UiState) {
       angle = uiState.rMSSD, brush = blueBrush
     )
   }
-  Spacer(modifier = Modifier.height(10.dp))
+  Spacer(Modifier.height(10.dp))
   Row() {
     CircularChart(
       modifier = Modifier.weight(1f),

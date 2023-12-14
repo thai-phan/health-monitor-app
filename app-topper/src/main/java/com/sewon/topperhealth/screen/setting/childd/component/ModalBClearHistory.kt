@@ -45,11 +45,11 @@ fun ModalBClearHistory(
     ) {
       Text(stringResource(R.string.setting_d_clear), style = topperTypography.titleLarge)
 
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
 
 
       Text(stringResource(R.string.setting_d_clear_question))
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
 
       Row(
         modifier = Modifier
@@ -61,7 +61,7 @@ fun ModalBClearHistory(
           Text(stringResource(R.string.cancel))
 
         }
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(Modifier.width(20.dp))
         Button(onClick = {
           onClearHistory()
           onToggleModal()

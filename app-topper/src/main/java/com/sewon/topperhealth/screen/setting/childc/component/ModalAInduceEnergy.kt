@@ -46,11 +46,11 @@ fun ModalAInduceEnergy(
         stringResource(R.string.setting_c_sleep_inducing_energy),
         style = topperTypography.titleLarge
       )
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
       Text(
         stringResource(R.string.setting_c_sleep_inducing_energy_message)
       )
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
 
       Row(
         modifier = Modifier
@@ -62,7 +62,7 @@ fun ModalAInduceEnergy(
           Text(stringResource(R.string.cancel))
 
         }
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(Modifier.width(20.dp))
         Button(onClick = {
           onChangeInduceEnergy()
           onToggleModal()

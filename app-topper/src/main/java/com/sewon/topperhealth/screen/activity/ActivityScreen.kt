@@ -67,7 +67,7 @@ fun SleepActivity(
   modifier: Modifier = Modifier,
   viewModel: ActivityViewModel = hiltViewModel(),
   redirectDevicePage: () -> Unit,
-  redirectReportPage: () -> Unit,
+  redirectAdvisePage: () -> Unit,
 ) {
 
   val context = LocalContext.current
@@ -202,12 +202,12 @@ fun SleepActivity(
 //      }
 
       Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
-        onClick = { redirectReportPage() }) {
+        onClick = { redirectAdvisePage() }) {
         Text(stringResource(R.string.report), color = BackgroundMiddle)
       }
     }
 
-    Spacer(modifier = Modifier.height(10.dp))
+    Spacer(Modifier.height(10.dp))
 
     CircularTimePicker(uiState.startTime, uiState.endTime,
       updateStartTime = {
@@ -216,7 +216,7 @@ fun SleepActivity(
         viewModel.updateEndTime(it)
       })
 
-    Spacer(modifier = Modifier.height(10.dp))
+    Spacer(Modifier.height(10.dp))
 
     Column(
       modifier = Modifier
@@ -225,9 +225,9 @@ fun SleepActivity(
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       TimeSelection(uiState.startTime, uiState.endTime)
-      Spacer(modifier = Modifier.height(10.dp))
+      Spacer(Modifier.height(10.dp))
       SwitchAction()
-      Spacer(modifier = Modifier.height(10.dp))
+      Spacer(Modifier.height(10.dp))
       TextButton(
         onClick = {
 
@@ -275,7 +275,7 @@ fun SleepActivity(
       }) { rating, memo ->
         openQualityModal = !openQualityModal
         viewModel.saveQuality(rating, memo)
-        redirectReportPage()
+        redirectAdvisePage()
       }
     }
 

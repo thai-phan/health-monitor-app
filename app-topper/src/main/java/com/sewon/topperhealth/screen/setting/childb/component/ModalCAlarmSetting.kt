@@ -99,7 +99,7 @@ fun ModalCAlarmSetting(
                 .width(50.dp),
               color = Color.White
             )
-            Spacer(modifier = Modifier.width(10.dp))
+            Spacer(Modifier.width(10.dp))
             Image(
               painter = painterResource(id = pair.first),
               contentDescription = "Logo",
@@ -117,7 +117,7 @@ fun ModalCAlarmSetting(
           Text(stringResource(R.string.cancel))
 
         }
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(Modifier.width(20.dp))
         Button(onClick = {
           onChangeAlarmType(selectedOption)
           onToggleModal()

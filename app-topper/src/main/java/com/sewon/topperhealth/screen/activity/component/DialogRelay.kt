@@ -74,7 +74,7 @@ fun DialogRelay(onDismissRequest: () -> Unit) {
       ) {
         item {
           Text("Saved devices", style = topperTypography.titleLarge)
-          Spacer(modifier = Modifier.height(10.dp))
+          Spacer(Modifier.height(10.dp))
         }
         items(pairedDevices) {
           DialogRelayItem(
@@ -86,7 +86,7 @@ fun DialogRelay(onDismissRequest: () -> Unit) {
           )
         }
         item {
-          Spacer(modifier = Modifier.height(20.dp))
+          Spacer(Modifier.height(20.dp))
           Button(onClick = { onDismissRequest() }) {
             Text("Close")
           }

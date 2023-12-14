@@ -59,9 +59,9 @@ fun ModalAssessment(
         .padding(horizontal = 50.dp)
     ) {
       Text(stringResource(R.string.sleep_assessment), style = topperTypography.titleLarge)
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
       Text(stringResource(R.string.sleep_assessment_question))
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
       Column(
         modifier = Modifier
           .selectableGroup(),
@@ -100,7 +100,7 @@ fun ModalAssessment(
           }
         }
       }
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(Modifier.height(20.dp))
       Row(
         modifier = Modifier
           .fillMaxWidth()
@@ -111,7 +111,7 @@ fun ModalAssessment(
           Text(stringResource(R.string.cancel))
 
         }
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(Modifier.width(20.dp))
         Button(onClick = {
           onSaveAssessment(selectedValue)
         }) {

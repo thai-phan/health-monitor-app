@@ -84,7 +84,7 @@ fun DialogRelayItem(
         CircularProgressIndicator(
           modifier = Modifier.width(20.dp),
         )
-        Spacer(modifier = Modifier.width(10.dp))
+        Spacer(Modifier.width(10.dp))
         Text("Pending", color = Color.Black)
       }
 
