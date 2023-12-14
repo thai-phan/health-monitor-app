@@ -1,5 +1,6 @@
 package com.sewon.topperhealth.screen.advise
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -53,6 +54,14 @@ fun AdviseScreen(
   val openAIKey by remember { dataStore.openAIKey }.collectAsState(initial = "")
   val isDialogOpen = rememberSaveable { mutableStateOf(false) }
 
+  fun getAdvise() {
+    if (openAIKey != "") {
+      viewModel.queryOpenAI(openAIKey)
+    } else {
+      Toast.makeText(context, "No api key", Toast.LENGTH_SHORT).show()
+    }
+  }
+
   Column(
     modifier = modifier
       .fillMaxSize()
@@ -103,7 +112,7 @@ fun AdviseScreen(
           fontWeight = FontWeight(600)
         )
         Spacer(Modifier.height(20.dp))
-        Button(onClick = { viewModel.queryOpenAI(openAIKey) }) {
+        Button(onClick = ::getAdvise) {
           Text("Get Advise from ChatGPT")
         }
         Spacer(Modifier.height(20.dp))
