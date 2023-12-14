@@ -66,8 +66,8 @@ import timber.log.Timber
 fun SleepActivity(
   modifier: Modifier = Modifier,
   viewModel: ActivityViewModel = hiltViewModel(),
-  redirectDevicePage: () -> Unit,
   redirectAdvisePage: () -> Unit,
+  redirectReportPage: () -> Unit,
 ) {
 
   val context = LocalContext.current
@@ -202,7 +202,7 @@ fun SleepActivity(
 //      }
 
       Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
-        onClick = { redirectAdvisePage() }) {
+        onClick = { redirectReportPage() }) {
         Text(stringResource(R.string.report), color = BackgroundMiddle)
       }
     }
@@ -281,7 +281,9 @@ fun SleepActivity(
 
 
     if (openDevMode.value) {
-      DialogDevMode(openDevMode)
+      DialogDevMode() {
+        openDevMode.value = !openDevMode.value
+      }
     }
   }
 }

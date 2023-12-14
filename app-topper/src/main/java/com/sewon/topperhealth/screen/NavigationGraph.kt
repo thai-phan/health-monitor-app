@@ -1,7 +1,6 @@
 package com.sewon.topperhealth.screen
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.magnifier
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -116,8 +115,8 @@ fun NavigationGraph(
 //            navController.getBackStackEntry("parentNavigationRoute")
 //        }
 //        val parentViewModel = hiltViewModel(parentEntry)
-      SleepActivity(modifier, redirectDevicePage = {
-        navController.navigate(Destinations.DEVICE_ROUTE) {
+      SleepActivity(modifier, redirectAdvisePage = {
+        navController.navigate(Destinations.ADVISE_ROUTE) {
           popUpTo(navController.graph.startDestinationId) {
             saveState = false
           }
@@ -125,7 +124,7 @@ fun NavigationGraph(
           restoreState = true
         }
       }) {
-        navController.navigate(Destinations.ADVISE_ROUTE) {
+        navController.navigate(Destinations.REPORT_ROUTE) {
           //          TODO: research
           popUpTo(navController.graph.startDestinationId) {
             // Save backstack state. This will ensure restoration of
@@ -151,8 +150,21 @@ fun NavigationGraph(
     }
 
     composable(Destinations.ADVISE_ROUTE) {
-      AdviseScreen(modifier)
+      AdviseScreen(modifier) {
+        navi(navController, Destinations.REPORT_ROUTE)
+      }
     }
+  }
+}
+
+
+fun navi(navController: NavHostController, route: String) {
+  navController.navigate(route) {
+    popUpTo(navController.graph.startDestinationId) {
+      saveState = false
+    }
+    launchSingleTop = true
+    restoreState = true
   }
 }
 

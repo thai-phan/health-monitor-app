@@ -34,6 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.IOException
 import java.util.ArrayDeque
 import java.util.Date
@@ -53,7 +54,6 @@ class LowEnergyService : Service() {
 
 //  val dataStore = HealthDataStore(this)
 //  val referenceCount = dataStore.referenceCount.collect { value -> println(value) }
-
 
   private val job = SupervisorJob()
   private val scope = CoroutineScope(Dispatchers.IO + job)
@@ -77,6 +77,8 @@ class LowEnergyService : Service() {
   private var connected = false
 
   private lateinit var playerInduce: MediaPlayer
+  private lateinit var playerDisconnect: MediaPlayer
+
 
   fun toggleSoundSleepInduce(value: Boolean) {
     isPlaySound.value = value
@@ -93,6 +95,11 @@ class LowEnergyService : Service() {
     playerInduce.stop()
   }
 
+
+  fun playSoundDisconnected() {
+    playerDisconnect = MediaPlayer.create(this, R.raw.ring)
+    playerDisconnect.start()
+  }
 
   fun updateCurrentSessionRefValue(refHRV: Double, refHR: Double, refBR: Double) {
     scope.launch {
@@ -170,6 +177,7 @@ class LowEnergyService : Service() {
         if (lowEnergyClient != null) {
           mainLooper.post {
             if (lowEnergyClient != null) {
+              Timber.tag("onServiceConnectError").d("onServiceConnectError")
               lowEnergyClient!!.onClientConnectError(e)
             }
           }
@@ -223,6 +231,9 @@ class LowEnergyService : Service() {
         if (lowEnergyClient != null) {
           mainLooper.post {
             if (lowEnergyClient != null) {
+              Timber.tag("onServiceIoError").d("onServiceIoError")
+              stopSoundSleepInduce()
+              playSoundDisconnected()
               lowEnergyClient!!.onSerialIoError(e)
             }
           }

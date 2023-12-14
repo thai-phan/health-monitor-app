@@ -70,5 +70,6 @@
   <string name="wakeup">Wake-up</string>
   <string name="stop_alarm">Stop Alarm</string>
   <string name="sleep_evaluation_score">PSQI sleep evaluation score</string>
+  <string name="wakeup_button">Wake up</string>
 
 </resources>

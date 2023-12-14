@@ -4,33 +4,35 @@ import okhttp3.Interceptor
 import okhttp3.Interceptor.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Query
+import java.util.concurrent.TimeUnit
 
 interface OpenAIService {
   companion object {
     private const val BASE_URL = "https://api.openai.com/"
 
 
-    fun create(): OpenAIService {
+    fun create(key: String): OpenAIService {
       val logger = HttpLoggingInterceptor().apply { level = Level.BASIC }
 
-      val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(Interceptor { chain ->
-        val newRequest: Request = chain.request().newBuilder()
-          .addHeader("Authorization", "Bearer ")
-          .addHeader("Content-Type", "application/json")
-          .build()
-        chain.proceed(newRequest)
-      }).build()
-
+      val client: OkHttpClient = OkHttpClient.Builder()
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .addInterceptor(Interceptor { chain ->
+          val newRequest: Request = chain.request().newBuilder()
+            .addHeader(
+              "Authorization",
+              "Bearer $key"
+            )
+            .addHeader("Content-Type", "application/json")
+            .build()
+          chain.proceed(newRequest)
+        }).build()
 
       return Retrofit.Builder()
         .baseUrl(BASE_URL)

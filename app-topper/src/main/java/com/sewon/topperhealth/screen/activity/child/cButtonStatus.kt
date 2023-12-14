@@ -99,7 +99,7 @@ fun ButtonAction(
           .width(280.dp)
           .height(56.dp),
         onClick = { cancelSleep() }) {
-        Text(stringResource(R.string.wakeup), style = textStyle)
+        Text(stringResource(R.string.wakeup_button), style = textStyle)
       }
     }
     if (isAlarm) {

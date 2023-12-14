@@ -33,7 +33,7 @@ import timber.log.Timber
 
 @Composable
 fun DialogDevMode(
-  openDevMode: MutableState<Boolean>
+  onDismiss: () -> Unit
 ) {
   val context = LocalContext.current
 
@@ -44,7 +44,7 @@ fun DialogDevMode(
   val referenceCount by remember { dataStore.referenceCount }.collectAsState(initial = 0)
 
 
-  Dialog(onDismissRequest = { openDevMode.value = false }) {
+  Dialog(onDismissRequest = onDismiss) {
     Card(
       modifier = Modifier
         .fillMaxWidth()

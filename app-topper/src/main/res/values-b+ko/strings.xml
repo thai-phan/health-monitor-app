@@ -23,6 +23,7 @@
 
   <string name="setting_b_sleep_setting">수면설정</string>
   <string name="wakeup">기상</string>
+  <string name="wakeup_button">기상(측정중)</string>
   <string name="wakeup_time">기상시간</string>
   <string name="bedtime">취침시간</string>
   <string name="setting_b_alarm_setting">알람설정</string>

@@ -20,6 +20,8 @@ class HealthDataStore(private var context: Context) {
     private val IS_LOG_SHOWED = booleanPreferencesKey("is_show_log")
     private val IS_DISABLE_DIM = booleanPreferencesKey("is_disable_dim")
     private val REFERENCE_COUNT = intPreferencesKey("reference_count")
+    private val OPENAI_KEY = stringPreferencesKey("openai_key")
+
 
   }
 
@@ -63,5 +65,11 @@ class HealthDataStore(private var context: Context) {
     preferences[REFERENCE_COUNT] ?: REF_COUNT
   }
 
+  suspend fun saveOpenAIKey(value: String) {
+    context.dataStore.edit { preferences -> preferences[OPENAI_KEY] = value }
+  }
 
+  val openAIKey: Flow<String> = context.dataStore.data.map { preferences ->
+    preferences[OPENAI_KEY] ?: ""
+  }
 }

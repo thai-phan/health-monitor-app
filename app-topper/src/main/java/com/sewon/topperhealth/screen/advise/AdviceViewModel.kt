@@ -1,16 +1,16 @@
 package com.sewon.topperhealth.screen.advise
 
 import android.icu.util.Calendar
+import android.icu.util.GregorianCalendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sewon.topperhealth.api.AdviceMessage
 import com.sewon.topperhealth.api.OpenAIService
 import com.sewon.topperhealth.api.RequestBodySleepAdvice
-import com.sewon.topperhealth.api.AdviceMessage
 import com.sewon.topperhealth.data.irepository.ISessionRepository
 import com.sewon.topperhealth.data.irepository.ISettingRepository
 import com.sewon.topperhealth.data.irepository.ITopperRepository
 import com.sewon.topperhealth.data.irepository.IUserRepository
-import com.sewon.topperhealth.data.model.SleepSession
 import com.sewon.topperhealth.screen.a0common.timepicker.TimeRangePicker
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,9 +25,12 @@ import javax.inject.Inject
 
 
 data class UiState(
-  val startTime: TimeRangePicker.Time = TimeRangePicker.Time(22, 0),
-  val endTime: TimeRangePicker.Time = TimeRangePicker.Time(7, 0),
+  val startTime: Int = 0,
+  val endTime: Int = 0,
+  val psqi: Int = 18,
+  val question: String = "",
   var advise: String = "",
+  var isLoading: Boolean = false
 )
 
 
@@ -45,16 +48,30 @@ class AdviceViewModel @Inject constructor(
 
 
   private fun loadData() = viewModelScope.launch {
-    val user = settingRepository.loadUserSetting(0)
-    if (user != null) {
-      val startTime = TimeRangePicker.Time(user.sleepTime.hour, user.sleepTime.minute)
-      val endTime = TimeRangePicker.Time(user.wakeupTime.hour, user.wakeupTime.minute)
-      _uiState.update {
-        it.copy(
-          startTime = startTime,
-          endTime = endTime,
-        )
-      }
+    val session = sessionRepository.getSessionById(LowEnergyService.sessionId)
+
+    val startTime: Date = session.actualStartTime
+    val wakeUpTime: Date = session.actualEndTime
+
+    val startCalendar = GregorianCalendar.getInstance()
+    startCalendar.time = startTime
+    val startHour = startCalendar.get(Calendar.HOUR)
+
+    val wakeupCalendar = GregorianCalendar.getInstance()
+    wakeupCalendar.time = wakeUpTime
+    val endHour = wakeupCalendar.get(Calendar.HOUR)
+
+    val message =
+      "PSQI 점수가 ${session.rating}점이고, 오후 ${startHour}시에 수면 시작 오전 ${endHour}시에 일어났어. 이 수면에 대한 조언을 50자 이내로 해줘."
+
+    _uiState.update {
+      Timber.tag("update").d("update")
+      it.copy(
+        startTime = startHour,
+        endTime = endHour,
+        psqi = session.rating,
+        question = message
+      )
     }
   }
 
@@ -62,11 +79,21 @@ class AdviceViewModel @Inject constructor(
     loadData()
   }
 
-  fun queryOpenAI() = viewModelScope.launch {
+  fun queryOpenAI(key: String) = viewModelScope.launch {
+    Timber.tag("query").d("query")
+    _uiState.update {
+      it.copy(
+        isLoading = true
+      )
+    }
     try {
       val systemMessage = AdviceMessage("system", "You are a helpful assistant.")
+
       val userMessage =
-        AdviceMessage("user", "PSQI 점수가 90점이고, 오후 10시에 수면 시작 오전 7시에 일어났어. 이 수면에 대한 조언을 50자 이내로 해줘.")
+        AdviceMessage(
+          "user",
+          _uiState.value.question
+        )
       val body = RequestBodySleepAdvice(
         model = "gpt-3.5-turbo",
         messages = arrayListOf(systemMessage, userMessage),
@@ -76,20 +103,22 @@ class AdviceViewModel @Inject constructor(
         frequency_penalty = 0,
         presence_penalty = 0
       )
-
-      val response = OpenAIService.create().getSleepAdvice(body)
+      val response = OpenAIService.create(key).getSleepAdvice(body)
 
       _uiState.update {
-        it.copy(advise = response.choices[0].message.content)
+        it.copy(
+          advise = response.choices[0].message.content,
+          isLoading = false
+        )
       }
     } catch (error: Error) {
       Timber.v("catch")
-//      _uiState.update {
-//        it.copy(status3 = "Disconnect")
-//      }
+      _uiState.update {
+        it.copy(
+          advise = "Error",
+          isLoading = false
+        )
+      }
     }
-    println("asdas")
   }
-
-
 }
