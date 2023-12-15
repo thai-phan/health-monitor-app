@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -95,49 +96,51 @@ fun AdviseScreen(
       shape = topperShapes.small,
       colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
     ) {
-      Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceAround,
-        modifier = Modifier
-          .shadow(
-            elevation = 24.dp,
-            spotColor = Color(0x40000000),
-            ambientColor = Color(0x40000000)
-          )
-          .padding(20.dp),
-      ) {
-        Text(
-          uiState.question,
-          fontSize = 20.sp,
-          fontWeight = FontWeight(600)
-        )
-        Spacer(Modifier.height(20.dp))
-        Button(onClick = ::getAdvise) {
-          Text("Get Advise from ChatGPT")
-        }
-        Spacer(Modifier.height(20.dp))
-
-        if (!uiState.isLoading) {
-          Text(
-            uiState.advise,
-            modifier = Modifier
-              .weight(1f)
-              .verticalScroll(rememberScrollState()),
-            textAlign = TextAlign.Justify,
-          )
-        } else {
-          CircularProgressIndicator(
-            modifier = Modifier
-              .width(64.dp)
-              .weight(1f),
-          )
-        }
-
-        Spacer(Modifier.height(20.dp))
-        Button(
-          onClick = { closeScreen() },
+      SelectionContainer {
+        Column(
+          horizontalAlignment = Alignment.CenterHorizontally,
+          verticalArrangement = Arrangement.SpaceAround,
+          modifier = Modifier
+            .shadow(
+              elevation = 24.dp,
+              spotColor = Color(0x40000000),
+              ambientColor = Color(0x40000000)
+            )
+            .padding(20.dp),
         ) {
-          Text("Close")
+          Text(
+            uiState.question,
+            fontSize = 20.sp,
+            fontWeight = FontWeight(600)
+          )
+          Spacer(Modifier.height(20.dp))
+          Button(onClick = ::getAdvise) {
+            Text("Get Advise from ChatGPT")
+          }
+          Spacer(Modifier.height(20.dp))
+
+          if (!uiState.isLoading) {
+            Text(
+              uiState.advise,
+              modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState()),
+              textAlign = TextAlign.Justify,
+            )
+          } else {
+            CircularProgressIndicator(
+              modifier = Modifier
+                .width(64.dp)
+                .weight(1f),
+            )
+          }
+
+          Spacer(Modifier.height(20.dp))
+          Button(
+            onClick = { closeScreen() },
+          ) {
+            Text("Close")
+          }
         }
       }
     }
