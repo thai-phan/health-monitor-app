@@ -83,7 +83,6 @@ fun SleepActivity(
 
   val deviceAddress by LowEnergyClient.deviceAddress.observeAsState()
   val isAlarm by LowEnergyClient.isAlarm.observeAsState()
-
   val isStarted by LowEnergyClient.isStarted.observeAsState()
   val lowEnergyConnectState = LowEnergyClient.connected.observeAsState()
 

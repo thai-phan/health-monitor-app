@@ -13,18 +13,13 @@ import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.data.HealthDataStore
-import com.sewon.topperhealth.service.algorithm.sleep.TopperData
-import com.sewon.topperhealth.data.model.toLocal
 import com.sewon.topperhealth.data.irepository.ISessionRepository
 import com.sewon.topperhealth.data.irepository.ITopperRepository
+import com.sewon.topperhealth.data.model.toLocal
+import com.sewon.topperhealth.service.algorithm.sleep.TopperData
 import com.sewon.topperhealth.service.bluetooth.util.Constants
 import com.sewon.topperhealth.service.bluetooth.util.QueueItem
 import com.sewon.topperhealth.service.bluetooth.util.QueueType
@@ -32,7 +27,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -82,6 +76,13 @@ class LowEnergyService : Service() {
 
   fun toggleSoundSleepInduce(value: Boolean) {
     isPlaySound.value = value
+    if (this::playerInduce.isInitialized && LowEnergyClient.isStarted.value!!) {
+      if (value) {
+        playerInduce.start()
+      } else {
+        playerInduce.pause()
+      }
+    }
   }
 
   fun playSoundSleepInduce() {
