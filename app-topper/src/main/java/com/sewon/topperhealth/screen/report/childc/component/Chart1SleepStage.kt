@@ -20,12 +20,12 @@ import com.patrykandpatrick.vico.compose.legend.verticalLegend
 import com.patrykandpatrick.vico.compose.style.ProvideChartStyle
 import com.patrykandpatrick.vico.compose.style.currentChartStyle
 import com.patrykandpatrick.vico.core.axis.AxisItemPlacer
-import com.patrykandpatrick.vico.core.axis.formatter.DefaultAxisValueFormatter
+import com.patrykandpatrick.vico.core.axis.formatter.DecimalFormatAxisValueFormatter
 import com.patrykandpatrick.vico.core.chart.DefaultPointConnector
 import com.patrykandpatrick.vico.core.chart.copy
+import com.patrykandpatrick.vico.core.chart.values.AxisValuesOverrider
 import com.patrykandpatrick.vico.core.component.shape.Shapes
 import com.patrykandpatrick.vico.core.entry.entryModelOf
-import com.patrykandpatrick.vico.core.legend.Legend
 import com.sewon.topperhealth.screen.report.component.rememberChartStyle
 
 @Composable
@@ -35,20 +35,22 @@ fun Chart1SleepStage(data: List<Float>) {
     val dataModel = entryModelOf(*data.map { it }.toTypedArray())
     val defaultLines = currentChartStyle.lineChart.lines
     val pointConnector = DefaultPointConnector(cubicStrength = 0f)
-    val lineChart = lineChart(
+    val stageLineChart = lineChart(
       remember(defaultLines) {
         defaultLines.map { defaultLine -> defaultLine.copy(pointConnector = pointConnector) }
       },
+      axisValuesOverrider = AxisValuesOverrider.fixed(
+        maxY = 3f
+      ),
     )
     Chart(
       modifier = Modifier.height(250.dp),
       legend = rememberLegend(),
-      chart = lineChart,
+      chart = stageLineChart,
       model = dataModel,
-
       startAxis = rememberStartAxis(
-        valueFormatter = DefaultAxisValueFormatter(),
-        itemPlacer = AxisItemPlacer.Vertical.default(3)
+        valueFormatter = DecimalFormatAxisValueFormatter(),
+        itemPlacer = AxisItemPlacer.Vertical.default(4)
       ),
       bottomAxis = rememberBottomAxis(),
     )
@@ -70,26 +72,23 @@ val mapRem = mapOf(
 )
 
 @Composable
-private fun rememberLegend(): Legend {
-  val textComponent = textComponent(
-    color = currentChartStyle.axis.axisLabelColor,
-    textSize = legendItemLabelTextSize,
-    typeface = Typeface.MONOSPACE,
-  )
-  return verticalLegend(
-    items = mapRem.map {
-      legendItem(
-        icon = shapeComponent(Shapes.pillShape, currentChartStyle.axis.axisLabelColor),
-        label = textComponent,
-        labelText = "${it.value}: ${it.key}",
-      )
-    },
-    iconSize = legendItemIconSize,
-    iconPadding = legendItemIconPaddingValue,
-    spacing = legendItemSpacing,
-    padding = legendPadding,
-  )
-}
+private fun rememberLegend() = verticalLegend(
+  items = mapRem.map {
+    legendItem(
+      icon = shapeComponent(Shapes.pillShape, currentChartStyle.axis.axisLabelColor),
+      label = textComponent(
+        color = currentChartStyle.axis.axisLabelColor,
+        textSize = legendItemLabelTextSize,
+        typeface = Typeface.MONOSPACE,
+      ),
+      labelText = "${it.value}: ${it.key}",
+    )
+  },
+  iconSize = legendItemIconSize,
+  iconPadding = legendItemIconPaddingValue,
+  spacing = legendItemSpacing,
+  padding = legendPadding,
+)
 
 
 
