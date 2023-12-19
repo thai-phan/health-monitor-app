@@ -39,6 +39,9 @@ class MainActivity : ComponentActivity() {
     var classicClient = ClassicClient()
   }
 
+  private lateinit var sensorManager: SensorManager
+  private var lightSensor: Sensor? = null
+  private var proximitySensor: Sensor? = null
 //  val dataStore = HealthDataStore(applicationContext)
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,27 +50,16 @@ class MainActivity : ComponentActivity() {
     actionBar?.hide()
     WindowCompat.setDecorFitsSystemWindows(window, false)
 
+    sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+    lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+    proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+
     setContent {
       RootCompose(setLocale = {
         reload()
       }) {
         finish()
       }
-    }
-
-    window?.attributes = window.attributes.apply {
-      screenBrightness = 0.5f
-    }
-
-    val mySensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
-
-    val lightSensor = mySensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
-    if (lightSensor != null) {
-      mySensorManager.registerListener(
-        lightSensorListener,
-        lightSensor,
-        SensorManager.SENSOR_DELAY_NORMAL
-      )
     }
   }
 
@@ -77,6 +69,21 @@ class MainActivity : ComponentActivity() {
 
   override fun onResume() {
     super.onResume()
+
+    if (lightSensor != null) {
+      sensorManager.registerListener(
+        lightSensorListener,
+        lightSensor,
+        SensorManager.SENSOR_DELAY_NORMAL
+      )
+    }
+    if (proximitySensor != null) {
+      sensorManager.registerListener(
+        proximitySensorListener,
+        proximitySensor,
+        SensorManager.SENSOR_DELAY_NORMAL
+      )
+    }
 
     setLocale("ko")
   }
@@ -115,8 +122,6 @@ class MainActivity : ComponentActivity() {
   override fun onPause() {
 //    mSensorManager.unregisterListener(sensorListener)
     super.onPause()
-
-
   }
 
   override fun onStop() {
@@ -134,10 +139,6 @@ class MainActivity : ComponentActivity() {
   }
 
 
-  /**
-   * Interface for monitoring the state of an application service. See Service and Context.bindService() for more information.
-   * Like many callbacks from the system, the methods on this class are called from the main thread of your process.
-   **/
   private val lowEnergyServiceConnection: ServiceConnection = object : ServiceConnection {
     override fun onServiceDisconnected(name: ComponentName) {}
 
@@ -164,13 +165,33 @@ class MainActivity : ComponentActivity() {
     override fun onSensorChanged(event: SensorEvent) {
       if (event.sensor.type == Sensor.TYPE_LIGHT) {
         if (event.values[0].toInt() < 100) {
-          val params = window.attributes
-          params.screenBrightness = 0f
-          window.attributes = params
+          window.attributes = window.attributes.apply {
+            screenBrightness = 0.0f
+          }
         } else {
-          val params = window.attributes
-          params.screenBrightness = -1.0f
-          window.attributes = params
+          window.attributes = window.attributes.apply {
+            screenBrightness = -1.0f
+          }
+        }
+      }
+    }
+  }
+
+  private val proximitySensorListener: SensorEventListener = object : SensorEventListener {
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+      // TODO Auto-generated method stub
+    }
+
+    override fun onSensorChanged(event: SensorEvent) {
+      if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
+        if (event.values[0].toInt() < 1) {
+          window.attributes = window.attributes.apply {
+            screenBrightness = 0.0f
+          }
+        } else {
+          window.attributes = window.attributes.apply {
+            screenBrightness = -1.0f
+          }
         }
       }
     }
