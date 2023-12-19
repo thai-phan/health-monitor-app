@@ -16,12 +16,16 @@ import android.os.IBinder
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import com.sewon.topperhealth.screen.RootCompose
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
 import com.sewon.topperhealth.service.bluetooth.ClassicService
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 
@@ -42,7 +46,8 @@ class MainActivity : ComponentActivity() {
   private lateinit var sensorManager: SensorManager
   private var lightSensor: Sensor? = null
   private var proximitySensor: Sensor? = null
-//  val dataStore = HealthDataStore(applicationContext)
+
+  private lateinit var settingManager: SettingManager
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -88,9 +93,36 @@ class MainActivity : ComponentActivity() {
     setLocale("ko")
   }
 
-//  override fun attachBaseContext(base: Context) {
-//    super.attachBaseContext(updateResources(base))
-//  }
+  private var selectedLang = ""
+  private var selectedLangCode = ""
+  override fun attachBaseContext(newBase: Context?) {
+    newBase?.let { context ->
+      settingManager = SettingManager(context)
+      val appLanguage = settingManager.currentLanguage
+      selectedLang = appLanguage.selectedLang
+      selectedLangCode = appLanguage.selectedLangCode
+      LanguageHelper.changeLanguage(context, selectedLangCode)
+    }
+
+    super.attachBaseContext(newBase)
+  }
+
+  private fun restartActivity() {
+    startActivity(Intent(this, MainActivity::class.java))
+    overridePendingTransition(0, 0)
+    finish()
+    overridePendingTransition(0, 0)
+  }
+
+  private fun observeLanguageChanges() {
+    lifecycleScope.launch {
+      settingManager.observeLanguageChange().collect {
+        if (selectedLangCode != it.selectedLangCode) {
+          restartActivity()
+        }
+      }
+    }
+  }
 
   private fun updateResources(context: Context): Context {
     val config = Configuration(context.resources.configuration)
