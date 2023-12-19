@@ -27,7 +27,7 @@ class RealtimeHandler {
       processData(topperData)
     }
 
-    fun resetData() {
+    fun resetData(refCount: Int) {
       Timber.tag(tag).d("reset data")
       sumHRV = 0.0
       sumHR = 0.0
@@ -39,6 +39,7 @@ class RealtimeHandler {
       countInsomniaValue = 0
       countDeepSleep = 0
       isRefCalculated = false
+      referenceCount.value = refCount
     }
 
     private var sumHRV = 0.0

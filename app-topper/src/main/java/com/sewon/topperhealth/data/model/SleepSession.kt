@@ -4,32 +4,27 @@ import com.sewon.topperhealth.data.source.local.entity.LocalSleepSession
 import java.util.Date
 
 data class SleepSession(
-  val refHRV: Double,
-  val refHR: Double,
-  val refBR: Double,
-  val isGeneratedReport: Boolean,
-
-  val meanHR: Double,
-  val meanBR: Double,
-  val SDRP: Double,
-  val RMSSD: Double,
-  val RPITriangular: Double,
-  val lowFreq: Double,
-  val highFreq: Double,
-  val lfHfRatio: Double,
-
-  val rating: Int,
-  val wakeUpCount: Int,
-
+  val refHRV: Double = 0.0,
+  val refHR: Double = 0.0,
+  val refBR: Double = 0.0,
+  val isGeneratedReport: Boolean = false,
+  val meanHR: Double = 0.0,
+  val meanBR: Double = 0.0,
+  val SDRP: Double = 0.0,
+  val RMSSD: Double = 0.0,
+  val RPITriangular: Double = 0.0,
+  val lowFreq: Double = 0.0,
+  val highFreq: Double = 0.0,
+  val lfHfRatio: Double = 0.0,
+  val rating: Int = 0,
+  val wakeUpCount: Int = 0,
   val pickerStartTime: Date,
   val pickerEndTime: Date,
-  val actualStartTime: Date,
-  val actualEndTime: Date,
-  val fellAsleepTime: Date,
-
-  val assessment: String,
-  val memo: String,
-
+  val actualStartTime: Date = Date(),
+  val actualEndTime: Date = Date(),
+  val fellAsleepTime: Date = Date(),
+  val assessment: String = "",
+  val memo: String = "",
   val sessionId: Int = -1,
 )
 

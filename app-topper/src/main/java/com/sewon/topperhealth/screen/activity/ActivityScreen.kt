@@ -110,30 +110,10 @@ fun SleepActivity(
         screenBrightness = 0.2f
       }
     }
+    val startTimeCalendar = viewModel.getCalendarFromTimePicker(uiState.startTime)
+    val endTimeCalendar = viewModel.getCalendarFromTimePicker(uiState.endTime)
+    viewModel.startSession(referenceCount, startTimeCalendar, endTimeCalendar)
 
-    RealtimeHandler.resetData()
-    Timber.tag("SleepActivity").d(referenceCount.toString())
-    RealtimeHandler.referenceCount.value = referenceCount
-
-    MainActivity.lowEnergyService.playSoundSleepInduce()
-
-    LowEnergyClient.isStarted.value = true
-
-    val startTimeCalendar = GregorianCalendar.getInstance()
-    startTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, uiState.startTime.hour)
-    startTimeCalendar.set(GregorianCalendar.MINUTE, uiState.startTime.minute)
-    startTimeCalendar.set(GregorianCalendar.SECOND, 0)
-
-    val endTimeCalendar = GregorianCalendar.getInstance()
-    endTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, uiState.endTime.hour)
-    endTimeCalendar.set(GregorianCalendar.MINUTE, uiState.endTime.minute)
-    endTimeCalendar.set(GregorianCalendar.SECOND, 0)
-
-    if (endTimeCalendar < GregorianCalendar.getInstance()) {
-      endTimeCalendar.add(GregorianCalendar.DAY_OF_MONTH, 1)
-    }
-
-    viewModel.createSession(startTimeCalendar, endTimeCalendar)
     composeConnectToSensor()
 
     val alarmIntent = Intent(context, AlarmReceiver::class.java)
@@ -154,14 +134,7 @@ fun SleepActivity(
       }
     }
 
-    LowEnergyClient.isStarted.value = false
-    LowEnergyClient.connected.value = Connected.False
-
-    MainActivity.alarmManager.cancel(MainActivity.alarmPendingIntent)
-    MainActivity.lowEnergyService.stopSoundSleepInduce()
-    MainActivity.lowEnergyService.disconnectBluetoothGatt()
-
-    viewModel.updateCurrentSessionEndTime()
+    viewModel.endSession()
   }
 
   fun stopAlarm() {

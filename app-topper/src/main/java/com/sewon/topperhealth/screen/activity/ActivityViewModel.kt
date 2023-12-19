@@ -1,18 +1,20 @@
 package com.sewon.topperhealth.screen.activity
 
 import android.icu.util.Calendar
+import android.icu.util.GregorianCalendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sewon.topperhealth.api.OpenAIService
-import com.sewon.topperhealth.api.RequestBodySleepAdvice
-import com.sewon.topperhealth.api.AdviceMessage
+import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.data.irepository.ISessionRepository
 import com.sewon.topperhealth.data.irepository.ISettingRepository
 import com.sewon.topperhealth.data.irepository.ITopperRepository
 import com.sewon.topperhealth.data.irepository.IUserRepository
 import com.sewon.topperhealth.data.model.SleepSession
 import com.sewon.topperhealth.screen.a0common.timepicker.TimeRangePicker
+import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeHandler
+import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
+import com.sewon.topperhealth.service.bluetooth.util.Connected
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -91,27 +93,48 @@ class ActivityViewModel @Inject constructor(
     loadData()
   }
 
+  fun getCalendarFromTimePicker(timePicker: TimeRangePicker.Time): Calendar {
+    val calendar = GregorianCalendar.getInstance()
+    calendar.set(GregorianCalendar.HOUR_OF_DAY, timePicker.hour)
+    calendar.set(GregorianCalendar.MINUTE, timePicker.minute)
+    calendar.set(GregorianCalendar.SECOND, 0)
+    return calendar
+  }
+
+  fun startSession(ref: Int, startTimeCalendar: Calendar, endTimeCalendar: Calendar) {
+    MainActivity.lowEnergyService.playSoundSleepInduce()
+    RealtimeHandler.resetData(ref)
+    LowEnergyClient.isStarted.value = true
+    if (endTimeCalendar < GregorianCalendar.getInstance()) {
+      endTimeCalendar.add(GregorianCalendar.DAY_OF_MONTH, 1)
+    }
+    createSession(startTimeCalendar, endTimeCalendar)
+  }
 
   fun createSession(pickerStartTime: Calendar, pickerEndTime: Calendar) = viewModelScope.launch {
-    val currentTimeMillis = Date()
 
     val sleepSession = SleepSession(
-      0.0, 0.0, 0.0, false,
-      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-      0, 0,
-      pickerStartTime.time,
-      pickerEndTime.time,
-      currentTimeMillis,
-      currentTimeMillis,
-      currentTimeMillis,
-      "", ""
+      pickerStartTime = pickerStartTime.time,
+      pickerEndTime = pickerEndTime.time,
     )
+
     val sessionId: Int = sessionRepository.createNewSession(sleepSession).toInt()
     _dataState.update {
       it.copy(sessionId = sessionId)
     }
     LowEnergyService.sessionId = sessionId
     LowEnergyService.pickerEndTime = pickerEndTime.time
+  }
+
+  fun endSession() = viewModelScope.launch {
+    LowEnergyClient.isStarted.value = false
+    LowEnergyClient.connected.value = Connected.False
+
+    MainActivity.alarmManager.cancel(MainActivity.alarmPendingIntent)
+    MainActivity.lowEnergyService.stopSoundSleepInduce()
+    MainActivity.lowEnergyService.disconnectBluetoothGatt()
+
+    updateCurrentSessionEndTime()
   }
 
   fun updateCurrentSessionEndTime() = viewModelScope.launch {
