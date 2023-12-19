@@ -11,8 +11,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
-//import kotlinx.coroutines.flow.map
-
 
 private val Context.datastore: DataStore<Preferences> by preferencesDataStore(
   name = "settings_preferences"
