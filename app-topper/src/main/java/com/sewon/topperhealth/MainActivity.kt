@@ -6,7 +6,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.content.res.Configuration
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -17,16 +16,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import com.sewon.topperhealth.data.DataStoreManager
 import com.sewon.topperhealth.screen.RootCompose
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
 import com.sewon.topperhealth.service.bluetooth.ClassicService
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
+import com.sewon.topperhealth.util.LanguageHelper
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -47,7 +45,7 @@ class MainActivity : ComponentActivity() {
   private var lightSensor: Sensor? = null
   private var proximitySensor: Sensor? = null
 
-  private lateinit var settingManager: SettingManager
+  private lateinit var dataStore: DataStoreManager
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -66,6 +64,8 @@ class MainActivity : ComponentActivity() {
         finish()
       }
     }
+
+    observeLanguageChanges()
   }
 
   private fun reload() {
@@ -89,54 +89,38 @@ class MainActivity : ComponentActivity() {
         SensorManager.SENSOR_DELAY_NORMAL
       )
     }
-
-    setLocale("ko")
   }
 
   private var selectedLang = ""
   private var selectedLangCode = ""
+
   override fun attachBaseContext(newBase: Context?) {
+    var base = newBase
     newBase?.let { context ->
-      settingManager = SettingManager(context)
-      val appLanguage = settingManager.currentLanguage
+      dataStore = DataStoreManager(context)
+      val appLanguage = dataStore.currentLanguage
       selectedLang = appLanguage.selectedLang
       selectedLangCode = appLanguage.selectedLangCode
-      LanguageHelper.changeLanguage(context, selectedLangCode)
+      base = LanguageHelper.changeLanguage(context, selectedLangCode)
     }
 
-    super.attachBaseContext(newBase)
+    super.attachBaseContext(base)
   }
 
   private fun restartActivity() {
     startActivity(Intent(this, MainActivity::class.java))
-    overridePendingTransition(0, 0)
     finish()
-    overridePendingTransition(0, 0)
   }
 
   private fun observeLanguageChanges() {
     lifecycleScope.launch {
-      settingManager.observeLanguageChange().collect {
+      dataStore.observeLanguageChange().collect {
         if (selectedLangCode != it.selectedLangCode) {
           restartActivity()
         }
       }
     }
   }
-
-  private fun updateResources(context: Context): Context {
-    val config = Configuration(context.resources.configuration)
-    config.setLocale(Locale("en"))
-    return context.createConfigurationContext(config)
-  }
-
-  private fun setLocale(localeStr: String) {
-    Locale.setDefault(Locale(localeStr))
-    val config = resources.configuration
-    config.setLocale(Locale(localeStr))
-    resources.updateConfiguration(config, resources.displayMetrics)
-  }
-
 
   override fun onStart() {
     super.onStart()
@@ -152,7 +136,6 @@ class MainActivity : ComponentActivity() {
   }
 
   override fun onPause() {
-//    mSensorManager.unregisterListener(sensorListener)
     super.onPause()
   }
 
@@ -160,14 +143,6 @@ class MainActivity : ComponentActivity() {
     super.onStop()
     unbindService(lowEnergyServiceConnection)
     unbindService(classicServiceConnection)
-  }
-
-  override fun onRestart() {
-    super.onRestart()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
   }
 
 

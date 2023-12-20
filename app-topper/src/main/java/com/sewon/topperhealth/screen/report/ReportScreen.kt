@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.data.HealthDataStore
+import com.sewon.topperhealth.data.DataStoreManager
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.report.childa.ReportLog
 import com.sewon.topperhealth.screen.report.childa.SessionSelection
@@ -36,7 +36,7 @@ fun ReportScreen(
   viewModel: ReportViewModel = hiltViewModel(),
 ) {
   val context = LocalContext.current
-  val dataStore = HealthDataStore(context)
+  val dataStore = DataStoreManager(context)
 
   val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
 

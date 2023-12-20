@@ -24,7 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.sewon.topperhealth.data.HealthDataStore
+import com.sewon.topperhealth.data.DataStoreManager
 
 @Composable
 fun CircularChart(
@@ -37,7 +37,7 @@ fun CircularChart(
   gapBetweenCircles: Dp = 20.dp
 ) {
   val context = LocalContext.current
-  val dataStore = HealthDataStore(context)
+  val dataStore = DataStoreManager(context)
 
   val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
 

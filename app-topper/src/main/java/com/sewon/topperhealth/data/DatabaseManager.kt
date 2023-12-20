@@ -30,7 +30,7 @@ import com.sewon.topperhealth.data.source.local.converter.TimeConverter
   TimeConverter::class
 )
 
-abstract class HealthDatabase : RoomDatabase() {
+abstract class DatabaseManager : RoomDatabase() {
   abstract fun userDao(): LocalUserDao
   abstract fun settingDao(): LocalSettingDao
   abstract fun sensorDao(): LocalTopperDao

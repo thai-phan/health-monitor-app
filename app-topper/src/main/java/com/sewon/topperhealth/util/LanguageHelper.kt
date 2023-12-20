@@ -1,4 +1,4 @@
-package com.sewon.topperhealth
+package com.sewon.topperhealth.util
 
 import android.content.Context
 import android.content.ContextWrapper
@@ -9,14 +9,14 @@ class LanguageHelper {
     fun changeLanguage(context: Context, languageCode: String): ContextWrapper {
       var thisContext = context
       val resource = thisContext.resources
-      val configuaration = resource.configuration
-      val systemLocale = configuaration.locales[0]
+      val configuration = resource.configuration
+      val systemLocale = configuration.locales[0]
 
       if (languageCode != "" && languageCode != systemLocale.language) {
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
-        configuaration.setLocale(locale)
-        thisContext = thisContext.createConfigurationContext(configuaration)
+        configuration.setLocale(locale)
+        thisContext = thisContext.createConfigurationContext(configuration)
       }
       return ContextWrapper(thisContext)
     }

@@ -10,27 +10,44 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.REF_COUNT
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
-class HealthDataStore(private var context: Context) {
+class DataStoreManager(private var context: Context) {
   companion object {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("settings")
-    private val TOPPER_LANGUAGE = stringPreferencesKey("topper_language")
     private val IS_TERM_ACCEPTED = booleanPreferencesKey("is_term_accepted")
     private val IS_LOG_SHOWED = booleanPreferencesKey("is_show_log")
     private val IS_DISABLE_DIM = booleanPreferencesKey("is_disable_dim")
     private val REFERENCE_COUNT = intPreferencesKey("reference_count")
     private val OPENAI_KEY = stringPreferencesKey("openai_key")
-
-
+    private val SELECTED_LANGUAGE = stringPreferencesKey("selected_language")
+    private val SELECTED_LANGUAGE_CODE = stringPreferencesKey("selected_language_code")
   }
 
-  suspend fun changeLanguage(language: String) {
-    context.dataStore.edit { preferences -> preferences[TOPPER_LANGUAGE] = language }
+  suspend fun saveSelectedLanguage(appLanguage: AppLanguage) {
+    context.dataStore.edit { mutablePreferences ->
+      mutablePreferences[SELECTED_LANGUAGE] = appLanguage.selectedLang
+      mutablePreferences[SELECTED_LANGUAGE_CODE] = appLanguage.selectedLangCode
+    }
   }
 
-  val getLanguage: Flow<String> = context.dataStore.data.map { preferences ->
-    preferences[TOPPER_LANGUAGE] ?: "ko"
+  private val languageFlow: Flow<AppLanguage> =
+    context.dataStore.data.map { preferences ->
+      AppLanguage(
+        preferences[SELECTED_LANGUAGE] ?: "한국어",
+        preferences[SELECTED_LANGUAGE_CODE] ?: "ko"
+      )
+    }
+
+  val currentLanguage: AppLanguage
+    get() = runBlocking { languageFlow.first() }
+
+  fun observeLanguageChange(): Flow<AppLanguage> {
+    Timber.tag("SettingManager").d("observeLanguageChange")
+    return languageFlow
   }
 
   suspend fun saveAcceptTerm(value: Boolean) {
@@ -73,3 +90,5 @@ class HealthDataStore(private var context: Context) {
     preferences[OPENAI_KEY] ?: ""
   }
 }
+
+data class AppLanguage(val selectedLang: String, val selectedLangCode: String)

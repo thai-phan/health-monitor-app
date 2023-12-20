@@ -31,6 +31,7 @@
 
   <string name="setting_d_general_setting">General Settings</string>
   <string name="setting_d_access">Access to cell phone cache</string>
+  <string name="setting_d_language">Setting language</string>
   <string name="setting_d_clear">Clear all sleep history</string>
   <string name="setting_d_access_cellphone_cache">Set cell phone cache access rights</string>
   <string name="setting_d_cache_question">You cannot use the service if you do not have access to the mobile phone cache. Do you want to allow access?</string>

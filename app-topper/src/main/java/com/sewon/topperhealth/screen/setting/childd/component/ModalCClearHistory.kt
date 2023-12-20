@@ -27,7 +27,7 @@ import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalBClearHistory(
+fun ModalCClearHistory(
   onToggleModal: () -> Unit,
   onClearHistory: () -> Unit
 ) {

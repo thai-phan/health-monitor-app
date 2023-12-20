@@ -13,7 +13,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -22,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.sewon.topperhealth.data.HealthDataStore
+import com.sewon.topperhealth.data.DataStoreManager
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.a0common.theme.BackgroundMiddle
 import kotlinx.coroutines.CoroutineScope
@@ -37,7 +36,7 @@ fun DialogDevMode(
 ) {
   val context = LocalContext.current
 
-  val dataStore = HealthDataStore(context)
+  val dataStore = DataStoreManager(context)
 
   val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
   val isDimDisabled by remember { dataStore.isDimDisabled }.collectAsState(initial = false)

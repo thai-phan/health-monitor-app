@@ -13,7 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sewon.topperhealth.data.HealthDataStore
+import com.sewon.topperhealth.data.DataStoreManager
 import com.sewon.topperhealth.screen.a0common.Destinations
 import com.sewon.topperhealth.screen.a0common.MainTabs
 import com.sewon.topperhealth.screen.activity.SleepActivity
@@ -39,7 +39,7 @@ fun NavigationGraph(
 
   val context = LocalContext.current
 
-  val dataStore = HealthDataStore(context)
+  val dataStore = DataStoreManager(context)
 
   val isAccepted = remember {
     dataStore.isTermAccepted

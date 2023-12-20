@@ -288,7 +288,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     }
   }
 
-  //  For Android < 12
+  //  For Android <= 12
   @Deprecated("Deprecated in Java")
   @Suppress("DEPRECATION")
   override fun onCharacteristicChanged(
@@ -298,7 +298,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     if (canceled) return
     delegate?.onCharacteristicChanged(gatt, characteristic)
     if (canceled) return
-    if (characteristic === readCharacteristic) { // NOPMD - test object identity
+    if (characteristic === readCharacteristic) {
       val data = readCharacteristic!!.value
       onGattRead(data)
 //      Timber.tag(tag).d("read, len=%s", data.size)
@@ -314,7 +314,7 @@ class LowEnergyGatt(val context: Context, var device: BluetoothDevice) : Bluetoo
     if (canceled) return
     delegate!!.onCharacteristicChanged(gatt, characteristic)
     if (canceled) return
-    if (characteristic === readCharacteristic) { // NOPMD - test object identity
+    if (characteristic === readCharacteristic) {
       onGattRead(value)
 //      Timber.tag(tag).d("read, len=%s", value.size)
     }

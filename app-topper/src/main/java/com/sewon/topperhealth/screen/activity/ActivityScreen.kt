@@ -6,7 +6,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
 import android.content.Intent
-import android.icu.util.GregorianCalendar
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,7 +41,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.data.HealthDataStore
+import com.sewon.topperhealth.data.DataStoreManager
 import com.sewon.topperhealth.screen.a0common.theme.BackgroundMiddle
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import com.sewon.topperhealth.screen.activity.component.CircularTimePicker
@@ -54,7 +53,6 @@ import com.sewon.topperhealth.screen.activity.child.SwitchAction
 import com.sewon.topperhealth.screen.activity.child.TimeSelection
 import com.sewon.topperhealth.service.alarm.AlarmReceiver
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants
-import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeHandler
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyGatt
 import com.sewon.topperhealth.service.bluetooth.util.Connected
@@ -73,7 +71,7 @@ fun SleepActivity(
   val context = LocalContext.current
   val activity = LocalView.current.context as? Activity
 
-  val dataStore = HealthDataStore(context)
+  val dataStore = DataStoreManager(context)
   val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
   val isDimDisabled by remember { dataStore.isDimDisabled }.collectAsState(initial = false)
   val referenceCount by remember { dataStore.referenceCount }.collectAsState(initial = AlgorithmConstants.REF_COUNT)

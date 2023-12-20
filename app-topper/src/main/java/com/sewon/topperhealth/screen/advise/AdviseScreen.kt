@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sewon.topperhealth.data.HealthDataStore
+import com.sewon.topperhealth.data.DataStoreManager
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
 import kotlinx.coroutines.CoroutineScope
@@ -51,7 +51,7 @@ fun AdviseScreen(
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   val context = LocalContext.current
-  val dataStore = HealthDataStore(context)
+  val dataStore = DataStoreManager(context)
   val openAIKey by remember { dataStore.openAIKey }.collectAsState(initial = "")
   val isDialogOpen = rememberSaveable { mutableStateOf(false) }
 

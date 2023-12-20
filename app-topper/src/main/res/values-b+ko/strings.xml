@@ -1,33 +1,25 @@
 <resources>
   <string name="app_name">인텔리네스트</string>
-
   <string name="activity">수면시작</string>
   <string name="report">리포트</string>
   <string name="setting">내정보</string>
-
-
   <string name="setting_title">내 설정</string>
-
-
   <string name="user_not_found">사용자를찾을수없습니다</string>
   <string name="loading_user_error">사용자를 로드하는 중 오류가 발생했습니다.</string>
-
   <string name="setting_not_found">설정을 찾을 수 없습니다</string>
-
   <string name="report_sleep_report">수면 리포트</string>
 
+  <string name="wakeup">기상</string>
+  <string name="wakeup_button">기상(측정중)</string>
+  <string name="wakeup_time">기상시간</string>
+  <string name="bedtime">취침시간</string>
 
   <string name="setting_a_profile">프로필</string>
   <string name="setting_a_gender">성별</string>
   <string name="setting_a_age">연령</string>
 
   <string name="setting_b_sleep_setting">수면설정</string>
-  <string name="wakeup">기상</string>
-  <string name="wakeup_button">기상(측정중)</string>
-  <string name="wakeup_time">기상시간</string>
-  <string name="bedtime">취침시간</string>
   <string name="setting_b_alarm_setting">알람설정</string>
-
 
   <string name="setting_c_sleep_inducing_solution">수면유도 솔루션</string>
   <string name="setting_c_sleep_inducing_energy">수면유도 에너지</string>
@@ -35,19 +27,21 @@
   <string name="setting_c_sleep_score_thresholds">수면점수 임계값 설정</string>
 
   <string name="setting_d_access_cellphone_cache">핸드폰 캐시 접근 권한 설정</string>
-
   <string name="setting_d_general_setting">일반설정</string>
   <string name="setting_d_access">핸드폰 캐시 접근 권한</string>
+  <string name="setting_d_cache_question">핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?</string>
   <string name="setting_d_clear">수면 기록 모두 지우기</string>
+  <string name="setting_d_clear_question">실행으로 모든 수면 기록과 분석결과가 삭제되어 과거 레포트를 확인하실 수 없습니다. 실행 하시겠습니까?</string>
+  <string name="setting_d_contact_information">연락처</string>
   <string name="setting_d_emergency">위급 SOS 수신자 설정</string>
+  <string name="setting_d_language">언어 설정</string>
+  <string name="setting_d_recipient_setting">알람 수신자 설정</string>
+  <string name="setting_d_relation">관계</string>
+
   <string name="setting_e_product_registration">제품등록 / 연결</string>
   <string name="setting_e_product_number">제품번호등록 (S/N)</string>
   <string name="setting_e_bluetooth">블루투스연결</string>
-  <string name="setting_d_cache_question">핸드폰 캐시 접근 권한 비설정시 서비스를 이용하실 수 없습니다. 접근을 허용하시겠습니까?</string>
-  <string name="setting_d_clear_question">실행으로 모든 수면 기록과 분석결과가 삭제되어 과거 레포트를 확인하실 수 없습니다. 실행 하시겠습니까?</string>
-  <string name="setting_d_recipient_setting">알람 수신자 설정</string>
-  <string name="setting_d_relation">관계</string>
-  <string name="setting_d_contact_information">연락처</string>
+
   <string name="cancel">취소</string>
   <string name="save">저장</string>
   <string name="male">남성</string>

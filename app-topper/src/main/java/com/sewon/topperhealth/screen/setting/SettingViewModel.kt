@@ -48,31 +48,11 @@ class SettingViewModel @Inject constructor(
 
       // init first Setting
       if (settingRepository.countSetting() == 0) {
-        val curDate = Calendar.getInstance().time
         val bedTime = LocalTime.of(22, 0)
         val alarmTime = LocalTime.of(7, 0)
         val setting = Setting(
-          userId = 0,
           sleepTime = bedTime,
           wakeupTime = alarmTime,
-          alarmOn = false,
-          alarmBehavior = "벨소리",
-          bedOn = false,
-          energyOn = false,
-          soundOn = false,
-          cacheOn = false,
-          initOn = false,
-          sosOn = false,
-          productSn = "aa",
-          threshold = "threshold",
-          createdAt = curDate,
-          updatedAt = curDate,
-          relation1 = "관계",
-          relation2 = "관계",
-          relation3 = "관계",
-          contact1 = "연락처",
-          contact2 = "연락처",
-          contact3 = "연락처",
         )
         settingRepository.addSetting(setting)
       }

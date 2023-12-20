@@ -37,7 +37,7 @@ data class RecipientState(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalCSOSRecipient(
+fun ModalDSOSRecipient(
   uiState: UiStateD,
   onToggleModal: () -> Unit,
   onChangeSOSRecipient: (RecipientState) -> Unit

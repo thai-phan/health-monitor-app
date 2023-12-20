@@ -4,12 +4,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -23,17 +23,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
+import com.sewon.topperhealth.data.AppLanguage
+import com.sewon.topperhealth.data.DataStoreManager
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
-import com.sewon.topperhealth.screen.setting.childd.component.ModalADeviceAccess
-import com.sewon.topperhealth.screen.setting.childd.component.ModalBClearHistory
-import com.sewon.topperhealth.screen.setting.childd.component.ModalCSOSRecipient
+import com.sewon.topperhealth.screen.setting.childd.component.ModalALanguage
+import com.sewon.topperhealth.screen.setting.childd.component.ModalBDeviceAccess
+import com.sewon.topperhealth.screen.setting.childd.component.ModalCClearHistory
+import com.sewon.topperhealth.screen.setting.childd.component.ModalDSOSRecipient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 // Card 4
@@ -42,43 +49,54 @@ fun GeneralSetting(
   rowHeight: Dp,
   viewModel: CardGeneralViewModel = hiltViewModel()
 ) {
+  val context = LocalContext.current
+
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+  var openLanguageModal by rememberSaveable { mutableStateOf(false) }
   var openDeviceAccessModal by rememberSaveable { mutableStateOf(false) }
   var openClearHistoryModal by rememberSaveable { mutableStateOf(false) }
   var openSOSRecipientModal by rememberSaveable { mutableStateOf(false) }
-//  val context = LocalContext.current
 
-//  val locale = remember { mutableStateOf("en") }
-//  fun ssss(localeStr: String) {
-//    Locale.setDefault(Locale(localeStr))
-//    locale.value = localeStr
-//    val config = context.resources.configuration
-//    config.setLocale(Locale(localeStr))
-//    context.resources.updateConfiguration(config, context.resources.displayMetrics)
-//  }
-//  Button(onClick = { ssss("en") }) {
-//    Text("Changge en")
-//  }
-//  Button(onClick = { ssss("ko") }) {
-//    Text("Changge ko")
-//  }
-//  Text(locale.value)
 
+  val dataStore = DataStoreManager(context)
+
+  fun updateLanguage(localeStr: String) {
+    CoroutineScope(Dispatchers.Default).launch {
+      dataStore.saveSelectedLanguage(AppLanguage("Korean", localeStr))
+    }
+  }
+
+  Button(onClick = { updateLanguage("en") }) {
+    Text("Changge en")
+  }
+  Button(onClick = { updateLanguage("ko") }) {
+    Text("Changge ko")
+  }
 
   Card(
     shape = topperShapes.small,
     colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
   ) {
     Column(
-      verticalArrangement = Arrangement.SpaceAround,
       modifier = Modifier
         .fillMaxWidth()
-        .padding(20.dp)
-
+        .padding(20.dp),
+      verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterVertically),
     ) {
       Text(stringResource(R.string.setting_d_general_setting), style = topperTypography.titleMedium)
-      Spacer(Modifier.height(10.dp))
+      Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(rowHeight)
+          .clickable(onClick = { openLanguageModal = !openLanguageModal })
+      ) {
+        Text(stringResource(R.string.setting_d_language))
+        Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
+      }
+      Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -88,12 +106,9 @@ fun GeneralSetting(
           .clickable(onClick = { openDeviceAccessModal = !openDeviceAccessModal })
       ) {
         Text(stringResource(R.string.setting_d_access))
-
         Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
       }
-      Spacer(Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-      Spacer(Modifier.height(5.dp))
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -103,12 +118,9 @@ fun GeneralSetting(
           .clickable(onClick = { openClearHistoryModal = !openClearHistoryModal })
       ) {
         Text(stringResource(R.string.setting_d_clear))
-
         Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
       }
-      Spacer(Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-      Spacer(Modifier.height(5.dp))
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -123,22 +135,29 @@ fun GeneralSetting(
     }
   }
 
+  if (openLanguageModal) {
+    ModalALanguage(
+      onToggleModal = { openLanguageModal = !openLanguageModal },
+      onChangeLanguage = viewModel::onChangeAccessDevice
+    )
+  }
+
   if (openDeviceAccessModal) {
-    ModalADeviceAccess(
+    ModalBDeviceAccess(
       onToggleModal = { openDeviceAccessModal = !openDeviceAccessModal },
       onChangeDeviceAccess = viewModel::onChangeAccessDevice
     )
   }
 
   if (openClearHistoryModal) {
-    ModalBClearHistory(
+    ModalCClearHistory(
       onToggleModal = { openClearHistoryModal = !openClearHistoryModal },
       onClearHistory = viewModel::onClearHistory
     )
   }
 
   if (openSOSRecipientModal) {
-    ModalCSOSRecipient(
+    ModalDSOSRecipient(
       uiState,
       onToggleModal = { openSOSRecipientModal = !openSOSRecipientModal },
       onChangeSOSRecipient = viewModel::onChangeSOSRecipient
