@@ -39,17 +39,17 @@ fun DeviceConnectionSetting(
     colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
   ) {
     Column(
-      verticalArrangement = Arrangement.SpaceAround,
       modifier = Modifier
         .fillMaxWidth()
-        .padding(20.dp)
+        .padding(20.dp),
+      verticalArrangement = Arrangement.spacedBy(5.dp)
 
     ) {
       Text(
         stringResource(R.string.setting_e_product_registration),
         style = topperTypography.titleMedium
       )
-      Spacer(Modifier.height(10.dp))
+      Spacer(Modifier.height(5.dp))
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -66,9 +66,7 @@ fun DeviceConnectionSetting(
           checked = checked,
           onCheckedChange = { checked = it })
       }
-      Spacer(Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-      Spacer(Modifier.height(5.dp))
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.REF_COUNT
+import com.sewon.topperhealth.util.AppLanguage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -91,4 +92,4 @@ class DataStoreManager(private var context: Context) {
   }
 }
 
-data class AppLanguage(val selectedLang: String, val selectedLangCode: String)
+

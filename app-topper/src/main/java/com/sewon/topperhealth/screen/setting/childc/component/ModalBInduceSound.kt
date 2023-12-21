@@ -31,7 +31,6 @@ fun ModalBInduceSound(
   onToggleModal: () -> Unit,
   onChangeInduceSound: () -> Unit
 ) {
-
   val skipPartiallyExpanded by remember { mutableStateOf(false) }
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
 

@@ -53,18 +53,17 @@ fun ProfileSetting(
     colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
   ) {
     Column(
-      verticalArrangement = Arrangement.SpaceAround,
       modifier = Modifier
         .fillMaxWidth()
-        .padding(20.dp)
+        .padding(20.dp),
+      verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
       Text(stringResource(R.string.setting_a_profile), style = topperTypography.titleMedium)
-      Spacer(Modifier.height(10.dp))
+      Spacer(Modifier.height(5.dp))
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-          .fillMaxWidth()
           .height(rowHeight)
           .clickable(onClick = { openGenderModal = !openGenderModal }),
       ) {
@@ -76,7 +75,6 @@ fun ProfileSetting(
         }
       }
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

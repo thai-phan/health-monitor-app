@@ -42,12 +42,15 @@ fun ModalAssessment(
 
   val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded)
 
-
-  val radioOptions = mapOf("매우 그렇다" to 3, "그렇다" to 2, "그렇지 않다" to 1, "전혀 그렇지 않다" to 0)
+  val radioOptions = mapOf(
+    "매우 그렇다" to 3,
+    "그렇다" to 2,
+    "그렇지 않다" to 1,
+    "전혀 그렇지 않다" to 0
+  )
 
   val (selectedKey, setSelectedKey) = remember { mutableStateOf("전혀 그렇지 않다") }
   val (selectedValue, setSelectedValue) = remember { mutableIntStateOf(0) }
-
 
   ModalBottomSheet(
     onDismissRequest = onToggleModal,
@@ -67,8 +70,6 @@ fun ModalAssessment(
           .selectableGroup(),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
-
-
         radioOptions.forEach { (status, value) ->
           Row(
             modifier = Modifier
@@ -107,12 +108,12 @@ fun ModalAssessment(
           .height(80.dp),
         horizontalArrangement = Arrangement.Center
       ) {
-        Button(onClick = onToggleModal) {
+        Button(onToggleModal) {
           Text(stringResource(R.string.cancel))
 
         }
         Spacer(Modifier.width(20.dp))
-        Button(onClick = {
+        Button({
           onSaveAssessment(selectedValue)
         }) {
           Text(stringResource(R.string.save))

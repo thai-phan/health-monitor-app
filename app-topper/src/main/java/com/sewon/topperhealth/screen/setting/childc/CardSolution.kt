@@ -35,7 +35,6 @@ import com.sewon.topperhealth.screen.setting.childc.component.ModalBInduceSound
 import com.sewon.topperhealth.screen.setting.childc.component.ModalCScoreThreshold
 
 
-// Card 3
 @Composable
 fun InductionSolutionSetting(
   rowHeight: Dp,
@@ -51,17 +50,16 @@ fun InductionSolutionSetting(
     colors = CardDefaults.cardColors(containerColor = Color(0x33000000))
   ) {
     Column(
-      verticalArrangement = Arrangement.SpaceAround,
       modifier = Modifier
         .fillMaxWidth()
-        .padding(20.dp)
-
+        .padding(20.dp),
+      verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
       Text(
         stringResource(R.string.setting_c_sleep_inducing_solution),
         style = topperTypography.titleMedium
       )
-      Spacer(Modifier.height(10.dp))
+      Spacer(Modifier.height(5.dp))
       Row(
         modifier = Modifier
           .fillMaxWidth()
@@ -73,9 +71,7 @@ fun InductionSolutionSetting(
         Text(stringResource(R.string.setting_c_sleep_inducing_energy))
         Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
       }
-      Spacer(Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-      Spacer(Modifier.height(5.dp))
       Row(
         modifier = Modifier
           .fillMaxWidth()
@@ -87,9 +83,7 @@ fun InductionSolutionSetting(
         Text(stringResource(R.string.setting_c_sleep_inducing_sound))
         Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
       }
-      Spacer(Modifier.height(5.dp))
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
-      Spacer(Modifier.height(5.dp))
       Row(
         modifier = Modifier
           .fillMaxWidth()

@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,8 +17,10 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -30,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.data.AppLanguage
 import com.sewon.topperhealth.data.DataStoreManager
 import com.sewon.topperhealth.screen.a0common.theme.topperShapes
 import com.sewon.topperhealth.screen.a0common.theme.topperTypography
@@ -38,12 +40,12 @@ import com.sewon.topperhealth.screen.setting.childd.component.ModalALanguage
 import com.sewon.topperhealth.screen.setting.childd.component.ModalBDeviceAccess
 import com.sewon.topperhealth.screen.setting.childd.component.ModalCClearHistory
 import com.sewon.topperhealth.screen.setting.childd.component.ModalDSOSRecipient
+import com.sewon.topperhealth.util.AppLanguage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-// Card 4
 @Composable
 fun GeneralSetting(
   rowHeight: Dp,
@@ -52,26 +54,18 @@ fun GeneralSetting(
   val context = LocalContext.current
 
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val dataStore = DataStoreManager(context)
 
   var openLanguageModal by rememberSaveable { mutableStateOf(false) }
   var openDeviceAccessModal by rememberSaveable { mutableStateOf(false) }
   var openClearHistoryModal by rememberSaveable { mutableStateOf(false) }
   var openSOSRecipientModal by rememberSaveable { mutableStateOf(false) }
+  val appLanguage = dataStore.currentLanguage
 
-
-  val dataStore = DataStoreManager(context)
-
-  fun updateLanguage(localeStr: String) {
+  fun updateLanguage(language: AppLanguage) {
     CoroutineScope(Dispatchers.Default).launch {
-      dataStore.saveSelectedLanguage(AppLanguage("Korean", localeStr))
+      dataStore.saveSelectedLanguage(language)
     }
-  }
-
-  Button(onClick = { updateLanguage("en") }) {
-    Text("Changge en")
-  }
-  Button(onClick = { updateLanguage("ko") }) {
-    Text("Changge ko")
   }
 
   Card(
@@ -82,9 +76,10 @@ fun GeneralSetting(
       modifier = Modifier
         .fillMaxWidth()
         .padding(20.dp),
-      verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterVertically),
+      verticalArrangement = Arrangement.spacedBy(5.dp),
     ) {
       Text(stringResource(R.string.setting_d_general_setting), style = topperTypography.titleMedium)
+      Spacer(Modifier.height(5.dp))
       Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -137,8 +132,9 @@ fun GeneralSetting(
 
   if (openLanguageModal) {
     ModalALanguage(
+      appLanguage,
       onToggleModal = { openLanguageModal = !openLanguageModal },
-      onChangeLanguage = viewModel::onChangeAccessDevice
+      onChangeLanguage = ::updateLanguage
     )
   }
 
