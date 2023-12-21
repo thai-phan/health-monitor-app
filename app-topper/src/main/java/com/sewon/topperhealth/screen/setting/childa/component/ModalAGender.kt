@@ -56,10 +56,8 @@ fun ModalAGender(
 
         AndroidView(
           factory = { context ->
-            val view =
-              LayoutInflater.from(context).inflate(R.layout.number_picker, null)
+            val view = LayoutInflater.from(context).inflate(R.layout.number_picker, null)
             val picker = view.findViewById<NumberPicker>(R.id.number_picker)
-
             picker.minValue = 0
             picker.maxValue = genderOption.size - 1
             picker.displayedValues = genderOption
