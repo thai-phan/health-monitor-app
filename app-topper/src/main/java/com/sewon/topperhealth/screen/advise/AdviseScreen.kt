@@ -77,11 +77,11 @@ fun AdviseScreen(
     ) {
       Text("ChatGPT", style = topperTypography.headlineSmall)
 
-      Button(
-        onClick = { isDialogOpen.value = !isDialogOpen.value },
-      ) {
-        Text("Setting key")
-      }
+//      Button(
+//        onClick = { isDialogOpen.value = !isDialogOpen.value },
+//      ) {
+//        Text("Setting key")
+//      }
 //      Image(
 //        painter = painterResource(id = R.drawable.ic_intellinest_white),
 //        contentDescription = "intellinest",
