@@ -4,14 +4,13 @@ import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sewon.topperhealth.api.AdviceMessage
-import com.sewon.topperhealth.api.OpenAIService
-import com.sewon.topperhealth.api.RequestBodySleepAdvice
+import com.sewon.topperhealth.api.openai.AdviceMessage
+import com.sewon.topperhealth.api.openai.OpenAIService
+import com.sewon.topperhealth.api.openai.RequestBodySleepAdvice
 import com.sewon.topperhealth.data.irepository.ISessionRepository
 import com.sewon.topperhealth.data.irepository.ISettingRepository
 import com.sewon.topperhealth.data.irepository.ITopperRepository
 import com.sewon.topperhealth.data.irepository.IUserRepository
-import com.sewon.topperhealth.screen.a0common.timepicker.TimeRangePicker
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

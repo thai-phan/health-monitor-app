@@ -1,5 +1,7 @@
-package com.sewon.topperhealth.api
+package com.sewon.topperhealth.api.sewon
 
+import com.sewon.topperhealth.api.openai.RequestBodySleepAdvice
+import com.sewon.topperhealth.api.openai.ResBodySleepAdvice
 import okhttp3.Interceptor
 import okhttp3.Interceptor.*
 import okhttp3.OkHttpClient
@@ -12,12 +14,12 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
 
-interface OpenAIService {
+interface SewonService {
   companion object {
-    private const val BASE_URL = "https://api.openai.com/"
+    private const val BASE_URL = "http://175.196.118.115:8080/predict/"
 
 
-    fun create(key: String): OpenAIService {
+    fun create(key: String): SewonService {
       val logger = HttpLoggingInterceptor().apply { level = Level.BASIC }
 
       val client: OkHttpClient = OkHttpClient.Builder()
@@ -39,7 +41,7 @@ interface OpenAIService {
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-        .create(OpenAIService::class.java)
+        .create(SewonService::class.java)
     }
   }
 

@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.api
+package com.sewon.topperhealth.api.openai
 
 
 class RequestBodySleepAdvice(
