@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -21,6 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.sewon.topperhealth.R
+import com.sewon.topperhealth.api.sewon.RequestBodyAlgorithm
+import com.sewon.topperhealth.api.sewon.ServiceSewon
 import com.sewon.topperhealth.data.DataStoreManager
 import com.sewon.topperhealth.screen.a0common.component.CustomSwitch
 import com.sewon.topperhealth.screen.a0common.theme.BackgroundMiddle
@@ -28,6 +32,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.File
 
 
 @Composable
@@ -41,6 +46,26 @@ fun DialogDevMode(
   val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
   val isDimDisabled by remember { dataStore.isDimDisabled }.collectAsState(initial = false)
   val referenceCount by remember { dataStore.referenceCount }.collectAsState(initial = 0)
+
+  fun aaa() {
+
+//    create file
+
+
+//    https://stackoverflow.com/questions/3425906/creating-temporary-files-in-android
+
+//    https://stackoverflow.com/questions/39953457/how-to-upload-an-image-file-in-retrofit-2
+
+    
+    val inputStreammm = context.resources.openRawResource(R.raw.sewon_data)
+
+    val file = File("/storage/emulated/0/Download/Corrections 6.jpg")
+//    val body = RequestBodyAlgorithm(
+//     file = ,
+//    )
+//    val response = ServiceSewon.create().getAlgorithm(body)
+  }
+
 
 
   Dialog(onDismissRequest = onDismiss) {
@@ -60,6 +85,9 @@ fun DialogDevMode(
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
         Text("Developer Setting")
+        Button(onClick = ::aaa) {
+
+        }
         Row(
           horizontalArrangement = Arrangement.SpaceBetween,
           verticalAlignment = Alignment.CenterVertically,

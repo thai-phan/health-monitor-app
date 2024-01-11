@@ -111,20 +111,21 @@ class ActivityViewModel @Inject constructor(
     createSession(startTimeCalendar, endTimeCalendar)
   }
 
-  fun createSession(pickerStartTime: Calendar, pickerEndTime: Calendar) = viewModelScope.launch {
+  private fun createSession(pickerStartTime: Calendar, pickerEndTime: Calendar) =
+    viewModelScope.launch {
 
-    val sleepSession = SleepSession(
-      pickerStartTime = pickerStartTime.time,
-      pickerEndTime = pickerEndTime.time,
-    )
+      val sleepSession = SleepSession(
+        pickerStartTime = pickerStartTime.time,
+        pickerEndTime = pickerEndTime.time,
+      )
 
-    val sessionId: Int = sessionRepository.createNewSession(sleepSession).toInt()
-    _dataState.update {
-      it.copy(sessionId = sessionId)
+      val sessionId: Int = sessionRepository.createNewSession(sleepSession).toInt()
+      _dataState.update {
+        it.copy(sessionId = sessionId)
+      }
+      LowEnergyService.sessionId = sessionId
+      LowEnergyService.pickerEndTime = pickerEndTime.time
     }
-    LowEnergyService.sessionId = sessionId
-    LowEnergyService.pickerEndTime = pickerEndTime.time
-  }
 
   fun endSession() = viewModelScope.launch {
     LowEnergyClient.isStarted.value = false
@@ -137,7 +138,7 @@ class ActivityViewModel @Inject constructor(
     updateCurrentSessionEndTime()
   }
 
-  fun updateCurrentSessionEndTime() = viewModelScope.launch {
+  private fun updateCurrentSessionEndTime() = viewModelScope.launch {
     val actualEndTime = Date()
     sessionRepository.updateSessionEndTime(_dataState.value.sessionId, actualEndTime)
     Timber.tag("Timber").d("updateSessionRefValue")

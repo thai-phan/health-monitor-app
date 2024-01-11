@@ -5,7 +5,7 @@ import android.icu.util.GregorianCalendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.topperhealth.api.openai.AdviceMessage
-import com.sewon.topperhealth.api.openai.OpenAIService
+import com.sewon.topperhealth.api.openai.ServiceOpenAI
 import com.sewon.topperhealth.api.openai.RequestBodySleepAdvice
 import com.sewon.topperhealth.data.irepository.ISessionRepository
 import com.sewon.topperhealth.data.irepository.ISettingRepository
@@ -102,7 +102,7 @@ class AdviceViewModel @Inject constructor(
         frequency_penalty = 0,
         presence_penalty = 0
       )
-      val response = OpenAIService.create(key).getSleepAdvice(body)
+      val response = ServiceOpenAI.create(key).getSleepAdvice(body)
 
       _uiState.update {
         it.copy(
