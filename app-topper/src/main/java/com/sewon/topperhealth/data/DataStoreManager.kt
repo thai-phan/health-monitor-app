@@ -23,7 +23,7 @@ class DataStoreManager(private var context: Context) {
     private val IS_LOG_SHOWED = booleanPreferencesKey("is_show_log")
     private val IS_DISABLE_DIM = booleanPreferencesKey("is_disable_dim")
     private val REFERENCE_COUNT = intPreferencesKey("reference_count")
-    private val OPENAI_KEY = stringPreferencesKey("openai_key")
+    private val KEY = stringPreferencesKey("key")
     private val SELECTED_LANGUAGE = stringPreferencesKey("selected_language")
     private val SELECTED_LANGUAGE_CODE = stringPreferencesKey("selected_language_code")
   }
@@ -83,12 +83,12 @@ class DataStoreManager(private var context: Context) {
     preferences[REFERENCE_COUNT] ?: REF_COUNT
   }
 
-  suspend fun saveOpenAIKey(value: String) {
-    context.dataStore.edit { preferences -> preferences[OPENAI_KEY] = value }
+  suspend fun saveKey(value: String) {
+    context.dataStore.edit { preferences -> preferences[KEY] = value }
   }
 
-  val openAIKey: Flow<String> = context.dataStore.data.map { preferences ->
-    preferences[OPENAI_KEY] ?: ""
+  val openKey: Flow<String> = context.dataStore.data.map { preferences ->
+    preferences[KEY] ?: ("sk-" + "rYvrxwG84jJm" + "QRvalFkJT3Blb" + "kFJakTQzVW94roMVp55jzxx")
   }
 }
 

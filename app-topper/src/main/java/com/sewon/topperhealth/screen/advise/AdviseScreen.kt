@@ -52,7 +52,7 @@ fun AdviseScreen(
 
   val context = LocalContext.current
   val dataStore = DataStoreManager(context)
-  val openAIKey by remember { dataStore.openAIKey }.collectAsState(initial = "")
+  val openAIKey by remember { dataStore.openKey }.collectAsState(initial = "")
   val isDialogOpen = rememberSaveable { mutableStateOf(false) }
 
   fun getAdvise() {
@@ -150,7 +150,7 @@ fun AdviseScreen(
         isDialogOpen.value = !isDialogOpen.value
       }) {
         CoroutineScope(Dispatchers.IO).launch {
-          dataStore.saveOpenAIKey(it)
+          dataStore.saveKey(it)
         }
       }
     }
