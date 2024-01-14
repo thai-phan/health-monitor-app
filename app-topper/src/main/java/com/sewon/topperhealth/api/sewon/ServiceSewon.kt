@@ -20,8 +20,8 @@ interface ServiceSewon {
       val logger = HttpLoggingInterceptor().apply { level = Level.BASIC }
 
       val client: OkHttpClient = OkHttpClient.Builder()
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
+//        .connectTimeout(30, TimeUnit.SECONDS)
+//        .readTimeout(30, TimeUnit.SECONDS)
 //        .addInterceptor(Interceptor { chain ->
 //          val newRequest: Request = chain.request().newBuilder()
 //            .addHeader(
@@ -43,6 +43,6 @@ interface ServiceSewon {
     }
   }
 
-  @POST("/predict/")
-  suspend fun getAlgorithm(@Body body: RequestBodyAlgorithm): ResBodySleepAdvice
+  @POST("/predict")
+  suspend fun getAlgorithm(@Body body: RequestBodyAlgorithm): ResBodyAlgorithn
 }

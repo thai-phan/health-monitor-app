@@ -1,5 +1,7 @@
 package com.sewon.topperhealth.screen.activity
 
+import android.os.Environment
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,7 +35,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.BufferedReader
 import java.io.File
+import java.io.FileReader
+import java.io.FileWriter
+import java.io.IOException
 
 
 @Composable
@@ -40,7 +47,7 @@ fun DialogDevMode(
   onDismiss: () -> Unit
 ) {
   val context = LocalContext.current
-
+  val coroutineScope = rememberCoroutineScope()
   val dataStore = DataStoreManager(context)
 
   val isLogShowed by remember { dataStore.isLogShowed }.collectAsState(initial = false)
@@ -48,22 +55,64 @@ fun DialogDevMode(
   val referenceCount by remember { dataStore.referenceCount }.collectAsState(initial = 0)
 
   fun aaa() {
+    coroutineScope.launch {
+      try {
+        val outputDir = context.dataDir
+        val root = File(context.dataDir, "csv")
+        if (!root.exists()) {
+          root.mkdirs()
+        }
+        val gpxfile = File(root, "file.txt")
+        val writer = FileWriter(gpxfile)
+        writer.append("aaaaaa")
+        writer.flush()
+        writer.close()
+        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+      } catch (e: IOException) {
+        e.printStackTrace()
+      }
 
-//    create file
 
-
+//    val outputDir = context.dataDir // context being the Activity pointer
+////    val outputFile = File.createTempFile("prefix", ".csv", outputDir)
+////    /data/user/0/com.sewon.topperhealth/file.txt
+//
+//    val file = File(outputDir, "file.txt")
+//
+//
+//    val text = StringBuilder("asdfasdf")
+//
+//    try {
+//      val br = BufferedReader(FileReader(file))
+//      var line: String?
+//      while (br.readLine().also { line = it } != null) {
+//        text.append(line)
+//        text.append('\n')
+//      }
+//      br.close()
+//    } catch (e: IOException) {
+//      //You'll need to add proper error handling here
+//    }
 //    https://stackoverflow.com/questions/3425906/creating-temporary-files-in-android
 
 //    https://stackoverflow.com/questions/39953457/how-to-upload-an-image-file-in-retrofit-2
 
-    
-    val inputStreammm = context.resources.openRawResource(R.raw.sewon_data)
 
-    val file = File("/storage/emulated/0/Download/Corrections 6.jpg")
-//    val body = RequestBodyAlgorithm(
-//     file = ,
-//    )
-//    val response = ServiceSewon.create().getAlgorithm(body)
+//      val inputStreammm = context.resources.openRawResource(R.raw.sewon_data)
+
+      val root = File(context.dataDir, "csv")
+//      if (!root.exists()) {
+//        root.mkdirs()
+//      }
+      val filecsv = File(root, "data_small.csv")
+
+//      val file = File("/storage/emulated/0/Download/Corrections 6.jpg")
+      val body = RequestBodyAlgorithm(
+        file = filecsv,
+      )
+      val response = ServiceSewon.create().getAlgorithm(body)
+      println(response.toString())
+    }
   }
 
 
