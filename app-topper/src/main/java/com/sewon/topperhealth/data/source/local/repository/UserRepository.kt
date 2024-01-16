@@ -1,7 +1,7 @@
 package com.sewon.topperhealth.data.source.local.repository
 
-import com.example.android.architecture.blueprints.todoapp.di.ApplicationScope
-import com.example.android.architecture.blueprints.todoapp.di.DefaultDispatcher
+import com.sewon.topperhealth.data.di.ApplicationScope
+import com.sewon.topperhealth.data.di.DefaultDispatcher
 import com.sewon.topperhealth.data.model.User
 import com.sewon.topperhealth.data.model.toExternal
 import com.sewon.topperhealth.data.model.toLocal

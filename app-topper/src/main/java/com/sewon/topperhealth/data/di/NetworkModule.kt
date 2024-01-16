@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.di
+package com.sewon.topperhealth.data.di
 
 import com.sewon.topperhealth.data.source.server.UnsplashService
 import dagger.Module
