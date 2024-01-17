@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sewon.topperhealth.ui.common.BottomBar
-import com.sewon.topperhealth.ui.common.blackGreenBackground
+import com.sewon.topperhealth.ui.theme.blackGreenBackground
 import com.sewon.topperhealth.ui.navigation.Destinations
 import com.sewon.topperhealth.ui.navigation.MainTabs
 import com.sewon.topperhealth.ui.navigation.NavigationGraph
