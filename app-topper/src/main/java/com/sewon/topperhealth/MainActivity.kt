@@ -17,11 +17,12 @@ import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.sewon.topperhealth.data.DataStoreManager
-import com.sewon.topperhealth.screen.RootCompose
+
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
 import com.sewon.topperhealth.service.bluetooth.ClassicService
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
+import com.sewon.topperhealth.ui.RootCompose
 import com.sewon.topperhealth.util.LanguageHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
