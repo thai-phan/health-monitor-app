@@ -93,6 +93,9 @@ fun DialogDevMode(
         val request =
           Request.Builder().url("http://175.196.118.115:8080/predict").post(body).build()
         val response = client.newCall(request).execute()
+        val jsonData: String = response.body!!.string()
+        // Transform reponse to JSon Object
+        println(jsonData)
       } catch (e: Exception) {
         e.printStackTrace()
       }
