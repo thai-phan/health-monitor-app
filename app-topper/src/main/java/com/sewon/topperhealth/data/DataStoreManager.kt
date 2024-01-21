@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.sewon.topperhealth.BuildConfig
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants.REF_COUNT
 import com.sewon.topperhealth.util.AppLanguage
 import kotlinx.coroutines.flow.Flow
@@ -88,7 +89,7 @@ class DataStoreManager(private var context: Context) {
   }
 
   val openKey: Flow<String> = context.dataStore.data.map { preferences ->
-    preferences[KEY] ?: ("sk-" + "rYvrxwG84jJm" + "QRvalFkJT3Blb" + "kFJakTQzVW94roMVp55jzxx")
+    preferences[KEY] ?: (BuildConfig.OPEN_API_KEY)
   }
 }
 
