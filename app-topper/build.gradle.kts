@@ -3,6 +3,7 @@ plugins {
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.hilt.android)
   alias(libs.plugins.ksp)
+  alias(libs.plugins.gradle.secrets)
 }
 
 android {
@@ -131,4 +132,19 @@ dependencies {
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
+}
+
+secrets {
+  // Optionally specify a different file name containing your secrets.
+  // The plugin defaults to "local.properties"
+  propertiesFileName = "local.properties"
+
+  // A properties file containing default secret values. This file can be
+  // checked in version control.
+  defaultPropertiesFileName = "local.properties"
+
+  // Configure which keys should be ignored by the plugin by providing regular expressions.
+  // "sdk.dir" is ignored by default.
+  ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+  ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
 }

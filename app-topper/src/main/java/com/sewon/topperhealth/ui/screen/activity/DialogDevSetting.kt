@@ -74,6 +74,7 @@ fun DialogDevMode(
     }
   }
 
+  //  https://stackoverflow.com/questions/4238921/detect-whether-there-is-an-internet-connection-available-on-android
   fun testingAPI() {
     val thread = Thread {
       try {
