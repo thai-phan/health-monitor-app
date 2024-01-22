@@ -70,6 +70,7 @@ class LowEnergyClient {
       if (hexEnabled) {
         stringBuilder.append(TextUtil.toHexString(data)).append('\n')
       } else {
+//        val temp = "3 60 11 1 0.06 -0.03"
         val dataStr = String(data)
         validateDataFormat(dataStr)
         val text = TextUtil.toCaretString(dataStr, true)

@@ -1,6 +1,5 @@
 package com.sewon.topperhealth.ui.screen.activity
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,15 +29,7 @@ import com.sewon.topperhealth.ui.theme.BackgroundMiddle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
-import java.io.File
-import java.io.FileWriter
-import java.io.IOException
 
 
 @Composable
@@ -53,105 +44,9 @@ fun DialogDevMode(
   val isDimDisabled by remember { dataStore.isDimDisabled }.collectAsState(initial = false)
   val referenceCount by remember { dataStore.referenceCount }.collectAsState(initial = 0)
 
-  fun bbb() {
-    coroutineScope.launch {
-      try {
-        val outputDir = context.dataDir
-        val root = File(context.dataDir, "csv")
-        if (!root.exists()) {
-          root.mkdirs()
-        }
-        val gpxfile = File(root, "file.txt")
-        val writer = FileWriter(gpxfile)
-        writer.append("aaaaaa")
-        writer.flush()
-        writer.close()
-        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
-      } catch (e: IOException) {
-        e.printStackTrace()
-      }
+  fun test() {
 
-    }
   }
-
-  //  https://stackoverflow.com/questions/4238921/detect-whether-there-is-an-internet-connection-available-on-android
-  fun testingAPI() {
-    val thread = Thread {
-      try {
-        val root = File(context.dataDir, "csv")
-        if (!root.exists()) {
-          root.mkdirs()
-        }
-        val filecsv = File(root, "data_small.csv")
-        val client = OkHttpClient()
-        val mediaType = "text/plain".toMediaType()
-        val body = MultipartBody.Builder().setType(MultipartBody.FORM)
-          .addFormDataPart(
-            "file",
-            "",
-            filecsv.asRequestBody("application/octet-stream".toMediaType())
-          ).build()
-        val request =
-          Request.Builder().url("http://175.196.118.115:8080/predict").post(body).build()
-        val response = client.newCall(request).execute()
-        val jsonData: String = response.body!!.string()
-        // Transform reponse to JSon Object
-        println(jsonData)
-      } catch (e: Exception) {
-        e.printStackTrace()
-      }
-    }
-
-    thread.start()
-
-//    coroutineScope.launch {
-//
-//
-//
-//
-////    val outputDir = context.dataDir // context being the Activity pointer
-//////    val outputFile = File.createTempFile("prefix", ".csv", outputDir)
-//////    /data/user/0/com.sewon.topperhealth/file.txt
-////
-////    val file = File(outputDir, "file.txt")
-////
-////
-////    val text = StringBuilder("asdfasdf")
-////
-////    try {
-////      val br = BufferedReader(FileReader(file))
-////      var line: String?
-////      while (br.readLine().also { line = it } != null) {
-////        text.append(line)
-////        text.append('\n')
-////      }
-////      br.close()
-////    } catch (e: IOException) {
-////      //You'll need to add proper error handling here
-////    }
-////    https://stackoverflow.com/questions/3425906/creating-temporary-files-in-android
-//
-////    https://stackoverflow.com/questions/39953457/how-to-upload-an-image-file-in-retrofit-2
-//
-//
-////      val inputStreammm = context.resources.openRawResource(R.raw.sewon_data)
-//
-////      val root = File(context.dataDir, "csv")
-//////      if (!root.exists()) {
-//////        root.mkdirs()
-//////      }
-////      val filecsv = File(root, "data_small.csv")
-////
-//////      val file = File("/storage/emulated/0/Download/Corrections 6.jpg")
-////      val body = RequestBodyAlgorithm(
-////        file = filecsv,
-////      )
-////      val response = ServiceSewon.create().getAlgorithm(body)
-////      println(response.toString())
-//    }
-  }
-
-
 
   Dialog(onDismissRequest = onDismiss) {
     Card(
@@ -170,12 +65,10 @@ fun DialogDevMode(
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
         Text("Developer Setting")
-        Button(onClick = ::testingAPI) {
-
+        Button(onClick = ::test) {
+          Text("Test")
         }
-        Button(onClick = ::bbb) {
 
-        }
         Row(
           horizontalArrangement = Arrangement.SpaceBetween,
           verticalAlignment = Alignment.CenterVertically,

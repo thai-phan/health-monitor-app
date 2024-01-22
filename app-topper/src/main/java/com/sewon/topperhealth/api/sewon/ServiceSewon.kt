@@ -1,15 +1,19 @@
 package com.sewon.topperhealth.api.sewon
 
-import com.sewon.topperhealth.api.openai.ResBodySleepAdvice
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor.*
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
+
 
 interface ServiceSewon {
   companion object {
@@ -19,30 +23,25 @@ interface ServiceSewon {
     fun create(): ServiceSewon {
       val logger = HttpLoggingInterceptor().apply { level = Level.BASIC }
 
+      val gson = GsonBuilder()
+        .setLenient()
+        .create()
+
       val client: OkHttpClient = OkHttpClient.Builder()
-//        .connectTimeout(30, TimeUnit.SECONDS)
-//        .readTimeout(30, TimeUnit.SECONDS)
-//        .addInterceptor(Interceptor { chain ->
-//          val newRequest: Request = chain.request().newBuilder()
-//            .addHeader(
-//              "Authorization",
-//              "Bearer $key"
-//            )
-//            .addHeader("Content-Type", "application/json")
-//            .build()
-//          chain.proceed(newRequest)
-//        })
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(600, TimeUnit.SECONDS)
         .build()
 
       return Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(ScalarsConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
         .create(ServiceSewon::class.java)
     }
   }
 
   @POST("/predict")
-  suspend fun getAlgorithm(@Body body: RequestBodyAlgorithm): ResBodyAlgorithn
+  suspend fun getAlgorithm(@Body body: RequestBody): ResponseBody
 }

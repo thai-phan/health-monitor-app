@@ -44,7 +44,7 @@ fun ReportScreen(
 
 
   fun selectSessionReport(id: Int) {
-    viewModel.showSessionReport(id)
+    viewModel.showSessionReport(context, id)
   }
 
   Column(

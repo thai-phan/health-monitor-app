@@ -12,7 +12,7 @@ import com.sewon.topperhealth.R
 class CSVManager(private val context: Context) {
 
   suspend fun findResource() {
-    val inputStreammm = context.resources.openRawResource(R.raw.sewon_data)
+    val inputStreammm = context.resources.openRawResource(R.raw.data_small)
     val reader = BufferedReader(
       InputStreamReader(inputStreammm, Charset.forName("UTF-8"))
     )

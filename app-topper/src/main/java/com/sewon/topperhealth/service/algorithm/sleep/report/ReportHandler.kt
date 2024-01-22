@@ -1,16 +1,27 @@
 package com.sewon.topperhealth.service.algorithm.sleep.report
 
+import android.content.Context
+import android.widget.Toast
+import com.sewon.topperhealth.api.sewon.ServiceSewon
+import com.sewon.topperhealth.data.model.SleepSession
 import com.sewon.topperhealth.data.source.local.entity.LocalTopper
 import com.sewon.topperhealth.service.algorithm.ecg.ECGAnalysisProc
 import com.sewon.topperhealth.service.algorithm.ecg.ECGTopper
 import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.Response
+import java.io.File
+import java.io.FileWriter
+import java.io.IOException
 
 
 class ReportHandler(
   private var sessionData: List<LocalTopper>,
-  var refHRV: Double,
-  var refHR: Double,
-  var refBR: Double
+  private var sleepSession: SleepSession,
 ) {
   val tag = "TimberReportHandler"
 
@@ -49,6 +60,86 @@ class ReportHandler(
     return max!!.key
   }
 
+  suspend fun getSleepStageCloud(context: Context): List<Float> {
+//    State,HR,BR,HRV,HRwfm,BRwfm,SleepCategory
+    val stageList = mutableListOf<Float>()
+
+    try {
+      val root = File(context.dataDir, "csv")
+      if (!root.exists()) {
+        root.mkdirs()
+      }
+      val csvFileName = "sleep_data_${sleepSession.sessionId}.csv"
+      val csvFile = File(root, csvFileName)
+      if (!csvFile.exists()) {
+        val writer = FileWriter(csvFile)
+        buildCSVFile(writer)
+        writer.flush()
+        writer.close()
+        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+      } else {
+        Toast.makeText(context, "Not create", Toast.LENGTH_SHORT).show()
+      }
+
+      val bodyM = MultipartBody.Builder().setType(MultipartBody.FORM)
+        .addFormDataPart(
+          "file",
+          "",
+          csvFile.asRequestBody("application/octet-stream".toMediaType())
+        ).build()
+      val response = ServiceSewon.create().getAlgorithm(bodyM)
+      val responseList = response.string().split("\n")
+      val responseListNoHeader = responseList.subList(1, responseList.size)
+      for (row in responseListNoHeader) {
+        val rowElement = row.split(",")
+        if (rowElement.size == 7) {
+          stageList.add(rowElement.get(6).toFloat())
+        } else {
+          println("empty")
+        }
+      }
+    } catch (e: IOException) {
+      e.printStackTrace()
+    }
+
+    return stageList
+  }
+
+  private fun buildCSVFile(writer: FileWriter) {
+    writer.append("State,HR,BR,HRV,HRwfm,BRwfm\n")
+    for (data in sessionData) {
+      writer.append("${data.stable},${data.hr},${data.br},${data.hrv},${data.hrWfm},${data.brWfm}\n")
+    }
+  }
+
+  fun sewonSource(context: Context) {
+    val thread = Thread {
+      try {
+        val root = File(context.dataDir, "csv")
+        if (!root.exists()) {
+          root.mkdirs()
+        }
+        val filecsv = File(root, "data_small.csv")
+        val client = OkHttpClient()
+        val body = MultipartBody.Builder().setType(MultipartBody.FORM)
+          .addFormDataPart(
+            "file",
+            "",
+            filecsv.asRequestBody("application/octet-stream".toMediaType())
+          ).build()
+        val request =
+          Request.Builder().url("http://175.196.118.115:8080/predict").post(body).build()
+        val response: Response = client.newCall(request).execute()
+        val jsonData: String = response.body!!.string()
+        // Transform reponse to JSon Object
+        println(jsonData)
+      } catch (e: Exception) {
+        e.printStackTrace()
+      }
+    }
+
+    thread.start()
+  }
 
   fun getSleepStage(): List<Float> {
     var sumHRV = 0.0
@@ -79,17 +170,17 @@ class ReportHandler(
   }
 
   private fun calculatorSleepStage(meanHrv: Double, meanHr: Double, meanBr: Double): Int {
-    if (meanHrv < refHRV * AlgorithmConstants.SLEEP_HRV_THRESHOLD) {
+    if (meanHrv < sleepSession.refHRV * AlgorithmConstants.SLEEP_HRV_THRESHOLD) {
       return AlgorithmConstants.SLEEP_STAGE_N3_REM
     } else {
-      return if (meanHr >= refHR * AlgorithmConstants.SLEEP_HR_THRESHOLD) {
-        if (meanBr >= refBR * AlgorithmConstants.SLEEP_HRUP_BR_THRESHOLD) {
+      return if (meanHr >= sleepSession.refHR * AlgorithmConstants.SLEEP_HR_THRESHOLD) {
+        if (meanBr >= sleepSession.refBR * AlgorithmConstants.SLEEP_HRUP_BR_THRESHOLD) {
           AlgorithmConstants.SLEEP_STAGE_N1_N2
         } else {
           AlgorithmConstants.SLEEP_STAGE_N3_REM
         }
       } else {
-        if (meanBr >= refBR * AlgorithmConstants.SLEEP_HRDOWN_BR_THRESHOLD) {
+        if (meanBr >= sleepSession.refBR * AlgorithmConstants.SLEEP_HRDOWN_BR_THRESHOLD) {
           AlgorithmConstants.SLEEP_STAGE_WAKE
         } else {
           AlgorithmConstants.SLEEP_STAGE_N1_N2

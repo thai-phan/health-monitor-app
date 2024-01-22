@@ -70,7 +70,8 @@ dependencies {
   // Http
   implementation(libs.okhttp)
   implementation(libs.logging.interceptor)
-  implementation(libs.converter.gson)
+  implementation(libs.retrofit.converter.scalars)
+  implementation(libs.retrofit.converter.gson)
   implementation(libs.retrofit)
 
   // Hilt dependency injection

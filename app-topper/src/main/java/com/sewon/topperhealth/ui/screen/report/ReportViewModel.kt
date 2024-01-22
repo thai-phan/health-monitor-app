@@ -1,6 +1,7 @@
 package com.sewon.topperhealth.ui.screen.report
 
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sewon.topperhealth.data.model.SleepSession
@@ -71,7 +72,7 @@ class ReportViewModel @Inject constructor(
   }
 
 
-  fun showSessionReport(sessionId: Int) = viewModelScope.launch {
+  fun showSessionReport(context: Context, sessionId: Int) = viewModelScope.launch {
     val sessionData = topperRepository.getAllDataFromSession(sessionId)
     val session = sessionRepository.getSessionById(sessionId)
 
@@ -85,7 +86,7 @@ class ReportViewModel @Inject constructor(
       )
     }
     if (sessionData.isNotEmpty()) {
-      val reportHandler = ReportHandler(sessionData, session.refHRV, session.refHR, session.refBR)
+      val reportHandler = ReportHandler(sessionData, session)
 
 
       val sleepEfficiency = session.rating.toFloat() * 100 / 18
@@ -96,7 +97,7 @@ class ReportViewModel @Inject constructor(
       val sleepLatency = (sleepTime.time - startTime.time).toFloat() * 100 / (3600 * 1000)
       val wakeupOnSleep = session.wakeUpCount.toFloat() * 100 / (20 * 3600)
       Timber.tag("wakeupOnSleep").d(wakeupOnSleep.toString())
-      val sleepStage = reportHandler.getSleepStage()
+      val sleepStage = reportHandler.getSleepStageCloud(context)
 
       val sleepRPI: List<Float> = reportHandler.getBSleepRPI()
       val meanHR = reportHandler.getCMeanHR()
