@@ -12,6 +12,8 @@ import com.sewon.topperhealth.service.algorithm.sleep.TopperData
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import timber.log.Timber
 import java.util.Date
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 
 class RealtimeHandler {
@@ -53,8 +55,12 @@ class RealtimeHandler {
     private var countDeepSleep = 0
     private var isRefCalculated = false
 
+//    private var executor = Executors.newScheduledThreadPool(1)
+//    private var helloRunnable = Runnable { println("Hello world") }
+
     private fun processData(topperData: TopperData) {
-      countReferenceData.value = countReferenceData.value?.plus(1)
+//      executor.schedule(helloRunnable, 3, TimeUnit.SECONDS);
+
       if (countReferenceData.value!! < referenceCount.value!!) {
         sumHRV = sumHRV.plus(topperData.HRV)
         sumHR = sumHR.plus(topperData.HR)

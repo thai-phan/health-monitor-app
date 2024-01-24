@@ -153,7 +153,7 @@ class ActivityViewModel @Inject constructor(
     }
   }
 
-  fun saveQuality(rating: Int, memo: String) = viewModelScope.launch {
+  fun savePSQI(rating: Int, memo: String) = viewModelScope.launch {
 //  Rating
     val scoreRating = 4 - rating
 
@@ -163,7 +163,8 @@ class ActivityViewModel @Inject constructor(
     val sleepTime: Date = session.fellAsleepTime
 
 //    Sleep latency time (SLT)
-    val sleepLatency = (sleepTime.time - startTime.time).toFloat() / (60 * 1000)
+    val tenMinute = 10 * 60 * 1000
+    val sleepLatency = ((sleepTime.time - startTime.time).toFloat() + tenMinute) / (60 * 1000)
     val scoreSleepLatency = when {
       120 <= sleepLatency -> 3
       60 <= sleepLatency -> 2

@@ -97,6 +97,8 @@ class ReportViewModel @Inject constructor(
       val sleepLatency = (sleepTime.time - startTime.time).toFloat() * 100 / (3600 * 1000)
       val wakeupOnSleep = session.wakeUpCount.toFloat() * 100 / (20 * 3600)
       Timber.tag("wakeupOnSleep").d(wakeupOnSleep.toString())
+
+
       val sleepStage = reportHandler.getSleepStageCloud(context)
 
       val sleepRPI: List<Float> = reportHandler.getBSleepRPI()

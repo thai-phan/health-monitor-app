@@ -14,6 +14,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.Response
+import timber.log.Timber
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
@@ -60,7 +61,7 @@ class ReportHandler(
     return max!!.key
   }
 
-  suspend fun getSleepStageCloud(context: Context): List<Float> {
+  suspend fun getSleepStageCloud(context: Context): MutableList<Float> {
 //    State,HR,BR,HRV,HRwfm,BRwfm,SleepCategory
     val stageList = mutableListOf<Float>()
 
@@ -73,7 +74,10 @@ class ReportHandler(
       val csvFile = File(root, csvFileName)
       if (!csvFile.exists()) {
         val writer = FileWriter(csvFile)
-        buildCSVFile(writer)
+        writer.append("State,HR,BR,HRV,HRwfm,BRwfm\n")
+        for (data in sessionData) {
+          writer.append("${data.stable},${data.hr},${data.br},${data.hrv},${data.hrWfm},${data.brWfm}\n")
+        }
         writer.flush()
         writer.close()
         Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
@@ -81,36 +85,48 @@ class ReportHandler(
         Toast.makeText(context, "Not create", Toast.LENGTH_SHORT).show()
       }
 
-      val bodyM = MultipartBody.Builder().setType(MultipartBody.FORM)
-        .addFormDataPart(
-          "file",
-          "",
-          csvFile.asRequestBody("application/octet-stream".toMediaType())
+      val bodyM = MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart(
+          "file", "", csvFile.asRequestBody("application/octet-stream".toMediaType())
         ).build()
       val response = ServiceSewon.create().getAlgorithm(bodyM)
       val responseList = response.string().split("\n")
       val responseListNoHeader = responseList.subList(1, responseList.size)
+      Timber.tag("report1").d(responseListNoHeader.size.toString())
       for (row in responseListNoHeader) {
         val rowElement = row.split(",")
         if (rowElement.size == 7) {
           stageList.add(rowElement.get(6).toFloat())
         } else {
-          println("empty")
+          Timber.tag("report2").d("row empty")
         }
       }
     } catch (e: IOException) {
       e.printStackTrace()
     }
-
-    return stageList
+    return stageList.subList(0, 100)
   }
 
-  private fun buildCSVFile(writer: FileWriter) {
-    writer.append("State,HR,BR,HRV,HRwfm,BRwfm\n")
-    for (data in sessionData) {
-      writer.append("${data.stable},${data.hr},${data.br},${data.hrv},${data.hrWfm},${data.brWfm}\n")
+  private fun calculateSleepStageByTime(stageList: List<Int>): MutableList<Float> {
+    var sumStage = 0
+    val stageTime = mutableListOf<Float>()
+    var countTime = 0
+
+    for (stage in stageList) {
+      if (countTime == AlgorithmConstants.SLEEP_STAGE_NUMBER) {
+        val mean = sumStage / countTime
+        Timber.tag("report5").d(sumStage.toString())
+        Timber.tag("report3").d(mean.toString())
+        stageTime.add(mean.toFloat())
+        sumStage = 0
+        countTime = 0
+      }
+      sumStage += stage
+      countTime += 1
     }
+    Timber.tag("report4").d(stageTime.toString())
+    return stageTime
   }
+
 
   fun sewonSource(context: Context) {
     val thread = Thread {
@@ -121,11 +137,8 @@ class ReportHandler(
         }
         val filecsv = File(root, "data_small.csv")
         val client = OkHttpClient()
-        val body = MultipartBody.Builder().setType(MultipartBody.FORM)
-          .addFormDataPart(
-            "file",
-            "",
-            filecsv.asRequestBody("application/octet-stream".toMediaType())
+        val body = MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart(
+            "file", "", filecsv.asRequestBody("application/octet-stream".toMediaType())
           ).build()
         val request =
           Request.Builder().url("http://175.196.118.115:8080/predict").post(body).build()

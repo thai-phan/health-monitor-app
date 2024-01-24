@@ -25,12 +25,12 @@ data class LocalSetting(
   @ColumnInfo(name = "created_at") val createdAt: Date,
   @ColumnInfo(name = "updated_at") val updatedAt: Date,
 
-  @ColumnInfo(name = "relation1") var relation1: String,
-  @ColumnInfo(name = "contact1") var contact1: String,
-  @ColumnInfo(name = "relation2") var relation2: String,
-  @ColumnInfo(name = "contact2") var contact2: String,
-  @ColumnInfo(name = "relation3") var relation3: String,
-  @ColumnInfo(name = "contact3") var contact3: String,
+  @ColumnInfo(name = "relation1") val relation1: String,
+  @ColumnInfo(name = "contact1") val contact1: String,
+  @ColumnInfo(name = "relation2") val relation2: String,
+  @ColumnInfo(name = "contact2") val contact2: String,
+  @ColumnInfo(name = "relation3") val relation3: String,
+  @ColumnInfo(name = "contact3") val contact3: String,
 ) {
   @ColumnInfo(name = "setting_id")
   @PrimaryKey(autoGenerate = true)

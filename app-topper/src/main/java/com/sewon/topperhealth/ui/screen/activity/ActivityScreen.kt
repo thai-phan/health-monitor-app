@@ -245,7 +245,7 @@ fun SleepActivity(
         openQualityModal = !openQualityModal
       }) { rating, memo ->
         openQualityModal = !openQualityModal
-        viewModel.saveQuality(rating, memo)
+        viewModel.savePSQI(rating, memo)
         redirectAdvisePage()
       }
     }

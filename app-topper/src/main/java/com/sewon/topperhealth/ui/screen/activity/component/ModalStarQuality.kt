@@ -63,11 +63,9 @@ fun ModalStarQuality(
           .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
-
         RatingInputRow(rating = rating) { rating ->
           setRating(rating)
         }
-
         TextField(value = memo, onValueChange = {
           memo = it
         })

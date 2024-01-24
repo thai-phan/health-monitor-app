@@ -24,7 +24,7 @@ object AlgorithmConstants {
   const val SLEEP_HRUP_BR_THRESHOLD = 0.9
   const val SLEEP_HRDOWN_BR_THRESHOLD = 1.2
 
-  const val SLEEP_STAGE_NUMBER = 100
+  const val SLEEP_STAGE_NUMBER = 30 * 60 * 20
 
   const val STATUS_CALCULATE_REF = "Calculate reference"
   const val STATUS_MISS_THRESHOLD = "Miss threshold"

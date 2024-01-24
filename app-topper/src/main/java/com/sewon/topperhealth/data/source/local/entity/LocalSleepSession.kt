@@ -13,26 +13,16 @@ data class LocalSleepSession(
   @ColumnInfo(name = "ref_br") val refBR: Double,
   @ColumnInfo(name = "is_generated_report") val isGeneratedReport: Boolean,
 
-  // TODO: Implement
   @ColumnInfo(name = "mean_hr") val meanHR: Double,
-  // TODO: Implement
   @ColumnInfo(name = "mean_br") val meanBR: Double,
-  // TODO: Implement
   @ColumnInfo(name = "sdrp") val SDRP: Double,
-  // TODO: Implement
   @ColumnInfo(name = "rmssd") val RMSSD: Double,
-  // TODO: Implement
   @ColumnInfo(name = "rpi_triangular") val RPITriangular: Double,
-  // TODO: Implement
   @ColumnInfo(name = "low_freq") val lowFreq: Double,
-  // TODO: Implement
   @ColumnInfo(name = "high_freq") val highFreq: Double,
-  // TODO: Implement
   @ColumnInfo(name = "lf_hf_ratio") val lfHfRatio: Double,
 
-  // TODO: Implement
   @ColumnInfo(name = "rating") val rating: Int,
-  // TODO: Implement
   @ColumnInfo(name = "wake_up_count") val wakeUpCount: Int,
 
   @ColumnInfo(name = "picker_start_time") val pickerStartTime: Date,
