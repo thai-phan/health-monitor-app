@@ -98,16 +98,6 @@ class ReportViewModel @Inject constructor(
       val wakeupOnSleep = session.wakeUpCount.toFloat() * 100 / (20 * 3600)
       Timber.tag("wakeupOnSleep").d(wakeupOnSleep.toString())
 
-
-      val sleepStage = reportHandler.getSleepStageCloud(context)
-
-      val sleepRPI: List<Float> = reportHandler.getBSleepRPI()
-      val meanHR = reportHandler.getCMeanHR()
-      val meanBR = reportHandler.getCMeanBR()
-      val ecgTopper = reportHandler.getECGAlgorithmResult()
-      val nervousScore = listOf(ecgTopper.LF.toFloat(), ecgTopper.HF.toFloat())
-      val rPITriangular = reportHandler.getRPITriangular()
-
       _uiState.update {
         it.copy(
           sleepTime = totalSleepTime,
@@ -115,20 +105,48 @@ class ReportViewModel @Inject constructor(
           sleepLatency = sleepLatency,
           wakeupOnSleep = wakeupOnSleep,
           sleepRating = sleepEfficiency,
+//          sleepStage = sleepStage,
+
+          //  Hide
+//          sleepRPI = sleepRPI,
+//          meanHR = meanHR,
+//          meanBR = meanBR,
+//          sDRP = ecgTopper.SDRP.toFloat(),
+//          rMSSD = ecgTopper.RMSSD.toFloat(),
+//          lowFreq = ecgTopper.LF.toFloat(),
+//          highFreq = ecgTopper.HF.toFloat(),
+//          lfHfRatio = ecgTopper.LF_HF_Ratio.toFloat(),
+//          nervousScore = nervousScore,
+//          stressScore = ecgTopper.StressScore.toFloat(),
+//          rPITriangular = rPITriangular
+        )
+      }
+
+      val sleepStage = reportHandler.getSleepStageCloud(context)
+
+//      val sleepRPI: List<Float> = reportHandler.getBSleepRPI()
+//      val meanHR = reportHandler.getCMeanHR()
+//      val meanBR = reportHandler.getCMeanBR()
+//      val ecgTopper = reportHandler.getECGAlgorithmResult()
+//      val nervousScore = listOf(ecgTopper.LF.toFloat(), ecgTopper.HF.toFloat())
+//      val rPITriangular = reportHandler.getRPITriangular()
+
+      _uiState.update {
+        it.copy(
           sleepStage = sleepStage,
 
           //  Hide
-          sleepRPI = sleepRPI,
-          meanHR = meanHR,
-          meanBR = meanBR,
-          sDRP = ecgTopper.SDRP.toFloat(),
-          rMSSD = ecgTopper.RMSSD.toFloat(),
-          lowFreq = ecgTopper.LF.toFloat(),
-          highFreq = ecgTopper.HF.toFloat(),
-          lfHfRatio = ecgTopper.LF_HF_Ratio.toFloat(),
-          nervousScore = nervousScore,
-          stressScore = ecgTopper.StressScore.toFloat(),
-          rPITriangular = rPITriangular
+//          sleepRPI = sleepRPI,
+//          meanHR = meanHR,
+//          meanBR = meanBR,
+//          sDRP = ecgTopper.SDRP.toFloat(),
+//          rMSSD = ecgTopper.RMSSD.toFloat(),
+//          lowFreq = ecgTopper.LF.toFloat(),
+//          highFreq = ecgTopper.HF.toFloat(),
+//          lfHfRatio = ecgTopper.LF_HF_Ratio.toFloat(),
+//          nervousScore = nervousScore,
+//          stressScore = ecgTopper.StressScore.toFloat(),
+//          rPITriangular = rPITriangular
         )
       }
     } else {
