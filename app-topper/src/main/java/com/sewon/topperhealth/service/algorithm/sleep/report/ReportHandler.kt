@@ -85,10 +85,10 @@ class ReportHandler(
         Toast.makeText(context, "Not create", Toast.LENGTH_SHORT).show()
       }
 
-      val bodyM = MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart(
-          "file", "", csvFile.asRequestBody("application/octet-stream".toMediaType())
-        ).build()
-      val response = ServiceSewon.create().getAlgorithm(bodyM)
+      val multipartBody = MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart(
+        "file", "", csvFile.asRequestBody("application/octet-stream".toMediaType())
+      ).build()
+      val response = ServiceSewon.create().getAlgorithm(multipartBody)
       val responseList = response.string().split("\n")
       val responseListNoHeader = responseList.subList(1, responseList.size)
       Timber.tag("report1").d(responseListNoHeader.size.toString())
@@ -103,7 +103,12 @@ class ReportHandler(
     } catch (e: IOException) {
       e.printStackTrace()
     }
-    return stageList.subList(0, 100)
+    return if (stageList.size <= 100) {
+      stageList
+    } else {
+      stageList.subList(0, 100)
+
+    }
   }
 
   private fun calculateSleepStageByTime(stageList: List<Int>): MutableList<Float> {
@@ -138,8 +143,8 @@ class ReportHandler(
         val filecsv = File(root, "data_small.csv")
         val client = OkHttpClient()
         val body = MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart(
-            "file", "", filecsv.asRequestBody("application/octet-stream".toMediaType())
-          ).build()
+          "file", "", filecsv.asRequestBody("application/octet-stream".toMediaType())
+        ).build()
         val request =
           Request.Builder().url("http://175.196.118.115:8080/predict").post(body).build()
         val response: Response = client.newCall(request).execute()
