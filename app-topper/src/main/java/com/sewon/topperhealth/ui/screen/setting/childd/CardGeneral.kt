@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -24,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -31,12 +30,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.data.DataStoreManager
-import com.sewon.topperhealth.ui.theme.topperShapes
-import com.sewon.topperhealth.ui.theme.topperTypography
 import com.sewon.topperhealth.ui.screen.setting.childd.component.ModalALanguage
 import com.sewon.topperhealth.ui.screen.setting.childd.component.ModalBDeviceAccess
 import com.sewon.topperhealth.ui.screen.setting.childd.component.ModalCClearHistory
 import com.sewon.topperhealth.ui.screen.setting.childd.component.ModalDSOSRecipient
+import com.sewon.topperhealth.ui.theme.topperShapes
+import com.sewon.topperhealth.ui.theme.topperTypography
 import com.sewon.topperhealth.util.AppLanguage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -86,7 +85,10 @@ fun GeneralSetting(
           .clickable(onClick = { openLanguageModal = !openLanguageModal })
       ) {
         Text(stringResource(R.string.setting_d_language))
-        Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
+        Icon(
+          painterResource(R.drawable.ic_chevron_right),
+          contentDescription = "contentDescription"
+        )
       }
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
       Row(
@@ -98,7 +100,10 @@ fun GeneralSetting(
           .clickable(onClick = { openDeviceAccessModal = !openDeviceAccessModal })
       ) {
         Text(stringResource(R.string.setting_d_access))
-        Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
+        Icon(
+          painterResource(R.drawable.ic_chevron_right),
+          contentDescription = "contentDescription"
+        )
       }
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
       Row(
@@ -110,7 +115,10 @@ fun GeneralSetting(
           .clickable(onClick = { openClearHistoryModal = !openClearHistoryModal })
       ) {
         Text(stringResource(R.string.setting_d_clear))
-        Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
+        Icon(
+          painterResource(R.drawable.ic_chevron_right),
+          contentDescription = "contentDescription"
+        )
       }
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
       Row(
@@ -122,7 +130,10 @@ fun GeneralSetting(
           .clickable(onClick = { openSOSRecipientModal = !openSOSRecipientModal })
       ) {
         Text(stringResource(R.string.setting_d_emergency))
-        Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
+        Icon(
+          painterResource(R.drawable.ic_chevron_right),
+          contentDescription = "contentDescription"
+        )
       }
     }
   }

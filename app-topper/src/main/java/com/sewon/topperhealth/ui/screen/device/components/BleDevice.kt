@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,10 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.ui.theme.topperShapes
 
 
@@ -58,7 +58,11 @@ fun BleDevice(
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically
     ) {
-      Icon(Icons.Filled.Bluetooth, contentDescription = "Localized description", tint = Color.Black)
+      Icon(
+        painterResource(R.drawable.ic_bluetooth),
+        contentDescription = "Localized description",
+        tint = Color.Black
+      )
       Text(
         bluetoothDevice.name ?: "N/A",
         style = TextStyle(fontWeight = FontWeight.Normal),

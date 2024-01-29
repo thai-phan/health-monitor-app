@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -24,10 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
+import com.sewon.topperhealth.R
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
 import com.sewon.topperhealth.service.bluetooth.util.Connected
 import com.sewon.topperhealth.ui.theme.topperShapes
@@ -68,7 +68,11 @@ fun DialogRelayItem(
     verticalArrangement = Arrangement.Center
   ) {
     Row {
-      Icon(Icons.Filled.Bluetooth, contentDescription = "Localized description", tint = Color.Black)
+      Icon(
+        painterResource(R.drawable.ic_bluetooth),
+        "Localized description",
+        tint = Color.Black
+      )
       Text(
         bluetoothDevice.name ?: "N/A",
         style = TextStyle(fontWeight = FontWeight.Normal),

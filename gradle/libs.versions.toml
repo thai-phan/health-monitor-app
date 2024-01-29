@@ -29,7 +29,7 @@ lifecycleLivedataKtx = "2.7.0"
 material3 = "1.1.2"
 navigationCompose = "2.7.6"
 okhttp = "4.12.0"
-pluginsAndroidGradle = "8.2.1"
+pluginsAndroidGradle = "8.2.2"
 pluginsKotlinAndroid = "1.9.22"
 pluginsKsp = "1.9.22-1.0.16"
 preferenceKtx = "1.2.1"
@@ -102,9 +102,7 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeVersion" }
 secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
 
-
 [bundles]
-
 
 
 [plugins]

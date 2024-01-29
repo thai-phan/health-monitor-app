@@ -103,7 +103,6 @@ dependencies {
   implementation(libs.androidx.foundation)
   implementation(libs.androidx.foundation.layout)
   implementation(libs.androidx.material.icons.core)
-  implementation(libs.androidx.material.icons.extended)
   implementation(libs.androidx.runtime)
   implementation(libs.androidx.runtime.livedata)
   implementation(libs.androidx.ui)

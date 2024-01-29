@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -23,17 +21,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sewon.topperhealth.R
-
-import com.sewon.topperhealth.ui.theme.topperShapes
-import com.sewon.topperhealth.ui.theme.topperTypography
 import com.sewon.topperhealth.ui.screen.setting.childc.component.ModalAInduceEnergy
 import com.sewon.topperhealth.ui.screen.setting.childc.component.ModalBInduceSound
 import com.sewon.topperhealth.ui.screen.setting.childc.component.ModalCScoreThreshold
+import com.sewon.topperhealth.ui.theme.topperShapes
+import com.sewon.topperhealth.ui.theme.topperTypography
 
 
 @Composable
@@ -70,7 +68,10 @@ fun InductionSolutionSetting(
         verticalAlignment = Alignment.CenterVertically,
       ) {
         Text(stringResource(R.string.setting_c_sleep_inducing_energy))
-        Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
+        Icon(
+          painterResource(R.drawable.ic_chevron_right),
+          contentDescription = "contentDescription"
+        )
       }
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
       Row(
@@ -82,7 +83,10 @@ fun InductionSolutionSetting(
         verticalAlignment = Alignment.CenterVertically,
       ) {
         Text(stringResource(R.string.setting_c_sleep_inducing_sound))
-        Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
+        Icon(
+          painterResource(R.drawable.ic_chevron_right),
+          contentDescription = "contentDescription"
+        )
       }
       Divider(color = Color(0x1AFFFFFF), thickness = 1.dp)
       Row(
@@ -94,7 +98,10 @@ fun InductionSolutionSetting(
         verticalAlignment = Alignment.CenterVertically,
       ) {
         Text(stringResource(R.string.setting_c_sleep_score_thresholds))
-        Icon(Icons.Filled.ChevronRight, contentDescription = "contentDescription")
+        Icon(
+          painterResource(R.drawable.ic_chevron_right),
+          contentDescription = "contentDescription"
+        )
       }
     }
   }
