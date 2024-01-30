@@ -34,7 +34,7 @@ fun BottomBar(
     ?: MainTabs.REPORT.route
 
   val routes = remember {
-    MainTabs.values().map { it.route }
+    MainTabs.entries.map { it.route }
   }
   if (currentRoute in routes) {
     AnimatedVisibility(

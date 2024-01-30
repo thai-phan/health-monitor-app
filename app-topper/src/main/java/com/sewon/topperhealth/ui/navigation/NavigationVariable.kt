@@ -7,7 +7,7 @@ import com.sewon.topperhealth.R
 
 object Destinations {
   const val SPLASH_ROUTE = "splash_screen"
-  const val TERM_AGREEMENT_ROUTE = "term_agreement"
+  const val TERM_AGREEMENT_ROUTE = "term_agreement_screen"
   const val DEVICE_ROUTE = "device_screen"
   const val ACTIVITY_ROUTE = "activity_screen"
   const val REPORT_ROUTE = "report_screen"
