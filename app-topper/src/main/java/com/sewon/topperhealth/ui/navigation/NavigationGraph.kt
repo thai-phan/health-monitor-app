@@ -52,22 +52,6 @@ fun NavigationGraph(
     splashScreenRedirect.value = Destinations.DEVICE_ROUTE
   }
 
-
-//  val locale = remember { mutableStateOf("en") }
-//
-//  fun ssss(localeStr: String) {
-//    Locale.setDefault(Locale(localeStr))
-//    locale.value = localeStr
-//    val config = context.resources.configuration
-//    config.setLocale(Locale(localeStr))
-//    context.resources.updateConfiguration(config, context.resources.displayMetrics)
-//  }
-//
-//
-//  Button(onClick = { ssss("en") }) {
-//    Text("Changge en")
-//  }
-
   NavHost(
     navController = navController, startDestination = startDestination
   ) {

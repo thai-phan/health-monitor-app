@@ -14,12 +14,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sewon.topperhealth.R
-import com.sewon.topperhealth.ui.theme.topperTypography
 import com.sewon.topperhealth.ui.screen.setting.childa.ProfileSetting
 import com.sewon.topperhealth.ui.screen.setting.childb.SleepSetting
 import com.sewon.topperhealth.ui.screen.setting.childc.InductionSolutionSetting
 import com.sewon.topperhealth.ui.screen.setting.childd.GeneralSetting
 import com.sewon.topperhealth.ui.screen.setting.childe.DeviceConnectionSetting
+import com.sewon.topperhealth.ui.theme.topperTypography
 
 @Composable
 fun SettingScreen(
