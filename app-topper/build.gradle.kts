@@ -8,11 +8,11 @@ plugins {
 
 android {
   namespace = "com.sewon.topperhealth"
-  compileSdk = libs.versions.compileSdk.get().toInt()
+  compileSdk = 34
   defaultConfig {
     applicationId = "com.sewon.topperhealth"
-    minSdk = libs.versions.minSdk.get().toInt()
-    targetSdk = libs.versions.targetSdk.get().toInt()
+    minSdk = 29
+    targetSdk = 34
     versionCode = 1
     versionName = "1.0"
 
