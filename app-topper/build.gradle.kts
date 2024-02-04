@@ -31,7 +31,7 @@ android {
     targetCompatibility = JavaVersion.VERSION_17
   }
   composeOptions {
-    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+    kotlinCompilerExtensionVersion = libs.versions.composeKotlinCompiler.get()
   }
   kotlinOptions {
     jvmTarget = JavaVersion.VERSION_17.toString()
@@ -109,7 +109,7 @@ dependencies {
   implementation(libs.androidx.ui.util)
   implementation(libs.androidx.ui.text)
   implementation(libs.androidx.ui.tooling)
-  implementation(libs.ui.tooling.preview)
+  implementation(libs.androidx.ui.tooling.preview)
   implementation(libs.androidx.ui.viewbinding)
   debugImplementation(libs.androidx.ui.tooling)
 
