@@ -1,6 +1,8 @@
 package com.sewon.topperhealth.service.algorithm.sleep.report
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.widget.Toast
 import com.sewon.topperhealth.api.sewon.ServiceSewon
 import com.sewon.topperhealth.data.model.SleepSession
@@ -61,9 +63,29 @@ class ReportHandler(
     return max!!.key
   }
 
+  private fun isInternetAvailable(context: Context): Boolean {
+    val connectivityManager =
+      context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeNetwork = connectivityManager.activeNetwork ?: return false
+    val networkCapabilities =
+      connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+    val result = when {
+      networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+      networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+      networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+      else -> false
+    }
+    return result
+  }
+
   suspend fun getSleepStageCloud(context: Context): MutableList<Float> {
 //    State,HR,BR,HRV,HRwfm,BRwfm,SleepCategory
     val stageList = mutableListOf<Float>()
+
+    if (!isInternetAvailable(context)) {
+      Toast.makeText(context, "No network", Toast.LENGTH_SHORT).show()
+      return stageList
+    }
 
     try {
       val root = File(context.dataDir, "csv")
@@ -131,7 +153,6 @@ class ReportHandler(
     Timber.tag("report4").d(stageTime.toString())
     return stageTime
   }
-
 
   fun sewonSource(context: Context) {
     val thread = Thread {

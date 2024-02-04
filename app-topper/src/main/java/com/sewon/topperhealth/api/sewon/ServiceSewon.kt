@@ -28,7 +28,7 @@ interface ServiceSewon {
         .create()
 
       val client: OkHttpClient = OkHttpClient.Builder()
-        .connectTimeout(30, TimeUnit.SECONDS)
+        .connectTimeout(600, TimeUnit.SECONDS)
         .readTimeout(600, TimeUnit.SECONDS)
         .build()
 
