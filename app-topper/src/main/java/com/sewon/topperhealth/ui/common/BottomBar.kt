@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.sewon.topperhealth.ui.navigation.MainTabs
+import com.sewon.topperhealth.ui.navigation.navigateWithState
 
 import java.util.Locale
 
@@ -36,36 +37,30 @@ fun BottomBar(
   val routes = remember {
     MainTabs.entries.map { it.route }
   }
+
   if (currentRoute in routes) {
     AnimatedVisibility(
       visible = bottomBarState.value,
       enter = slideInVertically(initialOffsetY = { it }),
       exit = slideOutVertically(targetOffsetY = { it }),
-      content = {
-        NavigationBar(
-          containerColor = Color(0xFF000103),
-        ) {
-          tabs.forEach { tab ->
-            NavigationBarItem(
-              icon = { Icon(painterResource(tab.icon), contentDescription = null) },
-              label = { Text(stringResource(tab.title).uppercase(Locale.getDefault())) },
-              selected = currentRoute == tab.route,
-              onClick = {
-                if (tab.route != currentRoute) {
-                  navController.navigate(tab.route) {
-                    popUpTo(navController.graph.startDestinationId) {
-                      saveState = false
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                  }
-                }
-              },
-              modifier = Modifier.navigationBarsPadding()
-            )
-          }
+    ) {
+      NavigationBar(
+        containerColor = Color(0xFF000103),
+      ) {
+        tabs.forEach { tab ->
+          NavigationBarItem(
+            icon = { Icon(painterResource(tab.icon), contentDescription = null) },
+            label = { Text(stringResource(tab.title).uppercase(Locale.getDefault())) },
+            selected = currentRoute == tab.route,
+            onClick = {
+              if (tab.route != currentRoute) {
+                navigateWithState(navController, tab.route)
+              }
+            },
+            modifier = Modifier.navigationBarsPadding()
+          )
         }
       }
-    )
+    }
   }
 }

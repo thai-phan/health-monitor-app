@@ -16,12 +16,12 @@ import androidx.navigation.compose.rememberNavController
 import com.sewon.topperhealth.ui.common.BottomBar
 import com.sewon.topperhealth.ui.navigation.Destinations
 import com.sewon.topperhealth.ui.navigation.MainTabs
-import com.sewon.topperhealth.ui.navigation.NavigationGraph
+import com.sewon.topperhealth.ui.navigation.AppNavigationGraph
 import com.sewon.topperhealth.ui.theme.TopperAppTheme
 import com.sewon.topperhealth.ui.theme.blackGreenBackground
 
 @Composable
-fun RootCompose(setLocale: (String) -> Unit, finishActivity: () -> Unit) {
+fun RootCompose(finishActivity: () -> Unit) {
 
   val navController = rememberNavController()
   val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -55,7 +55,7 @@ fun RootCompose(setLocale: (String) -> Unit, finishActivity: () -> Unit) {
           .blackGreenBackground(),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
-        NavigationGraph(
+        AppNavigationGraph(
           finishActivity = finishActivity,
           navController = navController,
           modifier = Modifier.padding(innerPaddingModifier)

@@ -48,10 +48,10 @@ import com.sewon.topperhealth.service.algorithm.sleep.AlgorithmConstants
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyGatt
 import com.sewon.topperhealth.service.bluetooth.util.Connected
-import com.sewon.topperhealth.ui.screen.activity.child.ActivityLog
-import com.sewon.topperhealth.ui.screen.activity.child.ButtonAction
-import com.sewon.topperhealth.ui.screen.activity.child.SwitchAction
-import com.sewon.topperhealth.ui.screen.activity.child.TimeSelection
+import com.sewon.topperhealth.ui.screen.activity.component.DebugActivityLog
+import com.sewon.topperhealth.ui.screen.activity.childc.ButtonAction
+import com.sewon.topperhealth.ui.screen.activity.childb.SwitchAction
+import com.sewon.topperhealth.ui.screen.activity.childa.TimeSelection
 import com.sewon.topperhealth.ui.screen.activity.component.CircularTimePicker
 import com.sewon.topperhealth.ui.screen.activity.component.ModalAssessment
 import com.sewon.topperhealth.ui.screen.activity.component.ModalStarQuality
@@ -147,13 +147,11 @@ fun SleepActivity(
       .fillMaxSize()
       .padding(horizontal = 30.dp, vertical = 20.dp)
   ) {
-
     Row(
       modifier = Modifier.fillMaxWidth(),
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically
     ) {
-
       Text(stringResource(R.string.sleep_time_check), style = topperTypography.headlineSmall)
 
       Button(
@@ -166,11 +164,6 @@ fun SleepActivity(
         ),
         onClick = { openDevMode.value = true }) {
       }
-
-//      Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
-//        onClick = { redirectDevicePage() }) {
-//        Text(stringResource(R.string.device), color = BackgroundMiddle)
-//      }
 
       Button(colors = ButtonDefaults.buttonColors(Color(0xFFFFFFFF)),
         onClick = { redirectReportPage() }) {
@@ -223,7 +216,7 @@ fun SleepActivity(
       )
 
       if (isLogShowed) {
-        ActivityLog(viewModel)
+        DebugActivityLog()
       }
     }
 

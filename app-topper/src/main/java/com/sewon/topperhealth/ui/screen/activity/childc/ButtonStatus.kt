@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.ui.screen.activity.child
+package com.sewon.topperhealth.ui.screen.activity.childc
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -1,7 +1,6 @@
-package com.sewon.topperhealth.ui.screen.activity.child
+package com.sewon.topperhealth.ui.screen.activity.component
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -9,22 +8,17 @@ import androidx.compose.runtime.livedata.observeAsState
 
 import com.sewon.topperhealth.service.algorithm.sleep.realtime.RealtimeHandler
 import com.sewon.topperhealth.service.bluetooth.LowEnergyClient
-import com.sewon.topperhealth.ui.screen.activity.ActivityViewModel
 
 @Composable
-fun ActivityLog(viewModel: ActivityViewModel) {
-
+fun DebugActivityLog() {
   val log by LowEnergyClient.log.observeAsState()
   val count by RealtimeHandler.countReferenceData.observeAsState()
-//  val referenceCount by RealtimeHandler.referenceCount.observeAsState()
-
   val refHRV by RealtimeHandler.refHRV.observeAsState()
   val refHR by RealtimeHandler.refHR.observeAsState()
   val refBR by RealtimeHandler.refBR.observeAsState()
 
   Column {
     Text("Log: $log")
-//    Text("Ref: $referenceCount")
     Text("Total: $count")
     Text("HR: $refHR")
     Text("BR: $refBR")

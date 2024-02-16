@@ -10,7 +10,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 
 
 @Composable
-fun RatingInputRow(modifier: Modifier = Modifier, rating: Int, onRatingChange: (Int) -> Unit) {
+fun RatingSelection(modifier: Modifier = Modifier, rating: Int, onRatingChange: (Int) -> Unit) {
   InputRow(modifier = modifier) {
     AndroidView(
       factory = { context ->

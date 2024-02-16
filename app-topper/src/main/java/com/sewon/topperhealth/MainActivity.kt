@@ -59,18 +59,12 @@ class MainActivity : ComponentActivity() {
     proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
 
     setContent {
-      RootCompose(setLocale = {
-        reload()
-      }) {
+      RootCompose {
         finish()
       }
     }
 
     observeLanguageChanges()
-  }
-
-  private fun reload() {
-    recreate()
   }
 
   override fun onResume() {

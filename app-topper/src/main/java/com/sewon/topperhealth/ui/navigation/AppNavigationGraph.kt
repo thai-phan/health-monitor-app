@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,7 +29,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun NavigationGraph(
+fun AppNavigationGraph(
   modifier: Modifier = Modifier,
   finishActivity: () -> Unit = {},
   navController: NavHostController = rememberNavController(),
@@ -52,14 +53,8 @@ fun NavigationGraph(
     splashScreenRedirect.value = Destinations.DEVICE_ROUTE
   }
 
-  NavHost(
-    navController = navController, startDestination = startDestination
-  ) {
+  NavHost(navController = navController, startDestination = startDestination) {
     composable(Destinations.SPLASH_ROUTE) {
-      BackHandler {
-        finishActivity()
-      }
-
       SplashScreen(
         modifier,
         delayTime = 1000L
@@ -80,73 +75,55 @@ fun NavigationGraph(
     }
 
     composable(Destinations.DEVICE_ROUTE) {
-      DeviceScreen(
-        modifier
-      ) {
-        navController.navigate(Destinations.ACTIVITY_ROUTE) {
-          popUpTo(navController.graph.startDestinationId) {
-            saveState = false
-          }
-          launchSingleTop = true
-          restoreState = true
-        }
+      DeviceScreen(modifier) {
+        navigateWithState(navController, Destinations.ACTIVITY_ROUTE)
       }
     }
 
     composable(MainTabs.ACTIVITY.route) { backStackEntry ->
+      BackHandler {
+        finishActivity()
+      }
 //        val parentEntry = remember(backStackEntry) {
 //            navController.getBackStackEntry("parentNavigationRoute")
 //        }
 //        val parentViewModel = hiltViewModel(parentEntry)
       SleepActivity(modifier, redirectAdvisePage = {
-        navController.navigate(Destinations.ADVISE_ROUTE) {
-          popUpTo(navController.graph.startDestinationId) {
-            saveState = false
-          }
-          launchSingleTop = true
-          restoreState = true
-        }
+        navigateWithState(navController, Destinations.ADVISE_ROUTE)
       }) {
-        navController.navigate(Destinations.REPORT_ROUTE) {
-          //          TODO: research
-          popUpTo(navController.graph.startDestinationId) {
-            // Save backstack state. This will ensure restoration of
-            // nested navigation screen when the user comes back to
-            // the destination.
-            saveState = false
-          }
-          // prevent duplicate destinations when the navigation is
-          // clicked multiple times
-          launchSingleTop = true
-          // restore state if previously saved
-          restoreState = true
-        }
+        navigateWithState(navController, Destinations.REPORT_ROUTE)
       }
     }
 
-    composable(Destinations.REPORT_ROUTE) { from ->
+    composable(MainTabs.REPORT.route) { from ->
       ReportScreen(modifier)
     }
 
-    composable(Destinations.SETTING_ROUTE) {
+    composable(MainTabs.SETTING.route) {
       SettingScreen(modifier)
     }
 
     composable(Destinations.ADVISE_ROUTE) {
       AdviseScreen(modifier) {
-        navi(navController, Destinations.REPORT_ROUTE)
+        navigateWithState(navController, Destinations.REPORT_ROUTE)
       }
     }
   }
 }
 
 
-fun navi(navController: NavHostController, route: String) {
+fun navigateWithState(navController: NavController, route: String) {
   navController.navigate(route) {
-    popUpTo(navController.graph.startDestinationId) {
-      saveState = false
-    }
+//    popUpTo(navController.graph.startDestinationId) {
+//      // Save backstack state. This will ensure restoration of
+//      // nested navigation screen when the user comes back to
+//      // the destination.
+//      saveState = false
+//    }
+    // prevent duplicate destinations when the navigation is
+    // clicked multiple times
     launchSingleTop = true
+    // restore state if previously saved
     restoreState = true
   }
 }

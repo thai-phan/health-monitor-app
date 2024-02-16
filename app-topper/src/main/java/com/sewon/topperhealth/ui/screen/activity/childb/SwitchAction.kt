@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.ui.screen.activity.child
+package com.sewon.topperhealth.ui.screen.activity.childb
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import com.sewon.topperhealth.MainActivity
 import com.sewon.topperhealth.R
 import com.sewon.topperhealth.ui.common.component.CustomSwitch
-import com.sewon.topperhealth.ui.screen.activity.component.DialogRelay
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
 import com.sewon.topperhealth.service.bluetooth.LowEnergyService
 import com.sewon.topperhealth.service.bluetooth.util.Connected

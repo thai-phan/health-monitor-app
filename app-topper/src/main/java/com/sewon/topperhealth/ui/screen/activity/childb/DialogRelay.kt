@@ -1,4 +1,4 @@
-package com.sewon.topperhealth.ui.screen.activity.component
+package com.sewon.topperhealth.ui.screen.activity.childb
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -32,6 +32,7 @@ import com.sewon.topperhealth.ui.theme.topperTypography
 import com.sewon.topperhealth.service.bluetooth.ClassicClient
 import com.sewon.topperhealth.service.bluetooth.ClassicGatt
 import com.sewon.topperhealth.service.bluetooth.util.Connected
+import com.sewon.topperhealth.ui.screen.activity.component.DialogRelayItem
 import timber.log.Timber
 
 @SuppressLint("InlinedApi", "MissingPermission")
